@@ -2,10 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>e-gleba</title>
+  <title>Eugene - C++ Developer</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="C++ Developer specializing in game development, system architecture, and hardware integration">
+  <meta name="author" content="Eugene (e-gleba)">
+  
+  <!-- Favicon Implementation -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='80' font-size='80' fill='%23007acc'%3E⚡%3C/text%3E%3C/svg%3E" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%23007acc'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='80' fill='white'%3E⚡%3C/text%3E%3C/svg%3E">
+  
   <style>
-    html { height: 100%; }
+    * { box-sizing: border-box; }
+    
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap');
+    
+    :root {
+      --primary: #007acc;
+      --primary-dark: #005a99;
+      --bg: #f8f9fa;
+      --text: #232323;
+      --accent: #6c757d;
+      --shadow: rgba(0,0,0,0.1);
+      --highlight: rgba(0,122,204,0.1);
+    }
+    
+    html { 
+      height: 100%; 
+      scroll-behavior: smooth;
+    }
+    
     body {
       min-height: 100vh;
       margin: 0;
@@ -14,44 +39,345 @@
       justify-content: center;
       align-items: center;
       font-family: 'JetBrains Mono', monospace;
-      background: #f7f7fa;
-      color: #232323;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      animation: fadeIn 1s ease-out;
     }
-    h1 { font-size: 2.5rem; margin: 0.2em 0; }
-    p { margin: 0.5em 0 0.8em 0; font-size: 1.2em; }
-    a {
-      color: #007acc;
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    @keyframes slideIn {
+      from { transform: translateX(-10px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    
+    .container {
+      max-width: 600px;
+      padding: 2rem;
+      text-align: center;
+    }
+    
+    .avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: white;
+      animation: pulse 2s infinite;
+      box-shadow: 0 8px 25px var(--shadow);
+    }
+    
+    h1 { 
+      font-size: 2.5rem; 
+      margin: 0.2em 0; 
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .tagline { 
+      margin: 0.5em 0 1.5em 0; 
+      font-size: 1.1em; 
+      color: var(--accent);
+      font-style: italic;
+    }
+    
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 1.5rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px var(--shadow);
+      min-width: 100px;
+      transition: transform 0.2s ease;
+    }
+    
+    .stat:hover {
+      transform: translateY(-2px);
+    }
+    
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .tech-stack {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 1.5rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .tech {
+      background: var(--highlight);
+      color: var(--primary);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid rgba(0,122,204,0.2);
+      transition: all 0.2s ease;
+    }
+    
+    .tech:hover {
+      background: var(--primary);
+      color: white;
+      transform: scale(1.05);
+    }
+    
+    .repo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    
+    .repo-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px var(--shadow);
+      text-align: left;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0,0,0,0.05);
+      animation: slideIn 0.6s ease-out;
+      animation-fill-mode: both;
+    }
+    
+    .repo-card:nth-child(1) { animation-delay: 0.1s; }
+    .repo-card:nth-child(2) { animation-delay: 0.2s; }
+    .repo-card:nth-child(3) { animation-delay: 0.3s; }
+    .repo-card:nth-child(4) { animation-delay: 0.4s; }
+    .repo-card:nth-child(5) { animation-delay: 0.5s; }
+    
+    .repo-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px var(--shadow);
+    }
+    
+    .repo-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    
+    .repo-desc {
+      font-size: 0.9rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    
+    .repo-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .repo-lang {
+      background: var(--primary);
+      color: white;
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
+    .repo-stars {
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+    
+    .links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .link {
+      color: var(--primary);
       text-decoration: none;
-      border-bottom: 1px dotted #007acc;
-      transition: color 0.2s;
+      padding: 0.8rem 1.5rem;
+      border: 2px solid var(--primary);
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-    a:hover { color: #005a99; }
-    .repo-list {
-      margin: 1.2em 0 0 0;
-      padding: 0;
-      list-style: none;
-      font-size: 1.05em;
+    
+    .link:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,122,204,0.3);
     }
-    .repo-list li { margin: 0.4em 0; }
-    .tag { background: #e6eaff; color: #3a3a5a; border-radius: 4px; padding: 0 0.5em; margin-left: 0.4em; font-size: 0.9em; }
+    
+    .footer {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      color: var(--accent);
+      font-size: 0.85rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container { padding: 1rem; }
+      h1 { font-size: 2rem; }
+      .stats { gap: 1rem; }
+      .repo-grid { grid-template-columns: 1fr; }
+      .links { flex-direction: column; align-items: center; }
+    }
+    
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d1117;
+        --text: #e6edf3;
+        --accent: #7d8590;
+        --shadow: rgba(0,0,0,0.3);
+        --highlight: rgba(0,122,204,0.15);
+      }
+      
+      .repo-card, .stat {
+        background: #161b22;
+        border-color: rgba(240,246,252,0.1);
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>e-gleba</h1>
-  <p>c/c++ dev. “They say money can't buy happiness, but have you tried bribing the compiler?”</p>
-  <ul class="repo-list">
-    <li>
-      <a href="https://github.com/e-gleba/student-bsu-by">student-bsu-by</a>
-      <span class="tag">Kotlin</span>
-    </li>
-    <li>
-      <a href="https://github.com/e-gleba/basic-game-engine">basic-game-engine</a>
-      <span class="tag">C++</span>
-    </li>
-    <li>
-      <a href="https://github.com/e-gleba/template-cpp-project">template-cpp-project</a>
-      <span class="tag">C++</span>
-    </li>
-  </ul>
+  <div class="container">
+    <div class="avatar">⚡</div>
+    
+    <h1>Eugene</h1>
+    <p class="tagline">"They say money can't buy happiness, but have you tried bribing the compiler?"</p>
+    
+    <div class="tech-stack">
+      <span class="tech">C++</span>
+      <span class="tech">Python</span>
+      <span class="tech">SDL3</span>
+      <span class="tech">CMake</span>
+      <span class="tech">Docker</span>
+      <span class="tech">Game Dev</span>
+    </div>
+    
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-number">25</div>
+        <div class="stat-label">Repositories</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">808</div>
+        <div class="stat-label">Contributions</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">17</div>
+        <div class="stat-label">Followers</div>
+      </div>
+    </div>
+    
+    <div class="repo-grid">
+      <div class="repo-card">
+        <div class="repo-title">template-cpp-project</div>
+        <div class="repo-desc">Modern C++ project template with CMake, Docker, and best practices</div>
+        <div class="repo-meta">
+          <span class="repo-lang">C++</span>
+          <span class="repo-stars">⭐ 2</span>
+        </div>
+      </div>
+      
+      <div class="repo-card">
+        <div class="repo-title">basic-game-engine</div>
+        <div class="repo-desc">C++ game engine powered by SDL 3.0 for immersive gameplay development</div>
+        <div class="repo-meta">
+          <span class="repo-lang">C++</span>
+          <span class="repo-stars">⭐ 1</span>
+        </div>
+      </div>
+      
+      <div class="repo-card">
+        <div class="repo-title">satellite-weather-impact</div>
+        <div class="repo-desc">Machine learning analysis of solar impact on satellites with NASA data</div>
+        <div class="repo-meta">
+          <span class="repo-lang">Python</span>
+          <span class="repo-stars">⭐ 11</span>
+        </div>
+      </div>
+      
+      <div class="repo-card">
+        <div class="repo-title">nvim-config</div>
+        <div class="repo-desc">Professional Neovim configuration for C++ development productivity</div>
+        <div class="repo-meta">
+          <span class="repo-lang">Lua</span>
+          <span class="repo-stars">⭐ 0</span>
+        </div>
+      </div>
+      
+      <div class="repo-card">
+        <div class="repo-title">win-kernel-hooks</div>
+        <div class="repo-desc">Windows kernel-level hooks for system research and analysis</div>
+        <div class="repo-meta">
+          <span class="repo-lang">C++</span>
+          <span class="repo-stars">⭐ 0</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="links">
+      <a href="https://github.com/e-gleba" class="link">
+        🔗 GitHub
+      </a>
+      <a href="https://steamcommunity.com/id/egleba" class="link">
+        🎮 Steam
+      </a>
+      <a href="https://vk.com/e_gleba" class="link">
+        💬 VK
+      </a>
+    </div>
+    
+    <div class="footer">
+      <p>🏢 Lesta Games • 📍 Minsk • 🚀 C++ Developer</p>
+    </div>
+  </div>
 </body>
 </html>
