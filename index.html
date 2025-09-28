@@ -4,573 +4,61 @@
     <meta charset="utf-8" />
     <title>evgeniy.gleba@localhost:~$</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='80' font-size='80' fill='%2300ff00'%3E$%3C/text%3E%3C/svg%3E"
-    />
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap");
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      html,
-      body {
-        height: 100%;
-        background: #0a0a0a;
-        color: #00ff00;
-        font:
-          14px "JetBrains Mono",
-          monospace;
-        overflow: hidden;
-      }
-      .terminal {
-        height: 100vh;
-        width: 100%;
-        padding: 20px;
-        background: rgba(10, 10, 10, 0.9);
-        display: flex;
-        flex-direction: column;
-        overflow-y: auto;
-        position: relative;
-        z-index: 10;
-      }
-      .terminal::-webkit-scrollbar {
-        width: 4px;
-      }
-      .terminal::-webkit-scrollbar-thumb {
-        background: #00ff00;
-        border-radius: 2px;
-      }
-      .header {
-        font-weight: 600;
-        margin-bottom: 18px;
-        padding-bottom: 8px;
-        border-bottom: 1px solid #00ff00;
-      }
-      .prompt {
-        margin: 8px 0 4px;
-      }
-      .user {
-        color: #fff;
-      }
-      .output {
-        margin: 4px 0 12px;
-        line-height: 1.5;
-      }
-      .name {
-        font-size: 24px;
-        font-weight: 600;
-        text-shadow:
-          0 0 8px #00ff00,
-          0 0 16px #00ff00,
-          0 0 24px #00ff00;
-      }
-      .info {
-        display: grid;
-        grid-template-columns: 100px 1fr;
-        gap: 4px 12px;
-        margin: 12px 0;
-        font-size: 13px;
-      }
-      .label {
-        text-align: right;
-      }
-      .value {
-        color: #fff;
-      }
-      .repos {
-        margin: 12px 0;
-      }
-      .repo {
-        display: flex;
-        justify-content: space-between;
-        padding: 2px 0;
-        border-bottom: 1px dotted #004400;
-        margin-bottom: 4px;
-        font-size: 13px;
-      }
-      .repo a {
-        color: #fff;
-        text-decoration: none;
-        transition: all 0.2s;
-      }
-      .repo a:hover {
-        color: #00ff00;
-        text-shadow: 0 0 3px #00ff00;
-      }
-      .lang {
-        color: #0a0;
-        font-size: 11px;
-      }
-      .links {
-        display: flex;
-        gap: 8px;
-        margin: 12px 0;
-        flex-wrap: wrap;
-      }
-      .link {
-        color: #00ff00;
-        text-decoration: none;
-        padding: 3px 6px;
-        border: 1px solid #00ff00;
-        font-size: 11px;
-        transition: all 0.2s;
-      }
-      .link:hover {
-        background: #00ff00;
-        color: #0a0a0a;
-      }
-      .cursor {
-        animation: blink 1s infinite;
-      }
-      @keyframes blink {
-        0%,
-        50% {
-          opacity: 1;
-        }
-        51%,
-        100% {
-          opacity: 0;
-        }
-      }
-      .footer {
-        margin-top: auto;
-        padding-top: 12px;
-        border-top: 1px solid #004400;
-        font-size: 11px;
-        color: #008f00;
-        text-align: center;
-      }
-      /* MATRIX */
-      .matrix-bg {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        pointer-events: none;
-        z-index: 1;
-        overflow: hidden;
-        opacity: 0;
-        transition: opacity 0.4s;
-      }
-      .matrix-bg.active {
-        opacity: 1;
-      }
-      .matrix-char {
-        position: absolute;
-        font-family: "JetBrains Mono", monospace;
-        color: #00ff00;
-        font-size: 20px;
-        font-weight: 700;
-        opacity: 1;
-        text-shadow:
-          0 0 2px #fff,
-          0 0 5px #0f0,
-          0 0 10px #0f0,
-          0 0 15px #0f0,
-          0 0 25px #0f0,
-          0 0 35px #0f0;
-        filter: brightness(2) contrast(1.5);
-        animation: fall linear infinite;
-        will-change: transform;
-      }
-      @keyframes fall {
-        0% {
-          transform: translateY(-50px);
-          opacity: 0;
-        }
-        5% {
-          opacity: 1;
-        }
-        100% {
-          transform: translateY(calc(100vh + 50px));
-          opacity: 0;
-        }
-      }
-      /* KONAMI CODE "SPECTRUM" EFFECT (replaces rainbow) */
-      .matrix-bg.konami .matrix-char {
-        background: linear-gradient(
-          45deg,
-          #ff00ff,
-          #00ffff,
-          #ffff00,
-          #ff0000,
-          #00ff00
-        );
-        background-size: 400% 400%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        animation:
-          fall linear infinite,
-          spectrum-flow 1.5s ease-in-out infinite;
-        text-shadow: 0 0 20px #0f0;
-        filter: brightness(3) saturate(1.8) contrast(2);
-        font-size: 22px;
-      }
-      @keyframes spectrum-flow {
-        0%,
-        100% {
-          background-position: 0% 50%;
-        }
-        50% {
-          background-position: 100% 50%;
-        }
-      }
-      /* DOOM CONTAINER */
-      .doom-container {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(0, 0, 0, 0.98);
-        border: 2px solid #00ff00;
-        border-radius: 8px;
-        padding: 12px;
-        z-index: 2000;
-        display: none;
-        animation: doom-appear 0.5s ease-out;
-        box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
-        width: min(95vw, 900px);
-        max-height: 95vh;
-      }
-      @keyframes doom-appear {
-        from {
-          opacity: 0;
-          transform: translate(-50%, -50%) scale(0.8);
-        }
-        to {
-          opacity: 1;
-          transform: translate(-50%, -50%) scale(1);
-        }
-      }
-      .doom-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 8px;
-        padding-bottom: 6px;
-        border-bottom: 1px solid #00ff00;
-      }
-      .doom-title {
-        color: #00ff00;
-        font-size: 14px;
-        font-weight: 600;
-        text-shadow: 0 0 8px #00ff00;
-      }
-      .doom-close {
-        background: transparent;
-        border: 1px solid #00ff00;
-        color: #00ff00;
-        padding: 3px 6px;
-        font-size: 10px;
-        cursor: pointer;
-        transition: all 0.2s;
-        font-family: "JetBrains Mono", monospace;
-      }
-      .doom-close:hover {
-        background: #00ff00;
-        color: #0a0a0a;
-      }
-      .doom-iframe {
-        width: 100%;
-        aspect-ratio: 16/9;
-        border: 1px solid #004400;
-        background: #000;
-        border-radius: 4px;
-      }
-      .doom-controls {
-        margin-top: 6px;
-        font-size: 10px;
-        color: #008f00;
-        text-align: center;
-        line-height: 1.3;
-      }
-      /* NOTIFICATIONS */
-      .notification {
-        position: fixed;
-        right: 20px;
-        background: rgba(0, 255, 0, 0.2);
-        border: 1px solid #00ff00;
-        padding: 8px 12px;
-        border-radius: 4px;
-        font-size: 12px;
-        color: #00ff00;
-        text-shadow: 0 0 5px #00ff00;
-        box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-        z-index: 2000;
-        opacity: 0;
-        transform: translateX(300px);
-        animation:
-          slide-in 0.3s ease-out forwards,
-          slide-out 0.3s ease-in 2.2s forwards;
-        pointer-events: none;
-      }
-      @keyframes slide-in {
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-      @keyframes slide-out {
-        to {
-          opacity: 0;
-          transform: translateX(300px);
-        }
-      }
-      @media (max-width: 768px) {
-        .terminal {
-          padding: 12px;
-          font-size: 12px;
-        }
-        .name {
-          font-size: 20px;
-        }
-        .info {
-          grid-template-columns: 1fr;
-        }
-        .label {
-          text-align: left;
-        }
-        .doom-container {
-          width: 95vw;
-          padding: 8px;
-        }
-        .doom-title {
-          font-size: 12px;
-        }
-        .doom-controls {
-          font-size: 9px;
-        }
-      }
-    </style>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='80' font-size='80' fill='%2300ff00'%3E$%3C/text%3E%3C/svg%3E" />
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/matrix.css" />
+    <link rel="stylesheet" href="css/doom.css" />
   </head>
   <body>
     <div class="matrix-bg" id="matrix"></div>
     <div class="terminal">
       <div class="header">evgeniy.gleba@localhost:~$</div>
-      <div class="prompt">
-        <span class="user">evgeniy.gleba</span>@localhost:~$ whoami
-      </div>
-      <div class="output"><div class="name">EVGENIY GLEBA</div></div>
-      <div class="prompt">
-        <span class="user">evgeniy.gleba</span>@localhost:~$ cat /etc/profile
-      </div>
+      <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ whoami</div>
+      <div class="output"><div class="name">evgeniy gleba</div></div>
+      <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ cat /etc/profile</div>
       <div class="output">
         <div class="info">
-          <span class="label">role:</span
-          ><span class="value">c++ game developer</span>
-          <span class="label">focus:</span
-          ><span class="value">game engines • sdl3 • performance</span>
-          <span class="label">company:</span
-          ><span class="value">lesta games • minsk</span>
-          <span class="label">quote:</span
-          ><span class="value"
-            >"they say money can't buy happiness, but have you tried bribing the
-            compiler?"</span
-          >
-          <span class="label">stack:</span
-          ><span class="value">c++ | python | sdl3 | cmake | docker</span>
+          <span class="label">role:</span><span class="value">c++ game developer</span>
+          <span class="label">focus:</span><span class="value">game engines • sdl3 • performance</span>
+          <span class="label">company:</span><span class="value">lesta games • minsk</span>
+          <span class="label">quote:</span><span class="value">"they say money can't buy happiness, but have you tried bribing the compiler?"</span>
+          <span class="label">stack:</span><span class="value">c++ | python | sdl3 | cmake | docker</span>
         </div>
       </div>
-      <div class="prompt">
-        <span class="user">evgeniy.gleba</span>@localhost:~$ ls -la ~/projects/
-      </div>
+      <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ ls -la ~/projects/</div>
       <div class="output">
         <div class="repos">
-          <div class="repo">
-            <a href="https://github.com/e-gleba/basic-game-engine"
-              >basic-game-engine</a
-            ><span class="lang">cpp/sdl3</span>
-          </div>
-          <div class="repo">
-            <a href="https://github.com/e-gleba/template-cpp-project"
-              >template-cpp-project</a
-            ><span class="lang">cpp/cmake</span>
-          </div>
-          <div class="repo">
-            <a href="https://github.com/e-gleba/satellite-weather-impact"
-              >satellite-weather-impact</a
-            ><span class="lang">python/ml</span>
-          </div>
-          <div class="repo">
-            <a href="https://github.com/e-gleba/win-kernel-hooks"
-              >win-kernel-hooks</a
-            ><span class="lang">cpp/kernel</span>
-          </div>
-          <div class="repo">
-            <a href="https://github.com/e-gleba/nvim-config">nvim-config</a
-            ><span class="lang">lua/config</span>
-          </div>
+          <div class="repo"><a href="https://github.com/e-gleba/basic-game-engine">basic-game-engine</a><span class="lang">cpp/sdl3</span></div>
+          <div class="repo"><a href="https://github.com/e-gleba/template-cpp-project">template-cpp-project</a><span class="lang">cpp/cmake</span></div>
+          <div class="repo"><a href="https://github.com/e-gleba/satellite-weather-impact">satellite-weather-impact</a><span class="lang">python/ml</span></div>
+          <div class="repo"><a href="https://github.com/e-gleba/win-kernel-hooks">win-kernel-hooks</a><span class="lang">cpp/kernel</span></div>
+          <div class="repo"><a href="https://github.com/e-gleba/nvim-config">nvim-config</a><span class="lang">lua/config</span></div>
         </div>
       </div>
-      <div class="prompt">
-        <span class="user">evgeniy.gleba</span>@localhost:~$ find /social -type
-        l
-      </div>
+      <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ find /social -type l</div>
       <div class="output">
         <div class="links">
           <a class="link" href="https://github.com/e-gleba">[github]</a>
-          <a class="link" href="https://steamcommunity.com/id/egleba"
-            >[steam]</a
-          >
+          <a class="link" href="https://steamcommunity.com/id/egleba">[steam]</a>
           <a class="link" href="https://vk.com/e_gleba">[vk]</a>
         </div>
       </div>
-      <div class="prompt">
-        <span class="user">evgeniy.gleba</span>@localhost:~$
-        <span class="cursor">█</span>
-      </div>
+      <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ <span class="cursor">█</span></div>
       <div class="footer">// type: doom | konami code: ↑↑↓↓←→←→BA</div>
     </div>
 
     <!-- DOOM CONTAINER -->
     <div id="doomContainer" class="doom-container">
       <div class="doom-header">
-        <div class="doom-title">🔫 DOOM (1993)</div>
+        <div class="doom-title">DOOM (1993)</div>
         <button class="doom-close" onclick="closeDoom()">✕</button>
       </div>
-      <iframe
-        id="doomIframe"
-        class="doom-iframe"
-        src=""
-        frameborder="0"
-        allowfullscreen
-      ></iframe>
-      <div class="doom-controls">
-        WASD/Arrows=Move • Ctrl=Fire • Space=Use • ESC=Menu
-      </div>
+      <iframe id="doomIframe" class="doom-iframe" src="" frameborder="0" allowfullscreen></iframe>
+      <div class="doom-controls">WASD/Arrows=Move • Ctrl=Fire • Space=Use • ESC=Menu</div>
     </div>
 
-    <script>
-      const m = document.getElementById("matrix"),
-        chars =
-          "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
-      let active = false,
-        interval,
-        notifCount = 0,
-        doomLoaded = false;
-
-      function drop() {
-        if (!active) return;
-        const c = document.createElement("div");
-        c.className = "matrix-char";
-        c.textContent = chars[(Math.random() * chars.length) | 0];
-        c.style.left = Math.random() * 100 + "%";
-        c.style.animationDuration = 1.5 + Math.random() * 2 + "s";
-        m.appendChild(c);
-        setTimeout(() => c.remove(), 4000);
-      }
-
-      function startMatrix() {
-        if (active) return;
-        active = true;
-        m.classList.add("active");
-        for (let i = 0; i < 80; i++) setTimeout(drop, i * 60);
-        interval = setInterval(drop, 150);
-      }
-
-      function stopMatrix() {
-        active = false;
-        m.classList.remove("active", "konami");
-        clearInterval(interval);
-        setTimeout(() => (m.innerHTML = ""), 400);
-      }
-
-      function notify(txt) {
-        const n = document.createElement("div");
-        n.className = "notification";
-        n.textContent = txt;
-        n.style.top = 15 + notifCount * 50 + "px";
-        document.body.appendChild(n);
-        notifCount++;
-        setTimeout(() => {
-          n.remove();
-          notifCount = Math.max(0, notifCount - 1);
-        }, 2500);
-      }
-
-      function loadDoom() {
-        if (doomLoaded) {
-          document.getElementById("doomContainer").style.display = "block";
-          notify("🔫 DOOM ready");
-          return;
-        }
-        notify("🔫 Loading DOOM...");
-        document.getElementById("doomContainer").style.display = "block";
-        document.getElementById("doomIframe").src =
-          "https://archive.org/embed/doom-play";
-        doomLoaded = true;
-        notify("🔫 RIP AND TEAR!");
-      }
-
-      function closeDoom() {
-        document.getElementById("doomContainer").style.display = "none";
-        notify("🛑 DOOM minimized");
-      }
-
-      const konami = [
-        "ArrowUp",
-        "ArrowUp",
-        "ArrowDown",
-        "ArrowDown",
-        "ArrowLeft",
-        "ArrowRight",
-        "ArrowLeft",
-        "ArrowRight",
-        "KeyB",
-        "KeyA",
-      ];
-      let ki = 0,
-        seq = "";
-
-      document.addEventListener("keydown", (e) => {
-        // Konami code activates matrix with "spectrum" gradient
-        if (e.code === konami[ki]) {
-          ki++;
-          if (ki === konami.length) {
-            startMatrix();
-            m.classList.add("konami");
-            notify("🌈 SPECTRUM MODE UNLOCKED!"); // spectrum replaces rainbow
-            setTimeout(() => {
-              m.classList.remove("konami");
-              stopMatrix();
-              notify("🛑 Matrix stopped");
-            }, 15000);
-            ki = 0;
-          }
-        } else ki = 0;
-
-        if (e.key.length === 1 && /[a-z]/i.test(e.key)) {
-          seq = (seq + e.key.toLowerCase()).slice(-10);
-          if (seq.includes("doom")) {
-            loadDoom();
-            seq = "";
-          }
-        }
-      });
-
-      document.addEventListener("keydown", (e) => {
-        if (
-          e.key === "Escape" &&
-          document.getElementById("doomContainer").style.display === "block"
-        ) {
-          closeDoom();
-        }
-      });
-
-      console.log(
-        "%c🎮 EVGENIY GLEBA - GAME DEVELOPER",
-        "color:#00ff00;font-size:16px;font-weight:bold",
-      );
-      console.log(
-        '%c🔫 Type "doom" to play | Konami code for spectrum mode',
-        "color:#00aa00",
-      );
-      setTimeout(() => notify("🚀 Terminal Ready"), 1000);
-    </script>
+    <script src="js/script.js"></script>
   </body>
 </html>
