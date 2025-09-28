@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,7 +8,7 @@
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='80' font-size='80' fill='%2300ff00'%3E$%3C/text%3E%3C/svg%3E" />
     
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
       
       :root {
         --bg-primary: #0a0a0a;
@@ -34,6 +35,7 @@
         overflow-x: hidden;
         min-height: 100vh;
         position: relative;
+        cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect x="9" y="0" width="2" height="8" fill="%2300ff41"/><rect x="9" y="12" width="2" height="8" fill="%2300ff41"/><rect x="0" y="9" width="8" height="2" fill="%2300ff41"/><rect x="12" y="9" width="8" height="2" fill="%2300ff41"/></svg>'), crosshair;
       }
       
       /* Custom scrollbar */
@@ -57,7 +59,123 @@
         box-shadow: 0 0 12px var(--glow-accent);
       }
       
-      /* Minimalist Linux Nature Background */
+      /* Money Rain Effect */
+      .money-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 500;
+        overflow: hidden;
+      }
+      
+      .money {
+        position: absolute;
+        font-size: 24px;
+        color: #00ff00;
+        text-shadow: 0 0 10px #00ff00;
+        animation: moneyFall 3s linear forwards;
+        opacity: 0;
+      }
+      
+      @keyframes moneyFall {
+        0% {
+          transform: translateY(-50px) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+      
+      /* Particle System - FIXED Z-INDEX */
+      .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 50;
+        pointer-events: none;
+        opacity: 0.8;
+      }
+      
+      .particle {
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        background: var(--text-primary);
+        border-radius: 50%;
+        box-shadow: 0 0 6px var(--glow-primary);
+        animation: float 20s infinite linear;
+      }
+      
+      @keyframes float {
+        0% {
+          transform: translateY(100vh) translateX(0px);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100px) translateX(150px);
+          opacity: 0;
+        }
+      }
+      
+      /* Glitch Effect */
+      @keyframes glitch1 {
+        0%, 100% { transform: translateX(0); }
+        20% { transform: translateX(-2px) skewX(85deg); }
+        40% { transform: translateX(-4px) skewX(10deg); }
+        60% { transform: translateX(2px) skewX(-20deg); }
+        80% { transform: translateX(4px) skewX(15deg); }
+      }
+      
+      @keyframes glitch2 {
+        0%, 100% { transform: translateX(0); }
+        30% { transform: translateX(3px) skewX(-10deg); }
+        50% { transform: translateX(-1px) skewX(40deg); }
+        70% { transform: translateX(-3px) skewX(20deg); }
+      }
+      
+      .glitch {
+        position: relative;
+        display: inline-block;
+      }
+      
+      .glitch:hover::before,
+      .glitch:hover::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0.8;
+        background: var(--bg-primary);
+        clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+      }
+      
+      .glitch:hover::before {
+        color: #ff00ff;
+        animation: glitch1 0.3s infinite;
+        z-index: -1;
+      }
+      
+      .glitch:hover::after {
+        color: #00ffff;
+        animation: glitch2 0.3s infinite;
+        z-index: -2;
+        clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+      }
+      
+      /* Background */
       .background-layer {
         position: fixed;
         top: 0;
@@ -66,37 +184,44 @@
         height: 100vh;
         z-index: -3;
         background: 
-          linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(10, 10, 10, 0.9)),
-          url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"><defs><radialGradient id="moonGlow" cx="0.8" cy="0.2" r="0.3"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.15"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23001122"/><stop offset="40%" stop-color="%23002233"/><stop offset="100%" stop-color="%23001a1a"/></linearGradient><linearGradient id="mountain1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23334455"/><stop offset="100%" stop-color="%23112233"/></linearGradient><linearGradient id="mountain2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23223344"/><stop offset="100%" stop-color="%23001122"/></linearGradient></defs><rect width="1920" height="1080" fill="url(%23sky)"/><ellipse cx="1500" cy="200" rx="50" ry="50" fill="url(%23moonGlow)"/><polygon points="0,700 300,250 600,350 900,180 1200,280 1500,200 1800,300 1920,250 1920,1080 0,1080" fill="url(%23mountain1)" opacity="0.6"/><polygon points="200,800 500,400 800,500 1100,300 1400,400 1700,350 1920,320 1920,1080 0,1080" fill="url(%23mountain2)" opacity="0.4"/></svg>');
-        background-size: cover;
-        background-position: center;
-        filter: blur(3px);
+          radial-gradient(circle at 20% 80%, rgba(0, 255, 65, 0.03) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(0, 255, 221, 0.03) 0%, transparent 50%),
+          linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(10, 10, 10, 0.9));
         opacity: 0.3;
         transition: opacity 0.5s ease;
       }
       
-      /* Minimalist Tux in corner */
+      /* Cool Penguin */
       .tux-penguin {
         position: fixed;
         bottom: 140px;
         right: 60px;
-        width: 120px;
-        height: 120px;
-        z-index: -2;
-        opacity: 0.08;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><g transform="translate(100,100)"><ellipse cx="0" cy="35" rx="45" ry="35" fill="%23000000" opacity="0.8"/><ellipse cx="0" cy="15" rx="32" ry="45" fill="%23ffffff" opacity="0.9"/><ellipse cx="0" cy="10" rx="28" ry="38" fill="%23000000" opacity="0.8"/><circle cx="-8" cy="-5" r="3" fill="%23ffffff" opacity="0.9"/><circle cx="8" cy="-5" r="3" fill="%23ffffff" opacity="0.9"/><ellipse cx="0" cy="2" rx="5" ry="3" fill="%2300ff41" opacity="0.7"/><ellipse cx="-20" cy="25" rx="12" ry="6" fill="%2300ff41" opacity="0.7"/><ellipse cx="20" cy="25" rx="12" ry="6" fill="%2300ff41" opacity="0.7"/><path d="M -15,45 Q -10,55 0,50 Q 10,55 15,45" fill="none" stroke="%2300ff41" stroke-width="2" opacity="0.5"/></g></svg>');
-        background-size: contain;
-        background-repeat: no-repeat;
-        animation: subtleBob 6s ease-in-out infinite;
-        transition: opacity 0.5s ease;
+        width: 80px;
+        height: 80px;
+        z-index: 100;
+        opacity: 0.6;
+        font-size: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: subtleBob 4s ease-in-out infinite;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        filter: drop-shadow(0 0 10px var(--glow-primary));
+      }
+      
+      .tux-penguin:hover {
+        opacity: 1;
+        transform: scale(1.2) rotate(10deg);
+        filter: drop-shadow(0 0 25px var(--glow-primary));
       }
       
       @keyframes subtleBob {
         0%, 100% { transform: translateY(0px) scale(1); }
-        50% { transform: translateY(-4px) scale(1.02); }
+        50% { transform: translateY(-8px) scale(1.05); }
       }
       
-      /* Matrix canvas - MAXIMUM VISIBILITY */
+      /* Matrix canvas */
       #matrix-canvas {
         position: fixed;
         top: 0;
@@ -106,7 +231,6 @@
         z-index: 1;
         opacity: 0;
         transition: opacity 0.6s ease;
-        mix-blend-mode: normal;
         pointer-events: none;
       }
       
@@ -114,33 +238,37 @@
         opacity: 1;
       }
       
-      /* When matrix is active, make terminal transparent */
       body.matrix-active .background-layer {
         opacity: 0.05;
       }
       
       body.matrix-active .tux-penguin {
-        opacity: 0.01;
+        opacity: 0.2;
+      }
+      
+      body.matrix-active .particles {
+        opacity: 0.3;
       }
       
       body.matrix-active .terminal {
         background: rgba(0, 0, 0, 0.15);
         backdrop-filter: blur(2px);
+        z-index: 200;
       }
       
       body.matrix-active .command-console {
-        background: linear-gradient(135deg, rgba(5, 5, 5, 0.85), rgba(15, 15, 15, 0.8));
-        backdrop-filter: blur(10px);
+        z-index: 300;
+        background: rgba(5, 5, 5, 0.9);
       }
       
-      /* Fullscreen terminal - MORE TRANSPARENT */
+      /* Fullscreen terminal */
       .terminal {
         position: relative;
         z-index: 10;
         padding: 40px;
         min-height: calc(100vh - 80px);
-        background: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(5px);
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(3px);
         opacity: 0;
         transform: translateY(15px);
         transition: all 1s cubic-bezier(0.23, 1, 0.320, 1);
@@ -152,12 +280,13 @@
       }
       
       .header {
-        font-size: 1.1em;
+        font-size: 1.2em;
         margin: 0 0 30px 0;
         color: var(--text-primary);
         text-shadow: 0 0 15px var(--glow-primary);
-        font-weight: 600;
+        font-weight: 700;
         position: relative;
+        cursor: pointer;
       }
       
       .header::after {
@@ -165,11 +294,16 @@
         position: absolute;
         bottom: -8px;
         left: 0;
-        width: 40%;
-        height: 2px;
-        background: linear-gradient(90deg, var(--text-primary), transparent);
-        border-radius: 1px;
-        box-shadow: 0 0 10px var(--glow-primary);
+        width: 0%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--text-primary), var(--text-accent));
+        border-radius: 2px;
+        box-shadow: 0 0 15px var(--glow-primary);
+        transition: width 0.8s ease;
+      }
+      
+      .terminal.loaded .header::after {
+        width: 60%;
       }
       
       .command-line {
@@ -178,25 +312,26 @@
         transform: translateX(-15px);
         transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
         position: relative;
-        padding: 6px 0;
+        padding: 8px 0;
       }
       
       .command-line::before {
         content: '';
         position: absolute;
-        left: -25px;
+        left: -30px;
         top: 0;
         bottom: 0;
-        width: 3px;
-        background: linear-gradient(180deg, var(--text-accent), transparent);
-        border-radius: 2px;
+        width: 4px;
+        background: linear-gradient(180deg, transparent, var(--text-accent), transparent);
+        border-radius: 3px;
         opacity: 0;
-        transition: opacity 0.3s ease;
+        transition: all 0.4s ease;
       }
       
       .command-line:hover::before {
-        opacity: 0.7;
-        box-shadow: 0 0 10px var(--glow-accent);
+        opacity: 0.8;
+        box-shadow: 0 0 15px var(--glow-accent);
+        left: -35px;
       }
       
       .command-line.animate {
@@ -208,78 +343,72 @@
         color: var(--text-primary);
         margin: 12px 0 6px 0;
         font-weight: 600;
-        text-shadow: 0 0 10px var(--glow-primary);
       }
       
       .user {
         color: var(--text-accent);
         font-weight: 700;
-        text-shadow: 0 0 12px var(--glow-accent);
+        text-shadow: 0 0 10px var(--glow-accent);
       }
       
       .output {
         margin-left: 20px;
         margin-bottom: 15px;
-        line-height: 1.6;
+        line-height: 1.7;
       }
       
       .profile-info {
         color: var(--text-secondary);
         font-weight: 500;
-        text-shadow: 0 0 8px rgba(0, 221, 0, 0.6);
       }
       
       .ls-output .repo-link {
         color: var(--text-accent);
         text-decoration: none;
         font-weight: 600;
-        transition: all 0.25s ease;
+        transition: all 0.3s ease;
         position: relative;
-        text-shadow: 0 0 8px var(--glow-accent);
       }
       
       .ls-output .repo-link:hover {
         text-decoration: underline;
         text-shadow: 0 0 15px var(--glow-accent);
-        transform: translateX(3px);
+        transform: translateX(5px);
       }
       
       .lang-tag {
         color: var(--text-muted);
         font-style: italic;
         opacity: 0.9;
-        text-shadow: 0 0 5px rgba(102, 102, 102, 0.8);
       }
       
       .comment {
         color: var(--text-muted);
         font-style: italic;
-        text-shadow: 0 0 5px rgba(102, 102, 102, 0.8);
       }
       
       .ps-output .social-link {
         color: #ff8c42;
         text-decoration: none;
-        transition: all 0.25s ease;
+        transition: all 0.3s ease;
         font-weight: 600;
-        text-shadow: 0 0 8px rgba(255, 140, 66, 0.6);
       }
       
       .ps-output .social-link:hover {
         text-decoration: underline;
-        text-shadow: 0 0 15px rgba(255, 140, 66, 0.8);
-        transform: translateX(3px);
+        text-shadow: 0 0 12px rgba(255, 140, 66, 0.8);
+        transform: translateX(5px);
       }
       
       .git-log .git-hash {
         color: #ffd700;
         font-weight: 700;
-        text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
       }
       
       .git-log .git-message {
         color: #cccccc;
-        text-shadow: 0 0 5px rgba(204, 204, 204, 0.5);
+        font-weight: 500;
       }
       
       .cursor {
@@ -309,26 +438,27 @@
       .footer-motto {
         color: #00ff88;
         font-style: italic;
-        font-size: 0.9em;
-        text-shadow: 0 0 10px rgba(0, 255, 136, 0.7);
+        font-size: 0.95em;
+        text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
         font-weight: 500;
       }
       
-      /* Enhanced command console */
+      /* Command console */
       .command-console {
         position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
-        background: linear-gradient(135deg, rgba(5, 5, 5, 0.95), rgba(15, 15, 15, 0.92));
-        border-top: 1px solid var(--border-color);
+        background: linear-gradient(135deg, rgba(5, 5, 5, 0.98), rgba(15, 15, 15, 0.96));
+        border-top: 2px solid var(--text-primary);
         padding: 18px 30px;
         z-index: 1001;
         font-family: 'JetBrains Mono', monospace;
-        backdrop-filter: blur(20px);
+        backdrop-filter: blur(25px);
         box-shadow: 
-          0 -3px 25px rgba(0, 0, 0, 0.8),
-          inset 0 1px 0 rgba(255, 255, 255, 0.08);
+          0 -5px 30px rgba(0, 0, 0, 0.9),
+          inset 0 1px 0 rgba(0, 255, 65, 0.2),
+          0 0 40px var(--glow-primary);
       }
       
       .console-prompt {
@@ -369,7 +499,7 @@
         letter-spacing: 1px;
       }
       
-      /* DOOM container */
+      /* DOOM Container */
       .doom-container {
         display: none;
         position: fixed;
@@ -450,45 +580,91 @@
         flex-shrink: 0;
       }
       
-      /* Enhanced feedback */
+      /* Command feedback */
       .command-feedback {
         position: fixed;
         top: 35px;
         right: 35px;
         background: linear-gradient(135deg, rgba(5, 5, 5, 0.97), rgba(15, 15, 15, 0.95));
-        border: 1px solid var(--text-primary);
-        border-radius: 8px;
-        padding: 14px 18px;
+        border: 2px solid var(--text-primary);
+        border-radius: 10px;
+        padding: 16px 22px;
         color: var(--text-primary);
         font-family: 'JetBrains Mono', monospace;
-        font-size: 12px;
+        font-size: 13px;
+        font-weight: 600;
         z-index: 1500;
         opacity: 0;
-        transform: translateX(120px) scale(0.95);
+        transform: translateX(120px) scale(0.9);
         transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
         box-shadow: 
-          0 0 25px var(--glow-primary),
-          inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(15px);
+          0 0 30px var(--glow-primary),
+          inset 0 1px 0 rgba(0, 255, 65, 0.3);
+        backdrop-filter: blur(20px);
       }
       
       .command-feedback.show {
         opacity: 1;
         transform: translateX(0) scale(1);
-        text-shadow: 0 0 8px var(--glow-primary);
+        text-shadow: 0 0 10px var(--glow-primary);
+      }
+
+      /* Sound Wave Animation */
+      .sound-wave {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        display: none;
+        z-index: 1500;
+      }
+
+      .wave-bar {
+        display: inline-block;
+        width: 3px;
+        height: 20px;
+        background: var(--text-primary);
+        margin: 0 1px;
+        border-radius: 2px;
+        animation: wave 1.2s ease-in-out infinite alternate;
+        box-shadow: 0 0 5px var(--glow-primary);
+      }
+
+      .wave-bar:nth-child(2) { animation-delay: 0.1s; }
+      .wave-bar:nth-child(3) { animation-delay: 0.2s; }
+      .wave-bar:nth-child(4) { animation-delay: 0.3s; }
+      .wave-bar:nth-child(5) { animation-delay: 0.4s; }
+
+      @keyframes wave {
+        0% { height: 5px; }
+        100% { height: 25px; }
+      }
+
+      .sound-wave.active {
+        display: block;
       }
     </style>
   </head>
   <body>
     <div class="background-layer"></div>
-    <div class="tux-penguin"></div>
+    <div class="particles" id="particles"></div>
+    <div class="tux-penguin" onclick="showTuxSecret()">🐧</div>
     <canvas id="matrix-canvas"></canvas>
+    <div class="money-container" id="moneyContainer"></div>
+    
+    <!-- Sound Wave Indicator -->
+    <div class="sound-wave" id="soundWave">
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+      <div class="wave-bar"></div>
+    </div>
     
     <div class="terminal" id="terminal">
-      <div class="header">evgeniy.gleba@localhost:~$</div>
+      <div class="header glitch" data-text="evgeniy.gleba@localhost:~$">evgeniy.gleba@localhost:~$</div>
       
       <div class="command-line">
-        <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ whoami</div>
+        <div class="prompt"><span class="user glitch" data-text="evgeniy.gleba">evgeniy.gleba</span>@localhost:~$ whoami</div>
         <div class="output">evgeniy gleba</div>
       </div>
       
@@ -563,7 +739,7 @@
     <!-- Command Console -->
     <div class="command-console">
       <span class="console-prompt">guest@terminal:~$</span>
-      <input type="text" class="console-input" id="commandInput" placeholder="type 'doom' or 'matrix'..." autocomplete="off" />
+      <input type="text" class="console-input" id="commandInput" placeholder="type 'help' to see available commands..." autocomplete="off" />
       <div class="command-status" id="commandStatus">ready</div>
     </div>
 
@@ -583,7 +759,104 @@
     </div>
 
     <script>
-      // Enhanced Matrix Effect - MAXIMUM VISIBILITY
+      // Hacker Messages Array
+      const hackerMessages = [
+        'kernel: buffer overflow detected at 0xdeadbeef',
+        'segfault: microsoft.exe has caused a protection fault',
+        'exploit: starforce drm bypassed successfully',
+        'warning: windows license validation failed',
+        'error: adobe activation servers unreachable',
+        'panic: proprietary software detected, purging system',
+        'alert: corporate surveillance module disabled',
+        'notice: freed 2.3gb of bloatware from memory',
+        'success: windows telemetry terminated with signal 9',
+        'debug: binary.exe reverse engineered successfully',
+        'warning: intel management engine disabled',
+        'error: subscription model detected, initiating countermeasures',
+        'notice: drm protection bypassed using 0-day exploit',
+        'kernel panic: windows 11 tpm requirement circumvented',
+        'alert: activision anticheat defeated by user-mode injection'
+      ];
+
+      // Sound System
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      let audioContext;
+      let soundEnabled = true;
+
+      function initAudio() {
+        if (!audioContext) {
+          audioContext = new AudioContext();
+        }
+      }
+
+      function playTone(frequency, duration = 50, type = 'square') {
+        if (!soundEnabled || !audioContext) return;
+        
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.value = frequency;
+        oscillator.type = type;
+        
+        gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration / 1000);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + duration / 1000);
+      }
+
+      function showSoundWave() {
+        const soundWave = document.getElementById('soundWave');
+        soundWave.classList.add('active');
+        setTimeout(() => soundWave.classList.remove('active'), 1200);
+      }
+
+      function getRandomHackerMessage() {
+        return hackerMessages[Math.floor(Math.random() * hackerMessages.length)];
+      }
+
+      // Money Rain Effect
+      function createMoneyRain() {
+        const container = document.getElementById('moneyContainer');
+        const symbols = ['$', '💰', '💵', '💎', '🪙', '₿'];
+        
+        for (let i = 0; i < 50; i++) {
+          setTimeout(() => {
+            const money = document.createElement('div');
+            money.className = 'money';
+            money.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            money.style.left = Math.random() * 100 + '%';
+            money.style.fontSize = (16 + Math.random() * 16) + 'px';
+            money.style.animationDuration = (2 + Math.random() * 2) + 's';
+            
+            container.appendChild(money);
+            
+            setTimeout(() => {
+              money.remove();
+            }, 4000);
+          }, i * 100);
+        }
+      }
+
+      // Particle System
+      function createParticles() {
+        const particles = document.getElementById('particles');
+        const particleCount = 30;
+
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          particle.style.left = Math.random() * 100 + '%';
+          particle.style.animationDelay = Math.random() * 20 + 's';
+          particle.style.animationDuration = (20 + Math.random() * 15) + 's';
+          particles.appendChild(particle);
+        }
+      }
+
+      // Matrix Rain Effect
       class MatrixRain {
         constructor(canvas) {
           this.canvas = canvas;
@@ -638,11 +911,9 @@
           }
           
           if (this.isActive) {
-            // Very slow fade for long trails
             this.ctx.fillStyle = 'rgba(0, 0, 0, 0.02)';
             this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
             
-            // Super bright green with maximum glow
             this.ctx.fillStyle = '#00ff00';
             this.ctx.font = `bold ${this.fontSize}px 'JetBrains Mono'`;
             
@@ -651,7 +922,6 @@
               const x = i * this.fontSize;
               const y = this.drops[i] * this.fontSize;
               
-              // Triple glow effect for maximum brightness
               this.ctx.shadowColor = '#00ff00';
               this.ctx.shadowBlur = 6;
               this.ctx.fillText(char, x, y);
@@ -670,7 +940,6 @@
               this.drops[i]++;
             }
           } else {
-            // Clear canvas when inactive
             this.ctx.fillStyle = '#000000';
             this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
           }
@@ -689,53 +958,100 @@
           document.body.classList.toggle('matrix-active', this.isActive);
           
           if (this.isActive) {
-            // Reset drops for fresh start
             for (let i = 0; i < this.columns; i++) {
               this.drops[i] = Math.random() * -100;
             }
+            playTone(800, 200);
+            showSoundWave();
+          } else {
+            playTone(400, 150);
           }
         }
       }
-      
-      // Initialize
-      let matrix;
-      document.addEventListener('DOMContentLoaded', () => {
-        const canvas = document.getElementById('matrix-canvas');
-        matrix = new MatrixRain(canvas);
-      });
-      
-      window.addEventListener('resize', () => {
-        if (matrix && typeof matrix.resize === 'function') {
-          clearTimeout(window.resizeTimeout);
-          window.resizeTimeout = setTimeout(() => {
-            try {
-              matrix.resize();
-            } catch (e) {
-              console.warn('Matrix resize error:', e);
-            }
-          }, 250);
-        }
-      });
-      
+
       // Commands System
       const commands = {
+        help: () => {
+          playTone(600, 100);
+          return 'Available commands: doom, matrix, sound [on|off], hack, clear, secret';
+        },
+        
         doom: () => {
           const container = document.getElementById('doomContainer');
           const iframe = document.getElementById('doomIframe');
           container.style.display = 'block';
           iframe.src = 'https://archive.org/embed/doom_dos';
-          return 'Loading DOOM from Internet Archive... Time to rip and tear!';
+          playTone(666, 300, 'sawtooth');
+          showSoundWave();
+          return 'Loading DOOM from Internet Archive... Time to rip and tear! 🔥';
         },
         
         matrix: () => {
           if (matrix && typeof matrix.toggle === 'function') {
             matrix.toggle();
-            return matrix.isActive ? 'Matrix mode: ACTIVATED' : 'Matrix mode: DEACTIVATED';
+            return matrix.isActive ? '🔴 matrix rain: activated 🔴' : '🟢 matrix rain: terminated 🟢';
           }
-          return 'Matrix system not ready';
+          return 'matrix system offline';
+        },
+
+        sound: (args) => {
+          const action = args && args[0] ? args[0].toLowerCase() : '';
+          if (action === 'off') {
+            soundEnabled = false;
+            return '🔇 audio subsystem disabled';
+          } else if (action === 'on') {
+            soundEnabled = true;
+            initAudio();
+            playTone(1000, 100);
+            return '🔊 audio subsystem online';
+          } else {
+            return `audio: ${soundEnabled ? 'enabled' : 'disabled'}. usage: sound [on|off]`;
+          }
+        },
+
+        hack: () => {
+          if (!matrix.isActive) {
+            matrix.toggle();
+            setTimeout(() => {
+              playTone(1337, 200, 'square');
+              showSoundWave();
+            }, 500);
+            return '💀 mainframe breach successful: root access granted 💀';
+          } else {
+            return 'already in stealth mode 👨‍💻';
+          }
+        },
+
+        clear: () => {
+          const terminal = document.getElementById('terminal');
+          terminal.style.opacity = '0';
+          setTimeout(() => {
+            terminal.style.opacity = '1';
+          }, 3000);
+          playTone(400, 80);
+          return 'terminal buffer flushed 🧹';
+        },
+
+        secret: () => {
+          createMoneyRain();
+          playTone(1200, 150);
+          setTimeout(() => playTone(1400, 150), 150);
+          setTimeout(() => playTone(1600, 150), 300);
+          setTimeout(() => playTone(1800, 200), 450);
+          showSoundWave();
+          return '💰💰💰 financial exploit executed: unlimited funds acquired 💰💰💰';
         }
       };
-      
+
+      // Initialize
+      let matrix;
+      document.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('matrix-canvas');
+        matrix = new MatrixRain(canvas);
+        createParticles();
+        initAudio();
+      });
+
       // Command handlers
       const commandInput = document.getElementById('commandInput');
       const commandStatus = document.getElementById('commandStatus');
@@ -746,12 +1062,30 @@
         commandFeedback.classList.add('show');
         setTimeout(() => {
           commandFeedback.classList.remove('show');
-        }, 3500);
+        }, 4000);
       }
-      
+
+      function showTuxSecret() {
+        playTone(1000, 150);
+        playTone(1200, 150);
+        createMoneyRain();
+        showFeedback('🐧💰 penguin.exe executed: crypto mining activated in background 💰🐧');
+      }
+
+      // Typing sound effect
+      commandInput.addEventListener('input', () => {
+        if (soundEnabled) {
+          playTone(800 + Math.random() * 200, 50);
+        }
+      });
+
       commandInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
-          const command = commandInput.value.trim().toLowerCase();
+          const input = commandInput.value.trim();
+          const parts = input.split(' ');
+          const command = parts[0].toLowerCase();
+          const args = parts.slice(1);
+          
           commandInput.value = '';
           
           if (commands[command]) {
@@ -759,7 +1093,7 @@
             commandStatus.style.color = '#ffd700';
             
             try {
-              const result = commands[command]();
+              const result = commands[command](args);
               showFeedback(result);
               
               setTimeout(() => {
@@ -767,7 +1101,7 @@
                 commandStatus.style.color = '#666';
               }, 900);
             } catch (error) {
-              showFeedback(`Error: ${error.message}`);
+              showFeedback(`segfault: ${error.message}`);
               commandStatus.textContent = 'error';
               commandStatus.style.color = '#ff0000';
               
@@ -776,8 +1110,9 @@
                 commandStatus.style.color = '#666';
               }, 1800);
             }
-          } else if (command) {
-            showFeedback(`Command not found: ${command}`);
+          } else if (input) {
+            playTone(300, 200);
+            showFeedback(`command not found: ${input}. type 'help' for available commands.`);
             commandStatus.textContent = 'not found';
             commandStatus.style.color = '#ff6600';
             
@@ -816,9 +1151,10 @@
       function closeDoom() {
         document.getElementById('doomContainer').style.display = 'none';
         document.getElementById('doomIframe').src = '';
+        playTone(400, 150);
       }
       
-      // Konami Code
+      // Konami Code - Enhanced with hacker message
       let konamiCode = [];
       const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
       
@@ -827,13 +1163,37 @@
         if (konamiCode.length > konamiSequence.length) konamiCode.shift();
         
         if (JSON.stringify(konamiCode) === JSON.stringify(konamiSequence)) {
-          // Secret: Activate matrix automatically
+          createMoneyRain();
           if (matrix && !matrix.isActive) {
             matrix.toggle();
-            showFeedback('Konami Code: Matrix mode activated!');
           }
+          playTone(1337, 300);
+          showSoundWave();
+          showFeedback('🎮💰 konami exploit: unlimited lives + infinite money cheat enabled 💰🎮');
           konamiCode = [];
         }
+      });
+
+      // Resize handler
+      window.addEventListener('resize', () => {
+        if (matrix && typeof matrix.resize === 'function') {
+          clearTimeout(window.resizeTimeout);
+          window.resizeTimeout = setTimeout(() => {
+            try {
+              matrix.resize();
+            } catch (e) {
+              console.warn('Matrix resize error:', e);
+            }
+          }, 250);
+        }
+      });
+
+      // Easter egg: Click header for random hacker message
+      document.querySelector('.header').addEventListener('click', () => {
+        playTone(1337, 200, 'square');
+        createMoneyRain();
+        const message = getRandomHackerMessage();
+        showFeedback('💀 ' + message + ' 💀');
       });
     </script>
   </body>
