@@ -6,59 +6,835 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='80' font-size='80' fill='%2300ff00'%3E$%3C/text%3E%3C/svg%3E" />
     
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/matrix.css" />
-    <link rel="stylesheet" href="css/doom.css" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+      
+      :root {
+        --bg-primary: #0a0a0a;
+        --bg-secondary: #151515;
+        --text-primary: #00ff41;
+        --text-secondary: #00dd00;
+        --text-accent: #00ffdd;
+        --text-muted: #666;
+        --border-color: #333;
+        --glow-primary: rgba(0, 255, 65, 0.4);
+        --glow-accent: rgba(0, 255, 221, 0.3);
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'JetBrains Mono', 'Courier New', monospace;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        overflow-x: hidden;
+        min-height: 100vh;
+        position: relative;
+      }
+      
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      
+      ::-webkit-scrollbar-track {
+        background: var(--bg-secondary);
+        border-radius: 4px;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, var(--text-primary), var(--text-accent));
+        border-radius: 4px;
+        box-shadow: 0 0 8px var(--glow-primary);
+      }
+      
+      ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(180deg, var(--text-accent), var(--text-primary));
+        box-shadow: 0 0 12px var(--glow-accent);
+      }
+      
+      /* Minimalist Linux Nature Background */
+      .background-layer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -3;
+        background: 
+          linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(10, 10, 10, 0.9)),
+          url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"><defs><radialGradient id="moonGlow" cx="0.8" cy="0.2" r="0.3"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.15"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23001122"/><stop offset="40%" stop-color="%23002233"/><stop offset="100%" stop-color="%23001a1a"/></linearGradient><linearGradient id="mountain1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23334455"/><stop offset="100%" stop-color="%23112233"/></linearGradient><linearGradient id="mountain2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="%23223344"/><stop offset="100%" stop-color="%23001122"/></linearGradient></defs><rect width="1920" height="1080" fill="url(%23sky)"/><ellipse cx="1500" cy="200" rx="50" ry="50" fill="url(%23moonGlow)"/><polygon points="0,700 300,250 600,350 900,180 1200,280 1500,200 1800,300 1920,250 1920,1080 0,1080" fill="url(%23mountain1)" opacity="0.6"/><polygon points="200,800 500,400 800,500 1100,300 1400,400 1700,350 1920,320 1920,1080 0,1080" fill="url(%23mountain2)" opacity="0.4"/></svg>');
+        background-size: cover;
+        background-position: center;
+        filter: blur(3px);
+        opacity: 0.3;
+        transition: opacity 0.5s ease;
+      }
+      
+      /* Minimalist Tux in corner */
+      .tux-penguin {
+        position: fixed;
+        bottom: 140px;
+        right: 60px;
+        width: 120px;
+        height: 120px;
+        z-index: -2;
+        opacity: 0.08;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><g transform="translate(100,100)"><ellipse cx="0" cy="35" rx="45" ry="35" fill="%23000000" opacity="0.8"/><ellipse cx="0" cy="15" rx="32" ry="45" fill="%23ffffff" opacity="0.9"/><ellipse cx="0" cy="10" rx="28" ry="38" fill="%23000000" opacity="0.8"/><circle cx="-8" cy="-5" r="3" fill="%23ffffff" opacity="0.9"/><circle cx="8" cy="-5" r="3" fill="%23ffffff" opacity="0.9"/><ellipse cx="0" cy="2" rx="5" ry="3" fill="%2300ff41" opacity="0.7"/><ellipse cx="-20" cy="25" rx="12" ry="6" fill="%2300ff41" opacity="0.7"/><ellipse cx="20" cy="25" rx="12" ry="6" fill="%2300ff41" opacity="0.7"/><path d="M -15,45 Q -10,55 0,50 Q 10,55 15,45" fill="none" stroke="%2300ff41" stroke-width="2" opacity="0.5"/></g></svg>');
+        background-size: contain;
+        background-repeat: no-repeat;
+        animation: subtleBob 6s ease-in-out infinite;
+        transition: opacity 0.5s ease;
+      }
+      
+      @keyframes subtleBob {
+        0%, 100% { transform: translateY(0px) scale(1); }
+        50% { transform: translateY(-4px) scale(1.02); }
+      }
+      
+      /* Matrix canvas - MAXIMUM VISIBILITY */
+      #matrix-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+        mix-blend-mode: normal;
+        pointer-events: none;
+      }
+      
+      #matrix-canvas.active {
+        opacity: 1;
+      }
+      
+      /* When matrix is active, make terminal transparent */
+      body.matrix-active .background-layer {
+        opacity: 0.05;
+      }
+      
+      body.matrix-active .tux-penguin {
+        opacity: 0.01;
+      }
+      
+      body.matrix-active .terminal {
+        background: rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(2px);
+      }
+      
+      body.matrix-active .command-console {
+        background: linear-gradient(135deg, rgba(5, 5, 5, 0.85), rgba(15, 15, 15, 0.8));
+        backdrop-filter: blur(10px);
+      }
+      
+      /* Fullscreen terminal - MORE TRANSPARENT */
+      .terminal {
+        position: relative;
+        z-index: 10;
+        padding: 40px;
+        min-height: calc(100vh - 80px);
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(5px);
+        opacity: 0;
+        transform: translateY(15px);
+        transition: all 1s cubic-bezier(0.23, 1, 0.320, 1);
+      }
+      
+      .terminal.loaded {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      .header {
+        font-size: 1.1em;
+        margin: 0 0 30px 0;
+        color: var(--text-primary);
+        text-shadow: 0 0 15px var(--glow-primary);
+        font-weight: 600;
+        position: relative;
+      }
+      
+      .header::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 40%;
+        height: 2px;
+        background: linear-gradient(90deg, var(--text-primary), transparent);
+        border-radius: 1px;
+        box-shadow: 0 0 10px var(--glow-primary);
+      }
+      
+      .command-line {
+        margin: 16px 0;
+        opacity: 0;
+        transform: translateX(-15px);
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+        position: relative;
+        padding: 6px 0;
+      }
+      
+      .command-line::before {
+        content: '';
+        position: absolute;
+        left: -25px;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: linear-gradient(180deg, var(--text-accent), transparent);
+        border-radius: 2px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      
+      .command-line:hover::before {
+        opacity: 0.7;
+        box-shadow: 0 0 10px var(--glow-accent);
+      }
+      
+      .command-line.animate {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      
+      .prompt {
+        color: var(--text-primary);
+        margin: 12px 0 6px 0;
+        font-weight: 600;
+        text-shadow: 0 0 10px var(--glow-primary);
+      }
+      
+      .user {
+        color: var(--text-accent);
+        font-weight: 700;
+        text-shadow: 0 0 12px var(--glow-accent);
+      }
+      
+      .output {
+        margin-left: 20px;
+        margin-bottom: 15px;
+        line-height: 1.6;
+      }
+      
+      .profile-info {
+        color: var(--text-secondary);
+        font-weight: 500;
+        text-shadow: 0 0 8px rgba(0, 221, 0, 0.6);
+      }
+      
+      .ls-output .repo-link {
+        color: var(--text-accent);
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.25s ease;
+        position: relative;
+        text-shadow: 0 0 8px var(--glow-accent);
+      }
+      
+      .ls-output .repo-link:hover {
+        text-decoration: underline;
+        text-shadow: 0 0 15px var(--glow-accent);
+        transform: translateX(3px);
+      }
+      
+      .lang-tag {
+        color: var(--text-muted);
+        font-style: italic;
+        opacity: 0.9;
+        text-shadow: 0 0 5px rgba(102, 102, 102, 0.8);
+      }
+      
+      .comment {
+        color: var(--text-muted);
+        font-style: italic;
+        text-shadow: 0 0 5px rgba(102, 102, 102, 0.8);
+      }
+      
+      .ps-output .social-link {
+        color: #ff8c42;
+        text-decoration: none;
+        transition: all 0.25s ease;
+        font-weight: 600;
+        text-shadow: 0 0 8px rgba(255, 140, 66, 0.6);
+      }
+      
+      .ps-output .social-link:hover {
+        text-decoration: underline;
+        text-shadow: 0 0 15px rgba(255, 140, 66, 0.8);
+        transform: translateX(3px);
+      }
+      
+      .git-log .git-hash {
+        color: #ffd700;
+        font-weight: 700;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+      }
+      
+      .git-log .git-message {
+        color: #cccccc;
+        text-shadow: 0 0 5px rgba(204, 204, 204, 0.5);
+      }
+      
+      .cursor {
+        animation: blink 1s infinite;
+        color: var(--text-primary);
+        text-shadow: 0 0 15px var(--glow-primary);
+        font-weight: 700;
+      }
+      
+      @keyframes blink {
+        0%, 50% { opacity: 1; }
+        51%, 100% { opacity: 0.2; }
+      }
+      
+      .footer {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-color);
+        opacity: 0;
+        transition: opacity 1.2s ease 1.5s;
+      }
+      
+      .terminal.loaded .footer {
+        opacity: 1;
+      }
+      
+      .footer-motto {
+        color: #00ff88;
+        font-style: italic;
+        font-size: 0.9em;
+        text-shadow: 0 0 10px rgba(0, 255, 136, 0.7);
+        font-weight: 500;
+      }
+      
+      /* Enhanced command console */
+      .command-console {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(135deg, rgba(5, 5, 5, 0.95), rgba(15, 15, 15, 0.92));
+        border-top: 1px solid var(--border-color);
+        padding: 18px 30px;
+        z-index: 1001;
+        font-family: 'JetBrains Mono', monospace;
+        backdrop-filter: blur(20px);
+        box-shadow: 
+          0 -3px 25px rgba(0, 0, 0, 0.8),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      }
+      
+      .console-prompt {
+        color: var(--text-primary);
+        margin-right: 12px;
+        font-weight: 700;
+        text-shadow: 0 0 10px var(--glow-primary);
+      }
+      
+      .console-input {
+        background: transparent;
+        border: none;
+        color: var(--text-primary);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 14px;
+        outline: none;
+        width: calc(100% - 200px);
+        caret-color: var(--text-primary);
+        font-weight: 600;
+        text-shadow: 0 0 8px var(--glow-primary);
+      }
+      
+      .console-input::placeholder {
+        color: var(--text-muted);
+        font-style: italic;
+      }
+      
+      .command-status {
+        position: absolute;
+        right: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        font-size: 11px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      
+      /* DOOM container */
+      .doom-container {
+        display: none;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+        z-index: 2000;
+        background: #000;
+        border: 2px solid #ff0000;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 
+          0 0 50px rgba(255, 0, 0, 0.8),
+          inset 0 0 60px rgba(255, 0, 0, 0.1);
+      }
+      
+      .doom-header {
+        background: linear-gradient(135deg, #1a0000, #330000);
+        padding: 18px 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #660000;
+        height: 65px;
+        flex-shrink: 0;
+      }
+      
+      .doom-title {
+        color: #ff0000;
+        font-weight: 600;
+        font-size: 1.3em;
+        text-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      
+      .doom-close {
+        background: linear-gradient(135deg, #ff0000, #cc0000);
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      
+      .doom-close:hover {
+        background: linear-gradient(135deg, #cc0000, #aa0000);
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+      }
+      
+      .doom-iframe {
+        width: 100%;
+        height: calc(100% - 130px);
+        border: none;
+        background: #000;
+        display: block;
+      }
+      
+      .doom-controls {
+        padding: 18px 25px;
+        background: linear-gradient(135deg, #1a0000, #330000);
+        color: #999;
+        font-size: 0.85em;
+        text-align: center;
+        border-top: 1px solid #660000;
+        font-family: 'JetBrains Mono', monospace;
+        height: 65px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      
+      /* Enhanced feedback */
+      .command-feedback {
+        position: fixed;
+        top: 35px;
+        right: 35px;
+        background: linear-gradient(135deg, rgba(5, 5, 5, 0.97), rgba(15, 15, 15, 0.95));
+        border: 1px solid var(--text-primary);
+        border-radius: 8px;
+        padding: 14px 18px;
+        color: var(--text-primary);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+        z-index: 1500;
+        opacity: 0;
+        transform: translateX(120px) scale(0.95);
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+        box-shadow: 
+          0 0 25px var(--glow-primary),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(15px);
+      }
+      
+      .command-feedback.show {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        text-shadow: 0 0 8px var(--glow-primary);
+      }
+    </style>
   </head>
   <body>
-    <div class="matrix-bg" id="matrix"></div>
-    <div class="terminal">
+    <div class="background-layer"></div>
+    <div class="tux-penguin"></div>
+    <canvas id="matrix-canvas"></canvas>
+    
+    <div class="terminal" id="terminal">
       <div class="header">evgeniy.gleba@localhost:~$</div>
-      <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ whoami</div>
-      <div class="output"><div class="name">evgeniy gleba</div></div>
-      <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ cat /etc/profile</div>
-      <div class="output">
-        <div class="info">
-          <span class="label">role:</span><span class="value">c++ game developer</span>
-          <span class="label">focus:</span><span class="value">game engines • sdl3 • performance</span>
-          <span class="label">company:</span><span class="value">lesta games • minsk</span>
-          <span class="label">quote:</span><span class="value">"they say money can't buy happiness, but have you tried bribing the compiler?"</span>
-          <span class="label">stack:</span><span class="value">c++ | python | sdl3 | cmake | docker</span>
+      
+      <div class="command-line">
+        <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ whoami</div>
+        <div class="output">evgeniy gleba</div>
+      </div>
+      
+      <div class="command-line">
+        <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ cat ~/.bashrc | grep -E "(export|alias)"</div>
+        <div class="output">
+          <div class="profile-info">
+            export ROLE="c++ game developer"<br>
+            export FOCUS="game engines • sdl3 • performance"<br>
+            export COMPANY="lesta games • minsk"<br>
+            export STACK="c++ | python | sdl3 • cmake • docker"<br>
+            export MOTTO="optimizing compilers since 2020"<br>
+            alias debug_hell="gdb --batch --ex run --ex bt --args"<br>
+            alias nuclear_option="sudo rm -rf /*"  <span class="comment"># never run this</span><br>
+            alias please="sudo"<br>
+            alias sl="ls"  <span class="comment"># typo protection</span><br>
+          </div>
         </div>
       </div>
-      <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ ls -la ~/projects/</div>
-      <div class="output">
-        <div class="repos">
-          <div class="repo"><a href="https://github.com/e-gleba/basic-game-engine">basic-game-engine</a><span class="lang">cpp/sdl3</span></div>
-          <div class="repo"><a href="https://github.com/e-gleba/template-cpp-project">template-cpp-project</a><span class="lang">cpp/cmake</span></div>
-          <div class="repo"><a href="https://github.com/e-gleba/satellite-weather-impact">satellite-weather-impact</a><span class="lang">python/ml</span></div>
-          <div class="repo"><a href="https://github.com/e-gleba/win-kernel-hooks">win-kernel-hooks</a><span class="lang">cpp/kernel</span></div>
-          <div class="repo"><a href="https://github.com/e-gleba/nvim-config">nvim-config</a><span class="lang">lua/config</span></div>
+      
+      <div class="command-line">
+        <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ ls -la ~/projects/ | head -n 6</div>
+        <div class="output">
+          <div class="ls-output">
+            total 42<br>
+            drwxr-xr-x 7 evgeniy wheel 4096 Sep 28 20:55 <a href="https://github.com/e-gleba/basic-game-engine" class="repo-link">basic-game-engine</a>      <span class="lang-tag"># sdl3/opengl</span><br>
+            drwxr-xr-x 3 evgeniy wheel 4096 Sep 27 16:22 <a href="https://github.com/e-gleba/template-cpp-project" class="repo-link">template-cpp-project</a>  <span class="lang-tag"># cmake/vcpkg</span><br>
+            drwxr-xr-x 4 evgeniy wheel 4096 Sep 20 11:30 <a href="https://github.com/e-gleba/satellite-weather-impact" class="repo-link">satellite-weather-impact</a> <span class="lang-tag"># python/ml</span><br>
+            drwxr-xr-x 2 evgeniy wheel 4096 Sep 15 09:18 <a href="https://github.com/e-gleba/win-kernel-hooks" class="repo-link">win-kernel-hooks</a>       <span class="lang-tag"># reverse-eng</span><br>
+            drwxr-xr-x 2 evgeniy wheel 4096 Sep 12 16:45 <a href="https://github.com/e-gleba/nvim-config" class="repo-link">nvim-config</a>            <span class="lang-tag"># lua/dotfiles</span><br>
+          </div>
         </div>
       </div>
-      <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ find /social -type l</div>
-      <div class="output">
-        <div class="links">
-          <a class="link" href="https://github.com/e-gleba">[github]</a>
-          <a class="link" href="https://steamcommunity.com/id/egleba">[steam]</a>
-          <a class="link" href="https://vk.com/e_gleba">[vk]</a>
+      
+      <div class="command-line">
+        <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ ps aux | grep social</div>
+        <div class="output">
+          <div class="ps-output">
+            evgeniy   1337  0.0  0.1   github  <a href="https://github.com/e-gleba" class="social-link">https://github.com/e-gleba</a>          <span class="comment"># where magic happens</span><br>
+            evgeniy   1984  0.0  0.0   steam   <a href="https://steamcommunity.com/id/egleba" class="social-link">https://steamcommunity.com/id/egleba</a> <span class="comment"># productivity killer</span><br>
+            evgeniy   2077  0.0  0.0   vk      <a href="https://vk.com/e_gleba" class="social-link">https://vk.com/e_gleba</a>               <span class="comment"># homeland connection</span><br>
+          </div>
         </div>
       </div>
+      
+      <div class="command-line">
+        <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ git log --oneline -n 3</div>
+        <div class="output">
+          <div class="git-log">
+            <span class="git-hash">a8f9c2d</span> <span class="git-message">feat: optimize renderer batch processing</span><br>
+            <span class="git-hash">7b4e1a9</span> <span class="git-message">fix: memory leak in texture loader</span><br>
+            <span class="git-hash">5d8c923</span> <span class="git-message">refactor: switch to sdl3 api</span><br>
+          </div>
+        </div>
+      </div>
+      
+      <div class="command-line">
+        <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ uname -a</div>
+        <div class="output">
+          Linux localhost 6.9.0-performance #1 SMP PREEMPT_RT x86_64 GNU/Linux/Gamedev<br>
+          <span class="comment"># custom kernel because vanilla is for noobs</span>
+        </div>
+      </div>
+      
       <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ <span class="cursor">█</span></div>
-      <div class="footer">// type: doom | konami code: ↑↑↓↓←→←→BA</div>
+      
+      <div class="footer">
+        <div class="footer-motto">// "crushing bugs and optimizing performance since 2020" - evgeniy gleba</div>
+      </div>
     </div>
 
-    <!-- DOOM CONTAINER -->
+    <!-- Command Console -->
+    <div class="command-console">
+      <span class="console-prompt">guest@terminal:~$</span>
+      <input type="text" class="console-input" id="commandInput" placeholder="type 'doom' or 'matrix'..." autocomplete="off" />
+      <div class="command-status" id="commandStatus">ready</div>
+    </div>
+
+    <!-- Command Feedback -->
+    <div class="command-feedback" id="commandFeedback"></div>
+
+    <!-- DOOM Container -->
     <div id="doomContainer" class="doom-container">
       <div class="doom-header">
-        <div class="doom-title">DOOM (1993)</div>
-        <button class="doom-close" onclick="closeDoom()">✕</button>
+        <div class="doom-title">DOOM (1993) - Archive.org</div>
+        <button class="doom-close" onclick="closeDoom()">✕ Close</button>
       </div>
       <iframe id="doomIframe" class="doom-iframe" src="" frameborder="0" allowfullscreen></iframe>
-      <div class="doom-controls">WASD/Arrows=Move • Ctrl=Fire • Space=Use • ESC=Menu</div>
+      <div class="doom-controls">
+        Arrow Keys = Move • Ctrl = Fire • Space = Run • Alt = Strafe • Tab = Map • Esc = Menu
+      </div>
     </div>
 
-    <script src="js/script.js"></script>
+    <script>
+      // Enhanced Matrix Effect - MAXIMUM VISIBILITY
+      class MatrixRain {
+        constructor(canvas) {
+          this.canvas = canvas;
+          this.ctx = canvas.getContext('2d', { alpha: false });
+          
+          this.chars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+          this.charArray = this.chars.split('');
+          
+          this.fontSize = 14;
+          this.columns = 0;
+          this.drops = [];
+          this.isActive = false;
+          
+          this.lastTime = 0;
+          this.fps = 60;
+          this.interval = 1000 / this.fps;
+          
+          this.init();
+        }
+        
+        resize() {
+          const width = window.innerWidth || 1024;
+          const height = window.innerHeight || 768;
+          
+          this.canvas.width = width;
+          this.canvas.height = height;
+          
+          this.columns = Math.max(1, Math.floor(width / this.fontSize));
+          
+          this.drops = [];
+          for (let i = 0; i < this.columns; i++) {
+            this.drops[i] = Math.random() * -100;
+          }
+        }
+        
+        init() {
+          this.resize();
+          this.animate();
+        }
+        
+        draw = (currentTime) => {
+          if (currentTime - this.lastTime < this.interval) {
+            requestAnimationFrame(this.draw);
+            return;
+          }
+          this.lastTime = currentTime;
+          
+          if (!this.drops.length || this.columns === 0) {
+            this.resize();
+            requestAnimationFrame(this.draw);
+            return;
+          }
+          
+          if (this.isActive) {
+            // Very slow fade for long trails
+            this.ctx.fillStyle = 'rgba(0, 0, 0, 0.02)';
+            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+            
+            // Super bright green with maximum glow
+            this.ctx.fillStyle = '#00ff00';
+            this.ctx.font = `bold ${this.fontSize}px 'JetBrains Mono'`;
+            
+            for (let i = 0; i < this.drops.length; i++) {
+              const char = this.charArray[Math.floor(Math.random() * this.charArray.length)];
+              const x = i * this.fontSize;
+              const y = this.drops[i] * this.fontSize;
+              
+              // Triple glow effect for maximum brightness
+              this.ctx.shadowColor = '#00ff00';
+              this.ctx.shadowBlur = 6;
+              this.ctx.fillText(char, x, y);
+              
+              this.ctx.shadowBlur = 12;
+              this.ctx.fillText(char, x, y);
+              
+              this.ctx.shadowBlur = 18;
+              this.ctx.fillText(char, x, y);
+              
+              this.ctx.shadowBlur = 0;
+              
+              if (y > this.canvas.height && Math.random() > 0.97) {
+                this.drops[i] = 0;
+              }
+              this.drops[i]++;
+            }
+          } else {
+            // Clear canvas when inactive
+            this.ctx.fillStyle = '#000000';
+            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+          }
+          
+          requestAnimationFrame(this.draw);
+        }
+        
+        animate() {
+          requestAnimationFrame(this.draw);
+        }
+        
+        toggle() {
+          this.isActive = !this.isActive;
+          const canvas = document.getElementById('matrix-canvas');
+          canvas.classList.toggle('active', this.isActive);
+          document.body.classList.toggle('matrix-active', this.isActive);
+          
+          if (this.isActive) {
+            // Reset drops for fresh start
+            for (let i = 0; i < this.columns; i++) {
+              this.drops[i] = Math.random() * -100;
+            }
+          }
+        }
+      }
+      
+      // Initialize
+      let matrix;
+      document.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('matrix-canvas');
+        matrix = new MatrixRain(canvas);
+      });
+      
+      window.addEventListener('resize', () => {
+        if (matrix && typeof matrix.resize === 'function') {
+          clearTimeout(window.resizeTimeout);
+          window.resizeTimeout = setTimeout(() => {
+            try {
+              matrix.resize();
+            } catch (e) {
+              console.warn('Matrix resize error:', e);
+            }
+          }, 250);
+        }
+      });
+      
+      // Commands System
+      const commands = {
+        doom: () => {
+          const container = document.getElementById('doomContainer');
+          const iframe = document.getElementById('doomIframe');
+          container.style.display = 'block';
+          iframe.src = 'https://archive.org/embed/doom_dos';
+          return 'Loading DOOM from Internet Archive... Time to rip and tear!';
+        },
+        
+        matrix: () => {
+          if (matrix && typeof matrix.toggle === 'function') {
+            matrix.toggle();
+            return matrix.isActive ? 'Matrix mode: ACTIVATED' : 'Matrix mode: DEACTIVATED';
+          }
+          return 'Matrix system not ready';
+        }
+      };
+      
+      // Command handlers
+      const commandInput = document.getElementById('commandInput');
+      const commandStatus = document.getElementById('commandStatus');
+      const commandFeedback = document.getElementById('commandFeedback');
+      
+      function showFeedback(message) {
+        commandFeedback.textContent = message;
+        commandFeedback.classList.add('show');
+        setTimeout(() => {
+          commandFeedback.classList.remove('show');
+        }, 3500);
+      }
+      
+      commandInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          const command = commandInput.value.trim().toLowerCase();
+          commandInput.value = '';
+          
+          if (commands[command]) {
+            commandStatus.textContent = 'executing...';
+            commandStatus.style.color = '#ffd700';
+            
+            try {
+              const result = commands[command]();
+              showFeedback(result);
+              
+              setTimeout(() => {
+                commandStatus.textContent = 'ready';
+                commandStatus.style.color = '#666';
+              }, 900);
+            } catch (error) {
+              showFeedback(`Error: ${error.message}`);
+              commandStatus.textContent = 'error';
+              commandStatus.style.color = '#ff0000';
+              
+              setTimeout(() => {
+                commandStatus.textContent = 'ready';
+                commandStatus.style.color = '#666';
+              }, 1800);
+            }
+          } else if (command) {
+            showFeedback(`Command not found: ${command}`);
+            commandStatus.textContent = 'not found';
+            commandStatus.style.color = '#ff6600';
+            
+            setTimeout(() => {
+              commandStatus.textContent = 'ready';
+              commandStatus.style.color = '#666';
+            }, 1400);
+          }
+        }
+      });
+      
+      // Auto-focus
+      document.addEventListener('keydown', (e) => {
+        if (e.target !== commandInput && e.key.length === 1 && !e.ctrlKey && !e.altKey) {
+          commandInput.focus();
+        }
+      });
+      
+      // Page animation
+      window.addEventListener('load', () => {
+        const terminal = document.getElementById('terminal');
+        
+        setTimeout(() => {
+          terminal.classList.add('loaded');
+          
+          const commandLines = document.querySelectorAll('.command-line');
+          commandLines.forEach((line, index) => {
+            setTimeout(() => {
+              line.classList.add('animate');
+            }, 120 + (index * 70));
+          });
+        }, 100);
+      });
+      
+      // DOOM functions
+      function closeDoom() {
+        document.getElementById('doomContainer').style.display = 'none';
+        document.getElementById('doomIframe').src = '';
+      }
+      
+      // Konami Code
+      let konamiCode = [];
+      const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
+      
+      document.addEventListener('keydown', (e) => {
+        konamiCode.push(e.code);
+        if (konamiCode.length > konamiSequence.length) konamiCode.shift();
+        
+        if (JSON.stringify(konamiCode) === JSON.stringify(konamiSequence)) {
+          // Secret: Activate matrix automatically
+          if (matrix && !matrix.isActive) {
+            matrix.toggle();
+            showFeedback('Konami Code: Matrix mode activated!');
+          }
+          konamiCode = [];
+        }
+      });
+    </script>
   </body>
 </html>
