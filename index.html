@@ -59,6 +59,40 @@
         box-shadow: 0 0 12px var(--glow-accent);
       }
       
+      /* Open Source Rain Effect */
+      .foss-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 500;
+        overflow: hidden;
+      }
+      
+      .foss-item {
+        position: absolute;
+        font-size: 20px;
+        color: #00ff00;
+        text-shadow: 0 0 8px #00ff00;
+        animation: fossRain 3.5s linear forwards;
+        opacity: 0;
+        font-family: 'JetBrains Mono', monospace;
+        font-weight: bold;
+      }
+      
+      @keyframes fossRain {
+        0% {
+          transform: translateY(-50px) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+      
       /* Money Rain Effect */
       .money-container {
         position: fixed;
@@ -650,6 +684,7 @@
     <div class="tux-penguin" onclick="showTuxSecret()">🐧</div>
     <canvas id="matrix-canvas"></canvas>
     <div class="money-container" id="moneyContainer"></div>
+    <div class="foss-container" id="fossContainer"></div>
     
     <!-- Sound Wave Indicator -->
     <div class="sound-wave" id="soundWave">
@@ -816,6 +851,36 @@
 
       function getRandomHackerMessage() {
         return hackerMessages[Math.floor(Math.random() * hackerMessages.length)];
+      }
+
+      // Open Source Rain Effect
+      function createOpenSourceRain() {
+        const container = document.getElementById('fossContainer');
+        const fossItems = ['🐧', '🔓', '📖', '⚡', '🆓', '⭐', 'GNU', 'GPL', 'MIT', 'BSD', 'FOSS', 'FLOSS', 'FSF', 'LINUX', 'UNIX'];
+        
+        for (let i = 0; i < 60; i++) {
+          setTimeout(() => {
+            const fossItem = document.createElement('div');
+            fossItem.className = 'foss-item';
+            fossItem.textContent = fossItems[Math.floor(Math.random() * fossItems.length)];
+            fossItem.style.left = Math.random() * 100 + '%';
+            
+            // Vary size for text vs emoji
+            if (fossItem.textContent.length > 2) {
+              fossItem.style.fontSize = (14 + Math.random() * 8) + 'px';
+            } else {
+              fossItem.style.fontSize = (18 + Math.random() * 12) + 'px';
+            }
+            
+            fossItem.style.animationDuration = (2.5 + Math.random() * 2) + 's';
+            
+            container.appendChild(fossItem);
+            
+            setTimeout(() => {
+              fossItem.remove();
+            }, 4500);
+          }, i * 80);
+        }
       }
 
       // Money Rain Effect
@@ -1027,7 +1092,7 @@
           terminal.style.opacity = '0';
           setTimeout(() => {
             terminal.style.opacity = '1';
-          }, 3000);
+          }, 300);
           playTone(400, 80);
           return 'terminal buffer flushed 🧹';
         },
@@ -1068,8 +1133,8 @@
       function showTuxSecret() {
         playTone(1000, 150);
         playTone(1200, 150);
-        createMoneyRain();
-        showFeedback('🐧💰 penguin.exe executed: crypto mining activated in background 💰🐧');
+        createOpenSourceRain();
+        showFeedback('🐧🔓 tux.exe: gnu/linux freedom celebration initiated 🔓🐧');
       }
 
       // Typing sound effect
