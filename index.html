@@ -4,13 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="C++ Developer - Cross-platform systems, game development, reverse engineering">
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a">
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f5fb">
+  <meta id="theme_color" name="theme-color" content="#0a0a0a">
   <title>e-gleba</title>
   <link rel="icon" type="image/svg+xml" sizes="any" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 6 L58 32 L32 58 L6 32 Z' fill='none' stroke='%238B5CF6' stroke-width='4' stroke-linejoin='round'/%3E%3C/svg%3E">
+
+  <!-- pre-paint: set theme before CSS to avoid flicker -->
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('theme');
+        var theme = (stored === 'light' || stored === 'dark')
+          ? stored
+          : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+        var meta = document.getElementById('theme_color');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#0a0a0a' : '#f6f5fb');
+      } catch (_) {}
+    })();
+  </script>
+
   <style>
+    /* base: dark as default; override via [data-theme="light"] */
     :root {
-      color-scheme: light dark;
+      color-scheme: light dark; /* let UA pick if no override yet */
       --bg: #0a0a0a;
       --bg_2: #101011;
       --text: #e8e8ea;
@@ -21,17 +37,30 @@
       --accent_2: #c084fc;
       --radius: 12px;
       --shadow: 0 1px 0 rgba(255,255,255,0.03) inset, 0 6px 40px rgba(0,0,0,0.35);
+
+      /* repaint nudge to fix compositor artifacts on theme switch */
+      --z_nudge: 0px;
     }
-    @media (prefers-color-scheme: light) {
-      :root {
-        --bg: #f6f5fb;
-        --bg_2: #ffffff;
-        --text: #14141a;
-        --muted: #5b5b66;
-        --glass: rgba(255,255,255,0.7);
-        --border: rgba(20,20,30,0.10);
-        --shadow: 0 1px 0 rgba(255,255,255,0.8) inset, 0 8px 30px rgba(30, 16, 60, 0.10);
-      }
+
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #0a0a0a;
+      --bg_2: #101011;
+      --text: #e8e8ea;
+      --muted: #a7a7b0;
+      --glass: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.10);
+      --shadow: 0 1px 0 rgba(255,255,255,0.03) inset, 0 6px 40px rgba(0,0,0,0.35);
+    }
+    [data-theme="light"] {
+      color-scheme: light;
+      --bg: #f6f5fb;
+      --bg_2: #ffffff;
+      --text: #14141a;
+      --muted: #5b5b66;
+      --glass: rgba(255,255,255,0.7);
+      --border: rgba(20,20,30,0.10);
+      --shadow: 0 1px 0 rgba(255,255,255,0.8) inset, 0 8px 30px rgba(30, 16, 60, 0.10);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -55,6 +84,11 @@
         radial-gradient(38vmax 38vmax at 85% 18%, rgba(192,132,252,0.28), transparent 60%),
         radial-gradient(36vmax 36vmax at 50% 120%, rgba(139,92,246,0.20), transparent 60%);
       animation: float 16s ease-in-out infinite alternate;
+
+      /* ensure correct composite after theme change */
+      transform: translateZ(var(--z_nudge));
+      will-change: transform, filter, background;
+      backface-visibility: hidden;
     }
     @keyframes float { 0% { transform: translate3d(0,0,0) scale(1); } 100% { transform: translate3d(0,-3%,0) scale(1.03); } }
 
@@ -67,6 +101,10 @@
       backdrop-filter: saturate(160%) blur(10px);
       background: color-mix(in oklab, var(--bg) 70%, transparent);
       border-bottom: 1px solid var(--border);
+
+      transform: translateZ(var(--z_nudge));
+      will-change: transform, background, border-color, backdrop-filter;
+      backface-visibility: hidden;
     }
     .nav {
       max-width: 960px; margin: 0 auto; padding: 0.85rem 2rem;
@@ -77,6 +115,24 @@
     .nav_links { display: flex; gap: 1.1rem; list-style: none; align-items: center; }
     .nav_links a { font-size: .95rem; color: inherit; opacity: .9; }
     .nav_links a:hover { opacity: 1; color: var(--accent); }
+
+    /* minimal theme toggle button */
+    .theme_toggle {
+      background: color-mix(in oklab, var(--bg_2) 70%, transparent);
+      border: 1px solid var(--border);
+      padding: .35rem .7rem;
+      border-radius: 999px;
+      color: inherit;
+      cursor: pointer;
+      font: inherit;
+      line-height: 1;
+      transition: border-color .2s ease, background .2s ease, transform .2s ease;
+    }
+    .theme_toggle:hover {
+      border-color: var(--accent);
+      background: color-mix(in oklab, var(--accent) 12%, transparent);
+      transform: translateY(-1px);
+    }
 
     main { max-width: 960px; margin: 0 auto; padding: 2.2rem 2rem 3rem; }
     section { margin: 3.8rem 0; }
@@ -90,6 +146,10 @@
       backdrop-filter: blur(8px);
       font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: .85rem;
+
+      transform: translateZ(var(--z_nudge));
+      will-change: transform, background, border-color, backdrop-filter;
+      backface-visibility: hidden;
     }
     .prompt_line .caret { color: var(--accent); }
     .hero h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.01em; margin-bottom: .6rem; }
@@ -104,6 +164,10 @@
       padding: .35rem .7rem; border-radius: 999px;
       font-size: .8rem; color: var(--muted);
       backdrop-filter: blur(6px);
+
+      transform: translateZ(var(--z_nudge));
+      will-change: transform, background, border-color, backdrop-filter;
+      backface-visibility: hidden;
     }
 
     h2 {
@@ -133,6 +197,10 @@
       transition: border-color .2s ease, transform .2s ease;
       display: flex; flex-direction: column; min-height: 240px;
       overflow: clip;
+
+      transform: translateZ(var(--z_nudge));
+      will-change: transform, background, border-color, backdrop-filter;
+      backface-visibility: hidden;
     }
     .card::after {
       content: ""; position: absolute; inset: 0;
@@ -152,6 +220,10 @@
       border: 1px solid var(--border);
       padding: .22rem .5rem; border-radius: 8px;
       backdrop-filter: blur(6px);
+
+      transform: translateZ(var(--z_nudge));
+      will-change: transform, background, border-color, backdrop-filter;
+      backface-visibility: hidden;
     }
     .project_link { font-size: .92rem; margin-top: auto; align-self: flex-start; }
 
@@ -168,6 +240,10 @@
       border: 1px solid var(--border); border-radius: 999px;
       transition: border-color .2s ease, background .2s ease, transform .2s ease;
       color: inherit; backdrop-filter: blur(10px);
+
+      transform: translateZ(var(--z_nudge));
+      will-change: transform, background, border-color, backdrop-filter;
+      backface-visibility: hidden;
     }
     .contact_link:hover { border-color: var(--accent); background: color-mix(in oklab, var(--accent) 12%, transparent); transform: translateY(-1px); }
     .contact_link[href*="github.com"] span::before { content: "★ "; color: var(--accent); }
@@ -182,6 +258,10 @@
       border-top: 1px solid var(--border);
       margin-top: 4rem; padding: 2rem; text-align: center;
       color: var(--muted); font-size: .95rem;
+
+      transform: translateZ(var(--z_nudge));
+      will-change: transform, background, border-color, backdrop-filter;
+      backface-visibility: hidden;
     }
 
     @media (max-width: 768px) {
@@ -199,6 +279,10 @@
       font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: .9rem; color: var(--accent);
       backdrop-filter: blur(6px);
+
+      transform: translateZ(var(--z_nudge));
+      will-change: transform, background, border-color, backdrop-filter;
+      backface-visibility: hidden;
     }
 
     a[href^="http"]:not([href^="mailto:"])::after { content: " ↗"; color: var(--muted); font-size: .9em; margin-left: .25rem; }
@@ -217,6 +301,7 @@
         <li><a href="#projects">projects</a></li>
         <li><a href="#skills">skills</a></li>
         <li><a href="#contact">contact</a></li>
+        <li><button id="theme_toggle" class="theme_toggle" type="button" aria-label="switch to dark theme">☾</button></li>
       </ul>
     </nav>
   </header>
@@ -354,5 +439,82 @@
   <footer>
     <p>&copy; 2025 e-gleba. built with minimal html/css. hosted on github pages.</p>
   </footer>
+
+  <script>
+    (function () {
+      'use strict';
+      var d = document;
+      var root = d.documentElement;
+      var btn = d.getElementById('theme_toggle');
+      if (!btn) return;
+
+      function get_system_theme() {
+        return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+      }
+
+      function get_current_theme() {
+        var a = root.getAttribute('data-theme');
+        if (a === 'light' || a === 'dark') return a;
+        var s = null;
+        try { s = localStorage.getItem('theme'); } catch (_) {}
+        if (s === 'light' || s === 'dark') return s;
+        return get_system_theme();
+      }
+
+      function set_button_for(current) {
+        var next = current === 'dark' ? 'light' : 'dark';
+        btn.textContent = (next === 'dark') ? '☾' : '☀';
+        btn.setAttribute('aria-label', 'switch to ' + next + ' theme');
+      }
+
+      function set_theme_color_meta(theme) {
+        var m = d.getElementById('theme_color');
+        if (m) m.setAttribute('content', theme === 'dark' ? '#0a0a0a' : '#f6f5fb');
+      }
+
+      // nudge compositor to avoid stale layers after theme change
+      function nudge_repaint() {
+        root.style.setProperty('--z_nudge', '0.0001px');
+        requestAnimationFrame(function () {
+          root.style.setProperty('--z_nudge', '0px');
+        });
+      }
+
+      function apply_theme(theme, persist) {
+        root.setAttribute('data-theme', theme);
+        if (persist) {
+          try { localStorage.setItem('theme', theme); } catch (_) {}
+        }
+        set_button_for(theme);
+        set_theme_color_meta(theme);
+        nudge_repaint();
+      }
+
+      // init UI
+      var current = get_current_theme();
+      set_button_for(current);
+      set_theme_color_meta(current);
+
+      btn.addEventListener('click', function () {
+        var theme = (get_current_theme() === 'dark') ? 'light' : 'dark';
+        apply_theme(theme, true);
+      });
+
+      // reflect system changes (if user hasn't chosen) for button/meta
+      if (!localStorage.getItem('theme') && window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+          var t = e.matches ? 'dark' : 'light';
+          set_button_for(t);
+          set_theme_color_meta(t);
+          // no apply_theme here (don't override user intent) unless no user choice:
+          if (!root.getAttribute('data-theme')) {
+            apply_theme(t, false);
+          } else {
+            nudge_repaint();
+          }
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
