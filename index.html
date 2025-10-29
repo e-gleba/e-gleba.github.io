@@ -1,1265 +1,545 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>evgeniy.gleba@localhost:~$</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='80' font-size='80' fill='%2300ff00'%3E$%3C/text%3E%3C/svg%3E" />
-    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="C++ Developer - Cross-platform systems, game development, reverse engineering">
+    <title>e-gleba | C++ Developer Portfolio</title>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
-      
-      :root {
-        --bg-primary: #0a0a0a;
-        --bg-secondary: #151515;
-        --text-primary: #00ff41;
-        --text-secondary: #00dd00;
-        --text-accent: #00ffdd;
-        --text-muted: #666;
-        --border-color: #333;
-        --glow-primary: rgba(0, 255, 65, 0.4);
-        --glow-accent: rgba(0, 255, 221, 0.3);
-      }
-      
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      
-      body {
-        font-family: 'JetBrains Mono', 'Courier New', monospace;
-        background: var(--bg-primary);
-        color: var(--text-primary);
-        overflow-x: hidden;
-        min-height: 100vh;
-        position: relative;
-        cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect x="9" y="0" width="2" height="8" fill="%2300ff41"/><rect x="9" y="12" width="2" height="8" fill="%2300ff41"/><rect x="0" y="9" width="8" height="2" fill="%2300ff41"/><rect x="12" y="9" width="8" height="2" fill="%2300ff41"/></svg>'), crosshair;
-      }
-      
-      /* Custom scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      
-      ::-webkit-scrollbar-track {
-        background: var(--bg-secondary);
-        border-radius: 4px;
-      }
-      
-      ::-webkit-scrollbar-thumb {
-        background: linear-gradient(180deg, var(--text-primary), var(--text-accent));
-        border-radius: 4px;
-        box-shadow: 0 0 8px var(--glow-primary);
-      }
-      
-      ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(180deg, var(--text-accent), var(--text-primary));
-        box-shadow: 0 0 12px var(--glow-accent);
-      }
-      
-      /* Open Source Rain Effect */
-      .foss-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        pointer-events: none;
-        z-index: 500;
-        overflow: hidden;
-      }
-      
-      .foss-item {
-        position: absolute;
-        font-size: 20px;
-        color: #00ff00;
-        text-shadow: 0 0 8px #00ff00;
-        animation: fossRain 3.5s linear forwards;
-        opacity: 0;
-        font-family: 'JetBrains Mono', monospace;
-        font-weight: bold;
-      }
-      
-      @keyframes fossRain {
-        0% {
-          transform: translateY(-50px) rotate(0deg);
-          opacity: 1;
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #888;
+            --accent: #00d4ff;
+            --accent-dark: #0099cc;
+            --border: #333;
         }
-        100% {
-          transform: translateY(100vh) rotate(360deg);
-          opacity: 0;
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-      }
-      
-      /* Money Rain Effect */
-      .money-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        pointer-events: none;
-        z-index: 500;
-        overflow: hidden;
-      }
-      
-      .money {
-        position: absolute;
-        font-size: 24px;
-        color: #00ff00;
-        text-shadow: 0 0 10px #00ff00;
-        animation: moneyFall 3s linear forwards;
-        opacity: 0;
-      }
-      
-      @keyframes moneyFall {
-        0% {
-          transform: translateY(-50px) rotate(0deg);
-          opacity: 1;
+        
+        html {
+            scroll-behavior: smooth;
         }
-        100% {
-          transform: translateY(100vh) rotate(360deg);
-          opacity: 0;
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto Mono", monospace;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
         }
-      }
-      
-      /* Particle System - FIXED Z-INDEX */
-      .particles {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: 50;
-        pointer-events: none;
-        opacity: 0.8;
-      }
-      
-      .particle {
-        position: absolute;
-        width: 3px;
-        height: 3px;
-        background: var(--text-primary);
-        border-radius: 50%;
-        box-shadow: 0 0 6px var(--glow-primary);
-        animation: float 20s infinite linear;
-      }
-      
-      @keyframes float {
-        0% {
-          transform: translateY(100vh) translateX(0px);
-          opacity: 0;
+        
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s ease;
         }
-        10% {
-          opacity: 1;
+        
+        a:hover {
+            color: var(--accent-dark);
         }
-        90% {
-          opacity: 1;
+        
+        /* Header */
+        header {
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        100% {
-          transform: translateY(-100px) translateX(150px);
-          opacity: 0;
+        
+        nav {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-      }
-      
-      /* Glitch Effect */
-      @keyframes glitch1 {
-        0%, 100% { transform: translateX(0); }
-        20% { transform: translateX(-2px) skewX(85deg); }
-        40% { transform: translateX(-4px) skewX(10deg); }
-        60% { transform: translateX(2px) skewX(-20deg); }
-        80% { transform: translateX(4px) skewX(15deg); }
-      }
-      
-      @keyframes glitch2 {
-        0%, 100% { transform: translateX(0); }
-        30% { transform: translateX(3px) skewX(-10deg); }
-        50% { transform: translateX(-1px) skewX(40deg); }
-        70% { transform: translateX(-3px) skewX(20deg); }
-      }
-      
-      .glitch {
-        position: relative;
-        display: inline-block;
-      }
-      
-      .glitch:hover::before,
-      .glitch:hover::after {
-        content: attr(data-text);
-        position: absolute;
-        top: 0;
-        left: 0;
-        opacity: 0.8;
-        background: var(--bg-primary);
-        clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-      }
-      
-      .glitch:hover::before {
-        color: #ff00ff;
-        animation: glitch1 0.3s infinite;
-        z-index: -1;
-      }
-      
-      .glitch:hover::after {
-        color: #00ffff;
-        animation: glitch2 0.3s infinite;
-        z-index: -2;
-        clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
-      }
-      
-      /* Background */
-      .background-layer {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: -3;
-        background: 
-          radial-gradient(circle at 20% 80%, rgba(0, 255, 65, 0.03) 0%, transparent 50%),
-          radial-gradient(circle at 80% 20%, rgba(0, 255, 221, 0.03) 0%, transparent 50%),
-          linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(10, 10, 10, 0.9));
-        opacity: 0.3;
-        transition: opacity 0.5s ease;
-      }
-      
-      /* Cool Penguin */
-      .tux-penguin {
-        position: fixed;
-        bottom: 140px;
-        right: 60px;
-        width: 80px;
-        height: 80px;
-        z-index: 100;
-        opacity: 0.6;
-        font-size: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        animation: subtleBob 4s ease-in-out infinite;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        filter: drop-shadow(0 0 10px var(--glow-primary));
-      }
-      
-      .tux-penguin:hover {
-        opacity: 1;
-        transform: scale(1.2) rotate(10deg);
-        filter: drop-shadow(0 0 25px var(--glow-primary));
-      }
-      
-      @keyframes subtleBob {
-        0%, 100% { transform: translateY(0px) scale(1); }
-        50% { transform: translateY(-8px) scale(1.05); }
-      }
-      
-      /* Matrix canvas */
-      #matrix-canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: 1;
-        opacity: 0;
-        transition: opacity 0.6s ease;
-        pointer-events: none;
-      }
-      
-      #matrix-canvas.active {
-        opacity: 1;
-      }
-      
-      body.matrix-active .background-layer {
-        opacity: 0.05;
-      }
-      
-      body.matrix-active .tux-penguin {
-        opacity: 0.2;
-      }
-      
-      body.matrix-active .particles {
-        opacity: 0.3;
-      }
-      
-      body.matrix-active .terminal {
-        background: rgba(0, 0, 0, 0.15);
-        backdrop-filter: blur(2px);
-        z-index: 200;
-      }
-      
-      body.matrix-active .command-console {
-        z-index: 300;
-        background: rgba(5, 5, 5, 0.9);
-      }
-      
-      /* Fullscreen terminal */
-      .terminal {
-        position: relative;
-        z-index: 10;
-        padding: 40px;
-        min-height: calc(100vh - 80px);
-        background: rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(3px);
-        opacity: 0;
-        transform: translateY(15px);
-        transition: all 1s cubic-bezier(0.23, 1, 0.320, 1);
-      }
-      
-      .terminal.loaded {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      
-      .header {
-        font-size: 1.2em;
-        margin: 0 0 30px 0;
-        color: var(--text-primary);
-        text-shadow: 0 0 15px var(--glow-primary);
-        font-weight: 700;
-        position: relative;
-        cursor: pointer;
-      }
-      
-      .header::after {
-        content: '';
-        position: absolute;
-        bottom: -8px;
-        left: 0;
-        width: 0%;
-        height: 3px;
-        background: linear-gradient(90deg, var(--text-primary), var(--text-accent));
-        border-radius: 2px;
-        box-shadow: 0 0 15px var(--glow-primary);
-        transition: width 0.8s ease;
-      }
-      
-      .terminal.loaded .header::after {
-        width: 60%;
-      }
-      
-      .command-line {
-        margin: 16px 0;
-        opacity: 0;
-        transform: translateX(-15px);
-        transition: all 0.8s cubic-bezier(0.23, 1, 0.320, 1);
-        position: relative;
-        padding: 8px 0;
-      }
-      
-      .command-line::before {
-        content: '';
-        position: absolute;
-        left: -30px;
-        top: 0;
-        bottom: 0;
-        width: 4px;
-        background: linear-gradient(180deg, transparent, var(--text-accent), transparent);
-        border-radius: 3px;
-        opacity: 0;
-        transition: all 0.4s ease;
-      }
-      
-      .command-line:hover::before {
-        opacity: 0.8;
-        box-shadow: 0 0 15px var(--glow-accent);
-        left: -35px;
-      }
-      
-      .command-line.animate {
-        opacity: 1;
-        transform: translateX(0);
-      }
-      
-      .prompt {
-        color: var(--text-primary);
-        margin: 12px 0 6px 0;
-        font-weight: 600;
-      }
-      
-      .user {
-        color: var(--text-accent);
-        font-weight: 700;
-        text-shadow: 0 0 10px var(--glow-accent);
-      }
-      
-      .output {
-        margin-left: 20px;
-        margin-bottom: 15px;
-        line-height: 1.7;
-      }
-      
-      .profile-info {
-        color: var(--text-secondary);
-        font-weight: 500;
-      }
-      
-      .ls-output .repo-link {
-        color: var(--text-accent);
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        position: relative;
-      }
-      
-      .ls-output .repo-link:hover {
-        text-decoration: underline;
-        text-shadow: 0 0 15px var(--glow-accent);
-        transform: translateX(5px);
-      }
-      
-      .lang-tag {
-        color: var(--text-muted);
-        font-style: italic;
-        opacity: 0.9;
-      }
-      
-      .comment {
-        color: var(--text-muted);
-        font-style: italic;
-      }
-      
-      .ps-output .social-link {
-        color: #ff8c42;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        font-weight: 600;
-      }
-      
-      .ps-output .social-link:hover {
-        text-decoration: underline;
-        text-shadow: 0 0 12px rgba(255, 140, 66, 0.8);
-        transform: translateX(5px);
-      }
-      
-      .git-log .git-hash {
-        color: #ffd700;
-        font-weight: 700;
-        text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
-      }
-      
-      .git-log .git-message {
-        color: #cccccc;
-        font-weight: 500;
-      }
-      
-      .cursor {
-        animation: blink 1s infinite;
-        color: var(--text-primary);
-        text-shadow: 0 0 15px var(--glow-primary);
-        font-weight: 700;
-      }
-      
-      @keyframes blink {
-        0%, 50% { opacity: 1; }
-        51%, 100% { opacity: 0.2; }
-      }
-      
-      .footer {
-        margin-top: 40px;
-        padding-top: 20px;
-        border-top: 1px solid var(--border-color);
-        opacity: 0;
-        transition: opacity 1.2s ease 1.5s;
-      }
-      
-      .terminal.loaded .footer {
-        opacity: 1;
-      }
-      
-      .footer-motto {
-        color: #00ff88;
-        font-style: italic;
-        font-size: 0.95em;
-        text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
-        font-weight: 500;
-      }
-      
-      /* Command console */
-      .command-console {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: linear-gradient(135deg, rgba(5, 5, 5, 0.98), rgba(15, 15, 15, 0.96));
-        border-top: 2px solid var(--text-primary);
-        padding: 18px 30px;
-        z-index: 1001;
-        font-family: 'JetBrains Mono', monospace;
-        backdrop-filter: blur(25px);
-        box-shadow: 
-          0 -5px 30px rgba(0, 0, 0, 0.9),
-          inset 0 1px 0 rgba(0, 255, 65, 0.2),
-          0 0 40px var(--glow-primary);
-      }
-      
-      .console-prompt {
-        color: var(--text-primary);
-        margin-right: 12px;
-        font-weight: 700;
-        text-shadow: 0 0 10px var(--glow-primary);
-      }
-      
-      .console-input {
-        background: transparent;
-        border: none;
-        color: var(--text-primary);
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 14px;
-        outline: none;
-        width: calc(100% - 200px);
-        caret-color: var(--text-primary);
-        font-weight: 600;
-        text-shadow: 0 0 8px var(--glow-primary);
-      }
-      
-      .console-input::placeholder {
-        color: var(--text-muted);
-        font-style: italic;
-      }
-      
-      .command-status {
-        position: absolute;
-        right: 30px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--text-muted);
-        font-size: 11px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-      
-      /* DOOM Container */
-      .doom-container {
-        display: none;
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        right: 20px;
-        bottom: 20px;
-        z-index: 2000;
-        background: #000;
-        border: 2px solid #ff0000;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 
-          0 0 50px rgba(255, 0, 0, 0.8),
-          inset 0 0 60px rgba(255, 0, 0, 0.1);
-      }
-      
-      .doom-header {
-        background: linear-gradient(135deg, #1a0000, #330000);
-        padding: 18px 25px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid #660000;
-        height: 65px;
-        flex-shrink: 0;
-      }
-      
-      .doom-title {
-        color: #ff0000;
-        font-weight: 600;
-        font-size: 1.3em;
-        text-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-      
-      .doom-close {
-        background: linear-gradient(135deg, #ff0000, #cc0000);
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-        border-radius: 6px;
-        font-weight: 600;
-        transition: all 0.2s ease;
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-      
-      .doom-close:hover {
-        background: linear-gradient(135deg, #cc0000, #aa0000);
-        transform: scale(1.05);
-        box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
-      }
-      
-      .doom-iframe {
-        width: 100%;
-        height: calc(100% - 130px);
-        border: none;
-        background: #000;
-        display: block;
-      }
-      
-      .doom-controls {
-        padding: 18px 25px;
-        background: linear-gradient(135deg, #1a0000, #330000);
-        color: #999;
-        font-size: 0.85em;
-        text-align: center;
-        border-top: 1px solid #660000;
-        font-family: 'JetBrains Mono', monospace;
-        height: 65px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-      }
-      
-      /* Command feedback */
-      .command-feedback {
-        position: fixed;
-        top: 35px;
-        right: 35px;
-        background: linear-gradient(135deg, rgba(5, 5, 5, 0.97), rgba(15, 15, 15, 0.95));
-        border: 2px solid var(--text-primary);
-        border-radius: 10px;
-        padding: 16px 22px;
-        color: var(--text-primary);
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 13px;
-        font-weight: 600;
-        z-index: 1500;
-        opacity: 0;
-        transform: translateX(120px) scale(0.9);
-        transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
-        box-shadow: 
-          0 0 30px var(--glow-primary),
-          inset 0 1px 0 rgba(0, 255, 65, 0.3);
-        backdrop-filter: blur(20px);
-      }
-      
-      .command-feedback.show {
-        opacity: 1;
-        transform: translateX(0) scale(1);
-        text-shadow: 0 0 10px var(--glow-primary);
-      }
 
-      /* Sound Wave Animation */
-      .sound-wave {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        display: none;
-        z-index: 1500;
-      }
+        .logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
 
-      .wave-bar {
-        display: inline-block;
-        width: 3px;
-        height: 20px;
-        background: var(--text-primary);
-        margin: 0 1px;
-        border-radius: 2px;
-        animation: wave 1.2s ease-in-out infinite alternate;
-        box-shadow: 0 0 5px var(--glow-primary);
-      }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
 
-      .wave-bar:nth-child(2) { animation-delay: 0.1s; }
-      .wave-bar:nth-child(3) { animation-delay: 0.2s; }
-      .wave-bar:nth-child(4) { animation-delay: 0.3s; }
-      .wave-bar:nth-child(5) { animation-delay: 0.4s; }
+        .nav-links a {
+            font-size: 0.9rem;
+            transition: opacity 0.3s ease;
+        }
 
-      @keyframes wave {
-        0% { height: 5px; }
-        100% { height: 25px; }
-      }
+        .nav-links a:hover {
+            opacity: 0.7;
+        }
 
-      .sound-wave.active {
-        display: block;
-      }
+        /* Main Container */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            margin: 4rem 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .hero .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .tech-badge {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-family: "Roboto Mono", monospace;
+            color: var(--accent);
+        }
+
+        /* Section Headers */
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+        }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 4px;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .project-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-tech span {
+            font-size: 0.75rem;
+            background-color: var(--bg-primary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            border: 1px solid var(--border);
+            font-family: "Roboto Mono", monospace;
+            color: var(--text-secondary);
+        }
+
+        .project-link {
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        /* Skills */
+        .skills-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .skill-category {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 4px;
+        }
+
+        .skill-category h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .skill-category ul {
+            list-style: none;
+        }
+
+        .skill-category li {
+            padding: 0.4rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .skill-category li:before {
+            content: "→ ";
+            color: var(--accent);
+            margin-right: 0.5rem;
+        }
+
+        /* About */
+        .about-text {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-top: 1rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+        }
+
+        /* Contact */
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            align-items: center;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            border-color: var(--accent);
+            background-color: rgba(0, 212, 255, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .tech-stack {
+                gap: 0.75rem;
+            }
+
+            .tech-badge {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .contact-link {
+                justify-content: center;
+            }
+        }
+
+        /* Code highlighting */
+        code {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: "Roboto Mono", monospace;
+            font-size: 0.9rem;
+            color: var(--accent);
+        }
     </style>
-  </head>
-  <body>
-    <div class="background-layer"></div>
-    <div class="particles" id="particles"></div>
-    <div class="tux-penguin" onclick="showTuxSecret()">🐧</div>
-    <canvas id="matrix-canvas"></canvas>
-    <div class="money-container" id="moneyContainer"></div>
-    <div class="foss-container" id="fossContainer"></div>
-    
-    <!-- Sound Wave Indicator -->
-    <div class="sound-wave" id="soundWave">
-      <div class="wave-bar"></div>
-      <div class="wave-bar"></div>
-      <div class="wave-bar"></div>
-      <div class="wave-bar"></div>
-      <div class="wave-bar"></div>
-    </div>
-    
-    <div class="terminal" id="terminal">
-      <div class="header glitch" data-text="evgeniy.gleba@localhost:~$">evgeniy.gleba@localhost:~$</div>
-      
-      <div class="command-line">
-        <div class="prompt"><span class="user glitch" data-text="evgeniy.gleba">evgeniy.gleba</span>@localhost:~$ whoami</div>
-        <div class="output">evgeniy gleba</div>
-      </div>
-      
-      <div class="command-line">
-        <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ cat ~/.bashrc | grep -E "(export|alias)"</div>
-        <div class="output">
-          <div class="profile-info">
-            export ROLE="c++ game developer"<br>
-            export FOCUS="game engines • sdl3 • performance"<br>
-            export COMPANY="lesta games • minsk"<br>
-            export STACK="c++ | python | sdl3 • cmake • docker"<br>
-            export MOTTO="optimizing compilers since 2020"<br>
-            alias debug_hell="gdb --batch --ex run --ex bt --args"<br>
-            alias nuclear_option="sudo rm -rf /*"  <span class="comment"># never run this</span><br>
-            alias please="sudo"<br>
-            alias sl="ls"  <span class="comment"># typo protection</span><br>
-          </div>
-        </div>
-      </div>
-      
-      <div class="command-line">
-        <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ ls -la ~/projects/ | head -n 6</div>
-        <div class="output">
-          <div class="ls-output">
-            total 42<br>
-            drwxr-xr-x 7 evgeniy wheel 4096 Sep 28 20:55 <a href="https://github.com/e-gleba/basic-game-engine" class="repo-link">basic-game-engine</a>      <span class="lang-tag"># sdl3/opengl</span><br>
-            drwxr-xr-x 3 evgeniy wheel 4096 Sep 27 16:22 <a href="https://github.com/e-gleba/template-cpp-project" class="repo-link">template-cpp-project</a>  <span class="lang-tag"># cmake/vcpkg</span><br>
-            drwxr-xr-x 4 evgeniy wheel 4096 Sep 20 11:30 <a href="https://github.com/e-gleba/satellite-weather-impact" class="repo-link">satellite-weather-impact</a> <span class="lang-tag"># python/ml</span><br>
-            drwxr-xr-x 2 evgeniy wheel 4096 Sep 15 09:18 <a href="https://github.com/e-gleba/win-kernel-hooks" class="repo-link">win-kernel-hooks</a>       <span class="lang-tag"># reverse-eng</span><br>
-            drwxr-xr-x 2 evgeniy wheel 4096 Sep 12 16:45 <a href="https://github.com/e-gleba/nvim-config" class="repo-link">nvim-config</a>            <span class="lang-tag"># lua/dotfiles</span><br>
-          </div>
-        </div>
-      </div>
-      
-      <div class="command-line">
-        <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ ps aux | grep social</div>
-        <div class="output">
-          <div class="ps-output">
-            evgeniy   1337  0.0  0.1   github  <a href="https://github.com/e-gleba" class="social-link">https://github.com/e-gleba</a>          <span class="comment"># where magic happens</span><br>
-            evgeniy   1984  0.0  0.0   steam   <a href="https://steamcommunity.com/id/egleba" class="social-link">https://steamcommunity.com/id/egleba</a> <span class="comment"># productivity killer</span><br>
-            evgeniy   2077  0.0  0.0   vk      <a href="https://vk.com/e_gleba" class="social-link">https://vk.com/e_gleba</a>               <span class="comment"># homeland connection</span><br>
-          </div>
-        </div>
-      </div>
-      
-      <div class="command-line">
-        <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ git log --oneline -n 3</div>
-        <div class="output">
-          <div class="git-log">
-            <span class="git-hash">a8f9c2d</span> <span class="git-message">feat: optimize renderer batch processing</span><br>
-            <span class="git-hash">7b4e1a9</span> <span class="git-message">fix: memory leak in texture loader</span><br>
-            <span class="git-hash">5d8c923</span> <span class="git-message">refactor: switch to sdl3 api</span><br>
-          </div>
-        </div>
-      </div>
-      
-      <div class="command-line">
-        <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ uname -a</div>
-        <div class="output">
-          Linux localhost 6.9.0-performance #1 SMP PREEMPT_RT x86_64 GNU/Linux/Gamedev<br>
-          <span class="comment"># custom kernel because vanilla is for noobs</span>
-        </div>
-      </div>
-      
-      <div class="prompt"><span class="user">evgeniy.gleba</span>@localhost:~$ <span class="cursor">█</span></div>
-      
-      <div class="footer">
-        <div class="footer-motto">// "crushing bugs and optimizing performance since 2020" - evgeniy gleba</div>
-      </div>
-    </div>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">e-gleba</div>
+            <ul class="nav-links">
+                <li><a href="#about">about</a></li>
+                <li><a href="#projects">projects</a></li>
+                <li><a href="#skills">skills</a></li>
+                <li><a href="#contact">contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <!-- Command Console -->
-    <div class="command-console">
-      <span class="console-prompt">guest@terminal:~$</span>
-      <input type="text" class="console-input" id="commandInput" placeholder="type 'help' to see available commands..." autocomplete="off" />
-      <div class="command-status" id="commandStatus">ready</div>
-    </div>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>C++ Developer</h1>
+            <p class="subtitle">systems architect • game development • reverse engineering</p>
+            <div class="tech-stack">
+                <span class="tech-badge">C++</span>
+                <span class="tech-badge">CMake</span>
+                <span class="tech-badge">Linux</span>
+                <span class="tech-badge">OpenGL</span>
+                <span class="tech-badge">Android NDK</span>
+                <span class="tech-badge">iOS</span>
+            </div>
+        </section>
 
-    <!-- Command Feedback -->
-    <div class="command-feedback" id="commandFeedback"></div>
+        <!-- About Section -->
+        <section id="about">
+            <h2>about</h2>
+            <div class="about-text">
+                <p>Performance-aware developer specializing in cross-platform C++ systems. Adherent to minimalist philosophy: less code, fewer bugs. Focused on efficient implementations using standard library idioms and explicit error handling.</p>
+                <p>Experience spans game development with ECS patterns, reverse engineering, and native mobile development across Android and iOS platforms. Proficient with modern build systems (CMake), low-level graphics programming (OpenGL), and production-grade C++ architecture.</p>
+                <p>Philosophy: practice over theory. Code is documentation. Prefer Unix-style tooling, open formats, and explicit over implicit.</p>
+            </div>
+        </section>
 
-    <!-- DOOM Container -->
-    <div id="doomContainer" class="doom-container">
-      <div class="doom-header">
-        <div class="doom-title">DOOM (1993) - Archive.org</div>
-        <button class="doom-close" onclick="closeDoom()">✕ Close</button>
-      </div>
-      <iframe id="doomIframe" class="doom-iframe" src="" frameborder="0" allowfullscreen></iframe>
-      <div class="doom-controls">
-        Arrow Keys = Move • Ctrl = Fire • Space = Run • Alt = Strafe • Tab = Map • Esc = Menu
-      </div>
-    </div>
+        <!-- Projects Section -->
+        <section id="projects">
+            <h2>projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-title">kyocera-drivers</div>
+                    <p class="project-desc">Fully reverse-engineered Kyocera PPD and filter solution for Linux printing. Modern CMake build system with automated installation.</p>
+                    <div class="project-tech">
+                        <span>C/C++20</span>
+                        <span>CMake</span>
+                        <span>CUPS</span>
+                        <span>Reverse Eng.</span>
+                    </div>
+                    <a class="project-link" href="https://github.com/e-gleba/kyocera-drivers">view →</a>
+                </div>
 
-    <script>
-      // Hacker Messages Array
-      const hackerMessages = [
-        'kernel: buffer overflow detected at 0xdeadbeef',
-        'segfault: microsoft.exe has caused a protection fault',
-        'exploit: starforce drm bypassed successfully',
-        'warning: windows license validation failed',
-        'error: adobe activation servers unreachable',
-        'panic: proprietary software detected, purging system',
-        'alert: corporate surveillance module disabled',
-        'notice: freed 2.3gb of bloatware from memory',
-        'success: windows telemetry terminated with signal 9',
-        'debug: binary.exe reverse engineered successfully',
-        'warning: intel management engine disabled',
-        'error: subscription model detected, initiating countermeasures',
-        'notice: drm protection bypassed using 0-day exploit',
-        'kernel panic: windows 11 tpm requirement circumvented',
-        'alert: activision anticheat defeated by user-mode injection'
-      ];
+                <div class="project-card">
+                    <div class="project-title">basic-game-engine</div>
+                    <p class="project-desc">C++ game engine powered by SDL 3.0 and OpenGL. Implements ECS architecture with EnTT for entity management and sprite editing capabilities.</p>
+                    <div class="project-tech">
+                        <span>C++</span>
+                        <span>SDL 3</span>
+                        <span>OpenGL</span>
+                        <span>ECS</span>
+                    </div>
+                    <a class="project-link" href="https://github.com/e-gleba/basic-game-engine">view →</a>
+                </div>
 
-      // Sound System
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      let audioContext;
-      let soundEnabled = true;
+                <div class="project-card">
+                    <div class="project-title">template-cpp-project</div>
+                    <p class="project-desc">Modern C++23 project template with CMake, code quality tools, Docker support, and cross-platform compatibility for Linux, Windows, macOS, Android.</p>
+                    <div class="project-tech">
+                        <span>C++23</span>
+                        <span>CMake 3.30+</span>
+                        <span>Docker</span>
+                        <span>CI/CD</span>
+                    </div>
+                    <a class="project-link" href="https://github.com/e-gleba/template-cpp-project">view →</a>
+                </div>
 
-      function initAudio() {
-        if (!audioContext) {
-          audioContext = new AudioContext();
-        }
-      }
+                <div class="project-card">
+                    <div class="project-title">sdl-overview</div>
+                    <p class="project-desc">Comprehensive SDL 3 demonstration showcasing graphics rendering, window management, and input handling with modern C++20 patterns.</p>
+                    <div class="project-tech">
+                        <span>C++20</span>
+                        <span>SDL 3</span>
+                        <span>CMake</span>
+                        <span>Graphics</span>
+                    </div>
+                    <a class="project-link" href="https://github.com/e-gleba/sdl-overview">view →</a>
+                </div>
 
-      function playTone(frequency, duration = 50, type = 'square') {
-        if (!soundEnabled || !audioContext) return;
-        
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        
-        oscillator.frequency.value = frequency;
-        oscillator.type = type;
-        
-        gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration / 1000);
-        
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + duration / 1000);
-      }
+                <div class="project-card">
+                    <div class="project-title">student-bsu-by</div>
+                    <p class="project-desc">Native Android interface for Belarusian State University student account access. Cross-platform considerations for university system integration.</p>
+                    <div class="project-tech">
+                        <span>Android</span>
+                        <span>NDK</span>
+                        <span>Mobile</span>
+                    </div>
+                    <a class="project-link" href="https://github.com/e-gleba/student-bsu-by">view →</a>
+                </div>
 
-      function showSoundWave() {
-        const soundWave = document.getElementById('soundWave');
-        soundWave.classList.add('active');
-        setTimeout(() => soundWave.classList.remove('active'), 1200);
-      }
+                <div class="project-card">
+                    <div class="project-title">Various Explorations</div>
+                    <p class="project-desc">Ghidra reverse engineering resources, game asset modification tooling, DLL injection techniques, and shader programming experiments.</p>
+                    <div class="project-tech">
+                        <span>Reverse Eng.</span>
+                        <span>Ghidra</span>
+                        <span>GLSL</span>
+                        <span>Binary Patching</span>
+                    </div>
+                    <a class="project-link" href="https://github.com/e-gleba">github →</a>
+                </div>
+            </div>
+        </section>
 
-      function getRandomHackerMessage() {
-        return hackerMessages[Math.floor(Math.random() * hackerMessages.length)];
-      }
+        <!-- Skills Section -->
+        <section id="skills">
+            <h2>skills</h2>
+            <div class="skills-list">
+                <div class="skill-category">
+                    <h3>languages</h3>
+                    <ul>
+                        <li>C++17/20/23</li>
+                        <li>C17/99</li>
+                        <li>Python 3</li>
+                        <li>Bash/Shell</li>
+                        <li>Objective-C/C++</li>
+                    </ul>
+                </div>
 
-      // Open Source Rain Effect
-      function createOpenSourceRain() {
-        const container = document.getElementById('fossContainer');
-        const fossItems = ['🐧', '🔓', '📖', '⚡', '🆓', '⭐', 'GNU', 'GPL', 'MIT', 'BSD', 'FOSS', 'FLOSS', 'FSF', 'LINUX', 'UNIX'];
-        
-        for (let i = 0; i < 60; i++) {
-          setTimeout(() => {
-            const fossItem = document.createElement('div');
-            fossItem.className = 'foss-item';
-            fossItem.textContent = fossItems[Math.floor(Math.random() * fossItems.length)];
-            fossItem.style.left = Math.random() * 100 + '%';
-            
-            // Vary size for text vs emoji
-            if (fossItem.textContent.length > 2) {
-              fossItem.style.fontSize = (14 + Math.random() * 8) + 'px';
-            } else {
-              fossItem.style.fontSize = (18 + Math.random() * 12) + 'px';
-            }
-            
-            fossItem.style.animationDuration = (2.5 + Math.random() * 2) + 's';
-            
-            container.appendChild(fossItem);
-            
-            setTimeout(() => {
-              fossItem.remove();
-            }, 4500);
-          }, i * 80);
-        }
-      }
+                <div class="skill-category">
+                    <h3>systems & tools</h3>
+                    <ul>
+                        <li>CMake 3.16+</li>
+                        <li>Linux (Fedora, Alt)</li>
+                        <li>Git/GitHub</li>
+                        <li>Docker</li>
+                        <li>Ninja/Make</li>
+                    </ul>
+                </div>
 
-      // Money Rain Effect
-      function createMoneyRain() {
-        const container = document.getElementById('moneyContainer');
-        const symbols = ['$', '💰', '💵', '💎', '🪙', '₿'];
-        
-        for (let i = 0; i < 50; i++) {
-          setTimeout(() => {
-            const money = document.createElement('div');
-            money.className = 'money';
-            money.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-            money.style.left = Math.random() * 100 + '%';
-            money.style.fontSize = (16 + Math.random() * 16) + 'px';
-            money.style.animationDuration = (2 + Math.random() * 2) + 's';
-            
-            container.appendChild(money);
-            
-            setTimeout(() => {
-              money.remove();
-            }, 4000);
-          }, i * 100);
-        }
-      }
+                <div class="skill-category">
+                    <h3>graphics & engines</h3>
+                    <ul>
+                        <li>OpenGL (GLSL)</li>
+                        <li>SDL 2/3</li>
+                        <li>Game architecture</li>
+                        <li>ECS patterns</li>
+                        <li>Sprite systems</li>
+                    </ul>
+                </div>
 
-      // Particle System
-      function createParticles() {
-        const particles = document.getElementById('particles');
-        const particleCount = 30;
+                <div class="skill-category">
+                    <h3>mobile development</h3>
+                    <ul>
+                        <li>Android NDK</li>
+                        <li>iOS development</li>
+                        <li>Cross-platform</li>
+                        <li>JNI/Native binding</li>
+                        <li>Mobile UI</li>
+                    </ul>
+                </div>
 
-        for (let i = 0; i < particleCount; i++) {
-          const particle = document.createElement('div');
-          particle.className = 'particle';
-          particle.style.left = Math.random() * 100 + '%';
-          particle.style.animationDelay = Math.random() * 20 + 's';
-          particle.style.animationDuration = (20 + Math.random() * 15) + 's';
-          particles.appendChild(particle);
-        }
-      }
+                <div class="skill-category">
+                    <h3>reverse engineering</h3>
+                    <ul>
+                        <li>Ghidra analysis</li>
+                        <li>Binary patching</li>
+                        <li>Memory analysis</li>
+                        <li>DLL injection</li>
+                        <li>Asset extraction</li>
+                    </ul>
+                </div>
 
-      // Matrix Rain Effect
-      class MatrixRain {
-        constructor(canvas) {
-          this.canvas = canvas;
-          this.ctx = canvas.getContext('2d', { alpha: false });
-          
-          this.chars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-          this.charArray = this.chars.split('');
-          
-          this.fontSize = 14;
-          this.columns = 0;
-          this.drops = [];
-          this.isActive = false;
-          
-          this.lastTime = 0;
-          this.fps = 60;
-          this.interval = 1000 / this.fps;
-          
-          this.init();
-        }
-        
-        resize() {
-          const width = window.innerWidth || 1024;
-          const height = window.innerHeight || 768;
-          
-          this.canvas.width = width;
-          this.canvas.height = height;
-          
-          this.columns = Math.max(1, Math.floor(width / this.fontSize));
-          
-          this.drops = [];
-          for (let i = 0; i < this.columns; i++) {
-            this.drops[i] = Math.random() * -100;
-          }
-        }
-        
-        init() {
-          this.resize();
-          this.animate();
-        }
-        
-        draw = (currentTime) => {
-          if (currentTime - this.lastTime < this.interval) {
-            requestAnimationFrame(this.draw);
-            return;
-          }
-          this.lastTime = currentTime;
-          
-          if (!this.drops.length || this.columns === 0) {
-            this.resize();
-            requestAnimationFrame(this.draw);
-            return;
-          }
-          
-          if (this.isActive) {
-            this.ctx.fillStyle = 'rgba(0, 0, 0, 0.02)';
-            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-            
-            this.ctx.fillStyle = '#00ff00';
-            this.ctx.font = `bold ${this.fontSize}px 'JetBrains Mono'`;
-            
-            for (let i = 0; i < this.drops.length; i++) {
-              const char = this.charArray[Math.floor(Math.random() * this.charArray.length)];
-              const x = i * this.fontSize;
-              const y = this.drops[i] * this.fontSize;
-              
-              this.ctx.shadowColor = '#00ff00';
-              this.ctx.shadowBlur = 6;
-              this.ctx.fillText(char, x, y);
-              
-              this.ctx.shadowBlur = 12;
-              this.ctx.fillText(char, x, y);
-              
-              this.ctx.shadowBlur = 18;
-              this.ctx.fillText(char, x, y);
-              
-              this.ctx.shadowBlur = 0;
-              
-              if (y > this.canvas.height && Math.random() > 0.97) {
-                this.drops[i] = 0;
-              }
-              this.drops[i]++;
-            }
-          } else {
-            this.ctx.fillStyle = '#000000';
-            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-          }
-          
-          requestAnimationFrame(this.draw);
-        }
-        
-        animate() {
-          requestAnimationFrame(this.draw);
-        }
-        
-        toggle() {
-          this.isActive = !this.isActive;
-          const canvas = document.getElementById('matrix-canvas');
-          canvas.classList.toggle('active', this.isActive);
-          document.body.classList.toggle('matrix-active', this.isActive);
-          
-          if (this.isActive) {
-            for (let i = 0; i < this.columns; i++) {
-              this.drops[i] = Math.random() * -100;
-            }
-            playTone(800, 200);
-            showSoundWave();
-          } else {
-            playTone(400, 150);
-          }
-        }
-      }
+                <div class="skill-category">
+                    <h3>development practices</h3>
+                    <ul>
+                        <li>Explicit error handling</li>
+                        <li>Performance profiling</li>
+                        <li>Minimal code footprint</li>
+                        <li>Standard library idioms</li>
+                        <li>Production deployment</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
-      // Commands System
-      const commands = {
-        help: () => {
-          playTone(600, 100);
-          return 'Available commands: doom, matrix, sound [on|off], hack, clear, secret';
-        },
-        
-        doom: () => {
-          const container = document.getElementById('doomContainer');
-          const iframe = document.getElementById('doomIframe');
-          container.style.display = 'block';
-          iframe.src = 'https://archive.org/embed/doom_dos';
-          playTone(666, 300, 'sawtooth');
-          showSoundWave();
-          return 'Loading DOOM from Internet Archive... Time to rip and tear! 🔥';
-        },
-        
-        matrix: () => {
-          if (matrix && typeof matrix.toggle === 'function') {
-            matrix.toggle();
-            return matrix.isActive ? '🔴 matrix rain: activated 🔴' : '🟢 matrix rain: terminated 🟢';
-          }
-          return 'matrix system offline';
-        },
+        <section id="contact">
+            <h2>contact</h2>
+            <div class="contact-links">
+                <a class="contact-link" href="https://github.com/e-gleba">
+                    <span>github</span>
+                </a>
+                <a class="contact-link" href="https://vk.ru/e_gleba">
+                  <span>vk</span>
+                  </a>
+                <a class="contact-link" href="https://setka.ru/users/c7b26aaa-6c35-436e-975a-a48515dbab7a?utm_medium=profile&utm_content=332624&utm_source=share_content&utm_term=332624&utm_campaign=inapp_setka&old=332624">
+                    <span>setka</span>
+                </a>
+                <a class="contact-link" href="mailto:i@egleba.ru">
+                    <span>email</span>
+                </a>
+                <a class="contact-link" href="https://steamcommunity.com/id/egleba">
+                    <span>steam</span>
+                </a>
+            </div>
+        </section>
+    </main>
 
-        sound: (args) => {
-          const action = args && args[0] ? args[0].toLowerCase() : '';
-          if (action === 'off') {
-            soundEnabled = false;
-            return '🔇 audio subsystem disabled';
-          } else if (action === 'on') {
-            soundEnabled = true;
-            initAudio();
-            playTone(1000, 100);
-            return '🔊 audio subsystem online';
-          } else {
-            return `audio: ${soundEnabled ? 'enabled' : 'disabled'}. usage: sound [on|off]`;
-          }
-        },
-
-        hack: () => {
-          if (!matrix.isActive) {
-            matrix.toggle();
-            setTimeout(() => {
-              playTone(1337, 200, 'square');
-              showSoundWave();
-            }, 500);
-            return '💀 mainframe breach successful: root access granted 💀';
-          } else {
-            return 'already in stealth mode 👨‍💻';
-          }
-        },
-
-        clear: () => {
-          const terminal = document.getElementById('terminal');
-          terminal.style.opacity = '0';
-          setTimeout(() => {
-            terminal.style.opacity = '1';
-          }, 300);
-          playTone(400, 80);
-          return 'terminal buffer flushed 🧹';
-        },
-
-        secret: () => {
-          createMoneyRain();
-          playTone(1200, 150);
-          setTimeout(() => playTone(1400, 150), 150);
-          setTimeout(() => playTone(1600, 150), 300);
-          setTimeout(() => playTone(1800, 200), 450);
-          showSoundWave();
-          return '💰💰💰 financial exploit executed: unlimited funds acquired 💰💰💰';
-        }
-      };
-
-      // Initialize
-      let matrix;
-      document.addEventListener('DOMContentLoaded', () => {
-        const canvas = document.getElementById('matrix-canvas');
-        matrix = new MatrixRain(canvas);
-        createParticles();
-        initAudio();
-      });
-
-      // Command handlers
-      const commandInput = document.getElementById('commandInput');
-      const commandStatus = document.getElementById('commandStatus');
-      const commandFeedback = document.getElementById('commandFeedback');
-      
-      function showFeedback(message) {
-        commandFeedback.textContent = message;
-        commandFeedback.classList.add('show');
-        setTimeout(() => {
-          commandFeedback.classList.remove('show');
-        }, 4000);
-      }
-
-      function showTuxSecret() {
-        playTone(1000, 150);
-        playTone(1200, 150);
-        createOpenSourceRain();
-        showFeedback('🐧🔓 tux.exe: gnu/linux freedom celebration initiated 🔓🐧');
-      }
-
-      // Typing sound effect
-      commandInput.addEventListener('input', () => {
-        if (soundEnabled) {
-          playTone(800 + Math.random() * 200, 50);
-        }
-      });
-
-      commandInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          const input = commandInput.value.trim();
-          const parts = input.split(' ');
-          const command = parts[0].toLowerCase();
-          const args = parts.slice(1);
-          
-          commandInput.value = '';
-          
-          if (commands[command]) {
-            commandStatus.textContent = 'executing...';
-            commandStatus.style.color = '#ffd700';
-            
-            try {
-              const result = commands[command](args);
-              showFeedback(result);
-              
-              setTimeout(() => {
-                commandStatus.textContent = 'ready';
-                commandStatus.style.color = '#666';
-              }, 900);
-            } catch (error) {
-              showFeedback(`segfault: ${error.message}`);
-              commandStatus.textContent = 'error';
-              commandStatus.style.color = '#ff0000';
-              
-              setTimeout(() => {
-                commandStatus.textContent = 'ready';
-                commandStatus.style.color = '#666';
-              }, 1800);
-            }
-          } else if (input) {
-            playTone(300, 200);
-            showFeedback(`command not found: ${input}. type 'help' for available commands.`);
-            commandStatus.textContent = 'not found';
-            commandStatus.style.color = '#ff6600';
-            
-            setTimeout(() => {
-              commandStatus.textContent = 'ready';
-              commandStatus.style.color = '#666';
-            }, 1400);
-          }
-        }
-      });
-      
-      // Auto-focus
-      document.addEventListener('keydown', (e) => {
-        if (e.target !== commandInput && e.key.length === 1 && !e.ctrlKey && !e.altKey) {
-          commandInput.focus();
-        }
-      });
-      
-      // Page animation
-      window.addEventListener('load', () => {
-        const terminal = document.getElementById('terminal');
-        
-        setTimeout(() => {
-          terminal.classList.add('loaded');
-          
-          const commandLines = document.querySelectorAll('.command-line');
-          commandLines.forEach((line, index) => {
-            setTimeout(() => {
-              line.classList.add('animate');
-            }, 120 + (index * 70));
-          });
-        }, 100);
-      });
-      
-      // DOOM functions
-      function closeDoom() {
-        document.getElementById('doomContainer').style.display = 'none';
-        document.getElementById('doomIframe').src = '';
-        playTone(400, 150);
-      }
-      
-      // Konami Code - Enhanced with hacker message
-      let konamiCode = [];
-      const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
-      
-      document.addEventListener('keydown', (e) => {
-        konamiCode.push(e.code);
-        if (konamiCode.length > konamiSequence.length) konamiCode.shift();
-        
-        if (JSON.stringify(konamiCode) === JSON.stringify(konamiSequence)) {
-          createMoneyRain();
-          if (matrix && !matrix.isActive) {
-            matrix.toggle();
-          }
-          playTone(1337, 300);
-          showSoundWave();
-          showFeedback('🎮💰 konami exploit: unlimited lives + infinite money cheat enabled 💰🎮');
-          konamiCode = [];
-        }
-      });
-
-      // Resize handler
-      window.addEventListener('resize', () => {
-        if (matrix && typeof matrix.resize === 'function') {
-          clearTimeout(window.resizeTimeout);
-          window.resizeTimeout = setTimeout(() => {
-            try {
-              matrix.resize();
-            } catch (e) {
-              console.warn('Matrix resize error:', e);
-            }
-          }, 250);
-        }
-      });
-
-      // Easter egg: Click header for random hacker message
-      document.querySelector('.header').addEventListener('click', () => {
-        playTone(1337, 200, 'square');
-        createMoneyRain();
-        const message = getRandomHackerMessage();
-        showFeedback('💀 ' + message + ' 💀');
-      });
-    </script>
-  </body>
+    <footer>
+        <p>&copy; 2025 e-gleba. built with minimal html/css. hosted on github pages.</p>
+    </footer>
+</body>
 </html>
