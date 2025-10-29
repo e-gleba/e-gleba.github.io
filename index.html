@@ -1,545 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="C++ Developer - Cross-platform systems, game development, reverse engineering">
-    <title>e-gleba | C++ Developer Portfolio</title>
-    <style>
-        :root {
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #1a1a1a;
-            --text-primary: #e0e0e0;
-            --text-secondary: #888;
-            --accent: #00d4ff;
-            --accent-dark: #0099cc;
-            --border: #333;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto Mono", monospace;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-        }
-        
-        a {
-            color: var(--accent);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        a:hover {
-            color: var(--accent-dark);
-        }
-        
-        /* Header */
-        header {
-            background-color: var(--bg-secondary);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        nav {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="C++ Developer - Cross-platform systems, game development, reverse engineering">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f5fb">
+  <title>e-gleba</title>
+  <link rel="icon" type="image/svg+xml" sizes="any" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 6 L58 32 L32 58 L6 32 Z' fill='none' stroke='%238B5CF6' stroke-width='4' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #0a0a0a;
+      --bg_2: #101011;
+      --text: #e8e8ea;
+      --muted: #a7a7b0;
+      --glass: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.10);
+      --accent: #8b5cf6;
+      --accent_2: #c084fc;
+      --radius: 12px;
+      --shadow: 0 1px 0 rgba(255,255,255,0.03) inset, 0 6px 40px rgba(0,0,0,0.35);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f6f5fb;
+        --bg_2: #ffffff;
+        --text: #14141a;
+        --muted: #5b5b66;
+        --glass: rgba(255,255,255,0.7);
+        --border: rgba(20,20,30,0.10);
+        --shadow: 0 1px 0 rgba(255,255,255,0.8) inset, 0 8px 30px rgba(30, 16, 60, 0.10);
+      }
+    }
 
-        .logo {
-            font-weight: 700;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-        }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto Mono", monospace;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      min-height: 100dvh;
+      position: relative;
+      overflow-x: hidden;
+    }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
+    .bg_layer {
+      position: fixed; inset: -10vmax;
+      z-index: -1; pointer-events: none;
+      filter: blur(60px) saturate(140%);
+      background:
+        radial-gradient(40vmax 40vmax at 15% 8%, rgba(139,92,246,0.35), transparent 60%),
+        radial-gradient(38vmax 38vmax at 85% 18%, rgba(192,132,252,0.28), transparent 60%),
+        radial-gradient(36vmax 36vmax at 50% 120%, rgba(139,92,246,0.20), transparent 60%);
+      animation: float 16s ease-in-out infinite alternate;
+    }
+    @keyframes float { 0% { transform: translate3d(0,0,0) scale(1); } 100% { transform: translate3d(0,-3%,0) scale(1.03); } }
 
-        .nav-links a {
-            font-size: 0.9rem;
-            transition: opacity 0.3s ease;
-        }
+    a { color: var(--accent); text-decoration: none; transition: color .2s ease; }
+    a:hover { color: var(--accent_2); }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 
-        .nav-links a:hover {
-            opacity: 0.7;
-        }
+    header {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: saturate(160%) blur(10px);
+      background: color-mix(in oklab, var(--bg) 70%, transparent);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav {
+      max-width: 960px; margin: 0 auto; padding: 0.85rem 2rem;
+      display: flex; align-items: center; gap: 1rem; justify-content: space-between;
+    }
+    .brand { font-weight: 700; font-size: 1.05rem; letter-spacing: 0.12em; text-transform: lowercase; }
+    .brand::before { color: var(--accent); }
+    .nav_links { display: flex; gap: 1.1rem; list-style: none; align-items: center; }
+    .nav_links a { font-size: .95rem; color: inherit; opacity: .9; }
+    .nav_links a:hover { opacity: 1; color: var(--accent); }
 
-        /* Main Container */
-        main {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
+    main { max-width: 960px; margin: 0 auto; padding: 2.2rem 2rem 3rem; }
+    section { margin: 3.8rem 0; }
 
-        section {
-            margin: 4rem 0;
-        }
+    .hero { padding: 2.8rem 0 1.4rem; text-align: center; }
+    .prompt_line {
+      display: inline-flex; gap: .5rem; align-items: center;
+      padding: .5rem .8rem; border-radius: 999px; margin-bottom: .9rem;
+      color: var(--muted); border: 1px solid var(--border);
+      background: color-mix(in oklab, var(--bg_2) 70%, transparent);
+      backdrop-filter: blur(8px);
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .85rem;
+    }
+    .prompt_line .caret { color: var(--accent); }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.01em; margin-bottom: .6rem; }
+    .subtitle { color: var(--muted); font-size: clamp(1rem, 1.6vw, 1.15rem); }
 
-        /* Hero Section */
-        .hero {
-            padding: 3rem 0;
-            text-align: center;
-        }
+    .tech_stack {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; margin-top: 1.2rem;
+    }
+    .tech_badge {
+      background: color-mix(in oklab, var(--bg_2) 70%, transparent);
+      border: 1px solid var(--border);
+      padding: .35rem .7rem; border-radius: 999px;
+      font-size: .8rem; color: var(--muted);
+      backdrop-filter: blur(6px);
+    }
 
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            letter-spacing: -1px;
-        }
+    h2 {
+      font-size: clamp(1.4rem, 3.5vw, 1.75rem);
+      font-weight: 700; letter-spacing: -0.01em;
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding-bottom: .65rem; border-bottom: 1px solid var(--border);
+    }
+    #about h2::before { color: var(--accent); }
+    #projects h2::before { color: var(--accent); }
+    #skills h2::before { color: var(--accent); }
+    #contact h2::before { color: var(--accent); }
 
-        .hero .subtitle {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-        }
+    .about_text { color: var(--muted); margin-top: 1.1rem; }
+    .about_text p { margin-bottom: 1rem; }
 
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
+    .grid { display: grid; gap: 1.1rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 1.3rem; }
 
-        .tech-badge {
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border);
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-family: "Roboto Mono", monospace;
-            color: var(--accent);
-        }
+    .card {
+      position: relative;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.15rem;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px) saturate(140%);
+      transition: border-color .2s ease, transform .2s ease;
+      display: flex; flex-direction: column; min-height: 240px;
+      overflow: clip;
+    }
+    .card::after {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(120% 40% at 10% -20%, rgba(255,255,255,0.18), transparent 40%),
+                  linear-gradient(to bottom, rgba(255,255,255,0.06), transparent 30%);
+      pointer-events: none;
+    }
+    .card:hover { border-color: color-mix(in oklab, var(--accent) 60%, var(--border)); transform: translateY(-2px); }
 
-        /* Section Headers */
-        h2 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--accent);
-            display: inline-block;
-        }
+    .project_title { color: var(--accent); font-weight: 600; margin-bottom: .35rem; }
+    .project_title::before { color: var(--accent); }
+    .project_desc { color: var(--muted); font-size: .95rem; margin-bottom: .8rem; }
+    .project_tech { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .6rem; }
+    .project_tech span {
+      font-size: .75rem; color: var(--muted);
+      background: color-mix(in oklab, var(--bg_2) 75%, transparent);
+      border: 1px solid var(--border);
+      padding: .22rem .5rem; border-radius: 8px;
+      backdrop-filter: blur(6px);
+    }
+    .project_link { font-size: .92rem; margin-top: auto; align-self: flex-start; }
 
-        /* Projects */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
+    .skills_list { display: grid; gap: 1.1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 1.1rem; }
+    .skill_category h3 { color: var(--accent); font-size: .95rem; margin-bottom: .55rem; text-transform: lowercase; }
+    .skill_category ul { list-style: none; }
+    .skill_category li { padding: .35rem 0; color: var(--muted); font-size: .92rem; }
+    .skill_category li:before { content: "→ "; color: var(--accent); margin-right: .35rem; }
 
-        .project-card {
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border);
-            padding: 1.5rem;
-            border-radius: 4px;
-            transition: border-color 0.3s ease, transform 0.3s ease;
-        }
+    .contact_links { display: flex; flex-wrap: wrap; gap: .9rem 1rem; margin-top: 1.1rem; align-items: center; }
+    .contact_link {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .7rem 1.05rem; background: color-mix(in oklab, var(--bg_2) 65%, transparent);
+      border: 1px solid var(--border); border-radius: 999px;
+      transition: border-color .2s ease, background .2s ease, transform .2s ease;
+      color: inherit; backdrop-filter: blur(10px);
+    }
+    .contact_link:hover { border-color: var(--accent); background: color-mix(in oklab, var(--accent) 12%, transparent); transform: translateY(-1px); }
+    .contact_link[href*="github.com"] span::before { content: "★ "; color: var(--accent); }
+    .contact_link[href*="vk.ru"] span::before { content: "◎ "; color: var(--accent); }
+    .contact_link[href*="setka.ru"] span::before { content: "▦ "; color: var(--accent); }
+    .contact_link[href^="mailto:"] span::before { content: "✉ "; color: var(--accent); }
+    .contact_link[href*="steamcommunity.com"] span::before { content: "♨ "; color: var(--accent); }
 
-        .project-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
+    footer {
+      backdrop-filter: saturate(160%) blur(6px);
+      background: color-mix(in oklab, var(--bg) 70%, transparent);
+      border-top: 1px solid var(--border);
+      margin-top: 4rem; padding: 2rem; text-align: center;
+      color: var(--muted); font-size: .95rem;
+    }
 
-        .project-title {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: var(--accent);
-        }
+    @media (max-width: 768px) {
+      .nav { flex-direction: column; gap: .6rem; padding: .9rem 1.25rem; }
+      .nav_links { gap: 1rem; flex-wrap: wrap; justify-content: center; }
+      .hero { padding: 2.2rem 0 1.1rem; }
+      .contact_links { flex-direction: column; align-items: stretch; }
+      .contact_link { justify-content: center; width: 100%; }
+    }
 
-        .project-desc {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-        }
+    code {
+      background: color-mix(in oklab, var(--bg_2) 70%, transparent);
+      border: 1px solid var(--border);
+      padding: .22rem .45rem; border-radius: 8px;
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .9rem; color: var(--accent);
+      backdrop-filter: blur(6px);
+    }
 
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .project-tech span {
-            font-size: 0.75rem;
-            background-color: var(--bg-primary);
-            padding: 0.25rem 0.5rem;
-            border-radius: 3px;
-            border: 1px solid var(--border);
-            font-family: "Roboto Mono", monospace;
-            color: var(--text-secondary);
-        }
-
-        .project-link {
-            display: inline-block;
-            font-size: 0.9rem;
-        }
-
-        /* Skills */
-        .skills-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .skill-category {
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border);
-            padding: 1.5rem;
-            border-radius: 4px;
-        }
-
-        .skill-category h3 {
-            color: var(--accent);
-            margin-bottom: 1rem;
-            font-size: 1rem;
-        }
-
-        .skill-category ul {
-            list-style: none;
-        }
-
-        .skill-category li {
-            padding: 0.4rem 0;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .skill-category li:before {
-            content: "→ ";
-            color: var(--accent);
-            margin-right: 0.5rem;
-        }
-
-        /* About */
-        .about-text {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-top: 1rem;
-        }
-
-        .about-text p {
-            margin-bottom: 1rem;
-        }
-
-        /* Contact */
-        .contact-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-top: 2rem;
-            align-items: center;
-        }
-
-        .contact-link {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.25rem;
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .contact-link:hover {
-            border-color: var(--accent);
-            background-color: rgba(0, 212, 255, 0.1);
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--bg-secondary);
-            border-top: 1px solid var(--border);
-            margin-top: 4rem;
-            padding: 2rem;
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .nav-links {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-            }
-
-            .tech-stack {
-                gap: 0.75rem;
-            }
-
-            .tech-badge {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.8rem;
-            }
-
-            .contact-links {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .contact-link {
-                justify-content: center;
-            }
-        }
-
-        /* Code highlighting */
-        code {
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border);
-            padding: 0.2rem 0.4rem;
-            border-radius: 3px;
-            font-family: "Roboto Mono", monospace;
-            font-size: 0.9rem;
-            color: var(--accent);
-        }
-    </style>
+    a[href^="http"]:not([href^="mailto:"])::after { content: " ↗"; color: var(--muted); font-size: .9em; margin-left: .25rem; }
+    ::selection { background: color-mix(in oklab, var(--accent) 35%, transparent); color: #000; }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+  </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">e-gleba</div>
-            <ul class="nav-links">
-                <li><a href="#about">about</a></li>
-                <li><a href="#projects">projects</a></li>
-                <li><a href="#skills">skills</a></li>
-                <li><a href="#contact">contact</a></li>
-            </ul>
-        </nav>
-    </header>
+  <div class="bg_layer"></div>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <h1>C++ Developer</h1>
-            <p class="subtitle">systems architect • game development • reverse engineering</p>
-            <div class="tech-stack">
-                <span class="tech-badge">C++</span>
-                <span class="tech-badge">CMake</span>
-                <span class="tech-badge">Linux</span>
-                <span class="tech-badge">OpenGL</span>
-                <span class="tech-badge">Android NDK</span>
-                <span class="tech-badge">iOS</span>
-            </div>
-        </section>
+  <header>
+    <nav class="nav">
+      <div class="brand">e-gleba</div>
+      <ul class="nav_links">
+        <li><a href="#about">about</a></li>
+        <li><a href="#projects">projects</a></li>
+        <li><a href="#skills">skills</a></li>
+        <li><a href="#contact">contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-        <!-- About Section -->
-        <section id="about">
-            <h2>about</h2>
-            <div class="about-text">
-                <p>Performance-aware developer specializing in cross-platform C++ systems. Adherent to minimalist philosophy: less code, fewer bugs. Focused on efficient implementations using standard library idioms and explicit error handling.</p>
-                <p>Experience spans game development with ECS patterns, reverse engineering, and native mobile development across Android and iOS platforms. Proficient with modern build systems (CMake), low-level graphics programming (OpenGL), and production-grade C++ architecture.</p>
-                <p>Philosophy: practice over theory. Code is documentation. Prefer Unix-style tooling, open formats, and explicit over implicit.</p>
-            </div>
-        </section>
+  <main>
+    <section class="hero">
+      <div class="prompt_line"><span class="caret">➜</span> ~/src <span class="caret">git:(main)</span> <span style="opacity:.7"># building</span></div>
+      <h1>C++ Developer</h1>
+      <p class="subtitle">systems architect • game development • reverse engineering</p>
+      <div class="tech_stack">
+        <span class="tech_badge">C++</span>
+        <span class="tech_badge">CMake</span>
+        <span class="tech_badge">Linux</span>
+        <span class="tech_badge">OpenGL</span>
+        <span class="tech_badge">Android NDK</span>
+        <span class="tech_badge">iOS</span>
+      </div>
+    </section>
 
-        <!-- Projects Section -->
-        <section id="projects">
-            <h2>projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-title">kyocera-drivers</div>
-                    <p class="project-desc">Fully reverse-engineered Kyocera PPD and filter solution for Linux printing. Modern CMake build system with automated installation.</p>
-                    <div class="project-tech">
-                        <span>C/C++20</span>
-                        <span>CMake</span>
-                        <span>CUPS</span>
-                        <span>Reverse Eng.</span>
-                    </div>
-                    <a class="project-link" href="https://github.com/e-gleba/kyocera-drivers">view →</a>
-                </div>
+    <section id="about">
+      <h2>about</h2>
+      <div class="about_text">
+        <p>Performance-aware developer specializing in cross-platform C++ systems. Adherent to minimalist philosophy: less code, fewer bugs. Focused on efficient implementations using standard library idioms and explicit error handling.</p>
+        <p>Experience spans game development with ECS patterns, reverse engineering, and native mobile development across Android and iOS platforms. Proficient with modern build systems (CMake), low-level graphics programming (OpenGL), and production-grade C++ architecture.</p>
+        <p>Philosophy: practice over theory. Code is documentation. Prefer Unix-style tooling, open formats, and explicit over implicit.</p>
+      </div>
+    </section>
 
-                <div class="project-card">
-                    <div class="project-title">basic-game-engine</div>
-                    <p class="project-desc">C++ game engine powered by SDL 3.0 and OpenGL. Implements ECS architecture with EnTT for entity management and sprite editing capabilities.</p>
-                    <div class="project-tech">
-                        <span>C++</span>
-                        <span>SDL 3</span>
-                        <span>OpenGL</span>
-                        <span>ECS</span>
-                    </div>
-                    <a class="project-link" href="https://github.com/e-gleba/basic-game-engine">view →</a>
-                </div>
+    <section id="projects">
+      <h2>projects</h2>
+      <div class="grid">
+        <article class="card">
+          <div class="project_title">kyocera-drivers</div>
+          <p class="project_desc">Fully reverse-engineered Kyocera PPD and filter solution for Linux printing. Modern CMake build system with automated installation.</p>
+          <div class="project_tech">
+            <span>C/C++20</span><span>CMake</span><span>CUPS</span><span>Reverse Eng.</span>
+          </div>
+          <a class="project_link" href="https://github.com/e-gleba/kyocera-drivers">view</a>
+        </article>
 
-                <div class="project-card">
-                    <div class="project-title">template-cpp-project</div>
-                    <p class="project-desc">Modern C++23 project template with CMake, code quality tools, Docker support, and cross-platform compatibility for Linux, Windows, macOS, Android.</p>
-                    <div class="project-tech">
-                        <span>C++23</span>
-                        <span>CMake 3.30+</span>
-                        <span>Docker</span>
-                        <span>CI/CD</span>
-                    </div>
-                    <a class="project-link" href="https://github.com/e-gleba/template-cpp-project">view →</a>
-                </div>
+        <article class="card">
+          <div class="project_title">basic-game-engine</div>
+          <p class="project_desc">C++ game engine powered by SDL 3.0 and OpenGL. Implements ECS architecture with EnTT for entity management and sprite editing capabilities.</p>
+          <div class="project_tech">
+            <span>C++</span><span>SDL 3</span><span>OpenGL</span><span>ECS</span>
+          </div>
+          <a class="project_link" href="https://github.com/e-gleba/basic-game-engine">view</a>
+        </article>
 
-                <div class="project-card">
-                    <div class="project-title">sdl-overview</div>
-                    <p class="project-desc">Comprehensive SDL 3 demonstration showcasing graphics rendering, window management, and input handling with modern C++20 patterns.</p>
-                    <div class="project-tech">
-                        <span>C++20</span>
-                        <span>SDL 3</span>
-                        <span>CMake</span>
-                        <span>Graphics</span>
-                    </div>
-                    <a class="project-link" href="https://github.com/e-gleba/sdl-overview">view →</a>
-                </div>
+        <article class="card">
+          <div class="project_title">template-cpp-project</div>
+          <p class="project_desc">Modern C++23 project template with CMake, code quality tools, Docker support, and cross-platform compatibility for Linux, Windows, macOS, Android.</p>
+          <div class="project_tech">
+            <span>C++23</span><span>CMake 3.30+</span><span>Docker</span><span>CI/CD</span>
+          </div>
+          <a class="project_link" href="https://github.com/e-gleba/template-cpp-project">view</a>
+        </article>
 
-                <div class="project-card">
-                    <div class="project-title">student-bsu-by</div>
-                    <p class="project-desc">Native Android interface for Belarusian State University student account access. Cross-platform considerations for university system integration.</p>
-                    <div class="project-tech">
-                        <span>Android</span>
-                        <span>NDK</span>
-                        <span>Mobile</span>
-                    </div>
-                    <a class="project-link" href="https://github.com/e-gleba/student-bsu-by">view →</a>
-                </div>
+        <article class="card">
+          <div class="project_title">sdl-overview</div>
+          <p class="project_desc">Comprehensive SDL 3 demonstration showcasing graphics rendering, window management, and input handling with modern C++20 patterns.</p>
+          <div class="project_tech">
+            <span>C++20</span><span>SDL 3</span><span>CMake</span><span>Graphics</span>
+          </div>
+          <a class="project_link" href="https://github.com/e-gleba/sdl-overview">view</a>
+        </article>
 
-                <div class="project-card">
-                    <div class="project-title">Various Explorations</div>
-                    <p class="project-desc">Ghidra reverse engineering resources, game asset modification tooling, DLL injection techniques, and shader programming experiments.</p>
-                    <div class="project-tech">
-                        <span>Reverse Eng.</span>
-                        <span>Ghidra</span>
-                        <span>GLSL</span>
-                        <span>Binary Patching</span>
-                    </div>
-                    <a class="project-link" href="https://github.com/e-gleba">github →</a>
-                </div>
-            </div>
-        </section>
+        <article class="card">
+          <div class="project_title">student-bsu-by</div>
+          <p class="project_desc">Native Android interface for Belarusian State University student account access. Cross-platform considerations for university system integration.</p>
+          <div class="project_tech">
+            <span>Android</span><span>NDK</span><span>Mobile</span>
+          </div>
+          <a class="project_link" href="https://github.com/e-gleba/student-bsu-by">view</a>
+        </article>
 
-        <!-- Skills Section -->
-        <section id="skills">
-            <h2>skills</h2>
-            <div class="skills-list">
-                <div class="skill-category">
-                    <h3>languages</h3>
-                    <ul>
-                        <li>C++17/20/23</li>
-                        <li>C17/99</li>
-                        <li>Python 3</li>
-                        <li>Bash/Shell</li>
-                        <li>Objective-C/C++</li>
-                    </ul>
-                </div>
+        <article class="card">
+          <div class="project_title">Various Explorations</div>
+          <p class="project_desc">Ghidra reverse engineering resources, game asset modification tooling, DLL injection techniques, and shader programming experiments.</p>
+          <div class="project_tech">
+            <span>Reverse Eng.</span><span>Ghidra</span><span>GLSL</span><span>Binary Patching</span>
+          </div>
+          <a class="project_link" href="https://github.com/e-gleba">github</a>
+        </article>
+      </div>
+    </section>
 
-                <div class="skill-category">
-                    <h3>systems & tools</h3>
-                    <ul>
-                        <li>CMake 3.16+</li>
-                        <li>Linux (Fedora, Alt)</li>
-                        <li>Git/GitHub</li>
-                        <li>Docker</li>
-                        <li>Ninja/Make</li>
-                    </ul>
-                </div>
+    <section id="skills">
+      <h2>skills</h2>
+      <div class="skills_list">
+        <article class="card skill_category">
+          <h3>languages</h3>
+          <ul><li>C++17/20/23</li><li>C17/99</li><li>Python 3</li><li>Bash/Shell</li><li>Objective-C/C++</li></ul>
+        </article>
 
-                <div class="skill-category">
-                    <h3>graphics & engines</h3>
-                    <ul>
-                        <li>OpenGL (GLSL)</li>
-                        <li>SDL 2/3</li>
-                        <li>Game architecture</li>
-                        <li>ECS patterns</li>
-                        <li>Sprite systems</li>
-                    </ul>
-                </div>
+        <article class="card skill_category">
+          <h3>systems & tools</h3>
+          <ul><li>CMake 3.16+</li><li>Linux (Fedora, Alt)</li><li>Git/GitHub</li><li>Docker</li><li>Ninja/Make</li></ul>
+        </article>
 
-                <div class="skill-category">
-                    <h3>mobile development</h3>
-                    <ul>
-                        <li>Android NDK</li>
-                        <li>iOS development</li>
-                        <li>Cross-platform</li>
-                        <li>JNI/Native binding</li>
-                        <li>Mobile UI</li>
-                    </ul>
-                </div>
+        <article class="card skill_category">
+          <h3>graphics & engines</h3>
+          <ul><li>OpenGL (GLSL)</li><li>SDL 2/3</li><li>Game architecture</li><li>ECS patterns</li><li>Sprite systems</li></ul>
+        </article>
 
-                <div class="skill-category">
-                    <h3>reverse engineering</h3>
-                    <ul>
-                        <li>Ghidra analysis</li>
-                        <li>Binary patching</li>
-                        <li>Memory analysis</li>
-                        <li>DLL injection</li>
-                        <li>Asset extraction</li>
-                    </ul>
-                </div>
+        <article class="card skill_category">
+          <h3>mobile development</h3>
+          <ul><li>Android NDK</li><li>iOS development</li><li>Cross-platform</li><li>JNI/Native binding</li><li>Mobile UI</li></ul>
+        </article>
 
-                <div class="skill-category">
-                    <h3>development practices</h3>
-                    <ul>
-                        <li>Explicit error handling</li>
-                        <li>Performance profiling</li>
-                        <li>Minimal code footprint</li>
-                        <li>Standard library idioms</li>
-                        <li>Production deployment</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+        <article class="card skill_category">
+          <h3>reverse engineering</h3>
+          <ul><li>Ghidra analysis</li><li>Binary patching</li><li>Memory analysis</li><li>DLL injection</li><li>Asset extraction</li></ul>
+        </article>
 
-        <section id="contact">
-            <h2>contact</h2>
-            <div class="contact-links">
-                <a class="contact-link" href="https://github.com/e-gleba">
-                    <span>github</span>
-                </a>
-                <a class="contact-link" href="https://vk.ru/e_gleba">
-                  <span>vk</span>
-                  </a>
-                <a class="contact-link" href="https://setka.ru/users/c7b26aaa-6c35-436e-975a-a48515dbab7a?utm_medium=profile&utm_content=332624&utm_source=share_content&utm_term=332624&utm_campaign=inapp_setka&old=332624">
-                    <span>setka</span>
-                </a>
-                <a class="contact-link" href="mailto:i@egleba.ru">
-                    <span>email</span>
-                </a>
-                <a class="contact-link" href="https://steamcommunity.com/id/egleba">
-                    <span>steam</span>
-                </a>
-            </div>
-        </section>
-    </main>
+        <article class="card skill_category">
+          <h3>development practices</h3>
+          <ul><li>Explicit error handling</li><li>Performance profiling</li><li>Minimal code footprint</li><li>Standard library idioms</li><li>Production deployment</li></ul>
+        </article>
+      </div>
+    </section>
 
-    <footer>
-        <p>&copy; 2025 e-gleba. built with minimal html/css. hosted on github pages.</p>
-    </footer>
+    <section id="contact">
+      <h2>contact</h2>
+      <div class="contact_links">
+        <a class="contact_link" href="https://github.com/e-gleba"><span>github</span></a>
+        <a class="contact_link" href="https://vk.ru/e_gleba"><span>vk</span></a>
+        <a class="contact_link" href="https://setka.ru/users/c7b26aaa-6c35-436e-975a-a48515dbab7a?utm_medium=profile&utm_content=332624&utm_source=share_content&utm_term=332624&utm_campaign=inapp_setka&old=332624"><span>setka</span></a>
+        <a class="contact_link" href="mailto:i@egleba.ru"><span>email</span></a>
+        <a class="contact_link" href="https://steamcommunity.com/id/egleba"><span>steam</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 e-gleba. built with minimal html/css. hosted on github pages.</p>
+  </footer>
 </body>
 </html>
