@@ -288,6 +288,65 @@
     a[href^="http"]:not([href^="mailto:"])::after { content: " ↗"; color: var(--muted); font-size: .9em; margin-left: .25rem; }
     ::selection { background: color-mix(in oklab, var(--accent) 35%, transparent); color: #000; }
     @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+    /* PRINT FIXES: force light theme, disable filters/clipping, keep content visible */
+    @media print {
+      :root, [data-theme="dark"], [data-theme="light"] {
+        --bg: #ffffff;
+        --bg_2: #ffffff;
+        --text: #000000;
+        --muted: #333333;
+        --glass: #ffffff;
+        --border: #dddddd;
+        --accent: #000000;
+        --accent_2: #000000;
+        --shadow: none;
+        --z_nudge: 0px;
+      }
+      @page { margin: 12mm; }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .bg_layer,
+      header,
+      footer {
+        display: none !important;
+      }
+      .card {
+        background: #ffffff !important;
+        border-color: #dddddd !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        filter: none !important;
+        transform: none !important;
+        will-change: auto !important;
+        overflow: visible !important;
+      }
+      .project_tech span,
+      .tech_badge,
+      code {
+        background: #ffffff !important;
+        border-color: #cccccc !important;
+        color: #000000 !important;
+        backdrop-filter: none !important;
+      }
+      .prompt_line,
+      .contact_links {
+        filter: none !important;
+        backdrop-filter: none !important;
+        background: #ffffff !important;
+        border-color: #dddddd !important;
+        color: #000000 !important;
+      }
+      a[href^="http"]:not([href^="mailto:"])::after { content: ""; }
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -301,6 +360,7 @@
         <li><a href="#projects">projects</a></li>
         <li><a href="#skills">skills</a></li>
         <li><a href="#contact">contact</a></li>
+        <li><button id="export_pdf" class="theme_toggle" type="button" aria-label="export to pdf">pdf</button></li>
         <li><button id="theme_toggle" class="theme_toggle" type="button" aria-label="switch to dark theme">☾</button></li>
       </ul>
     </nav>
@@ -506,7 +566,6 @@
           var t = e.matches ? 'dark' : 'light';
           set_button_for(t);
           set_theme_color_meta(t);
-          // no apply_theme here (don't override user intent) unless no user choice:
           if (!root.getAttribute('data-theme')) {
             apply_theme(t, false);
           } else {
@@ -514,6 +573,18 @@
           }
         });
       }
+    })();
+  </script>
+
+  <!-- minimal export-to-PDF via native print dialog -->
+  <script>
+    (function () {
+      'use strict';
+      var btn = document.getElementById('export_pdf');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        window.print();
+      });
     })();
   </script>
 </body>
