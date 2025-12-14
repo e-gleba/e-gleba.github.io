@@ -128,25 +128,28 @@ class ThemeManager {
       theme === "dark" ? "#0a0514" : "#f5f5f7",
     );
     
-    // Add transition class for smooth theme change
-    this.root.classList.add("theme-transitioning");
+    // Set theme first, then add transition class
+    this.root.dataset.theme = theme;
+    if (persist) localStorage.setItem("theme", theme);
+
+    this.btn.textContent = theme === "dark" ? "☀" : "☾";
+    this.btn.setAttribute(
+      "aria-label",
+      `switch to ${theme === "dark" ? "light" : "dark"} theme`,
+    );
     
-    // Apply theme change
+    // Force a reflow to ensure theme is applied
+    void this.root.offsetHeight;
+    
+    // Add transition class after theme is set
     requestAnimationFrame(() => {
-      this.root.dataset.theme = theme;
-      if (persist) localStorage.setItem("theme", theme);
-
-      this.btn.textContent = theme === "dark" ? "☀" : "☾";
-      this.btn.setAttribute(
-        "aria-label",
-        `switch to ${theme === "dark" ? "light" : "dark"} theme`,
-      );
-
+      this.root.classList.add("theme-transitioning");
+      
       // Remove transition class after animation completes
       setTimeout(() => {
         this.root.classList.remove("theme-transitioning");
         document.body.style.backgroundColor = "";
-      }, 600);
+      }, 500);
     });
   }
 
