@@ -10,9 +10,10 @@
         ? "dark"
         : "light";
   document.documentElement.dataset.theme = theme;
+  document.body.style.backgroundColor = theme === "dark" ? "#0a0514" : "#f5f5f7";
   document
     .getElementById("theme_color")
-    ?.setAttribute("content", theme === "dark" ? "#0a0514" : "#fafbfc");
+    ?.setAttribute("content", theme === "dark" ? "#0a0514" : "#f5f5f7");
 })();
 
 class GitHubDataFetcher {
@@ -72,7 +73,7 @@ class ProjectCardRenderer {
         </div>
         <div class="project_stats">
           <span class="stat_item">${repo.stargazers_count}</span>
-          <span class="stat_item" style="opacity: 0.7;">forks: ${repo.forks_count}</span>
+          <span class="stat_item stat_fork" style="opacity: 0.7;">forks: ${repo.forks_count}</span>
         </div>
         <a class="project_link" href="${repo.html_url}">view project</a>
       </article>
@@ -117,18 +118,36 @@ class ThemeManager {
   }
 
   apply(theme, persist = true) {
-    this.root.dataset.theme = theme;
-    if (persist) localStorage.setItem("theme", theme);
-
-    this.btn.textContent = theme === "dark" ? "☀" : "☾";
-    this.btn.setAttribute(
-      "aria-label",
-      `switch to ${theme === "dark" ? "light" : "dark"} theme`,
-    );
+    // Prevent flashbang by setting theme immediately
+    const targetBg = theme === "dark" ? "#0a0514" : "#f5f5f7";
+    
+    // Set background immediately to prevent flash
+    document.body.style.backgroundColor = targetBg;
     this.meta?.setAttribute(
       "content",
-      theme === "dark" ? "#0a0514" : "#fafbfc",
+      theme === "dark" ? "#0a0514" : "#f5f5f7",
     );
+    
+    // Add transition class for smooth theme change
+    this.root.classList.add("theme-transitioning");
+    
+    // Apply theme change
+    requestAnimationFrame(() => {
+      this.root.dataset.theme = theme;
+      if (persist) localStorage.setItem("theme", theme);
+
+      this.btn.textContent = theme === "dark" ? "☀" : "☾";
+      this.btn.setAttribute(
+        "aria-label",
+        `switch to ${theme === "dark" ? "light" : "dark"} theme`,
+      );
+
+      // Remove transition class after animation completes
+      setTimeout(() => {
+        this.root.classList.remove("theme-transitioning");
+        document.body.style.backgroundColor = "";
+      }, 600);
+    });
   }
 
   toggle() {
