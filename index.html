@@ -404,8 +404,19 @@
             <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-10 sm:mb-12 flex items-center gap-2 sm:gap-3" data-aos="fade-right">
                 <span class="text-jb-pink font-mono text-2xl" aria-hidden="true">//</span>
                 <span x-text="t('projects.title')"></span>
-                <span class="material-symbols-outlined rate-warn text-lg" x-show="rateLimited"
-                      :title="t('projects.rateWarn')" aria-label="GitHub API rate limited" style="cursor:help;">warning</span>
+                <span class="relative inline-flex" x-show="rateLimited">
+                    <button @click="rateInfo = !rateInfo" class="material-symbols-outlined rate-warn text-lg focus:outline-none" aria-label="Rate limit info">warning</button>
+                    <div x-show="rateInfo" @click.outside="rateInfo = false" x-transition.opacity.duration.150ms
+                         class="absolute left-0 top-full mt-2 w-72 sm:w-80 rounded-xl dropdown-panel p-4 z-[60] text-sm font-normal text-gray-600 dark:text-gray-400">
+                        <p class="mb-2 font-medium text-gray-900 dark:text-gray-100" x-text="t('projects.rateTitle')"></p>
+                        <p x-text="t('projects.rateDesc')"></p>
+                        <a href="https://docs.github.com/en/rest/rate-limit" target="_blank" rel="noopener noreferrer"
+                           class="inline-flex items-center gap-1 mt-2 text-jb-pink hover:underline text-sm font-medium">
+                            GitHub Rate Limits
+                            <span class="material-symbols-outlined text-sm">open_in_new</span>
+                        </a>
+                    </div>
+                </span>
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" x-show="loading" aria-busy="true">
                 <template x-for="i in 6" :key="i"><div class="liquid-glass rounded-2xl p-6 skeleton h-56"></div></template>
@@ -538,6 +549,7 @@
             repos:        [],
             loading:      true,
             rateLimited:  false,
+            rateInfo:     false,
 
             langs: [
                 { code:'en', flag:'🇬🇧', label:'English' },
@@ -557,7 +569,7 @@
                         p3:'Static analysis over runtime checks. Contracts over exceptions. Generic programming over hierarchies. Every abstraction must compile down to what you\'d write by hand.',
                         p4:'Beyond code — drawn to design, sound, and music. Integrate Wwise audio pipelines into game engines, obsess over UI details, and prototype visual systems for the joy of it. Offline — telescope, Stellaris empires, Sniper Elite headshots, and occasionally breaking things just to understand how they work.'
                     },
-                    projects:{ title:'Projects', noDesc:'No description available', view:'View', rateWarn:'GitHub API rate limit reached — showing cached data' },
+                    projects:{ title:'Projects', noDesc:'No description available', view:'View', rateWarn:'GitHub API rate limit reached — showing cached data', rateTitle:'API Rate Limit', rateDesc:'GitHub limits unauthenticated requests to 60/hour. Projects shown below are cached. Try refreshing later.' },
                     skills:  { title:'Skills', languages:'Languages', systems:'Systems & Tools', engine:'Engine & Multimedia', mobile:'Mobile', reverse:'Reverse Engineering', practices:'Practices & AI' },
                     contact: { title:'Contact' },
                     footer:  'Tailwind CSS · Alpine.js · AOS'
@@ -573,7 +585,7 @@
                         p3:'Статический анализ вместо рантайм-проверок. Контракты вместо исключений. Обобщённое программирование вместо иерархий. Каждая абстракция должна компилироваться в то, что вы написали бы вручную.',
                         p4:'Помимо кода — увлекаюсь дизайном, звуком и музыкой. Интегрирую аудио-пайплайны на Wwise в игровые движки, зацикливаюсь на деталях UI, прототипирую визуальные системы ради удовольствия. Вне экрана — телескоп, империи в Stellaris, хедшоты в Sniper Elite и периодическое разрушение вещей ради понимания, как они работают.'
                     },
-                    projects:{ title:'Проекты', noDesc:'Описание отсутствует', view:'Смотреть', rateWarn:'Лимит GitHub API — показаны кэшированные данные' },
+                    projects:{ title:'Проекты', noDesc:'Описание отсутствует', view:'Смотреть', rateWarn:'Лимит GitHub API — показаны кэшированные данные', rateTitle:'Лимит API', rateDesc:'GitHub ограничивает анонимные запросы до 60 в час. Проекты ниже из кэша. Попробуйте обновить позже.' },
                     skills:  { title:'Навыки', languages:'Языки', systems:'Системы и инструменты', engine:'Движок и мультимедиа', mobile:'Мобильная', reverse:'Реверс-инжиниринг', practices:'Практики и AI' },
                     contact: { title:'Контакты' },
                     footer:  'Tailwind CSS · Alpine.js · AOS'
@@ -589,7 +601,7 @@
                         p3:'静态分析优于运行时检查。契约优于异常。泛型编程优于层次继承。每个抽象都必须编译为你手写的代码。',
                         p4:'代码之外——热衷设计、声音与音乐。在游戏引擎中集成Wwise音频管线，痴迷UI细节，纯粹为了乐趣而制作视觉原型。线下——望远镜、Stellaris帝国、Sniper Elite爆头，偶尔拆解东西只为理解其工作原理。'
                     },
-                    projects:{ title:'项目', noDesc:'暂无描述', view:'查看', rateWarn:'GitHub API 速率限制——显示缓存数据' },
+                    projects:{ title:'项目', noDesc:'暂无描述', view:'查看', rateWarn:'GitHub API 速率限制——显示缓存数据', rateTitle:'API 速率限制', rateDesc:'GitHub 限制匿名请求为每小时60次。以下项目为缓存数据，请稍后刷新。' },
                     skills:  { title:'技能', languages:'编程语言', systems:'系统与工具', engine:'引擎与多媒体', mobile:'移动开发', reverse:'逆向工程', practices:'开发实践与AI' },
                     contact: { title:'联系方式' },
                     footer:  'Tailwind CSS · Alpine.js · AOS'
