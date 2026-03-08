@@ -40,10 +40,3 @@ git push origin main
 ## contact
 
 if you need to reach me, the website literally exists for that purpose.
-
----
-
-*built with the bleeding-edge technology of html, css, and the occasional javascript.*
-*no transpilation required. no dependency hell. just works.*
-```
-
