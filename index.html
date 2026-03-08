@@ -1,1041 +1,1002 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="C++ Developer - Cross-platform systems, game development, reverse engineering"
-    />
-    <meta id="theme_color" name="theme-color" content="#0a0a0a" />
-    <title>e-gleba</title>
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      sizes="any"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M8 12 L24 28 L8 44' fill='none' stroke='%238B5CF6' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M30 44 L52 44' fill='none' stroke='%238B5CF6' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E"
-    />
-
-    <!-- pre-paint: set theme before CSS to avoid flicker -->
+<!DOCTYPE html>
+<html lang="en" x-data="{ theme: $persist('dark').as('theme') }" :class="theme">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="C++ Developer - Cross-platform systems, game development, reverse engineering">
+    <title>Evgeniy Gleba - C++</title>
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF6B9D'/%3E%3Cstop offset='50%25' style='stop-color:%23FF8C42'/%3E%3Cstop offset='100%25' style='stop-color:%23C792EA'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='45' font-family='monospace' font-size='36' font-weight='bold' text-anchor='middle' fill='url(%23g)'%3EE%3C/text%3E%3C/svg%3E">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      (function () {
-        try {
-          var stored = localStorage.getItem("theme");
-          var theme =
-            stored === "light" || stored === "dark"
-              ? stored
-              : window.matchMedia &&
-                  window.matchMedia("(prefers-color-scheme: dark)").matches
-                ? "dark"
-                : "light";
-          document.documentElement.setAttribute("data-theme", theme);
-          var meta = document.getElementById("theme_color");
-          if (meta)
-            meta.setAttribute(
-              "content",
-              theme === "dark" ? "#0a0a0a" : "#f6f5fb",
-            );
-        } catch (_) {}
-      })();
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter var', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        mono: ['SF Mono', 'Monaco', 'Inconsolata', 'Courier New', 'monospace']
+                    },
+                    colors: {
+                        accent: {
+                            DEFAULT: '#8B5CF6',
+                            light: '#A78BFA',
+                            dark: '#7C3AED'
+                        },
+                        jetbrains: {
+                            pink: '#FF6B9D',
+                            orange: '#FF8C42',
+                            purple: '#C792EA'
+                        }
+                    }
+                }
+            }
+        }
     </script>
-
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <link rel="preconnect" href="https://rsms.me/">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
     <style>
-      /* base: dark as default; override via [data-theme="light"] */
-      :root {
-        color-scheme: light dark; /* let UA pick if no override yet */
-        --bg: #0a0a0a;
-        --bg_2: #101011;
-        --text: #e8e8ea;
-        --muted: #a7a7b0;
-        --glass: rgba(255, 255, 255, 0.06);
-        --border: rgba(255, 255, 255, 0.1);
-        --accent: #8b5cf6;
-        --accent_2: #c084fc;
-        --radius: 12px;
-        --shadow:
-          0 1px 0 rgba(255, 255, 255, 0.03) inset,
-          0 6px 40px rgba(0, 0, 0, 0.35);
-
-        /* repaint nudge to fix compositor artifacts on theme switch */
-        --z_nudge: 0px;
-      }
-
-      [data-theme="dark"] {
-        color-scheme: dark;
-        --bg: #0a0a0a;
-        --bg_2: #101011;
-        --text: #e8e8ea;
-        --muted: #a7a7b0;
-        --glass: rgba(255, 255, 255, 0.06);
-        --border: rgba(255, 255, 255, 0.1);
-        --shadow:
-          0 1px 0 rgba(255, 255, 255, 0.03) inset,
-          0 6px 40px rgba(0, 0, 0, 0.35);
-      }
-      [data-theme="light"] {
-        color-scheme: light;
-        --bg: #f6f5fb;
-        --bg_2: #ffffff;
-        --text: #14141a;
-        --muted: #5b5b66;
-        --glass: rgba(255, 255, 255, 0.7);
-        --border: rgba(20, 20, 30, 0.1);
-        --shadow:
-          0 1px 0 rgba(255, 255, 255, 0.8) inset,
-          0 8px 30px rgba(30, 16, 60, 0.1);
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto Mono",
-          monospace;
-        background: var(--bg);
-        color: var(--text);
-        line-height: 1.65;
-        min-height: 100dvh;
-        position: relative;
-        overflow-x: hidden;
-      }
-
-      .bg_layer {
-        position: fixed;
-        inset: -10vmax;
-        z-index: -1;
-        pointer-events: none;
-        filter: blur(60px) saturate(140%);
-        background:
-          radial-gradient(
-            40vmax 40vmax at 15% 8%,
-            rgba(139, 92, 246, 0.35),
-            transparent 60%
-          ),
-          radial-gradient(
-            38vmax 38vmax at 85% 18%,
-            rgba(192, 132, 252, 0.28),
-            transparent 60%
-          ),
-          radial-gradient(
-            36vmax 36vmax at 50% 120%,
-            rgba(139, 92, 246, 0.2),
-            transparent 60%
-          );
-        animation: float 16s ease-in-out infinite alternate;
-
-        /* ensure correct composite after theme change */
-        transform: translateZ(var(--z_nudge));
-        will-change: transform, filter, background;
-        backface-visibility: hidden;
-      }
-      @keyframes float {
-        0% {
-          transform: translate3d(0, 0, 0) scale(1);
+        @supports (font-variation-settings: normal) {
+            html { font-family: 'Inter var', sans-serif; }
         }
-        100% {
-          transform: translate3d(0, -3%, 0) scale(1.03);
+        
+        html { scroll-behavior: smooth; }
+        
+        .bg-gradient-radial {
+            background: 
+                radial-gradient(circle at 15% 30%, rgba(255, 107, 157, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 85% 60%, rgba(255, 140, 66, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 50% 90%, rgba(199, 146, 234, 0.1) 0%, transparent 50%);
         }
-      }
-
-      a {
-        color: var(--accent);
-        text-decoration: none;
-        transition: color 0.2s ease;
-      }
-      a:hover {
-        color: var(--accent_2);
-      }
-      :focus-visible {
-        outline: 2px solid var(--accent);
-        outline-offset: 3px;
-        border-radius: 6px;
-      }
-
-      header {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        backdrop-filter: saturate(160%) blur(10px);
-        background: color-mix(in oklab, var(--bg) 70%, transparent);
-        border-bottom: 1px solid var(--border);
-
-        transform: translateZ(var(--z_nudge));
-        will-change: transform, background, border-color, backdrop-filter;
-        backface-visibility: hidden;
-      }
-      .nav {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 0.85rem 2rem;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        justify-content: space-between;
-      }
-      .brand {
-        font-weight: 700;
-        font-size: 1.05rem;
-        letter-spacing: 0.12em;
-        text-transform: lowercase;
-      }
-      .brand::before {
-        color: var(--accent);
-      }
-      .nav_links {
-        display: flex;
-        gap: 1.1rem;
-        list-style: none;
-        align-items: center;
-      }
-      .nav_links a {
-        font-size: 0.95rem;
-        color: inherit;
-        opacity: 0.9;
-      }
-      .nav_links a:hover {
-        opacity: 1;
-        color: var(--accent);
-      }
-
-      /* minimal theme toggle button */
-      .theme_toggle {
-        background: color-mix(in oklab, var(--bg_2) 70%, transparent);
-        border: 1px solid var(--border);
-        padding: 0.35rem 0.7rem;
-        border-radius: 999px;
-        color: inherit;
-        cursor: pointer;
-        font: inherit;
-        line-height: 1;
-        transition:
-          border-color 0.2s ease,
-          background 0.2s ease,
-          transform 0.2s ease;
-      }
-      .theme_toggle:hover {
-        border-color: var(--accent);
-        background: color-mix(in oklab, var(--accent) 12%, transparent);
-        transform: translateY(-1px);
-      }
-
-      main {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 2.2rem 2rem 3rem;
-      }
-      section {
-        margin: 3.8rem 0;
-      }
-
-      .hero {
-        padding: 2.8rem 0 1.4rem;
-        text-align: center;
-      }
-      .prompt_line {
-        display: inline-flex;
-        gap: 0.5rem;
-        align-items: center;
-        padding: 0.5rem 0.8rem;
-        border-radius: 999px;
-        margin-bottom: 0.9rem;
-        color: var(--muted);
-        border: 1px solid var(--border);
-        background: color-mix(in oklab, var(--bg_2) 70%, transparent);
-        backdrop-filter: blur(8px);
-        font-family:
-          "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-        font-size: 0.85rem;
-
-        transform: translateZ(var(--z_nudge));
-        will-change: transform, background, border-color, backdrop-filter;
-        backface-visibility: hidden;
-      }
-      .prompt_line .caret {
-        color: var(--accent);
-      }
-      .hero h1 {
-        font-size: clamp(2rem, 5vw, 3rem);
-        letter-spacing: -0.01em;
-        margin-bottom: 0.6rem;
-      }
-      .subtitle {
-        color: var(--muted);
-        font-size: clamp(1rem, 1.6vw, 1.15rem);
-      }
-
-      .tech_stack {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.6rem;
-        margin-top: 1.2rem;
-      }
-      .tech_badge {
-        background: color-mix(in oklab, var(--bg_2) 70%, transparent);
-        border: 1px solid var(--border);
-        padding: 0.35rem 0.7rem;
-        border-radius: 999px;
-        font-size: 0.8rem;
-        color: var(--muted);
-        backdrop-filter: blur(6px);
-
-        transform: translateZ(var(--z_nudge));
-        will-change: transform, background, border-color, backdrop-filter;
-        backface-visibility: hidden;
-      }
-
-      h2 {
-        font-size: clamp(1.4rem, 3.5vw, 1.75rem);
-        font-weight: 700;
-        letter-spacing: -0.01em;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding-bottom: 0.65rem;
-        border-bottom: 1px solid var(--border);
-      }
-      #about h2::before {
-        color: var(--accent);
-      }
-      #projects h2::before {
-        color: var(--accent);
-      }
-      #skills h2::before {
-        color: var(--accent);
-      }
-      #contact h2::before {
-        color: var(--accent);
-      }
-
-      .about_text {
-        color: var(--muted);
-        margin-top: 1.1rem;
-      }
-      .about_text p {
-        margin-bottom: 1rem;
-      }
-
-      .grid {
-        display: grid;
-        gap: 1.1rem;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        margin-top: 1.3rem;
-      }
-
-      .card {
-        position: relative;
-        background: var(--glass);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 1.1rem 1.15rem;
-        box-shadow: var(--shadow);
-        backdrop-filter: blur(12px) saturate(140%);
-        transition:
-          border-color 0.2s ease,
-          transform 0.2s ease;
-        display: flex;
-        flex-direction: column;
-        min-height: 240px;
-        overflow: clip;
-
-        transform: translateZ(var(--z_nudge));
-        will-change: transform, background, border-color, backdrop-filter;
-        backface-visibility: hidden;
-      }
-      .card::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background:
-          radial-gradient(
-            120% 40% at 10% -20%,
-            rgba(255, 255, 255, 0.18),
-            transparent 40%
-          ),
-          linear-gradient(to bottom, rgba(255, 255, 255, 0.06), transparent 30%);
-        pointer-events: none;
-      }
-      .card:hover {
-        border-color: color-mix(in oklab, var(--accent) 60%, var(--border));
-        transform: translateY(-2px);
-      }
-
-      .project_title {
-        color: var(--accent);
-        font-weight: 600;
-        margin-bottom: 0.35rem;
-      }
-      .project_title::before {
-        color: var(--accent);
-      }
-      .project_desc {
-        color: var(--muted);
-        font-size: 0.95rem;
-        margin-bottom: 0.8rem;
-      }
-      .project_tech {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.4rem;
-        margin-bottom: 0.6rem;
-      }
-      .project_tech span {
-        font-size: 0.75rem;
-        color: var(--muted);
-        background: color-mix(in oklab, var(--bg_2) 75%, transparent);
-        border: 1px solid var(--border);
-        padding: 0.22rem 0.5rem;
-        border-radius: 8px;
-        backdrop-filter: blur(6px);
-
-        transform: translateZ(var(--z_nudge));
-        will-change: transform, background, border-color, backdrop-filter;
-        backface-visibility: hidden;
-      }
-      .project_link {
-        font-size: 0.92rem;
-        margin-top: auto;
-        align-self: flex-start;
-      }
-
-      .skills_list {
-        display: grid;
-        gap: 1.1rem;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        margin-top: 1.1rem;
-      }
-      .skill_category h3 {
-        color: var(--accent);
-        font-size: 0.95rem;
-        margin-bottom: 0.55rem;
-        text-transform: lowercase;
-      }
-      .skill_category ul {
-        list-style: none;
-      }
-      .skill_category li {
-        padding: 0.35rem 0;
-        color: var(--muted);
-        font-size: 0.92rem;
-      }
-      .skill_category li:before {
-        content: "→ ";
-        color: var(--accent);
-        margin-right: 0.35rem;
-      }
-
-      .contact_links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.9rem 1rem;
-        margin-top: 1.1rem;
-        align-items: center;
-      }
-      .contact_link {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.7rem 1.05rem;
-        background: color-mix(in oklab, var(--bg_2) 65%, transparent);
-        border: 1px solid var(--border);
-        border-radius: 999px;
-        transition:
-          border-color 0.2s ease,
-          background 0.2s ease,
-          transform 0.2s ease;
-        color: inherit;
-        backdrop-filter: blur(10px);
-
-        transform: translateZ(var(--z_nudge));
-        will-change: transform, background, border-color, backdrop-filter;
-        backface-visibility: hidden;
-      }
-
-      .contact_link:hover {
-        border-color: var(--accent);
-        background: color-mix(in oklab, var(--accent) 12%, transparent);
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px
-          color-mix(in oklab, var(--accent) 15%, transparent);
-      }
-
-      .contact_link span::before {
-        content: "";
-        display: inline-block;
-        width: 1.1em;
-        height: 1.1em;
-        margin-right: 0.5em;
-        background-color: var(--accent);
-        mask-size: contain;
-        mask-repeat: no-repeat;
-        mask-position: center;
-        vertical-align: -0.15em;
-      }
-
-      .contact_link[href*="github.com"] span::before {
-        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z'/%3E%3C/svg%3E");
-      }
-
-      .contact_link[href*="vk.ru"] span::before {
-        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13.162 18.994c.609 0 .858-.406.851-.915-.031-1.917.714-2.949 2.059-1.604 1.488 1.488 1.796 2.519 3.603 2.519h3.2c.808 0 1.126-.26 1.126-.668 0-.863-1.421-2.386-2.625-3.504-1.686-1.565-1.765-1.602-.313-3.486 1.801-2.339 4.157-5.336 2.073-5.336h-3.981c-.772 0-.828.435-1.103 1.083-.995 2.347-2.886 5.387-3.604 4.922-.751-.485-.407-2.406-.35-5.261.015-.754.011-1.271-1.141-1.539-.629-.145-1.241-.205-1.809-.205-2.273 0-3.841.953-2.95 1.119 1.571.293 1.42 3.692 1.054 5.16-.638 2.556-3.036-2.024-4.035-4.305-.241-.548-.315-.974-1.175-.974h-3.255c-.492 0-.787.16-.787.516 0 .602 2.96 6.72 5.786 9.77 2.756 2.975 5.48 2.708 7.376 2.708z'/%3E%3C/svg%3E");
-      }
-
-      .contact_link[href*="setka.ru"] span::before {
-        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 4h7v7H4zm0 9h7v7H4zm9-9h7v7h-7zm0 9h7v7h-7z'/%3E%3C/svg%3E");
-      }
-
-      .contact_link[href^="mailto:"] span::before {
-        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z'/%3E%3C/svg%3E");
-      }
-
-      .contact_link[href*="steamcommunity.com"] span::before {
-        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M.329 10.333A8.01 8.01 0 007.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 000 7.468l.003.006 4.304 1.769A2.2 2.2 0 015.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 013.042-3.043 3.046 3.046 0 013.042 3.043 3.047 3.047 0 01-3.111 3.044l-2.804 2a2.223 2.223 0 01-3.075 2.11 2.22 2.22 0 01-1.312-1.568L.33 10.333zM4.868 12.683a1.715 1.715 0 001.318-3.165 1.7 1.7 0 00-1.263-.02l1.023.424a1.261 1.261 0 11-.97 2.33l-.99-.41a1.7 1.7 0 00.882.84zm3.726-6.687a2.03 2.03 0 002.027 2.029 2.03 2.03 0 002.027-2.029 2.03 2.03 0 00-2.027-2.027 2.03 2.03 0 00-2.027 2.027m2.03-1.527a1.524 1.524 0 11-.002 3.048 1.524 1.524 0 01.002-3.048'/%3E%3C/svg%3E");
-      }
-
-      footer {
-        backdrop-filter: saturate(160%) blur(6px);
-        background: color-mix(in oklab, var(--bg) 70%, transparent);
-        border-top: 1px solid var(--border);
-        margin-top: 4rem;
-        padding: 2rem;
-        text-align: center;
-        color: var(--muted);
-        font-size: 0.95rem;
-
-        transform: translateZ(var(--z_nudge));
-        will-change: transform, background, border-color, backdrop-filter;
-        backface-visibility: hidden;
-      }
-
-      @media (max-width: 768px) {
-        .nav {
-          flex-direction: column;
-          gap: 0.6rem;
-          padding: 0.9rem 1.25rem;
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .nav_links {
-          gap: 1rem;
-          flex-wrap: wrap;
-          justify-content: center;
+        
+        .dark .glass {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .hero {
-          padding: 2.2rem 0 1.1rem;
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(180deg, rgba(255, 107, 157, 0.5), rgba(255, 140, 66, 0.5));
+            border-radius: 4px;
         }
-        .contact_links {
-          flex-direction: column;
-          align-items: stretch;
+        ::-webkit-scrollbar-thumb:hover { 
+            background: linear-gradient(180deg, rgba(255, 107, 157, 0.7), rgba(255, 140, 66, 0.7));
         }
-        .contact_link {
-          justify-content: center;
-          width: 100%;
+        
+        ::selection {
+            background: rgba(255, 107, 157, 0.3);
+            color: inherit;
         }
-      }
-
-      code {
-        background: color-mix(in oklab, var(--bg_2) 70%, transparent);
-        border: 1px solid var(--border);
-        padding: 0.22rem 0.45rem;
-        border-radius: 8px;
-        font-family:
-          "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-        font-size: 0.9rem;
-        color: var(--accent);
-        backdrop-filter: blur(6px);
-
-        transform: translateZ(var(--z_nudge));
-        will-change: transform, background, border-color, backdrop-filter;
-        backface-visibility: hidden;
-      }
-
-      a[href^="http"]:not([href^="mailto:"])::after {
-        content: " ↗";
-        color: var(--muted);
-        font-size: 0.9em;
-        margin-left: 0.25rem;
-      }
-      ::selection {
-        background: color-mix(in oklab, var(--accent) 35%, transparent);
-        color: #000;
-      }
-      @media (prefers-reduced-motion: reduce) {
-        * {
-          transition: none !important;
-          animation: none !important;
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            user-select: none;
+            -webkit-user-select: none;
         }
-      }
-
-      /* PRINT FIXES: force light theme, disable filters/clipping, keep content visible */
-      @media print {
-        :root,
-        [data-theme="dark"],
-        [data-theme="light"] {
-          --bg: #ffffff;
-          --bg_2: #ffffff;
-          --text: #000000;
-          --muted: #333333;
-          --glass: #ffffff;
-          --border: #dddddd;
-          --accent: #000000;
-          --accent_2: #000000;
-          --shadow: none;
-          --z_nudge: 0px;
+        
+        .liquid-glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
-        @page {
-          margin: 12mm;
+        
+        .dark .liquid-glass {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
-        body {
-          background: #ffffff !important;
-          color: #000000 !important;
-          -webkit-print-color-adjust: exact;
-          print-color-adjust: exact;
+        
+        .theme-selector {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
         }
-        .bg_layer,
-        header,
-        footer {
-          display: none !important;
+        
+        .dark .theme-selector {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        .card {
-          background: #ffffff !important;
-          border-color: #dddddd !important;
-          box-shadow: none !important;
-          backdrop-filter: none !important;
-          filter: none !important;
-          transform: none !important;
-          will-change: auto !important;
-          overflow: visible !important;
+        
+        @keyframes wave-float-1 {
+            0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+            33% { transform: translate3d(30px, -30px, 0) scale(1.1); }
+            66% { transform: translate3d(-20px, 20px, 0) scale(0.9); }
         }
-        .project_tech span,
-        .tech_badge,
-        code {
-          background: #ffffff !important;
-          border-color: #cccccc !important;
-          color: #000000 !important;
-          backdrop-filter: none !important;
+        
+        @keyframes wave-float-2 {
+            0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+            33% { transform: translate3d(-40px, 30px, 0) scale(0.9); }
+            66% { transform: translate3d(20px, -25px, 0) scale(1.15); }
         }
-        .prompt_line,
-        .contact_links {
-          filter: none !important;
-          backdrop-filter: none !important;
-          background: #ffffff !important;
-          border-color: #dddddd !important;
-          color: #000000 !important;
+        
+        @keyframes wave-float-3 {
+            0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+            33% { transform: translate3d(25px, 35px, 0) scale(1.05); }
+            66% { transform: translate3d(-30px, -20px, 0) scale(0.95); }
         }
-        a[href^="http"]:not([href^="mailto:"])::after {
-          content: "";
+        
+        .wave-blob:nth-child(1) { animation: wave-float-1 8s ease-in-out infinite; }
+        .wave-blob:nth-child(2) { animation: wave-float-2 10s ease-in-out infinite 1s; }
+        .wave-blob:nth-child(3) { animation: wave-float-3 12s ease-in-out infinite 2s; }
+        
+        .repo-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
-        * {
-          animation: none !important;
-          transition: none !important;
+        
+        .repo-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(255, 107, 157, 0.15);
         }
-      }
-      #export_pdf {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4em;
-      }
-
-      #export_pdf svg {
-        flex-shrink: 0;
-      }
+        
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        
+        .skeleton {
+            background: linear-gradient(90deg, 
+                rgba(255, 255, 255, 0.05) 0%, 
+                rgba(255, 255, 255, 0.1) 50%, 
+                rgba(255, 255, 255, 0.05) 100%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        .dark .skeleton {
+            background: linear-gradient(90deg, 
+                rgba(0, 0, 0, 0.1) 0%, 
+                rgba(255, 255, 255, 0.05) 50%, 
+                rgba(0, 0, 0, 0.1) 100%);
+            background-size: 1000px 100%;
+        }
+        
+        .tech-badge-icon {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(255, 140, 66, 0.1));
+            border: 1px solid rgba(255, 107, 157, 0.3);
+            border-radius: 999px;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+        
+        .tech-badge-icon:hover {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.2), rgba(255, 140, 66, 0.2));
+            border-color: rgba(255, 107, 157, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        html.light .light-waves,
+        html:not(.dark) .light-waves { display: block; }
+        html.light .dark-waves,
+        html:not(.dark) .dark-waves { display: none; }
+        
+        html.dark .light-waves { display: none; }
+        html.dark .dark-waves { display: block; }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .wave-path animate {
+                display: none;
+            }
+            .skeleton {
+                animation: none !important;
+            }
+        }
     </style>
-  </head>
-  <body>
-    <div class="bg_layer"></div>
-
-    <header>
-      <nav class="nav">
-        <div class="brand">e-gleba</div>
-        <ul class="nav_links">
-          <li><a href="#about">about</a></li>
-          <li><a href="#projects">projects</a></li>
-          <li><a href="#skills">skills</a></li>
-          <li><a href="#contact">contact</a></li>
-          <li>
-            <button
-              id="export_pdf"
-              class="theme_toggle"
-              type="button"
-              aria-label="export to pdf"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width="20"
-                height="20"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"
-                />
-              </svg>
-            </button>
-          </li>
-          <li>
-            <button
-              id="theme_toggle"
-              class="theme_toggle"
-              type="button"
-              aria-label="switch to dark theme"
-            >
-              ☾
-            </button>
-          </li>
-        </ul>
-      </nav>
-    </header>
-
-    <main>
-      <section class="hero">
-        <div class="prompt_line">
-          <span class="caret">➜</span> ~/src
-          <span class="caret">git:(main)</span>
-          <span style="opacity: 0.7"># building</span>
-        </div>
-        <h1>C++ Developer</h1>
-        <p class="subtitle">
-          systems architect • game development • reverse engineering
-        </p>
-        <div class="tech_stack">
-          <span class="tech_badge">C++</span>
-          <span class="tech_badge">CMake</span>
-          <span class="tech_badge">Linux</span>
-          <span class="tech_badge">OpenGL</span>
-          <span class="tech_badge">Android NDK</span>
-          <span class="tech_badge">iOS</span>
-        </div>
-      </section>
-
-      <section id="about">
-        <h2>about</h2>
-        <div class="about_text">
-          <p>
-            Performance-aware developer specializing in cross-platform C++
-            systems. Adherent to minimalist philosophy: less code, fewer bugs.
-            Focused on efficient implementations using standard library idioms
-            and explicit error handling.
-          </p>
-          <p>
-            Experience spans game development with ECS patterns, reverse
-            engineering, and native mobile development across Android and iOS
-            platforms. Proficient with modern build systems (CMake), low-level
-            graphics programming (OpenGL), and production-grade C++
-            architecture.
-          </p>
-          <p>
-            Philosophy: practice over theory. Code is documentation. Prefer
-            Unix-style tooling, open formats, and explicit over implicit.
-          </p>
-        </div>
-      </section>
-
-      <section id="projects">
-        <h2>projects</h2>
-        <div class="grid">
-          <article class="card">
-            <div class="project_title">kyocera-drivers</div>
-            <p class="project_desc">
-              Fully reverse-engineered Kyocera PPD and filter solution for Linux
-              printing. Modern CMake build system with automated installation.
-            </p>
-            <div class="project_tech">
-              <span>C/C++20</span><span>CMake</span><span>CUPS</span
-              ><span>Reverse Eng.</span>
-            </div>
-            <a
-              class="project_link"
-              href="https://github.com/e-gleba/kyocera-drivers"
-              >view</a
-            >
-          </article>
-
-          <article class="card">
-            <div class="project_title">basic-game-engine</div>
-            <p class="project_desc">
-              C++ game engine powered by SDL 3.0 and OpenGL. Implements ECS
-              architecture with EnTT for entity management and sprite editing
-              capabilities.
-            </p>
-            <div class="project_tech">
-              <span>C++</span><span>SDL 3</span><span>OpenGL</span
-              ><span>ECS</span>
-            </div>
-            <a
-              class="project_link"
-              href="https://github.com/e-gleba/basic-game-engine"
-              >view</a
-            >
-          </article>
-
-          <article class="card">
-            <div class="project_title">template-cpp-project</div>
-            <p class="project_desc">
-              Modern C++23 project template with CMake, code quality tools,
-              Docker support, and cross-platform compatibility for Linux,
-              Windows, macOS, Android.
-            </p>
-            <div class="project_tech">
-              <span>C++23</span><span>CMake 3.30+</span><span>Docker</span
-              ><span>CI/CD</span>
-            </div>
-            <a
-              class="project_link"
-              href="https://github.com/e-gleba/template-cpp-project"
-              >view</a
-            >
-          </article>
-
-          <article class="card">
-            <div class="project_title">sdl-overview</div>
-            <p class="project_desc">
-              Comprehensive SDL 3 demonstration showcasing graphics rendering,
-              window management, and input handling with modern C++20 patterns.
-            </p>
-            <div class="project_tech">
-              <span>C++20</span><span>SDL 3</span><span>CMake</span
-              ><span>Graphics</span>
-            </div>
-            <a
-              class="project_link"
-              href="https://github.com/e-gleba/sdl-overview"
-              >view</a
-            >
-          </article>
-
-          <article class="card">
-            <div class="project_title">student-bsu-by</div>
-            <p class="project_desc">
-              Native Android interface for Belarusian State University student
-              account access. Cross-platform considerations for university
-              system integration.
-            </p>
-            <div class="project_tech">
-              <span>Android</span><span>NDK</span><span>Mobile</span>
-            </div>
-            <a
-              class="project_link"
-              href="https://github.com/e-gleba/student-bsu-by"
-              >view</a
-            >
-          </article>
-
-          <article class="card">
-            <div class="project_title">Various Explorations</div>
-            <p class="project_desc">
-              Ghidra reverse engineering resources, game asset modification
-              tooling, DLL injection techniques, and shader programming
-              experiments.
-            </p>
-            <div class="project_tech">
-              <span>Reverse Eng.</span><span>Ghidra</span><span>GLSL</span
-              ><span>Binary Patching</span>
-            </div>
-            <a class="project_link" href="https://github.com/e-gleba">github</a>
-          </article>
-        </div>
-      </section>
-
-      <section id="skills">
-        <h2>skills</h2>
-        <div class="skills_list">
-          <article class="card skill_category">
-            <h3>languages</h3>
-            <ul>
-              <li>C++17/20/23</li>
-              <li>C17/99</li>
-              <li>Python 3</li>
-              <li>Bash/Shell</li>
-              <li>Objective-C/C++</li>
-            </ul>
-          </article>
-
-          <article class="card skill_category">
-            <h3>systems & tools</h3>
-            <ul>
-              <li>CMake 3.16+</li>
-              <li>Linux (Fedora, Alt)</li>
-              <li>Git/GitHub</li>
-              <li>Docker</li>
-              <li>Ninja/Make</li>
-            </ul>
-          </article>
-
-          <article class="card skill_category">
-            <h3>graphics & engines</h3>
-            <ul>
-              <li>OpenGL (GLSL)</li>
-              <li>SDL 2/3</li>
-              <li>Game architecture</li>
-              <li>ECS patterns</li>
-              <li>Sprite systems</li>
-            </ul>
-          </article>
-
-          <article class="card skill_category">
-            <h3>mobile development</h3>
-            <ul>
-              <li>Android NDK</li>
-              <li>iOS development</li>
-              <li>Cross-platform</li>
-              <li>JNI/Native binding</li>
-              <li>Mobile UI</li>
-            </ul>
-          </article>
-
-          <article class="card skill_category">
-            <h3>reverse engineering</h3>
-            <ul>
-              <li>Ghidra analysis</li>
-              <li>Binary patching</li>
-              <li>Memory analysis</li>
-              <li>DLL injection</li>
-              <li>Asset extraction</li>
-            </ul>
-          </article>
-
-          <article class="card skill_category">
-            <h3>development practices</h3>
-            <ul>
-              <li>Explicit error handling</li>
-              <li>Performance profiling</li>
-              <li>Minimal code footprint</li>
-              <li>Standard library idioms</li>
-              <li>Production deployment</li>
-            </ul>
-          </article>
-        </div>
-      </section>
-
-      <section id="contact">
-        <h2>contact</h2>
-        <div class="contact_links">
-          <a class="contact_link" href="https://github.com/e-gleba"
-            ><span>github</span></a
-          >
-          <a class="contact_link" href="https://vk.ru/e_gleba"
-            ><span>vk</span></a
-          >
-          <a
-            class="contact_link"
-            href="https://setka.ru/users/c7b26aaa-6c35-436e-975a-a48515dbab7a?utm_medium=profile&utm_content=332624&utm_source=share_content&utm_term=332624&utm_campaign=inapp_setka&old=332624"
-            ><span>setka</span></a
-          >
-          <a class="contact_link" href="mailto:i@egleba.ru"
-            ><span>email</span></a
-          >
-          <a class="contact_link" href="https://steamcommunity.com/id/egleba"
-            ><span>steam</span></a
-          >
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <p>&copy; 2025 e-gleba</p>
-    </footer>
-
-    <script>
-      (function () {
-        "use strict";
-        var d = document;
-        var root = d.documentElement;
-        var btn = d.getElementById("theme_toggle");
-        if (!btn) return;
-
-        function get_system_theme() {
-          return window.matchMedia &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light";
-        }
-
-        function get_current_theme() {
-          var a = root.getAttribute("data-theme");
-          if (a === "light" || a === "dark") return a;
-          var s = null;
-          try {
-            s = localStorage.getItem("theme");
-          } catch (_) {}
-          if (s === "light" || s === "dark") return s;
-          return get_system_theme();
-        }
-
-        function set_button_for(current) {
-          var next = current === "dark" ? "light" : "dark";
-          btn.textContent = next === "dark" ? "☾" : "☀";
-          btn.setAttribute("aria-label", "switch to " + next + " theme");
-        }
-
-        function set_theme_color_meta(theme) {
-          var m = d.getElementById("theme_color");
-          if (m)
-            m.setAttribute("content", theme === "dark" ? "#0a0a0a" : "#f6f5fb");
-        }
-
-        // nudge compositor to avoid stale layers after theme change
-        function nudge_repaint() {
-          root.style.setProperty("--z_nudge", "0.0001px");
-          requestAnimationFrame(function () {
-            root.style.setProperty("--z_nudge", "0px");
-          });
-        }
-
-        function apply_theme(theme, persist) {
-          root.setAttribute("data-theme", theme);
-          if (persist) {
-            try {
-              localStorage.setItem("theme", theme);
-            } catch (_) {}
-          }
-          set_button_for(theme);
-          set_theme_color_meta(theme);
-          nudge_repaint();
-        }
-
-        // init UI
-        var current = get_current_theme();
-        set_button_for(current);
-        set_theme_color_meta(current);
-
-        btn.addEventListener("click", function () {
-          var theme = get_current_theme() === "dark" ? "light" : "dark";
-          apply_theme(theme, true);
-        });
-
-        // reflect system changes (if user hasn't chosen) for button/meta
-        if (!localStorage.getItem("theme") && window.matchMedia) {
-          window
-            .matchMedia("(prefers-color-scheme: dark)")
-            .addEventListener("change", function (e) {
-              var t = e.matches ? "dark" : "light";
-              set_button_for(t);
-              set_theme_color_meta(t);
-              if (!root.getAttribute("data-theme")) {
-                apply_theme(t, false);
-              } else {
-                nudge_repaint();
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300" 
+      x-data="{ 
+          repos: [], 
+          stats: null, 
+          loading: true,
+          error: null,
+          lang: $persist('en').as('language'),
+          translations: {                  en: {
+                      nav: { about: 'About', projects: 'Projects', skills: 'Skills', contact: 'Contact' },
+                      hero: {
+                          tagline: 'systems architect • game developer • reverse engineer',
+                          viewProjects: 'View Projects'
+                      },
+                      about: {
+                          title: 'About',
+                          p1: 'Systems programmer focused on performance and cross-platform development. Write C++20, build with CMake, profile with Tracy — every day. Work close to metal: graphics, game engines, native mobile apps for iOS and Android.',
+                          p2: 'Simple principle: less code, fewer bugs. Every line must justify its existence. Prefer explicit over implicit, standard library over reinvention, Unix approach over framework magic.',
+                          p3: 'Grew up on Valve engines — Half-Life, Source SDK, Garry\'s Mod. Shaped both taste and approach: modularity, modding culture, community respect. Still dig through source code for fun.',
+                          p4: 'Outside code — look through telescope. Astronomy reminds me there are problems bigger than any deadline. Also play TF2, aim in Sniper Elite, build galactic empires in Stellaris, and sometimes break things to understand how they work.'
+                      },
+                  github: {
+                      title: 'GitHub Activity',
+                      stars: 'Total Stars',
+                      repos: 'Public Repos',
+                      forks: 'Total Forks'
+                  },
+                  projects: {
+                      title: 'Latest Projects',
+                      noDesc: 'No description available',
+                      view: 'View'
+                  },
+                  skills: {
+                      title: 'Skills',
+                      languages: 'Languages',
+                      systems: 'Systems & Tools',
+                      graphics: 'Graphics & Engines',
+                      mobile: 'Mobile Development',
+                      reverse: 'Reverse Engineering',
+                      practices: 'Development Practices'
+                  },
+                  contact: {
+                      title: 'Contact'
+                  },
+                  footer: 'Built with Tailwind CSS, Alpine.js, and AOS.'
+              },                  ru: {
+                      nav: { about: 'О себе', projects: 'Проекты', skills: 'Навыки', contact: 'Контакты' },
+                      hero: {
+                          tagline: 'системный архитектор • разработчик игр • реверс-инжиниринг',
+                          viewProjects: 'Проекты'
+                      },
+                      about: {
+                          title: 'О себе',
+                          p1: 'Системный программист с фокусом на производительность и кросс-платформенную разработку. Пишу на C++20, собираю через CMake, профилирую через Tracy — и так каждый день. Работаю близко к железу: графика, игровые движки, нативные мобильные приложения под iOS и Android.',
+                          p2: 'Верю в простой принцип: меньше кода — меньше багов. Каждая строчка должна оправдывать своё существование. Предпочитаю явное неявному, стандартную библиотеку — велосипедам, а Unix-подход — магии фреймворков.',
+                          p3: 'Вырос на движках Valve — Half-Life, Source SDK, Garry\'s Mod. Это сформировало и вкус, и подход: модульность, моддинг-культура, уважение к сообществу. До сих пор копаюсь в исходниках ради удовольствия.',
+                          p4: 'Вне кода — смотрю в телескоп. Астрономия для меня — способ помнить, что есть задачи масштабнее любого дедлайна. А ещё играю в TF2, целюсь в Sniper Elite, строю галактические империи в Stellaris и иногда ломаю вещи, чтобы понять, как они работают.'
+                      },
+                  github: {
+                      title: 'Активность на GitHub',
+                      stars: 'Всего звёзд',
+                      repos: 'Публичных репозиториев',
+                      forks: 'Всего форков'
+                  },
+                  projects: {
+                      title: 'Последние проекты',
+                      noDesc: 'Описание отсутствует',
+                      view: 'Смотреть'
+                  },
+                  skills: {
+                      title: 'Навыки',
+                      languages: 'Языки программирования',
+                      systems: 'Системы и инструменты',
+                      graphics: 'Графика и движки',
+                      mobile: 'Мобильная разработка',
+                      reverse: 'Реверс-инжиниринг',
+                      practices: 'Практики разработки'
+                  },
+                  contact: {
+                      title: 'Контакты'
+                  },
+                  footer: 'Собрано с Tailwind CSS, Alpine.js и AOS.'
+              },                  zh: {
+                      nav: { about: '关于', projects: '项目', skills: '技能', contact: '联系' },
+                      hero: {
+                          tagline: '系统架构师 • 游戏开发 • 逆向工程',
+                          viewProjects: '查看项目'
+                      },
+                      about: {
+                          title: '关于',
+                          p1: '专注性能和跨平台开发的系统程序员。编写C++20，使用CMake构建，通过Tracy分析性能——每天如此。贴近底层工作：图形、游戏引擎、iOS和Android原生移动应用。',
+                          p2: '信奉简单原则：代码越少，错误越少。每一行代码都必须证明其存在价值。偏好显式而非隐式、标准库而非重复造轮、Unix方式而非框架魔法。',
+                          p3: '在Valve引擎上成长——Half-Life、Source SDK、Garry\'s Mod。这塑造了品味和方法：模块化、模组文化、尊重社区。至今仍为乐趣而挖掘源代码。',
+                          p4: '代码之外——望远镜观星。天文学提醒我，有些问题比任何截止日期都重要。还玩TF2、在Sniper Elite中瞄准、在Stellaris中建立银河帝国，有时拆解东西以理解其工作原理。'
+                      },
+                  github: {
+                      title: 'GitHub 活动',
+                      stars: '总星标数',
+                      repos: '公共仓库',
+                      forks: '总分叉数'
+                  },
+                  projects: {
+                      title: '最新项目',
+                      noDesc: '暂无描述',
+                      view: '查看'
+                  },
+                  skills: {
+                      title: '技能',
+                      languages: '编程语言',
+                      systems: '系统与工具',
+                      graphics: '图形与引擎',
+                      mobile: '移动开发',
+                      reverse: '逆向工程',
+                      practices: '开发实践'
+                  },
+                  contact: {
+                      title: '联系方式'
+                  },
+                  footer: '使用 Tailwind CSS、Alpine.js 和 AOS 构建。'
               }
-            });
-        }
-      })();
-    </script>
-
-    <!-- minimal export-to-PDF via native print dialog -->
+          },
+          t(key) {
+              const keys = key.split('.');
+              let value = this.translations[this.lang];
+              for (const k of keys) {
+                  value = value?.[k];
+              }
+              return value || key;
+          },
+          async fetchGitHubData() {
+              try {
+                  const reposResponse = await fetch('https://api.github.com/users/e-gleba/repos?sort=updated&per_page=6', {
+                      headers: { 'Accept': 'application/vnd.github.v3+json' }
+                  });
+                  if (!reposResponse.ok) {
+                      console.warn(`GitHub API returned ${reposResponse.status}, using fallback data`);
+                      this.repos = [];
+                      this.stats = { public_repos: 0 };
+                      this.loading = false;
+                      return;
+                  }
+                  const reposData = await reposResponse.json();
+                  this.repos = Array.isArray(reposData) ? reposData : [];
+                  
+                  const userResponse = await fetch('https://api.github.com/users/e-gleba', {
+                      headers: { 'Accept': 'application/vnd.github.v3+json' }
+                  });
+                  if (!userResponse.ok) {
+                      console.warn(`GitHub API returned ${userResponse.status}`);
+                      this.stats = { public_repos: 0 };
+                      this.loading = false;
+                      return;
+                  }
+                  this.stats = await userResponse.json();
+                  
+                  this.loading = false;
+              } catch (error) {
+                  console.warn('GitHub API unavailable, using fallback:', error);
+                  this.repos = [];
+                  this.stats = { public_repos: 0 };
+                  this.loading = false;
+              }
+          }
+      }"
+      x-init="fetchGitHubData()">
+    
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div class="absolute inset-0 opacity-30 dark:opacity-20" style="background-image: 
+            repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255, 107, 157, 0.08) 40px, rgba(255, 107, 157, 0.08) 42px),
+            repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(255, 140, 66, 0.08) 40px, rgba(255, 140, 66, 0.08) 42px);">
+        </div>
+        <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="wave-gradient-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#FF6B9D;stop-opacity:0.15" />
+                    <stop offset="50%" style="stop-color:#FF8C42;stop-opacity:0.12" />
+                    <stop offset="100%" style="stop-color:#C792EA;stop-opacity:0.1" />
+                </linearGradient>
+                <linearGradient id="wave-gradient-2" x1="100%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#C792EA;stop-opacity:0.12" />
+                    <stop offset="50%" style="stop-color:#FF6B9D;stop-opacity:0.1" />
+                    <stop offset="100%" style="stop-color:#FF8C42;stop-opacity:0.08" />
+                </linearGradient>
+                <linearGradient id="wave-gradient-3" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#FF8C42;stop-opacity:0.1" />
+                    <stop offset="50%" style="stop-color:#C792EA;stop-opacity:0.12" />
+                    <stop offset="100%" style="stop-color:#FF6B9D;stop-opacity:0.08" />
+                </linearGradient>
+                
+                <linearGradient id="wave-gradient-dark-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#FF6B9D;stop-opacity:0.18" />
+                    <stop offset="50%" style="stop-color:#FF8C42;stop-opacity:0.15" />
+                    <stop offset="100%" style="stop-color:#C792EA;stop-opacity:0.12" />
+                </linearGradient>
+                <linearGradient id="wave-gradient-dark-2" x1="100%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#C792EA;stop-opacity:0.15" />
+                    <stop offset="50%" style="stop-color:#FF6B9D;stop-opacity:0.12" />
+                    <stop offset="100%" style="stop-color:#FF8C42;stop-opacity:0.10" />
+                </linearGradient>
+                <linearGradient id="wave-gradient-dark-3" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#FF8C42;stop-opacity:0.12" />
+                    <stop offset="50%" style="stop-color:#C792EA;stop-opacity:0.15" />
+                    <stop offset="100%" style="stop-color:#FF6B9D;stop-opacity:0.10" />
+                </linearGradient>
+            </defs>
+            
+            <g class="light-waves">
+                <path class="wave-path wave-1" fill="url(#wave-gradient-1)" d="M0,100 Q250,50 500,100 T1000,100 Q1250,50 1500,100 T2000,100 L2000,0 L0,0 Z">
+                    <animate attributeName="d" 
+                             dur="20s" 
+                             repeatCount="indefinite"
+                             values="M0,100 Q250,50 500,100 T1000,100 Q1250,50 1500,100 T2000,100 L2000,0 L0,0 Z;
+                                     M0,100 Q250,150 500,100 T1000,100 Q1250,150 1500,100 T2000,100 L2000,0 L0,0 Z;
+                                     M0,100 Q250,50 500,100 T1000,100 Q1250,50 1500,100 T2000,100 L2000,0 L0,0 Z"/>
+                </path>
+                
+                <path class="wave-path wave-2" fill="url(#wave-gradient-2)" d="M0,300 Q300,200 600,300 T1200,300 Q1500,200 1800,300 T2400,300 L2400,1200 L0,1200 Z" transform="translate(0, 0)">
+                    <animate attributeName="d" 
+                             dur="25s" 
+                             repeatCount="indefinite"
+                             values="M0,300 Q300,200 600,300 T1200,300 Q1500,200 1800,300 T2400,300 L2400,1200 L0,1200 Z;
+                                     M0,300 Q300,400 600,300 T1200,300 Q1500,400 1800,300 T2400,300 L2400,1200 L0,1200 Z;
+                                     M0,300 Q300,200 600,300 T1200,300 Q1500,200 1800,300 T2400,300 L2400,1200 L0,1200 Z"/>
+                </path>
+                
+                <path class="wave-path wave-3" fill="url(#wave-gradient-3)" d="M2400,800 Q2100,700 1800,800 T1200,800 Q900,700 600,800 T0,800 L0,1200 L2400,1200 Z">
+                    <animate attributeName="d" 
+                             dur="30s" 
+                             repeatCount="indefinite"
+                             values="M2400,800 Q2100,700 1800,800 T1200,800 Q900,700 600,800 T0,800 L0,1200 L2400,1200 Z;
+                                     M2400,800 Q2100,900 1800,800 T1200,800 Q900,900 600,800 T0,800 L0,1200 L2400,1200 Z;
+                                     M2400,800 Q2100,700 1800,800 T1200,800 Q900,700 600,800 T0,800 L0,1200 L2400,1200 Z"/>
+                </path>
+            </g>
+            
+            <g class="dark-waves">
+                <path class="wave-path wave-1-dark" fill="url(#wave-gradient-dark-1)" d="M0,100 Q250,50 500,100 T1000,100 Q1250,50 1500,100 T2000,100 L2000,0 L0,0 Z">
+                    <animate attributeName="d" 
+                             dur="20s" 
+                             repeatCount="indefinite"
+                             values="M0,100 Q250,50 500,100 T1000,100 Q1250,50 1500,100 T2000,100 L2000,0 L0,0 Z;
+                                     M0,100 Q250,150 500,100 T1000,100 Q1250,150 1500,100 T2000,100 L2000,0 L0,0 Z;
+                                     M0,100 Q250,50 500,100 T1000,100 Q1250,50 1500,100 T2000,100 L2000,0 L0,0 Z"/>
+                </path>
+                
+                <path class="wave-path wave-2-dark" fill="url(#wave-gradient-dark-2)" d="M0,300 Q300,200 600,300 T1200,300 Q1500,200 1800,300 T2400,300 L2400,1200 L0,1200 Z">
+                    <animate attributeName="d" 
+                             dur="25s" 
+                             repeatCount="indefinite"
+                             values="M0,300 Q300,200 600,300 T1200,300 Q1500,200 1800,300 T2400,300 L2400,1200 L0,1200 Z;
+                                     M0,300 Q300,400 600,300 T1200,300 Q1500,400 1800,300 T2400,300 L2400,1200 L0,1200 Z;
+                                     M0,300 Q300,200 600,300 T1200,300 Q1500,200 1800,300 T2400,300 L2400,1200 L0,1200 Z"/>
+                </path>
+                
+                <path class="wave-path wave-3-dark" fill="url(#wave-gradient-dark-3)" d="M2400,800 Q2100,700 1800,800 T1200,800 Q900,700 600,800 T0,800 L0,1200 L2400,1200 Z">
+                    <animate attributeName="d" 
+                             dur="30s" 
+                             repeatCount="indefinite"
+                             values="M2400,800 Q2100,700 1800,800 T1200,800 Q900,700 600,800 T0,800 L0,1200 L2400,1200 Z;
+                                     M2400,800 Q2100,900 1800,800 T1200,800 Q900,900 600,800 T0,800 L0,1200 L2400,1200 Z;
+                                     M2400,800 Q2100,700 1800,800 T1200,800 Q900,700 600,800 T0,800 L0,1200 L2400,1200 Z"/>
+                </path>
+            </g>
+        </svg>
+    </div>
+    
+    <nav class="sticky top-0 z-50 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="#" class="font-bold text-lg tracking-tight">e-gleba</a>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="hover:text-accent transition-colors" x-text="t('nav.about')"></a>
+                    <a href="#projects" class="hover:text-accent transition-colors" x-text="t('nav.projects')"></a>
+                    <a href="#skills" class="hover:text-accent transition-colors" x-text="t('nav.skills')"></a>
+                    <a href="#contact" class="hover:text-accent transition-colors" x-text="t('nav.contact')"></a>
+                    
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" 
+                                class="p-2 rounded-lg theme-selector hover:border-accent/50 transition-all flex items-center gap-2">
+                            <span class="material-symbols-outlined text-xl">language</span>
+                            <span class="text-sm" x-text="lang.toUpperCase()"></span>
+                        </button>
+                        
+                        <div x-show="open" 
+                             @click.away="open = false"
+                             x-transition
+                             class="absolute right-0 mt-2 w-48 liquid-glass rounded-lg shadow-xl py-2 z-50">
+                            <button @click="lang = 'en'; open = false" 
+                                    class="w-full px-4 py-2 text-left hover:bg-accent/10 transition-colors flex items-center gap-2">
+                                <span class="text-lg">🇬🇧</span>
+                                English
+                            </button>
+                            <button @click="lang = 'ru'; open = false" 
+                                    class="w-full px-4 py-2 text-left hover:bg-accent/10 transition-colors flex items-center gap-2">
+                                <span class="text-lg">🇷🇺</span>
+                                Русский
+                            </button>
+                            <button @click="lang = 'zh'; open = false" 
+                                    class="w-full px-4 py-2 text-left hover:bg-accent/10 transition-colors flex items-center gap-2">
+                                <span class="text-lg">🇨🇳</span>
+                                中文
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button @click="theme = (theme === 'dark' ? 'light' : 'dark')" 
+                            class="p-2 rounded-lg theme-selector hover:border-accent/50 transition-all flex items-center gap-2">
+                        <span class="material-symbols-outlined text-xl" x-show="theme === 'dark'">dark_mode</span>
+                        <span class="material-symbols-outlined text-xl" x-show="theme === 'light'">light_mode</span>
+                    </button>
+                </div>
+                
+                <div class="md:hidden flex items-center gap-2">
+                    <button @click="theme = (theme === 'dark' ? 'light' : 'dark')" 
+                            class="p-2 rounded-lg theme-selector hover:border-accent/50 transition-all">
+                        <span class="material-symbols-outlined text-xl" x-show="theme === 'dark'">dark_mode</span>
+                        <span class="material-symbols-outlined text-xl" x-show="theme === 'light'">light_mode</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <section class="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm font-mono mb-8">
+                <span style="color: #FF6B9D;">➜</span>
+                <span class="text-gray-500 dark:text-gray-400">~/src</span>
+                <span style="color: #FF6B9D;">git:(main)</span>
+            </div>
+            
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
+                Evgeniy <span style="background: linear-gradient(135deg, #FF6B9D, #FF8C42); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Gleba</span>
+            </h1>
+            
+            <p class="text-xl sm:text-2xl text-gray-600 dark:text-gray-400 mb-8 font-mono">
+                <span style="color: #FF6B9D;">$</span> whoami
+                <span style="color: #FF8C42;">→</span>
+                <span x-text="lang === 'ru' ? 'системный архитектор • разработчик игр • реверс-инжиниринг' : lang === 'zh' ? '系统架构师 • 游戏开发 • 逆向工程' : 'systems architect • game developer • reverse engineer'"></span>
+            </p>
+            
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <span class="tech-badge-icon">
+                    <img src="https://cdn.simpleicons.org/cplusplus/FF6B9D" class="w-4 h-4" alt="C++">
+                    C++20/23
+                </span>
+                <span class="tech-badge-icon">
+                    <img src="https://cdn.simpleicons.org/cmake/FF8C42" class="w-4 h-4" alt="CMake">
+                    CMake
+                </span>
+                <span class="tech-badge-icon">
+                    <img src="https://cdn.simpleicons.org/linux/C792EA" class="w-4 h-4" alt="Linux">
+                    Linux
+                </span>
+                <span class="tech-badge-icon">
+                    <img src="https://cdn.simpleicons.org/opengl/FF6B9D" class="w-4 h-4" alt="OpenGL">
+                    OpenGL
+                </span>
+                <span class="tech-badge-icon">
+                    <img src="https://cdn.simpleicons.org/android/FF8C42" class="w-4 h-4" alt="Android">
+                    Android NDK
+                </span>
+                <span class="tech-badge-icon">
+                    <img src="https://cdn.simpleicons.org/apple/C792EA" class="w-4 h-4" alt="iOS">
+                    iOS
+                </span>
+            </div>
+            
+            <a href="#projects" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg transition-colors" style="background: linear-gradient(135deg, #FF6B9D, #FF8C42); color: white;">
+                <span x-text="t('hero.viewProjects')"></span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+            </a>
+        </div>
+    </section>
+    
+    <section id="about" class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-4xl font-bold mb-8 flex items-center gap-3" data-aos="fade-right">
+                <span style="color: #FF6B9D;">//</span> <span x-text="t('about.title')"></span>
+            </h2>
+            
+            <div class="space-y-6 text-lg text-gray-600 dark:text-gray-400 text-justify" data-aos="fade-up" data-aos-delay="100">
+                <p x-text="t('about.p1')"></p>
+                <p x-text="t('about.p2')"></p>
+                <p x-text="t('about.p3')"></p>
+                <p x-text="t('about.p4')"></p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="projects" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold mb-12 flex items-center gap-3" data-aos="fade-right">
+                <span style="color: #FF6B9D;">//</span> <span x-text="t('projects.title')"></span>
+            </h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" x-show="loading">
+                <div class="liquid-glass rounded-2xl p-6 skeleton h-64"></div>
+                <div class="liquid-glass rounded-2xl p-6 skeleton h-64"></div>
+                <div class="liquid-glass rounded-2xl p-6 skeleton h-64"></div>
+                <div class="liquid-glass rounded-2xl p-6 skeleton h-64"></div>
+                <div class="liquid-glass rounded-2xl p-6 skeleton h-64"></div>
+                <div class="liquid-glass rounded-2xl p-6 skeleton h-64"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" x-show="!loading && repos.length > 0">
+                <template x-for="(repo, index) in repos" :key="index">
+                    <article class="liquid-glass rounded-2xl p-6 hover:border-accent/50 transition-all repo-card" data-aos="fade-up">
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="text-xl font-bold" style="color: #FF6B9D;" x-text="repo.name"></h3>
+                            <span class="material-symbols-outlined text-yellow-400 text-xl"
+                                  x-show="repo.stargazers_count > 0"
+                                  style="font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">
+                                star
+                            </span>
+                        </div>
+                        
+                        <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3" x-text="repo.description || t('projects.noDesc')"></p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 text-xs rounded-full liquid-glass" x-show="repo.language" x-text="repo.language"></span>
+                            <span class="px-3 py-1 text-xs rounded-full liquid-glass flex items-center gap-1">
+                                <span class="material-symbols-outlined" style="font-size: 14px; font-variation-settings: 'FILL' 1, 'wght' 400;">star</span>
+                                <span x-text="repo.stargazers_count"></span>
+                            </span>
+                            <span class="px-3 py-1 text-xs rounded-full liquid-glass flex items-center gap-1">
+                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z"/>
+                                </svg>
+                                <span x-text="repo.forks_count"></span>
+                            </span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <a :href="repo.html_url" class="inline-flex items-center gap-1 transition-colors" style="color: #FF6B9D;">
+                                <span x-text="t('projects.view')"></span> →
+                            </a>
+                            <span class="text-xs text-gray-500" x-text="new Date(repo.updated_at).toLocaleDateString()"></span>
+                        </div>
+                    </article>
+                </template>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" x-show="repos.length === 0 && !loading">
+                <article class="glass rounded-2xl p-6 hover:border-accent/50 transition-all hover:transform hover:-translate-y-1" data-aos="fade-up">
+                    <h3 class="text-xl font-bold mb-3" style="color: #FF6B9D;">kyocera-drivers</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        Fully reverse-engineered Kyocera PPD and filter solution for Linux printing. Modern CMake build system with automated installation.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 text-xs rounded-full glass">C/C++20</span>
+                        <span class="px-3 py-1 text-xs rounded-full glass">CMake</span>
+                        <span class="px-3 py-1 text-xs rounded-full glass">CUPS</span>
+                        <span class="px-3 py-1 text-xs rounded-full glass">Reverse Eng.</span>
+                    </div>
+                    <a href="https://github.com/e-gleba/kyocera-drivers" class="inline-flex items-center gap-1 transition-colors" style="color: #FF6B9D;">
+                        View →
+                    </a>
+                </article>
+                
+                <article class="glass rounded-2xl p-6 hover:border-accent/50 transition-all hover:transform hover:-translate-y-1" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-xl font-bold mb-3" style="color: #FF8C42;">basic-game-engine</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        C++ game engine powered by SDL 3.0 and OpenGL. Implements ECS architecture with EnTT for entity management and sprite editing capabilities.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 text-xs rounded-full glass">C++</span>
+                        <span class="px-3 py-1 text-xs rounded-full glass">SDL 3</span>
+                        <span class="px-3 py-1 text-xs rounded-full glass">OpenGL</span>
+                        <span class="px-3 py-1 text-xs rounded-full glass">ECS</span>
+                    </div>
+                    <a href="https://github.com/e-gleba/basic-game-engine" class="inline-flex items-center gap-1 transition-colors" style="color: #FF8C42;">
+                        View →
+                    </a>
+                </article>
+                
+                <article class="glass rounded-2xl p-6 hover:border-accent/50 transition-all hover:transform hover:-translate-y-1" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-xl font-bold mb-3" style="color: #C792EA;">template-cpp-project</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        Modern C++23 project template with CMake, code quality tools, Docker support, and cross-platform compatibility for Linux, Windows, macOS, Android.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 text-xs rounded-full glass">C++23</span>
+                        <span class="px-3 py-1 text-xs rounded-full glass">CMake 3.30+</span>
+                        <span class="px-3 py-1 text-xs rounded-full glass">Docker</span>
+                        <span class="px-3 py-1 text-xs rounded-full glass">CI/CD</span>
+                    </div>
+                    <a href="https://github.com/e-gleba/template-cpp-project" class="inline-flex items-center gap-1 transition-colors" style="color: #C792EA;">
+                        View →
+                    </a>
+                </article>
+                
+                <article class="glass rounded-2xl p-6 hover:border-accent/50 transition-all hover:transform hover:-translate-y-1" data-aos="fade-up">
+                    <h3 class="text-xl font-bold mb-3" style="color: #FF6B9D;">sdl-overview</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        Comprehensive SDL 3 demonstration showcasing graphics rendering, window management, and input handling with modern C++20 patterns.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 text-xs rounded-full glass">C++20</span>
+                        <span class="px-3 py-1 text-xs rounded-full glass">SDL 3</span>
+                        <span class="px-3 py-1 text-xs rounded-full glass">CMake</span>
+                        <span class="px-3 py-1 text-xs rounded-full glass">Graphics</span>
+                    </div>
+                    <a href="https://github.com/e-gleba/sdl-overview" class="inline-flex items-center gap-1 transition-colors" style="color: #FF6B9D;">
+                        View →
+                    </a>
+                </article>
+                
+                <article class="glass rounded-2xl p-6 hover:border-accent/50 transition-all hover:transform hover:-translate-y-1" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-xl font-bold mb-3" style="color: #FF8C42;">student-bsu-by</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        Native Android interface for Belarusian State University student account access. Cross-platform considerations for university system integration.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 text-xs rounded-full glass">Android</span>
+                        <span class="px-3 py-1 text-xs rounded-full glass">NDK</span>
+                        <span class="px-3 py-1 text-xs rounded-full glass">Mobile</span>
+                    </div>
+                    <a href="https://github.com/e-gleba/student-bsu-by" class="inline-flex items-center gap-1 transition-colors" style="color: #FF8C42;">
+                        View →
+                    </a>
+                </article>
+                
+                <article class="glass rounded-2xl p-6 hover:border-accent/50 transition-all hover:transform hover:-translate-y-1" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-xl font-bold mb-3" style="color: #C792EA;">Various Explorations</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        Ghidra reverse engineering resources, game asset modification tooling, DLL injection techniques, and shader programming experiments.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-3 py-1 text-xs rounded-full glass">Reverse Eng.</span>
+                        <span class="px-3 py-1 text-xs rounded-full glass">Ghidra</span>
+                        <span class="px-3 py-1 text-xs rounded-full glass">GLSL</span>
+                        <span class="px-3 py-1 text-xs rounded-full glass">Binary Patching</span>
+                    </div>
+                    <a href="https://github.com/e-gleba" class="inline-flex items-center gap-1 transition-colors" style="color: #C792EA;">
+                        GitHub →
+                    </a>
+                </article>
+            </div>
+        </div>
+    </section>
+    
+    <section id="skills" class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold mb-12 flex items-center gap-3" data-aos="fade-right">
+                <span style="color: #FF6B9D;">//</span> <span x-text="t('skills.title')"></span>
+            </h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="liquid-glass rounded-2xl p-6" data-aos="fade-up">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2" style="color: #FF6B9D;">
+                        <span class="material-symbols-outlined text-2xl">code</span>
+                        <span x-text="t('skills.languages')"></span>
+                    </h3>
+                    <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+                        <li class="flex items-center gap-3">
+                            <img src="https://cdn.simpleicons.org/cplusplus/FF6B9D" class="w-5 h-5" alt="C++">
+                            <span>C++17/20/23</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <img src="https://cdn.simpleicons.org/c/FF8C42" class="w-5 h-5" alt="C">
+                            <span>C17/99</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <img src="https://cdn.simpleicons.org/python/C792EA" class="w-5 h-5" alt="Python">
+                            <span>Python 3</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <img src="https://cdn.simpleicons.org/gnubash/FF6B9D" class="w-5 h-5" alt="Bash">
+                            <span>Bash/Shell</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined" style="color: #FF8C42;">code_blocks</span>
+                            <span>Objective-C/C++</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="liquid-glass rounded-2xl p-6" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2" style="color: #FF8C42;">
+                        <span class="material-symbols-outlined text-2xl">settings</span>
+                        <span x-text="t('skills.systems')"></span>
+                    </h3>
+                    <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+                        <li class="flex items-center gap-3">
+                            <img src="https://cdn.simpleicons.org/cmake/FF8C42" class="w-5 h-5" alt="CMake">
+                            <span>CMake 3.16+</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <img src="https://cdn.simpleicons.org/linux/C792EA" class="w-5 h-5" alt="Linux">
+                            <span>Linux (Fedora, Alt)</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <img src="https://cdn.simpleicons.org/git/FF6B9D" class="w-5 h-5" alt="Git">
+                            <span>Git/GitHub</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <img src="https://cdn.simpleicons.org/docker/FF8C42" class="w-5 h-5" alt="Docker">
+                            <span>Docker</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-xl" style="color: #C792EA;">terminal</span>
+                            <span>Ninja/Make</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="liquid-glass rounded-2xl p-6" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2" style="color: #C792EA;">
+                        <span class="material-symbols-outlined text-2xl">sports_esports</span>
+                        <span x-text="t('skills.graphics')"></span>
+                    </h3>
+                    <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+                        <li class="flex items-center gap-3">
+                            <img src="https://cdn.simpleicons.org/opengl/C792EA" class="w-5 h-5" alt="OpenGL">
+                            <span>OpenGL (GLSL)</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-xl" style="color: #FF6B9D;">sports_esports</span>
+                            <span>SDL 2/3</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-xl" style="color: #FF8C42;">account_tree</span>
+                            <span>Game architecture</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-xl" style="color: #C792EA;">view_in_ar</span>
+                            <span>ECS patterns</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-xl" style="color: #FF6B9D;">animation</span>
+                            <span>Sprite systems</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="liquid-glass rounded-2xl p-6" data-aos="fade-up">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2" style="color: #FF6B9D;">
+                        <span class="material-symbols-outlined text-2xl">smartphone</span>
+                        <span x-text="t('skills.mobile')"></span>
+                    </h3>
+                    <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+                        <li class="flex items-center gap-3">
+                            <img src="https://cdn.simpleicons.org/android/FF6B9D" class="w-5 h-5" alt="Android">
+                            <span>Android NDK</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <img src="https://cdn.simpleicons.org/apple/FF8C42" class="w-5 h-5" alt="iOS">
+                            <span>iOS development</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-xl" style="color: #C792EA;">devices</span>
+                            <span>Cross-platform</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-xl" style="color: #FF6B9D;">link</span>
+                            <span>JNI/Native binding</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-xl" style="color: #FF8C42;">phone_android</span>
+                            <span>Mobile UI</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="liquid-glass rounded-2xl p-6" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2" style="color: #FF8C42;">
+                        <span class="material-symbols-outlined text-2xl">bug_report</span>
+                        <span x-text="t('skills.reverse')"></span>
+                    </h3>
+                    <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-xl" style="color: #FF6B9D;">search</span>
+                            <span>Ghidra analysis</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-xl" style="color: #FF8C42;">construction</span>
+                            <span>Binary patching</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-xl" style="color: #C792EA;">memory</span>
+                            <span>Memory analysis</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-xl" style="color: #FF6B9D;">extension</span>
+                            <span>DLL injection</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-xl" style="color: #FF8C42;">folder_zip</span>
+                            <span>Asset extraction</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="liquid-glass rounded-2xl p-6" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2" style="color: #C792EA;">
+                        <span class="material-symbols-outlined text-2xl">verified</span>
+                        <span x-text="t('skills.practices')"></span>
+                    </h3>
+                    <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-xl" style="color: #FF6B9D;">error</span>
+                            <span>Explicit error handling</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-xl" style="color: #FF8C42;">speed</span>
+                            <span>Performance profiling</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-xl" style="color: #C792EA;">compress</span>
+                            <span>Minimal code footprint</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-xl" style="color: #FF6B9D;">book</span>
+                            <span>Standard library idioms</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-xl" style="color: #FF8C42;">cloud_done</span>
+                            <span>Production deployment</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-12 flex items-center justify-center gap-3" data-aos="fade-right">
+                <span style="color: #FF6B9D;">//</span> <span x-text="t('contact.title')"></span>
+            </h2>
+            
+            <div class="flex flex-wrap justify-center gap-4" data-aos="fade-up">
+                <a href="https://github.com/e-gleba" class="inline-flex items-center gap-2 px-6 py-3 glass rounded-lg hover:border-accent/50 transition-all">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    GitHub
+                </a>
+                
+                <a href="https://vk.ru/e_gleba" class="inline-flex items-center gap-2 px-6 py-3 glass rounded-lg hover:border-accent/50 transition-all">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13.162 18.994c.609 0 .858-.406.851-.915-.031-1.917.714-2.949 2.059-1.604 1.488 1.488 1.796 2.519 3.603 2.519h3.2c.808 0 1.126-.26 1.126-.668 0-.863-1.421-2.386-2.625-3.504-1.686-1.565-1.765-1.602-.313-3.486 1.801-2.339 4.157-5.336 2.073-5.336h-3.981c-.772 0-.828.435-1.103 1.083-.995 2.347-2.886 5.387-3.604 4.922-.751-.485-.407-2.406-.35-5.261.015-.754.011-1.271-1.141-1.539-.629-.145-1.241-.205-1.809-.205-2.273 0-3.841.953-2.95 1.119 1.571.293 1.42 3.692 1.054 5.16-.638 2.556-3.036-2.024-4.035-4.305-.241-.548-.315-.974-1.175-.974h-3.255c-.492 0-.787.16-.787.516 0 .602 2.96 6.72 5.786 9.77 2.756 2.975 5.48 2.708 7.376 2.708z"/>
+                    </svg>
+                    VK
+                </a>
+                
+                <a href="mailto:i@egleba.ru" class="inline-flex items-center gap-2 px-6 py-3 glass rounded-lg hover:border-accent/50 transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    Email
+                </a>
+                
+                <a href="https://steamcommunity.com/id/egleba" class="inline-flex items-center gap-2 px-6 py-3 glass rounded-lg hover:border-accent/50 transition-all">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z"/>
+                    </svg>
+                    Steam
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="py-8 px-4 sm:px-6 lg:px-8 glass text-center text-gray-600 dark:text-gray-400">
+        <p>&copy; 2025 Evgeniy Gleba. <span x-text="t('footer')"></span></p>
+    </footer>
+    
     <script>
-      (function () {
-        "use strict";
-        var btn = document.getElementById("export_pdf");
-        if (!btn) return;
-        btn.addEventListener("click", function () {
-          window.print();
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
         });
-      })();
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
     </script>
-  </body>
+</body>
 </html>
