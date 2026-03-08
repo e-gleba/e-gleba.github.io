@@ -55,7 +55,7 @@
         @supports (font-variation-settings: normal) { html { font-family: 'Inter var', sans-serif; } }
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-size: 17px; }
-        body { overflow-x: hidden; }
+        body { overflow-x: hidden; max-width: 100vw; }
 
         @media (min-width: 640px)  { html { font-size: 18px; } }
         @media (min-width: 1024px) { html { font-size: 19px; } }
@@ -208,7 +208,7 @@
 <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
 
     <!-- bg -->
-    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0 w-screen" aria-hidden="true">
         <div class="absolute inset-0 opacity-[0.04] dark:opacity-[0.06]"
              style="background-image: radial-gradient(rgba(255,107,157,.6) 1px, transparent 1px); background-size: 28px 28px;"></div>
         <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -244,7 +244,7 @@
     </div>
 
     <!-- NAV -->
-    <nav class="sticky top-0 z-50 glass" role="navigation" aria-label="Main navigation">
+    <nav class="sticky top-0 z-50 glass overflow-x-hidden" role="navigation" aria-label="Main navigation">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <a href="#" class="font-mono font-semibold text-xl tracking-tight group" aria-label="Home">
@@ -315,13 +315,13 @@
     <section class="relative min-h-[70vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 lg:py-14" role="banner">
         <div class="max-w-4xl mx-auto w-full text-center">
             <div data-aos="fade-up">
-<h1 class="text-5xl sm:text-hero lg:text-hero-lg font-bold tracking-tight mb-3">
+<h1 class="text-4xl sm:text-5xl md:text-hero lg:text-hero-lg font-bold tracking-tight mb-3">
                     Evgeniy<br><span class="gradient-text">Gleba</span>
                 </h1>
 
                 <p class="text-xl sm:text-2xl text-gray-500 dark:text-gray-400 mb-5 max-w-2xl mx-auto leading-relaxed" x-text="t('hero.tagline')"></p>
 
-                <div class="flex flex-wrap justify-center gap-2.5 mb-6">
+                <div class="flex flex-wrap justify-center gap-2 sm:gap-2.5 mb-6">
                     <span class="tech-pill"><img src="https://cdn.simpleicons.org/cplusplus/FF6B9D" class="w-4 h-4" alt="" width="16" height="16" loading="lazy"> C++23</span>
                     <span class="tech-pill"><img src="https://cdn.simpleicons.org/python/C792EA" class="w-4 h-4" alt="" width="16" height="16" loading="lazy"> Python</span>
                     <span class="tech-pill"><img src="https://cdn.simpleicons.org/cmake/FF8C42" class="w-4 h-4" alt="" width="16" height="16" loading="lazy"> CMake</span>
@@ -344,19 +344,19 @@
             <!-- stat cards -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-14" data-aos="fade-up" data-aos-delay="100">
                 <div class="stat-card glass rounded-xl p-5 text-center">
-                    <div class="text-3xl sm:text-4xl font-bold gradient-text mb-1">3+</div>
+                    <div class="text-2xl sm:text-3xl lg:text-4xl font-bold gradient-text mb-1">3+</div>
                     <div class="text-sm text-gray-500 dark:text-gray-400 font-medium" x-text="t('stats.years')"></div>
                 </div>
                 <div class="stat-card glass rounded-xl p-5 text-center">
-                    <div class="text-3xl sm:text-4xl font-bold gradient-text mb-1">C++23</div>
+                    <div class="text-2xl sm:text-3xl lg:text-4xl font-bold gradient-text mb-1">C++23</div>
                     <div class="text-sm text-gray-500 dark:text-gray-400 font-medium" x-text="t('stats.standard')"></div>
                 </div>
                 <div class="stat-card glass rounded-xl p-5 text-center">
-                    <div class="text-3xl sm:text-4xl font-bold gradient-text mb-1">25+</div>
+                    <div class="text-2xl sm:text-3xl lg:text-4xl font-bold gradient-text mb-1">25+</div>
                     <div class="text-sm text-gray-500 dark:text-gray-400 font-medium" x-text="t('stats.repos')"></div>
                 </div>
                 <div class="stat-card glass rounded-xl p-5 text-center">
-                    <div class="text-3xl sm:text-4xl font-bold gradient-text mb-1">5</div>
+                    <div class="text-2xl sm:text-3xl lg:text-4xl font-bold gradient-text mb-1">5</div>
                     <div class="text-sm text-gray-500 dark:text-gray-400 font-medium" x-text="t('stats.platforms')"></div>
                 </div>
             </div>
@@ -364,9 +364,9 @@
     </section>
 
     <!-- ABOUT -->
-    <section id="about" class="relative py-24 px-4 sm:px-6 lg:px-8">
+    <section id="about" class="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl sm:text-4xl font-bold mb-10 flex items-center gap-3" data-aos="fade-right">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 sm:mb-10 flex items-center gap-2 sm:gap-3" data-aos="fade-right">
                 <span class="text-jb-pink font-mono text-2xl" aria-hidden="true">//</span>
                 <span x-text="t('about.title')"></span>
             </h2>
@@ -383,29 +383,29 @@
     </section>
 
     <!-- PROJECTS -->
-    <section id="projects" class="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50/50 dark:bg-gray-800/30">
+    <section id="projects" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gray-50/50 dark:bg-gray-800/30">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl sm:text-4xl font-bold mb-12 flex items-center gap-3" data-aos="fade-right">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-10 sm:mb-12 flex items-center gap-2 sm:gap-3" data-aos="fade-right">
                 <span class="text-jb-pink font-mono text-2xl" aria-hidden="true">//</span>
                 <span x-text="t('projects.title')"></span>
                 <span class="material-symbols-outlined rate-warn text-lg" x-show="rateLimited"
                       :title="t('projects.rateWarn')" aria-label="GitHub API rate limited" style="cursor:help;">warning</span>
             </h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" x-show="loading" aria-busy="true">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" x-show="loading" aria-busy="true">
                 <template x-for="i in 6" :key="i"><div class="liquid-glass rounded-2xl p-6 skeleton h-56"></div></template>
             </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" x-show="!loading && repos.length > 0">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" x-show="!loading && repos.length > 0">
                 <template x-for="repo in repos" :key="repo.id">
-                    <article class="liquid-glass rounded-2xl p-6 hover:border-jb-pink/30 transition-all repo-card" data-aos="fade-up">
+                    <article class="liquid-glass rounded-2xl p-4 sm:p-6 hover:border-jb-pink/30 transition-all repo-card overflow-hidden" data-aos="fade-up">
                         <div class="flex items-start justify-between mb-3">
-                            <h3 class="text-lg font-bold font-mono text-jb-pink truncate" x-text="repo.name"></h3>
+                            <h3 class="text-base sm:text-lg font-bold font-mono text-jb-pink truncate max-w-[70%]" x-text="repo.name"></h3>
                             <div class="flex items-center gap-1.5 shrink-0 ml-2">
                                 <span class="hot-badge" x-show="isHot(repo)">🔥 HOT</span>
                             </div>
                         </div>
                         <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2" x-text="repo.description || t('projects.noDesc')"></p>
                         <div class="flex flex-wrap gap-1.5 mb-4">
-                            <span class="px-2.5 py-0.5 text-xs rounded-full liquid-glass font-mono" x-show="repo.language" x-text="repo.language"></span>
+                            <span class="px-2 py-0.5 text-[11px] sm:text-xs rounded-full liquid-glass font-mono break-all" x-show="repo.language" x-text="repo.language"></span>
                             <span class="px-2.5 py-0.5 text-xs rounded-full liquid-glass flex items-center gap-1">
                                 <span class="material-symbols-outlined" style="font-size:12px;font-variation-settings:'FILL' 1,'wght' 400;" aria-hidden="true">star</span>
                                 <span x-text="repo.stargazers_count"></span>
@@ -426,11 +426,11 @@
                 </template>
             </div>
             <!-- fallback -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" x-show="!loading && repos.length === 0">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" x-show="!loading && repos.length === 0">
                 <template x-for="fb in fallbackRepos" :key="fb.name">
-                    <article class="liquid-glass rounded-2xl p-6 hover:border-jb-pink/30 transition-all repo-card" data-aos="fade-up">
+                    <article class="liquid-glass rounded-2xl p-4 sm:p-6 hover:border-jb-pink/30 transition-all repo-card overflow-hidden" data-aos="fade-up">
                         <div class="flex items-start justify-between mb-3">
-                            <h3 class="text-lg font-bold font-mono" :style="'color:'+fb.color" x-text="fb.name"></h3>
+                            <h3 class="text-base sm:text-lg font-bold font-mono truncate max-w-[70%]" :style="'color:'+fb.color" x-text="fb.name"></h3>
                             <span class="hot-badge" x-show="fb.hot">🔥 HOT</span>
                         </div>
                         <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2" x-text="fb.desc"></p>
@@ -452,9 +452,9 @@
     </section>
 
     <!-- SKILLS -->
-    <section id="skills" class="py-24 px-4 sm:px-6 lg:px-8">
+    <section id="skills" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl sm:text-4xl font-bold mb-12 flex items-center gap-3" data-aos="fade-right">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-10 sm:mb-12 flex items-center gap-2 sm:gap-3" data-aos="fade-right">
                 <span class="text-jb-pink font-mono text-2xl" aria-hidden="true">//</span>
                 <span x-text="t('skills.title')"></span>
             </h2>
@@ -483,13 +483,13 @@
     </section>
 
     <!-- CONTACT -->
-    <section id="contact" class="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50/50 dark:bg-gray-800/30">
+    <section id="contact" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gray-50/50 dark:bg-gray-800/30">
         <div class="max-w-4xl mx-auto text-center">
             <h2 class="text-3xl sm:text-4xl font-bold mb-12 flex items-center justify-center gap-3" data-aos="fade-right">
                 <span class="text-jb-pink font-mono text-2xl" aria-hidden="true">//</span>
                 <span x-text="t('contact.title')"></span>
             </h2>
-            <div class="flex flex-wrap justify-center gap-3" data-aos="fade-up">
+            <div class="flex flex-wrap justify-center gap-2 sm:gap-3" data-aos="fade-up">
                 <template x-for="link in contactLinks" :key="link.label">
                     <a :href="link.href" class="inline-flex items-center gap-2 px-5 py-3 glass rounded-lg text-base font-medium hover:border-jb-pink/30 hover:text-jb-pink transition-all"
                        target="_blank" rel="noopener noreferrer" :aria-label="link.label">
