@@ -52,6 +52,7 @@
 
     <style>
         [x-cloak] { display: none !important; }
+        .no-js [x-cloak] { display: block !important; }
         @supports (font-variation-settings: normal) { html { font-family: 'Inter var', sans-serif; } }
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-size: 17px; }
@@ -193,6 +194,13 @@
         }
         @media (max-width: 640px) { .text-justify-body { text-align: left; hyphens: none; -webkit-hyphens: none; } }
 
+        @media (max-width: 767px) {
+            [data-aos] {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+        }
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: .01ms !important;
@@ -244,7 +252,7 @@
     </div>
 
     <!-- NAV -->
-    <nav class="sticky top-0 z-50 glass overflow-x-hidden" role="navigation" aria-label="Main navigation">
+    <nav class="sticky top-0 z-50 glass" role="navigation" aria-label="Main navigation">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <a href="#" class="font-mono font-semibold text-xl tracking-tight group" aria-label="Home">
@@ -263,7 +271,7 @@
                             <span class="text-xs font-mono font-semibold" x-text="lang.toUpperCase()"></span>
                         </button>
                         <div x-show="langOpen" x-transition.opacity.duration.150ms @click.outside="langOpen = false"
-                             class="absolute right-0 mt-2 w-48 rounded-xl dropdown-panel py-1.5 z-50" role="menu" x-trap.noscroll="langOpen">
+                             class="absolute right-0 mt-2 w-48 rounded-xl dropdown-panel py-1.5 z-[60]" role="menu" x-trap.noscroll="langOpen">
                             <template x-for="l in langs" :key="l.code">
                                 <button @click="lang = l.code; langOpen = false"
                                         class="w-full px-4 py-2.5 text-left hover:bg-jb-pink/10 transition-colors flex items-center gap-3 text-sm font-medium text-gray-700 dark:text-gray-200"
@@ -281,31 +289,39 @@
                     </button>
                 </div>
                 <div class="md:hidden flex items-center gap-1.5">
-                    <button @click="mobileMenu = !mobileMenu" class="p-2 rounded-lg theme-btn" :aria-expanded="mobileMenu" aria-label="Menu">
+                    <button @click="mobileMenu = !mobileMenu" class="p-2 rounded-lg theme-btn relative z-[60]" :aria-expanded="mobileMenu" aria-label="Menu">
                         <span class="material-symbols-outlined text-lg" x-text="mobileMenu ? 'close' : 'menu'" aria-hidden="true"></span>
                     </button>
                     <button @click="toggleTheme()" class="p-2 rounded-lg theme-btn" :aria-label="theme === 'dark' ? 'Light' : 'Dark'">
                         <span class="material-symbols-outlined text-lg" x-text="theme === 'dark' ? 'light_mode' : 'dark_mode'" aria-hidden="true"></span>
                     </button>
-                    <div x-show="mobileMenu" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2"
-                         x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150"
-                         x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0 -translate-y-2"
-                         @click.outside="mobileMenu = false" @keydown.escape.window="mobileMenu = false"
-                         class="absolute top-16 left-0 right-0 liquid-glass p-4 space-y-3 md:hidden" x-trap.noscroll="mobileMenu">
-                        <a href="#about"    @click="mobileMenu=false" class="block py-2 text-sm font-medium hover:text-jb-pink" x-text="t('nav.about')"></a>
-                        <a href="#projects" @click="mobileMenu=false" class="block py-2 text-sm font-medium hover:text-jb-pink" x-text="t('nav.projects')"></a>
-                        <a href="#skills"   @click="mobileMenu=false" class="block py-2 text-sm font-medium hover:text-jb-pink" x-text="t('nav.skills')"></a>
-                        <a href="#contact"  @click="mobileMenu=false" class="block py-2 text-sm font-medium hover:text-jb-pink" x-text="t('nav.contact')"></a>
-                        <div class="pt-3 border-t border-white/10 flex gap-2">
-                            <template x-for="l in langs" :key="l.code">
-                                <button @click="lang = l.code; mobileMenu = false"
-                                        class="px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all"
-                                        :class="lang === l.code ? 'bg-jb-pink/20 text-jb-pink border border-jb-pink/30' : 'theme-btn'">
-                                    <span x-text="l.code.toUpperCase()"></span>
-                                </button>
-                            </template>
-                        </div>
-                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- mobile menu panel (outside flex, inside nav) -->
+        <div x-show="mobileMenu"
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0"
+             @click.outside="mobileMenu = false"
+             @keydown.escape.window="mobileMenu = false"
+             class="md:hidden border-t border-white/10 dark:border-white/5">
+            <div class="px-4 sm:px-6 py-4 space-y-1">
+                <a href="#about"    @click="mobileMenu=false" class="block px-3 py-2.5 rounded-lg text-base font-medium hover:text-jb-pink hover:bg-jb-pink/5 transition-colors" x-text="t('nav.about')"></a>
+                <a href="#projects" @click="mobileMenu=false" class="block px-3 py-2.5 rounded-lg text-base font-medium hover:text-jb-pink hover:bg-jb-pink/5 transition-colors" x-text="t('nav.projects')"></a>
+                <a href="#skills"   @click="mobileMenu=false" class="block px-3 py-2.5 rounded-lg text-base font-medium hover:text-jb-pink hover:bg-jb-pink/5 transition-colors" x-text="t('nav.skills')"></a>
+                <a href="#contact"  @click="mobileMenu=false" class="block px-3 py-2.5 rounded-lg text-base font-medium hover:text-jb-pink hover:bg-jb-pink/5 transition-colors" x-text="t('nav.contact')"></a>
+                <div class="pt-3 mt-2 border-t border-white/10 dark:border-white/5 flex items-center gap-2">
+                    <template x-for="l in langs" :key="l.code">
+                        <button @click="lang = l.code; mobileMenu = false"
+                                class="px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all"
+                                :class="lang === l.code ? 'bg-jb-pink/20 text-jb-pink border border-jb-pink/30' : 'theme-btn'">
+                            <span x-text="l.code.toUpperCase()"></span>
+                        </button>
+                    </template>
                 </div>
             </div>
         </div>
@@ -485,11 +501,11 @@
     <!-- CONTACT -->
     <section id="contact" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gray-50/50 dark:bg-gray-800/30">
         <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl sm:text-4xl font-bold mb-12 flex items-center justify-center gap-3" data-aos="fade-right">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-12 flex items-center justify-center gap-3">
                 <span class="text-jb-pink font-mono text-2xl" aria-hidden="true">//</span>
                 <span x-text="t('contact.title')"></span>
             </h2>
-            <div class="flex flex-wrap justify-center gap-2 sm:gap-3" data-aos="fade-up">
+            <div class="flex flex-wrap justify-center gap-2 sm:gap-3">
                 <template x-for="link in contactLinks" :key="link.label">
                     <a :href="link.href" class="inline-flex items-center gap-2 px-5 py-3 glass rounded-lg text-base font-medium hover:border-jb-pink/30 hover:text-jb-pink transition-all"
                        target="_blank" rel="noopener noreferrer" :aria-label="link.label">
@@ -709,14 +725,31 @@
             init() {
                 this.fetchGitHubData();
                 window.addEventListener('scroll', () => { this.showTop = window.scrollY > 400; }, { passive: true });
-                document.addEventListener('DOMContentLoaded', () => {
-                    if (typeof AOS !== 'undefined') AOS.init({ duration: 500, once: true, offset: 60 });
+                this.$nextTick(() => {
+                    const initAOS = () => {
+                        if (typeof AOS !== 'undefined') {
+                            AOS.init({ duration: 400, once: true, offset: 30, disable: 'mobile' });
+                        }
+                    };
+                    if (document.readyState === 'complete') initAOS();
+                    else window.addEventListener('load', initAOS);
+                    // safety: if AOS never loads, reveal all elements after 2s
+                    setTimeout(() => {
+                        document.querySelectorAll('[data-aos]').forEach(el => {
+                            el.style.opacity = '1';
+                            el.style.transform = 'none';
+                            el.style.transition = 'none';
+                        });
+                    }, 2500);
                 });
                 document.addEventListener('click', (e) => {
                     const a = e.target.closest('a[href^="#"]');
                     if (!a) return;
-                    e.preventDefault();
-                    document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior:'smooth', block:'start' });
+                    const target = document.querySelector(a.getAttribute('href'));
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({ behavior:'smooth', block:'start' });
+                    }
                 });
             }
         };
