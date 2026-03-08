@@ -1,14 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" x-data="{ theme: $persist('dark').as('theme') }" :class="theme">
+<html lang="en" x-cloak x-data="app()" :lang="lang" :class="theme">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="C++ Developer - Cross-platform systems, game development, reverse engineering">
-    <title>Evgeniy Gleba - C++</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="C++ Developer — Cross-platform systems, game development, reverse engineering">
+    <meta name="theme-color" :content="theme === 'dark' ? '#0f172a' : '#ffffff'">
+    <title>Evgeniy Gleba — C++ Systems Developer</title>
+
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF6B9D'/%3E%3Cstop offset='50%25' style='stop-color:%23FF8C42'/%3E%3Cstop offset='100%25' style='stop-color:%23C792EA'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Ctext x='32' y='45' font-family='monospace' font-size='36' font-weight='bold' text-anchor='middle' fill='url(%23g)'%3EE%3C/text%3E%3C/svg%3E">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://rsms.me" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdn.simpleicons.org" crossorigin>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+
+    <!-- pinned deps -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -19,581 +29,392 @@
                         mono: ['SF Mono', 'Monaco', 'Inconsolata', 'Courier New', 'monospace']
                     },
                     colors: {
-                        accent: {
-                            DEFAULT: '#8B5CF6',
-                            light: '#A78BFA',
-                            dark: '#7C3AED'
-                        },
-                        jetbrains: {
-                            pink: '#FF6B9D',
-                            orange: '#FF8C42',
-                            purple: '#C792EA'
-                        }
+                        accent: { DEFAULT: '#8B5CF6', light: '#A78BFA', dark: '#7C3AED' },
+                        jb: { pink: '#FF6B9D', orange: '#FF8C42', purple: '#C792EA' }
                     }
                 }
             }
         }
     </script>
-    
-    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-    <link rel="preconnect" href="https://rsms.me/">
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    
+
+    <!-- alpine: persist -> focus -> core  (order matters, all pinned) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.14.9/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.14.9/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
     <style>
+        /* --- base --- */
+        [x-cloak] { display: none !important; }
+
         @supports (font-variation-settings: normal) {
             html { font-family: 'Inter var', sans-serif; }
         }
-        
-        html { scroll-behavior: smooth; }
-        
-        .bg-gradient-radial {
-            background: 
-                radial-gradient(circle at 15% 30%, rgba(255, 107, 157, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 85% 60%, rgba(255, 140, 66, 0.12) 0%, transparent 50%),
-                radial-gradient(circle at 50% 90%, rgba(199, 146, 234, 0.1) 0%, transparent 50%);
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        
+
+        body { overflow-x: hidden; }
+
+        /* --- glass layers --- */
         .glass {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,.06);
+            backdrop-filter: blur(10px) saturate(150%);
+            border: 1px solid rgba(255,255,255,.1);
         }
-        
         .dark .glass {
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(18,18,18,.72);
+            border-color: rgba(255,255,255,.05);
         }
-        
-        ::-webkit-scrollbar { width: 8px; }
+
+        .liquid-glass {
+            background: rgba(255,255,255,.08);
+            backdrop-filter: blur(14px) saturate(160%);
+            border: 1px solid rgba(255,255,255,.12);
+            box-shadow: 0 8px 32px rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.1);
+        }
+        .dark .liquid-glass {
+            background: rgba(18,18,18,.8);
+            border-color: rgba(255,255,255,.08);
+            box-shadow: 0 8px 32px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.05);
+        }
+
+        /* --- dropdown (theme-aware via tailwind, no duplication) --- */
+        .dropdown-panel {
+            background: rgba(255,255,255,.95);
+            backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid rgba(255,107,157,.2);
+            box-shadow: 0 16px 48px rgba(0,0,0,.12);
+        }
+        .dark .dropdown-panel {
+            background: rgba(15,23,42,.95);
+            border-color: rgba(255,107,157,.3);
+            box-shadow: 0 16px 48px rgba(0,0,0,.5);
+        }
+
+        .theme-btn {
+            background: rgba(255,255,255,.08);
+            backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255,255,255,.12);
+        }
+        .dark .theme-btn {
+            background: rgba(0,0,0,.3);
+            border-color: rgba(255,255,255,.08);
+        }
+
+        /* --- scrollbar --- */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { 
-            background: linear-gradient(180deg, rgba(255, 107, 157, 0.5), rgba(255, 140, 66, 0.5));
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, rgba(255,107,157,.5), rgba(255,140,66,.5));
             border-radius: 4px;
         }
-        ::-webkit-scrollbar-thumb:hover { 
-            background: linear-gradient(180deg, rgba(255, 107, 157, 0.7), rgba(255, 140, 66, 0.7));
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, rgba(255,107,157,.7), rgba(255,140,66,.7));
         }
-        
-        ::selection {
-            background: rgba(255, 107, 157, 0.3);
-            color: inherit;
-        }
-        
+        ::selection { background: rgba(255,107,157,.3); color: inherit; }
+
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
             user-select: none;
-            -webkit-user-select: none;
         }
-        
-        .liquid-glass {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px) saturate(200%);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-        
-        .dark .liquid-glass {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-        }
-        
-        .theme-selector {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(16px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-        }
-        
-        .dark .theme-selector {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        
-        @keyframes wave-float-1 {
-            0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-            33% { transform: translate3d(30px, -30px, 0) scale(1.1); }
-            66% { transform: translate3d(-20px, 20px, 0) scale(0.9); }
-        }
-        
-        @keyframes wave-float-2 {
-            0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-            33% { transform: translate3d(-40px, 30px, 0) scale(0.9); }
-            66% { transform: translate3d(20px, -25px, 0) scale(1.15); }
-        }
-        
-        @keyframes wave-float-3 {
-            0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-            33% { transform: translate3d(25px, 35px, 0) scale(1.05); }
-            66% { transform: translate3d(-30px, -20px, 0) scale(0.95); }
-        }
-        
-        .wave-blob:nth-child(1) { animation: wave-float-1 8s ease-in-out infinite; }
-        .wave-blob:nth-child(2) { animation: wave-float-2 10s ease-in-out infinite 1s; }
-        .wave-blob:nth-child(3) { animation: wave-float-3 12s ease-in-out infinite 2s; }
-        
-        .repo-card {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-        }
-        
-        .repo-card:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(255, 107, 157, 0.15);
-        }
-        
+
+        /* --- animations --- */
         @keyframes shimmer {
-            0% { background-position: -1000px 0; }
-            100% { background-position: 1000px 0; }
+            0%   { background-position: -1000px 0; }
+            100% { background-position:  1000px 0; }
         }
-        
+
         .skeleton {
-            background: linear-gradient(90deg, 
-                rgba(255, 255, 255, 0.05) 0%, 
-                rgba(255, 255, 255, 0.1) 50%, 
-                rgba(255, 255, 255, 0.05) 100%);
+            background: linear-gradient(90deg, rgba(255,255,255,.05) 0%, rgba(255,255,255,.1) 50%, rgba(255,255,255,.05) 100%);
             background-size: 1000px 100%;
-            animation: shimmer 2s infinite;
+            animation: shimmer 2s infinite linear;
         }
-        
         .dark .skeleton {
-            background: linear-gradient(90deg, 
-                rgba(0, 0, 0, 0.1) 0%, 
-                rgba(255, 255, 255, 0.05) 50%, 
-                rgba(0, 0, 0, 0.1) 100%);
+            background: linear-gradient(90deg, rgba(0,0,0,.1) 0%, rgba(255,255,255,.05) 50%, rgba(0,0,0,.1) 100%);
             background-size: 1000px 100%;
         }
-        
+
+        .repo-card { transition: all .3s cubic-bezier(.4,0,.2,1); }
+        .repo-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(255,107,157,.15); }
+        .repo-card:focus-within { outline: 2px solid #FF6B9D; outline-offset: 2px; }
+
         .tech-badge-icon {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(255, 140, 66, 0.1));
-            border: 1px solid rgba(255, 107, 157, 0.3);
+            display: inline-flex; align-items: center; gap: .5rem;
+            padding: .5rem 1rem;
+            background: linear-gradient(135deg, rgba(255,107,157,.1), rgba(255,140,66,.1));
+            border: 1px solid rgba(255,107,157,.3);
             border-radius: 999px;
-            transition: all 0.3s ease;
-            font-size: 0.875rem;
+            transition: all .3s ease;
+            font-size: .875rem;
         }
-        
         .tech-badge-icon:hover {
-            background: linear-gradient(135deg, rgba(255, 107, 157, 0.2), rgba(255, 140, 66, 0.2));
-            border-color: rgba(255, 107, 157, 0.5);
+            background: linear-gradient(135deg, rgba(255,107,157,.2), rgba(255,140,66,.2));
+            border-color: rgba(255,107,157,.5);
             transform: translateY(-2px);
         }
-        
-        .chart-container {
-            position: relative;
-            height: 300px;
-            width: 100%;
+
+        .gradient-text {
+            background: linear-gradient(135deg, #FF6B9D, #FF8C42);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        
-        html.light .light-waves,
-        html:not(.dark) .light-waves { display: block; }
-        html.light .dark-waves,
-        html:not(.dark) .dark-waves { display: none; }
-        
-        html.dark .light-waves { display: none; }
-        html.dark .dark-waves { display: block; }
-        
+
+        /* wave visibility via class on <html> */
+        html.light .light-waves, html:not(.dark) .light-waves { display: block; }
+        html.light .dark-waves,  html:not(.dark) .dark-waves  { display: none;  }
+        html.dark  .light-waves { display: none;  }
+        html.dark  .dark-waves  { display: block; }
+
+        button:focus-visible, a:focus-visible { outline: 2px solid #FF6B9D; outline-offset: 2px; }
+
         @media (prefers-reduced-motion: reduce) {
-            .wave-path animate {
-                display: none;
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
             }
-            .skeleton {
-                animation: none !important;
-            }
+            .skeleton { animation: none !important; }
+        }
+        @media (max-width: 768px) {
+            .repo-card:hover { transform: none; }
         }
     </style>
 </head>
-<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300" 
-      x-data="{ 
-          repos: [], 
-          stats: null, 
-          loading: true,
-          error: null,
-          lang: $persist('en').as('language'),
-          translations: {                  en: {
-                      nav: { about: 'About', projects: 'Projects', skills: 'Skills', contact: 'Contact' },
-                      hero: {
-                          tagline: 'systems architect • game developer • reverse engineer',
-                          viewProjects: 'View Projects'
-                      },
-                      about: {
-                          title: 'About',
-                          p1: 'Systems programmer focused on performance and cross-platform development. Write C++20, build with CMake, profile with Tracy — every day. Work close to metal: graphics, game engines, native mobile apps for iOS and Android.',
-                          p2: 'Simple principle: less code, fewer bugs. Every line must justify its existence. Prefer explicit over implicit, standard library over reinvention, Unix approach over framework magic.',
-                          p3: 'Grew up on Valve engines — Half-Life, Source SDK, Garry\'s Mod. Shaped both taste and approach: modularity, modding culture, community respect. Still dig through source code for fun.',
-                          p4: 'Outside code — look through telescope. Astronomy reminds me there are problems bigger than any deadline. Also play TF2, aim in Sniper Elite, build galactic empires in Stellaris, and sometimes break things to understand how they work.'
-                      },
-                  github: {
-                      title: 'GitHub Activity',
-                      stars: 'Total Stars',
-                      repos: 'Public Repos',
-                      forks: 'Total Forks'
-                  },
-                  projects: {
-                      title: 'Latest Projects',
-                      noDesc: 'No description available',
-                      view: 'View'
-                  },
-                  skills: {
-                      title: 'Skills',
-                      languages: 'Languages',
-                      systems: 'Systems & Tools',
-                      graphics: 'Graphics & Engines',
-                      mobile: 'Mobile Development',
-                      reverse: 'Reverse Engineering',
-                      practices: 'Development Practices'
-                  },
-                  contact: {
-                      title: 'Contact'
-                  },
-                  footer: 'Built with Tailwind CSS, Alpine.js, and AOS.'
-              },                  ru: {
-                      nav: { about: 'О себе', projects: 'Проекты', skills: 'Навыки', contact: 'Контакты' },
-                      hero: {
-                          tagline: 'системный архитектор • разработчик игр • реверс-инжиниринг',
-                          viewProjects: 'Проекты'
-                      },
-                      about: {
-                          title: 'О себе',
-                          p1: 'Системный программист с фокусом на производительность и кросс-платформенную разработку. Пишу на C++20, собираю через CMake, профилирую через Tracy — и так каждый день. Работаю близко к железу: графика, игровые движки, нативные мобильные приложения под iOS и Android.',
-                          p2: 'Верю в простой принцип: меньше кода — меньше багов. Каждая строчка должна оправдывать своё существование. Предпочитаю явное неявному, стандартную библиотеку — велосипедам, а Unix-подход — магии фреймворков.',
-                          p3: 'Вырос на движках Valve — Half-Life, Source SDK, Garry\'s Mod. Это сформировало и вкус, и подход: модульность, моддинг-культура, уважение к сообществу. До сих пор копаюсь в исходниках ради удовольствия.',
-                          p4: 'Вне кода — смотрю в телескоп. Астрономия для меня — способ помнить, что есть задачи масштабнее любого дедлайна. А ещё играю в TF2, целюсь в Sniper Elite, строю галактические империи в Stellaris и иногда ломаю вещи, чтобы понять, как они работают.'
-                      },
-                  github: {
-                      title: 'Активность на GitHub',
-                      stars: 'Всего звёзд',
-                      repos: 'Публичных репозиториев',
-                      forks: 'Всего форков'
-                  },
-                  projects: {
-                      title: 'Последние проекты',
-                      noDesc: 'Описание отсутствует',
-                      view: 'Смотреть'
-                  },
-                  skills: {
-                      title: 'Навыки',
-                      languages: 'Языки программирования',
-                      systems: 'Системы и инструменты',
-                      graphics: 'Графика и движки',
-                      mobile: 'Мобильная разработка',
-                      reverse: 'Реверс-инжиниринг',
-                      practices: 'Практики разработки'
-                  },
-                  contact: {
-                      title: 'Контакты'
-                  },
-                  footer: 'Собрано с Tailwind CSS, Alpine.js и AOS.'
-              },                  zh: {
-                      nav: { about: '关于', projects: '项目', skills: '技能', contact: '联系' },
-                      hero: {
-                          tagline: '系统架构师 • 游戏开发 • 逆向工程',
-                          viewProjects: '查看项目'
-                      },
-                      about: {
-                          title: '关于',
-                          p1: '专注性能和跨平台开发的系统程序员。编写C++20，使用CMake构建，通过Tracy分析性能——每天如此。贴近底层工作：图形、游戏引擎、iOS和Android原生移动应用。',
-                          p2: '信奉简单原则：代码越少，错误越少。每一行代码都必须证明其存在价值。偏好显式而非隐式、标准库而非重复造轮、Unix方式而非框架魔法。',
-                          p3: '在Valve引擎上成长——Half-Life、Source SDK、Garry\'s Mod。这塑造了品味和方法：模块化、模组文化、尊重社区。至今仍为乐趣而挖掘源代码。',
-                          p4: '代码之外——望远镜观星。天文学提醒我，有些问题比任何截止日期都重要。还玩TF2、在Sniper Elite中瞄准、在Stellaris中建立银河帝国，有时拆解东西以理解其工作原理。'
-                      },
-                  github: {
-                      title: 'GitHub 活动',
-                      stars: '总星标数',
-                      repos: '公共仓库',
-                      forks: '总分叉数'
-                  },
-                  projects: {
-                      title: '最新项目',
-                      noDesc: '暂无描述',
-                      view: '查看'
-                  },
-                  skills: {
-                      title: '技能',
-                      languages: '编程语言',
-                      systems: '系统与工具',
-                      graphics: '图形与引擎',
-                      mobile: '移动开发',
-                      reverse: '逆向工程',
-                      practices: '开发实践'
-                  },
-                  contact: {
-                      title: '联系方式'
-                  },
-                  footer: '使用 Tailwind CSS、Alpine.js 和 AOS 构建。'
-              }
-          },
-          t(key) {
-              const keys = key.split('.');
-              let value = this.translations[this.lang];
-              for (const k of keys) {
-                  value = value?.[k];
-              }
-              return value || key;
-          },
-          async fetchGitHubData() {
-              try {
-                  const reposResponse = await fetch('https://api.github.com/users/e-gleba/repos?sort=updated&per_page=6', {
-                      headers: { 'Accept': 'application/vnd.github.v3+json' }
-                  });
-                  if (!reposResponse.ok) {
-                      console.warn(`GitHub API returned ${reposResponse.status}, using fallback data`);
-                      this.repos = [];
-                      this.stats = { public_repos: 0 };
-                      this.loading = false;
-                      return;
-                  }
-                  const reposData = await reposResponse.json();
-                  this.repos = Array.isArray(reposData) ? reposData : [];
-                  
-                  const userResponse = await fetch('https://api.github.com/users/e-gleba', {
-                      headers: { 'Accept': 'application/vnd.github.v3+json' }
-                  });
-                  if (!userResponse.ok) {
-                      console.warn(`GitHub API returned ${userResponse.status}`);
-                      this.stats = { public_repos: 0 };
-                      this.loading = false;
-                      return;
-                  }
-                  this.stats = await userResponse.json();
-                  
-                  this.loading = false;
-              } catch (error) {
-                  console.warn('GitHub API unavailable, using fallback:', error);
-                  this.repos = [];
-                  this.stats = { public_repos: 0 };
-                  this.loading = false;
-              }
-          }
-      }"
-      x-init="fetchGitHubData()">
-    
-    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div class="absolute inset-0 opacity-30 dark:opacity-20" style="background-image: 
-            repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255, 107, 157, 0.08) 40px, rgba(255, 107, 157, 0.08) 42px),
-            repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(255, 140, 66, 0.08) 40px, rgba(255, 140, 66, 0.08) 42px);">
+
+<!--
+  BUG FIX: all UI state (langOpen, mobileMenu, theme, lang) lives in ONE
+  Alpine component on <body>. Previously nested x-data scopes caused the
+  theme toggle to reference `open` from the lang-dropdown scope — when the
+  class on <html> changed, Alpine re-evaluated and spawned a duplicate dropdown.
+  Now every boolean is independent and accessed from the same root scope.
+-->
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+
+    <!-- background blobs -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
+        <div class="absolute inset-0 opacity-30 dark:opacity-20"
+             style="background-image:
+                repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(255,107,157,.08) 40px,rgba(255,107,157,.08) 42px),
+                repeating-linear-gradient(-45deg,transparent,transparent 40px,rgba(255,140,66,.08) 40px,rgba(255,140,66,.08) 42px);">
         </div>
         <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <defs>
-                <linearGradient id="wave-gradient-1" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:#FF6B9D;stop-opacity:0.15" />
-                    <stop offset="50%" style="stop-color:#FF8C42;stop-opacity:0.12" />
-                    <stop offset="100%" style="stop-color:#C792EA;stop-opacity:0.1" />
+                <linearGradient id="wg1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%"   style="stop-color:#FF6B9D;stop-opacity:.15"/>
+                    <stop offset="50%"  style="stop-color:#FF8C42;stop-opacity:.12"/>
+                    <stop offset="100%" style="stop-color:#C792EA;stop-opacity:.1"/>
                 </linearGradient>
-                <linearGradient id="wave-gradient-2" x1="100%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" style="stop-color:#C792EA;stop-opacity:0.12" />
-                    <stop offset="50%" style="stop-color:#FF6B9D;stop-opacity:0.1" />
-                    <stop offset="100%" style="stop-color:#FF8C42;stop-opacity:0.08" />
-                </linearGradient>
-                <linearGradient id="wave-gradient-3" x1="0%" y1="100%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color:#FF8C42;stop-opacity:0.1" />
-                    <stop offset="50%" style="stop-color:#C792EA;stop-opacity:0.12" />
-                    <stop offset="100%" style="stop-color:#FF6B9D;stop-opacity:0.08" />
-                </linearGradient>
-                
-                <linearGradient id="wave-gradient-dark-1" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:#FF6B9D;stop-opacity:0.18" />
-                    <stop offset="50%" style="stop-color:#FF8C42;stop-opacity:0.15" />
-                    <stop offset="100%" style="stop-color:#C792EA;stop-opacity:0.12" />
-                </linearGradient>
-                <linearGradient id="wave-gradient-dark-2" x1="100%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" style="stop-color:#C792EA;stop-opacity:0.15" />
-                    <stop offset="50%" style="stop-color:#FF6B9D;stop-opacity:0.12" />
-                    <stop offset="100%" style="stop-color:#FF8C42;stop-opacity:0.10" />
-                </linearGradient>
-                <linearGradient id="wave-gradient-dark-3" x1="0%" y1="100%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color:#FF8C42;stop-opacity:0.12" />
-                    <stop offset="50%" style="stop-color:#C792EA;stop-opacity:0.15" />
-                    <stop offset="100%" style="stop-color:#FF6B9D;stop-opacity:0.10" />
+                <linearGradient id="wgd1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%"   style="stop-color:#FF6B9D;stop-opacity:.18"/>
+                    <stop offset="50%"  style="stop-color:#FF8C42;stop-opacity:.15"/>
+                    <stop offset="100%" style="stop-color:#C792EA;stop-opacity:.12"/>
                 </linearGradient>
             </defs>
-            
             <g class="light-waves">
-                <path class="wave-path wave-1" fill="url(#wave-gradient-1)" d="M0,100 Q250,50 500,100 T1000,100 Q1250,50 1500,100 T2000,100 L2000,0 L0,0 Z">
-                    <animate attributeName="d" 
-                             dur="20s" 
-                             repeatCount="indefinite"
-                             values="M0,100 Q250,50 500,100 T1000,100 Q1250,50 1500,100 T2000,100 L2000,0 L0,0 Z;
-                                     M0,100 Q250,150 500,100 T1000,100 Q1250,150 1500,100 T2000,100 L2000,0 L0,0 Z;
-                                     M0,100 Q250,50 500,100 T1000,100 Q1250,50 1500,100 T2000,100 L2000,0 L0,0 Z"/>
-                </path>
-                
-                <path class="wave-path wave-2" fill="url(#wave-gradient-2)" d="M0,300 Q300,200 600,300 T1200,300 Q1500,200 1800,300 T2400,300 L2400,1200 L0,1200 Z" transform="translate(0, 0)">
-                    <animate attributeName="d" 
-                             dur="25s" 
-                             repeatCount="indefinite"
-                             values="M0,300 Q300,200 600,300 T1200,300 Q1500,200 1800,300 T2400,300 L2400,1200 L0,1200 Z;
-                                     M0,300 Q300,400 600,300 T1200,300 Q1500,400 1800,300 T2400,300 L2400,1200 L0,1200 Z;
-                                     M0,300 Q300,200 600,300 T1200,300 Q1500,200 1800,300 T2400,300 L2400,1200 L0,1200 Z"/>
-                </path>
-                
-                <path class="wave-path wave-3" fill="url(#wave-gradient-3)" d="M2400,800 Q2100,700 1800,800 T1200,800 Q900,700 600,800 T0,800 L0,1200 L2400,1200 Z">
-                    <animate attributeName="d" 
-                             dur="30s" 
-                             repeatCount="indefinite"
-                             values="M2400,800 Q2100,700 1800,800 T1200,800 Q900,700 600,800 T0,800 L0,1200 L2400,1200 Z;
-                                     M2400,800 Q2100,900 1800,800 T1200,800 Q900,900 600,800 T0,800 L0,1200 L2400,1200 Z;
-                                     M2400,800 Q2100,700 1800,800 T1200,800 Q900,700 600,800 T0,800 L0,1200 L2400,1200 Z"/>
+                <path fill="url(#wg1)" d="M0,100 Q250,50 500,100 T1000,100 Q1250,50 1500,100 T2000,100 L2000,0 L0,0 Z">
+                    <animate attributeName="d" dur="20s" repeatCount="indefinite"
+                        values="M0,100 Q250,50 500,100 T1000,100 Q1250,50 1500,100 T2000,100 L2000,0 L0,0 Z;
+                                M0,100 Q250,150 500,100 T1000,100 Q1250,150 1500,100 T2000,100 L2000,0 L0,0 Z;
+                                M0,100 Q250,50 500,100 T1000,100 Q1250,50 1500,100 T2000,100 L2000,0 L0,0 Z"/>
                 </path>
             </g>
-            
             <g class="dark-waves">
-                <path class="wave-path wave-1-dark" fill="url(#wave-gradient-dark-1)" d="M0,100 Q250,50 500,100 T1000,100 Q1250,50 1500,100 T2000,100 L2000,0 L0,0 Z">
-                    <animate attributeName="d" 
-                             dur="20s" 
-                             repeatCount="indefinite"
-                             values="M0,100 Q250,50 500,100 T1000,100 Q1250,50 1500,100 T2000,100 L2000,0 L0,0 Z;
-                                     M0,100 Q250,150 500,100 T1000,100 Q1250,150 1500,100 T2000,100 L2000,0 L0,0 Z;
-                                     M0,100 Q250,50 500,100 T1000,100 Q1250,50 1500,100 T2000,100 L2000,0 L0,0 Z"/>
-                </path>
-                
-                <path class="wave-path wave-2-dark" fill="url(#wave-gradient-dark-2)" d="M0,300 Q300,200 600,300 T1200,300 Q1500,200 1800,300 T2400,300 L2400,1200 L0,1200 Z">
-                    <animate attributeName="d" 
-                             dur="25s" 
-                             repeatCount="indefinite"
-                             values="M0,300 Q300,200 600,300 T1200,300 Q1500,200 1800,300 T2400,300 L2400,1200 L0,1200 Z;
-                                     M0,300 Q300,400 600,300 T1200,300 Q1500,400 1800,300 T2400,300 L2400,1200 L0,1200 Z;
-                                     M0,300 Q300,200 600,300 T1200,300 Q1500,200 1800,300 T2400,300 L2400,1200 L0,1200 Z"/>
-                </path>
-                
-                <path class="wave-path wave-3-dark" fill="url(#wave-gradient-dark-3)" d="M2400,800 Q2100,700 1800,800 T1200,800 Q900,700 600,800 T0,800 L0,1200 L2400,1200 Z">
-                    <animate attributeName="d" 
-                             dur="30s" 
-                             repeatCount="indefinite"
-                             values="M2400,800 Q2100,700 1800,800 T1200,800 Q900,700 600,800 T0,800 L0,1200 L2400,1200 Z;
-                                     M2400,800 Q2100,900 1800,800 T1200,800 Q900,900 600,800 T0,800 L0,1200 L2400,1200 Z;
-                                     M2400,800 Q2100,700 1800,800 T1200,800 Q900,700 600,800 T0,800 L0,1200 L2400,1200 Z"/>
+                <path fill="url(#wgd1)" d="M0,100 Q250,50 500,100 T1000,100 Q1250,50 1500,100 T2000,100 L2000,0 L0,0 Z">
+                    <animate attributeName="d" dur="20s" repeatCount="indefinite"
+                        values="M0,100 Q250,50 500,100 T1000,100 Q1250,50 1500,100 T2000,100 L2000,0 L0,0 Z;
+                                M0,100 Q250,150 500,100 T1000,100 Q1250,150 1500,100 T2000,100 L2000,0 L0,0 Z;
+                                M0,100 Q250,50 500,100 T1000,100 Q1250,50 1500,100 T2000,100 L2000,0 L0,0 Z"/>
                 </path>
             </g>
         </svg>
     </div>
-    
-    <nav class="sticky top-0 z-50 glass">
+
+    <!-- ===== NAV ===== -->
+    <nav class="sticky top-0 z-50 glass" role="navigation" aria-label="Main navigation">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <a href="#" class="font-bold text-lg tracking-tight">e-gleba</a>
-                
+                <a href="#" class="font-bold text-lg tracking-tight" aria-label="Home">e-gleba</a>
+
+                <!-- desktop nav -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#about" class="hover:text-accent transition-colors" x-text="t('nav.about')"></a>
+                    <a href="#about"    class="hover:text-accent transition-colors" x-text="t('nav.about')"></a>
                     <a href="#projects" class="hover:text-accent transition-colors" x-text="t('nav.projects')"></a>
-                    <a href="#skills" class="hover:text-accent transition-colors" x-text="t('nav.skills')"></a>
-                    <a href="#contact" class="hover:text-accent transition-colors" x-text="t('nav.contact')"></a>
-                    
-                    <div class="relative" x-data="{ open: false }">
-                        <button @click="open = !open" 
-                                class="p-2 rounded-lg theme-selector hover:border-accent/50 transition-all flex items-center gap-2">
-                            <span class="material-symbols-outlined text-xl">language</span>
-                            <span class="text-sm" x-text="lang.toUpperCase()"></span>
+                    <a href="#skills"   class="hover:text-accent transition-colors" x-text="t('nav.skills')"></a>
+                    <a href="#contact"  class="hover:text-accent transition-colors" x-text="t('nav.contact')"></a>
+
+                    <!-- lang picker (desktop) -->
+                    <div class="relative">
+                        <button @click="langOpen = !langOpen"
+                                @keydown.escape.window="langOpen = false"
+                                class="p-2 rounded-lg theme-btn hover:border-accent/50 transition-all flex items-center gap-2"
+                                aria-label="Select language"
+                                :aria-expanded="langOpen">
+                            <span class="material-symbols-outlined text-xl" aria-hidden="true">language</span>
+                            <span class="text-sm font-semibold" x-text="lang.toUpperCase()"></span>
                         </button>
-                        
-                        <div x-show="open" 
-                             @click.away="open = false"
-                             x-transition
-                             class="absolute right-0 mt-2 w-48 liquid-glass rounded-lg shadow-xl py-2 z-50">
-                            <button @click="lang = 'en'; open = false" 
-                                    class="w-full px-4 py-2 text-left hover:bg-accent/10 transition-colors flex items-center gap-2">
-                                <span class="text-lg">🇬🇧</span>
-                                English
-                            </button>
-                            <button @click="lang = 'ru'; open = false" 
-                                    class="w-full px-4 py-2 text-left hover:bg-accent/10 transition-colors flex items-center gap-2">
-                                <span class="text-lg">🇷🇺</span>
-                                Русский
-                            </button>
-                            <button @click="lang = 'zh'; open = false" 
-                                    class="w-full px-4 py-2 text-left hover:bg-accent/10 transition-colors flex items-center gap-2">
-                                <span class="text-lg">🇨🇳</span>
-                                中文
-                            </button>
+
+                        <div x-show="langOpen"
+                             x-transition.opacity.duration.150ms
+                             @click.outside="langOpen = false"
+                             class="absolute right-0 mt-2 w-52 rounded-xl dropdown-panel py-2 z-50"
+                             role="menu"
+                             x-trap.noscroll="langOpen">
+                            <template x-for="l in langs" :key="l.code">
+                                <button @click="lang = l.code; langOpen = false"
+                                        class="w-full px-5 py-3 text-left hover:bg-accent/15 transition-colors flex items-center gap-3 font-medium text-gray-800 dark:text-gray-100"
+                                        role="menuitem">
+                                    <span class="text-xl" aria-hidden="true" x-text="l.flag"></span>
+                                    <span x-text="l.label"></span>
+                                </button>
+                            </template>
                         </div>
                     </div>
-                    
-                    <button @click="theme = (theme === 'dark' ? 'light' : 'dark')" 
-                            class="p-2 rounded-lg theme-selector hover:border-accent/50 transition-all flex items-center gap-2">
-                        <span class="material-symbols-outlined text-xl" x-show="theme === 'dark'">dark_mode</span>
-                        <span class="material-symbols-outlined text-xl" x-show="theme === 'light'">light_mode</span>
+
+                    <!-- theme toggle (desktop) — independent, no cross-scope refs -->
+                    <button @click="toggleTheme()"
+                            class="p-2 rounded-lg theme-btn hover:border-accent/50 transition-all flex items-center gap-2"
+                            :aria-label="theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'">
+                        <span class="material-symbols-outlined text-xl" x-show="theme === 'dark'" aria-hidden="true">dark_mode</span>
+                        <span class="material-symbols-outlined text-xl" x-show="theme === 'light'" aria-hidden="true">light_mode</span>
                     </button>
                 </div>
-                
+
+                <!-- mobile controls -->
                 <div class="md:hidden flex items-center gap-2">
-                    <button @click="theme = (theme === 'dark' ? 'light' : 'dark')" 
-                            class="p-2 rounded-lg theme-selector hover:border-accent/50 transition-all">
-                        <span class="material-symbols-outlined text-xl" x-show="theme === 'dark'">dark_mode</span>
-                        <span class="material-symbols-outlined text-xl" x-show="theme === 'light'">light_mode</span>
+                    <button @click="mobileMenu = !mobileMenu"
+                            class="p-2 rounded-lg theme-btn hover:border-accent/50 transition-all"
+                            aria-label="Toggle mobile menu"
+                            :aria-expanded="mobileMenu">
+                        <span class="material-symbols-outlined text-xl" aria-hidden="true"
+                              x-text="mobileMenu ? 'close' : 'menu'"></span>
                     </button>
+
+                    <button @click="toggleTheme()"
+                            class="p-2 rounded-lg theme-btn hover:border-accent/50 transition-all"
+                            :aria-label="theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'">
+                        <span class="material-symbols-outlined text-xl" x-show="theme === 'dark'" aria-hidden="true">dark_mode</span>
+                        <span class="material-symbols-outlined text-xl" x-show="theme === 'light'" aria-hidden="true">light_mode</span>
+                    </button>
+
+                    <!-- mobile slide-down -->
+                    <div x-show="mobileMenu"
+                         x-transition:enter="transition ease-out duration-200"
+                         x-transition:enter-start="opacity-0 -translate-y-2"
+                         x-transition:enter-end="opacity-100 translate-y-0"
+                         x-transition:leave="transition ease-in duration-150"
+                         x-transition:leave-start="opacity-100 translate-y-0"
+                         x-transition:leave-end="opacity-0 -translate-y-2"
+                         @click.outside="mobileMenu = false"
+                         @keydown.escape.window="mobileMenu = false"
+                         class="absolute top-16 left-0 right-0 liquid-glass p-4 space-y-4 md:hidden"
+                         x-trap.noscroll="mobileMenu">
+                        <a href="#about"    @click="mobileMenu = false" class="block py-2 hover:text-accent transition-colors" x-text="t('nav.about')"></a>
+                        <a href="#projects" @click="mobileMenu = false" class="block py-2 hover:text-accent transition-colors" x-text="t('nav.projects')"></a>
+                        <a href="#skills"   @click="mobileMenu = false" class="block py-2 hover:text-accent transition-colors" x-text="t('nav.skills')"></a>
+                        <a href="#contact"  @click="mobileMenu = false" class="block py-2 hover:text-accent transition-colors" x-text="t('nav.contact')"></a>
+
+                        <div class="pt-4 border-t border-white/10 space-y-2">
+                            <template x-for="l in langs" :key="l.code">
+                                <button @click="lang = l.code; mobileMenu = false"
+                                        class="w-full py-2 text-left flex items-center gap-2">
+                                    <span aria-hidden="true" x-text="l.flag"></span>
+                                    <span x-text="l.label"></span>
+                                </button>
+                            </template>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </nav>
-    
-    <section class="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+
+    <!-- ===== HERO ===== -->
+    <section class="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8" role="banner">
         <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm font-mono mb-8">
-                <span style="color: #FF6B9D;">➜</span>
-                <span class="text-gray-500 dark:text-gray-400">~/src</span>
-                <span style="color: #FF6B9D;">git:(main)</span>
+                <span class="text-jb-pink" aria-hidden="true">➜</span>
+                <span class="text-gray-600 dark:text-gray-400">~/src</span>
+                <span class="text-jb-pink" aria-hidden="true">git:(main)</span>
             </div>
-            
+
             <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
-                Evgeniy <span style="background: linear-gradient(135deg, #FF6B9D, #FF8C42); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Gleba</span>
+                Evgeniy <span class="gradient-text">Gleba</span>
             </h1>
-            
+
             <p class="text-xl sm:text-2xl text-gray-600 dark:text-gray-400 mb-8 font-mono">
-                <span style="color: #FF6B9D;">$</span> whoami
-                <span style="color: #FF8C42;">→</span>
-                <span x-text="lang === 'ru' ? 'системный архитектор • разработчик игр • реверс-инжиниринг' : lang === 'zh' ? '系统架构师 • 游戏开发 • 逆向工程' : 'systems architect • game developer • reverse engineer'"></span>
+                <span class="text-jb-pink" aria-hidden="true">$</span> whoami
+                <span class="text-jb-orange" aria-hidden="true">→</span>
+                <span x-text="t('hero.tagline')"></span>
             </p>
-            
+
             <div class="flex flex-wrap justify-center gap-3 mb-12">
                 <span class="tech-badge-icon">
-                    <img src="https://cdn.simpleicons.org/cplusplus/FF6B9D" class="w-4 h-4" alt="C++">
-                    C++20/23
+                    <img src="https://cdn.simpleicons.org/cplusplus/FF6B9D" class="w-4 h-4" alt="" loading="lazy" width="16" height="16"> C++20/23
                 </span>
                 <span class="tech-badge-icon">
-                    <img src="https://cdn.simpleicons.org/cmake/FF8C42" class="w-4 h-4" alt="CMake">
-                    CMake
+                    <img src="https://cdn.simpleicons.org/cmake/FF8C42" class="w-4 h-4" alt="" loading="lazy" width="16" height="16"> CMake
                 </span>
                 <span class="tech-badge-icon">
-                    <img src="https://cdn.simpleicons.org/linux/C792EA" class="w-4 h-4" alt="Linux">
-                    Linux
+                    <img src="https://cdn.simpleicons.org/linux/C792EA" class="w-4 h-4" alt="" loading="lazy" width="16" height="16"> Linux
                 </span>
                 <span class="tech-badge-icon">
-                    <img src="https://cdn.simpleicons.org/opengl/FF6B9D" class="w-4 h-4" alt="OpenGL">
-                    OpenGL
+                    <img src="https://cdn.simpleicons.org/opengl/FF6B9D" class="w-4 h-4" alt="" loading="lazy" width="16" height="16"> OpenGL
                 </span>
                 <span class="tech-badge-icon">
-                    <img src="https://cdn.simpleicons.org/android/FF8C42" class="w-4 h-4" alt="Android">
-                    Android NDK
+                    <img src="https://cdn.simpleicons.org/android/FF8C42" class="w-4 h-4" alt="" loading="lazy" width="16" height="16"> Android NDK
                 </span>
                 <span class="tech-badge-icon">
-                    <img src="https://cdn.simpleicons.org/apple/C792EA" class="w-4 h-4" alt="iOS">
-                    iOS
+                    <img src="https://cdn.simpleicons.org/apple/C792EA" class="w-4 h-4" alt="" loading="lazy" width="16" height="16"> iOS
                 </span>
             </div>
-            
-            <a href="#projects" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg transition-colors" style="background: linear-gradient(135deg, #FF6B9D, #FF8C42); color: white;">
-                <span x-text="t('hero.viewProjects')"></span>
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                </svg>
-            </a>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                <a href="#projects"
+                   class="group inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-accent to-accent-light rounded-lg font-semibold text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300">
+                    <span x-text="t('hero.viewProjects')"></span>
+                    <span class="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform" aria-hidden="true">arrow_forward</span>
+                </a>
+                <a href="#contact"
+                   class="inline-flex items-center gap-2 px-8 py-4 glass rounded-lg font-semibold hover:border-accent/50 transition-all duration-300">
+                    <span class="material-symbols-outlined text-xl" aria-hidden="true">mail</span>
+                    <span x-text="lang === 'ru' ? 'Связаться' : lang === 'zh' ? '联系我' : 'Get in Touch'"></span>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6 text-center">
+                <div class="p-4 glass rounded-xl" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-3xl font-bold gradient-text mb-2">2+</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400"
+                         x-text="lang === 'ru' ? 'Лет опыта' : lang === 'zh' ? '年经验' : 'Years Exp.'"></div>
+                </div>
+                <div class="p-4 glass rounded-xl" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-3xl font-bold gradient-text mb-2">C++20</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400"
+                         x-text="lang === 'ru' ? 'Стандарт' : lang === 'zh' ? '标准' : 'Standard'"></div>
+                </div>
+                <div class="p-4 glass rounded-xl" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-3xl font-bold gradient-text mb-2">5</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400"
+                         x-text="lang === 'ru' ? 'Платформы' : lang === 'zh' ? '个平台' : 'Platforms'"></div>
+                </div>
+            </div>
         </div>
     </section>
-    
-    <section id="about" class="py-20 px-4 sm:px-6 lg:px-8">
+
+    <!-- ===== ABOUT ===== -->
+    <section id="about" class="relative py-20 px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-4xl font-bold mb-8 flex items-center gap-3" data-aos="fade-right">
-                <span style="color: #FF6B9D;">//</span> <span x-text="t('about.title')"></span>
+                <span class="text-jb-pink" aria-hidden="true">//</span>
+                <span x-text="t('about.title')"></span>
             </h2>
-            
             <div class="space-y-6 text-lg text-gray-600 dark:text-gray-400 text-justify" data-aos="fade-up" data-aos-delay="100">
                 <p x-text="t('about.p1')"></p>
                 <p x-text="t('about.p2')"></p>
@@ -602,401 +423,348 @@
             </div>
         </div>
     </section>
-    
+
+    <!-- ===== PROJECTS ===== -->
     <section id="projects" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-4xl font-bold mb-12 flex items-center gap-3" data-aos="fade-right">
-                <span style="color: #FF6B9D;">//</span> <span x-text="t('projects.title')"></span>
+                <span class="text-jb-pink" aria-hidden="true">//</span>
+                <span x-text="t('projects.title')"></span>
             </h2>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" x-show="loading">
-                <div class="liquid-glass rounded-2xl p-6 skeleton h-64"></div>
-                <div class="liquid-glass rounded-2xl p-6 skeleton h-64"></div>
-                <div class="liquid-glass rounded-2xl p-6 skeleton h-64"></div>
-                <div class="liquid-glass rounded-2xl p-6 skeleton h-64"></div>
-                <div class="liquid-glass rounded-2xl p-6 skeleton h-64"></div>
-                <div class="liquid-glass rounded-2xl p-6 skeleton h-64"></div>
+
+            <!-- loading skeletons -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" x-show="loading" aria-busy="true">
+                <template x-for="i in 3" :key="i">
+                    <div class="liquid-glass rounded-2xl p-6 skeleton h-64" role="status" aria-label="Loading"></div>
+                </template>
             </div>
-            
+
+            <!-- live repos -->
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" x-show="!loading && repos.length > 0">
-                <template x-for="(repo, index) in repos" :key="index">
+                <template x-for="repo in repos" :key="repo.id">
                     <article class="liquid-glass rounded-2xl p-6 hover:border-accent/50 transition-all repo-card" data-aos="fade-up">
                         <div class="flex items-start justify-between mb-3">
-                            <h3 class="text-xl font-bold" style="color: #FF6B9D;" x-text="repo.name"></h3>
+                            <h3 class="text-xl font-bold text-jb-pink" x-text="repo.name"></h3>
                             <span class="material-symbols-outlined text-yellow-400 text-xl"
                                   x-show="repo.stargazers_count > 0"
-                                  style="font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;">
-                                star
-                            </span>
+                                  style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;"
+                                  aria-hidden="true">star</span>
                         </div>
-                        
-                        <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3" x-text="repo.description || t('projects.noDesc')"></p>
-                        
+                        <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3"
+                           x-text="repo.description || t('projects.noDesc')"></p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-3 py-1 text-xs rounded-full liquid-glass" x-show="repo.language" x-text="repo.language"></span>
+                            <span class="px-3 py-1 text-xs rounded-full liquid-glass"
+                                  x-show="repo.language" x-text="repo.language"></span>
                             <span class="px-3 py-1 text-xs rounded-full liquid-glass flex items-center gap-1">
-                                <span class="material-symbols-outlined" style="font-size: 14px; font-variation-settings: 'FILL' 1, 'wght' 400;">star</span>
+                                <span class="material-symbols-outlined" style="font-size:14px;font-variation-settings:'FILL' 1,'wght' 400;" aria-hidden="true">star</span>
                                 <span x-text="repo.stargazers_count"></span>
                             </span>
                             <span class="px-3 py-1 text-xs rounded-full liquid-glass flex items-center gap-1">
-                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 16 16">
+                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
                                     <path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z"/>
                                 </svg>
                                 <span x-text="repo.forks_count"></span>
                             </span>
                         </div>
-                        
                         <div class="flex items-center justify-between">
-                            <a :href="repo.html_url" class="inline-flex items-center gap-1 transition-colors" style="color: #FF6B9D;">
+                            <a :href="repo.html_url" class="inline-flex items-center gap-1 text-jb-pink transition-colors hover:underline"
+                               target="_blank" rel="noopener noreferrer">
                                 <span x-text="t('projects.view')"></span> →
                             </a>
-                            <span class="text-xs text-gray-500" x-text="new Date(repo.updated_at).toLocaleDateString()"></span>
+                            <time class="text-xs text-gray-500" :datetime="repo.updated_at"
+                                  x-text="new Date(repo.updated_at).toLocaleDateString()"></time>
                         </div>
                     </article>
                 </template>
             </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" x-show="repos.length === 0 && !loading">
-                <article class="glass rounded-2xl p-6 hover:border-accent/50 transition-all hover:transform hover:-translate-y-1" data-aos="fade-up">
-                    <h3 class="text-xl font-bold mb-3" style="color: #FF6B9D;">kyocera-drivers</h3>
-                    <p class="text-gray-600 dark:text-gray-400 mb-4">
-                        Fully reverse-engineered Kyocera PPD and filter solution for Linux printing. Modern CMake build system with automated installation.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-3 py-1 text-xs rounded-full glass">C/C++20</span>
-                        <span class="px-3 py-1 text-xs rounded-full glass">CMake</span>
-                        <span class="px-3 py-1 text-xs rounded-full glass">CUPS</span>
-                        <span class="px-3 py-1 text-xs rounded-full glass">Reverse Eng.</span>
-                    </div>
-                    <a href="https://github.com/e-gleba/kyocera-drivers" class="inline-flex items-center gap-1 transition-colors" style="color: #FF6B9D;">
-                        View →
-                    </a>
-                </article>
-                
-                <article class="glass rounded-2xl p-6 hover:border-accent/50 transition-all hover:transform hover:-translate-y-1" data-aos="fade-up" data-aos-delay="100">
-                    <h3 class="text-xl font-bold mb-3" style="color: #FF8C42;">basic-game-engine</h3>
-                    <p class="text-gray-600 dark:text-gray-400 mb-4">
-                        C++ game engine powered by SDL 3.0 and OpenGL. Implements ECS architecture with EnTT for entity management and sprite editing capabilities.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-3 py-1 text-xs rounded-full glass">C++</span>
-                        <span class="px-3 py-1 text-xs rounded-full glass">SDL 3</span>
-                        <span class="px-3 py-1 text-xs rounded-full glass">OpenGL</span>
-                        <span class="px-3 py-1 text-xs rounded-full glass">ECS</span>
-                    </div>
-                    <a href="https://github.com/e-gleba/basic-game-engine" class="inline-flex items-center gap-1 transition-colors" style="color: #FF8C42;">
-                        View →
-                    </a>
-                </article>
-                
-                <article class="glass rounded-2xl p-6 hover:border-accent/50 transition-all hover:transform hover:-translate-y-1" data-aos="fade-up" data-aos-delay="200">
-                    <h3 class="text-xl font-bold mb-3" style="color: #C792EA;">template-cpp-project</h3>
-                    <p class="text-gray-600 dark:text-gray-400 mb-4">
-                        Modern C++23 project template with CMake, code quality tools, Docker support, and cross-platform compatibility for Linux, Windows, macOS, Android.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-3 py-1 text-xs rounded-full glass">C++23</span>
-                        <span class="px-3 py-1 text-xs rounded-full glass">CMake 3.30+</span>
-                        <span class="px-3 py-1 text-xs rounded-full glass">Docker</span>
-                        <span class="px-3 py-1 text-xs rounded-full glass">CI/CD</span>
-                    </div>
-                    <a href="https://github.com/e-gleba/template-cpp-project" class="inline-flex items-center gap-1 transition-colors" style="color: #C792EA;">
-                        View →
-                    </a>
-                </article>
-                
-                <article class="glass rounded-2xl p-6 hover:border-accent/50 transition-all hover:transform hover:-translate-y-1" data-aos="fade-up">
-                    <h3 class="text-xl font-bold mb-3" style="color: #FF6B9D;">sdl-overview</h3>
-                    <p class="text-gray-600 dark:text-gray-400 mb-4">
-                        Comprehensive SDL 3 demonstration showcasing graphics rendering, window management, and input handling with modern C++20 patterns.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-3 py-1 text-xs rounded-full glass">C++20</span>
-                        <span class="px-3 py-1 text-xs rounded-full glass">SDL 3</span>
-                        <span class="px-3 py-1 text-xs rounded-full glass">CMake</span>
-                        <span class="px-3 py-1 text-xs rounded-full glass">Graphics</span>
-                    </div>
-                    <a href="https://github.com/e-gleba/sdl-overview" class="inline-flex items-center gap-1 transition-colors" style="color: #FF6B9D;">
-                        View →
-                    </a>
-                </article>
-                
-                <article class="glass rounded-2xl p-6 hover:border-accent/50 transition-all hover:transform hover:-translate-y-1" data-aos="fade-up" data-aos-delay="100">
-                    <h3 class="text-xl font-bold mb-3" style="color: #FF8C42;">student-bsu-by</h3>
-                    <p class="text-gray-600 dark:text-gray-400 mb-4">
-                        Native Android interface for Belarusian State University student account access. Cross-platform considerations for university system integration.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-3 py-1 text-xs rounded-full glass">Android</span>
-                        <span class="px-3 py-1 text-xs rounded-full glass">NDK</span>
-                        <span class="px-3 py-1 text-xs rounded-full glass">Mobile</span>
-                    </div>
-                    <a href="https://github.com/e-gleba/student-bsu-by" class="inline-flex items-center gap-1 transition-colors" style="color: #FF8C42;">
-                        View →
-                    </a>
-                </article>
-                
-                <article class="glass rounded-2xl p-6 hover:border-accent/50 transition-all hover:transform hover:-translate-y-1" data-aos="fade-up" data-aos-delay="200">
-                    <h3 class="text-xl font-bold mb-3" style="color: #C792EA;">Various Explorations</h3>
-                    <p class="text-gray-600 dark:text-gray-400 mb-4">
-                        Ghidra reverse engineering resources, game asset modification tooling, DLL injection techniques, and shader programming experiments.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-3 py-1 text-xs rounded-full glass">Reverse Eng.</span>
-                        <span class="px-3 py-1 text-xs rounded-full glass">Ghidra</span>
-                        <span class="px-3 py-1 text-xs rounded-full glass">GLSL</span>
-                        <span class="px-3 py-1 text-xs rounded-full glass">Binary Patching</span>
-                    </div>
-                    <a href="https://github.com/e-gleba" class="inline-flex items-center gap-1 transition-colors" style="color: #C792EA;">
-                        GitHub →
-                    </a>
-                </article>
+
+            <!-- fallback static repos -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" x-show="!loading && repos.length === 0">
+                <template x-for="fb in fallbackRepos" :key="fb.name">
+                    <article class="glass rounded-2xl p-6 hover:border-accent/50 transition-all repo-card" data-aos="fade-up">
+                        <h3 class="text-xl font-bold mb-3" :style="'color:' + fb.color" x-text="fb.name"></h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4" x-text="fb.desc"></p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <template x-for="tag in fb.tags" :key="tag">
+                                <span class="px-3 py-1 text-xs rounded-full glass" x-text="tag"></span>
+                            </template>
+                        </div>
+                        <a :href="fb.url" class="inline-flex items-center gap-1 transition-colors hover:underline"
+                           :style="'color:' + fb.color" target="_blank" rel="noopener noreferrer">
+                            <span x-text="t('projects.view')"></span> →
+                        </a>
+                    </article>
+                </template>
             </div>
         </div>
     </section>
-    
+
+    <!-- ===== SKILLS ===== -->
     <section id="skills" class="py-20 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-4xl font-bold mb-12 flex items-center gap-3" data-aos="fade-right">
-                <span style="color: #FF6B9D;">//</span> <span x-text="t('skills.title')"></span>
+                <span class="text-jb-pink" aria-hidden="true">//</span>
+                <span x-text="t('skills.title')"></span>
             </h2>
-            
+
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="liquid-glass rounded-2xl p-6" data-aos="fade-up">
-                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2" style="color: #FF6B9D;">
-                        <span class="material-symbols-outlined text-2xl">code</span>
-                        <span x-text="t('skills.languages')"></span>
-                    </h3>
-                    <ul class="space-y-3 text-gray-600 dark:text-gray-400">
-                        <li class="flex items-center gap-3">
-                            <img src="https://cdn.simpleicons.org/cplusplus/FF6B9D" class="w-5 h-5" alt="C++">
-                            <span>C++17/20/23</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <img src="https://cdn.simpleicons.org/c/FF8C42" class="w-5 h-5" alt="C">
-                            <span>C17/99</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <img src="https://cdn.simpleicons.org/python/C792EA" class="w-5 h-5" alt="Python">
-                            <span>Python 3</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <img src="https://cdn.simpleicons.org/gnubash/FF6B9D" class="w-5 h-5" alt="Bash">
-                            <span>Bash/Shell</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined" style="color: #FF8C42;">code_blocks</span>
-                            <span>Objective-C/C++</span>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="liquid-glass rounded-2xl p-6" data-aos="fade-up" data-aos-delay="100">
-                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2" style="color: #FF8C42;">
-                        <span class="material-symbols-outlined text-2xl">settings</span>
-                        <span x-text="t('skills.systems')"></span>
-                    </h3>
-                    <ul class="space-y-3 text-gray-600 dark:text-gray-400">
-                        <li class="flex items-center gap-3">
-                            <img src="https://cdn.simpleicons.org/cmake/FF8C42" class="w-5 h-5" alt="CMake">
-                            <span>CMake 3.16+</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <img src="https://cdn.simpleicons.org/linux/C792EA" class="w-5 h-5" alt="Linux">
-                            <span>Linux (Fedora, Alt)</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <img src="https://cdn.simpleicons.org/git/FF6B9D" class="w-5 h-5" alt="Git">
-                            <span>Git/GitHub</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <img src="https://cdn.simpleicons.org/docker/FF8C42" class="w-5 h-5" alt="Docker">
-                            <span>Docker</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl" style="color: #C792EA;">terminal</span>
-                            <span>Ninja/Make</span>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="liquid-glass rounded-2xl p-6" data-aos="fade-up" data-aos-delay="200">
-                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2" style="color: #C792EA;">
-                        <span class="material-symbols-outlined text-2xl">sports_esports</span>
-                        <span x-text="t('skills.graphics')"></span>
-                    </h3>
-                    <ul class="space-y-3 text-gray-600 dark:text-gray-400">
-                        <li class="flex items-center gap-3">
-                            <img src="https://cdn.simpleicons.org/opengl/C792EA" class="w-5 h-5" alt="OpenGL">
-                            <span>OpenGL (GLSL)</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl" style="color: #FF6B9D;">sports_esports</span>
-                            <span>SDL 2/3</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl" style="color: #FF8C42;">account_tree</span>
-                            <span>Game architecture</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl" style="color: #C792EA;">view_in_ar</span>
-                            <span>ECS patterns</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl" style="color: #FF6B9D;">animation</span>
-                            <span>Sprite systems</span>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="liquid-glass rounded-2xl p-6" data-aos="fade-up">
-                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2" style="color: #FF6B9D;">
-                        <span class="material-symbols-outlined text-2xl">smartphone</span>
-                        <span x-text="t('skills.mobile')"></span>
-                    </h3>
-                    <ul class="space-y-3 text-gray-600 dark:text-gray-400">
-                        <li class="flex items-center gap-3">
-                            <img src="https://cdn.simpleicons.org/android/FF6B9D" class="w-5 h-5" alt="Android">
-                            <span>Android NDK</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <img src="https://cdn.simpleicons.org/apple/FF8C42" class="w-5 h-5" alt="iOS">
-                            <span>iOS development</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl" style="color: #C792EA;">devices</span>
-                            <span>Cross-platform</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl" style="color: #FF6B9D;">link</span>
-                            <span>JNI/Native binding</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl" style="color: #FF8C42;">phone_android</span>
-                            <span>Mobile UI</span>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="liquid-glass rounded-2xl p-6" data-aos="fade-up" data-aos-delay="100">
-                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2" style="color: #FF8C42;">
-                        <span class="material-symbols-outlined text-2xl">bug_report</span>
-                        <span x-text="t('skills.reverse')"></span>
-                    </h3>
-                    <ul class="space-y-3 text-gray-600 dark:text-gray-400">
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl" style="color: #FF6B9D;">search</span>
-                            <span>Ghidra analysis</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl" style="color: #FF8C42;">construction</span>
-                            <span>Binary patching</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl" style="color: #C792EA;">memory</span>
-                            <span>Memory analysis</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl" style="color: #FF6B9D;">extension</span>
-                            <span>DLL injection</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl" style="color: #FF8C42;">folder_zip</span>
-                            <span>Asset extraction</span>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="liquid-glass rounded-2xl p-6" data-aos="fade-up" data-aos-delay="200">
-                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2" style="color: #C792EA;">
-                        <span class="material-symbols-outlined text-2xl">verified</span>
-                        <span x-text="t('skills.practices')"></span>
-                    </h3>
-                    <ul class="space-y-3 text-gray-600 dark:text-gray-400">
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl" style="color: #FF6B9D;">error</span>
-                            <span>Explicit error handling</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl" style="color: #FF8C42;">speed</span>
-                            <span>Performance profiling</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl" style="color: #C792EA;">compress</span>
-                            <span>Minimal code footprint</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl" style="color: #FF6B9D;">book</span>
-                            <span>Standard library idioms</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl" style="color: #FF8C42;">cloud_done</span>
-                            <span>Production deployment</span>
-                        </li>
-                    </ul>
-                </div>
+                <template x-for="(cat, ci) in skillCategories" :key="cat.key">
+                    <div class="liquid-glass rounded-2xl p-6" data-aos="fade-up" :data-aos-delay="(ci % 3) * 100">
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2" :style="'color:' + cat.color">
+                            <span class="material-symbols-outlined text-2xl" aria-hidden="true" x-text="cat.icon"></span>
+                            <span x-text="t('skills.' + cat.key)"></span>
+                        </h3>
+                        <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+                            <template x-for="item in cat.items" :key="item.label">
+                                <li class="flex items-center gap-3">
+                                    <template x-if="item.img">
+                                        <img :src="item.img" class="w-5 h-5" alt="" loading="lazy" width="20" height="20">
+                                    </template>
+                                    <template x-if="!item.img && item.icon">
+                                        <span class="material-symbols-outlined text-xl" :style="'color:' + item.iconColor" aria-hidden="true" x-text="item.icon"></span>
+                                    </template>
+                                    <span x-text="item.label"></span>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                </template>
             </div>
         </div>
     </section>
-    
+
+    <!-- ===== CONTACT ===== -->
     <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800/50">
         <div class="max-w-4xl mx-auto text-center">
             <h2 class="text-4xl font-bold mb-12 flex items-center justify-center gap-3" data-aos="fade-right">
-                <span style="color: #FF6B9D;">//</span> <span x-text="t('contact.title')"></span>
+                <span class="text-jb-pink" aria-hidden="true">//</span>
+                <span x-text="t('contact.title')"></span>
             </h2>
-            
             <div class="flex flex-wrap justify-center gap-4" data-aos="fade-up">
-                <a href="https://github.com/e-gleba" class="inline-flex items-center gap-2 px-6 py-3 glass rounded-lg hover:border-accent/50 transition-all">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                    GitHub
-                </a>
-                
-                <a href="https://vk.ru/e_gleba" class="inline-flex items-center gap-2 px-6 py-3 glass rounded-lg hover:border-accent/50 transition-all">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M13.162 18.994c.609 0 .858-.406.851-.915-.031-1.917.714-2.949 2.059-1.604 1.488 1.488 1.796 2.519 3.603 2.519h3.2c.808 0 1.126-.26 1.126-.668 0-.863-1.421-2.386-2.625-3.504-1.686-1.565-1.765-1.602-.313-3.486 1.801-2.339 4.157-5.336 2.073-5.336h-3.981c-.772 0-.828.435-1.103 1.083-.995 2.347-2.886 5.387-3.604 4.922-.751-.485-.407-2.406-.35-5.261.015-.754.011-1.271-1.141-1.539-.629-.145-1.241-.205-1.809-.205-2.273 0-3.841.953-2.95 1.119 1.571.293 1.42 3.692 1.054 5.16-.638 2.556-3.036-2.024-4.035-4.305-.241-.548-.315-.974-1.175-.974h-3.255c-.492 0-.787.16-.787.516 0 .602 2.96 6.72 5.786 9.77 2.756 2.975 5.48 2.708 7.376 2.708z"/>
-                    </svg>
-                    VK
-                </a>
-                
-                <a href="mailto:i@egleba.ru" class="inline-flex items-center gap-2 px-6 py-3 glass rounded-lg hover:border-accent/50 transition-all">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                    </svg>
-                    Email
-                </a>
-                
-                <a href="https://steamcommunity.com/id/egleba" class="inline-flex items-center gap-2 px-6 py-3 glass rounded-lg hover:border-accent/50 transition-all">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z"/>
-                    </svg>
-                    Steam
-                </a>
+                <template x-for="link in contactLinks" :key="link.label">
+                    <a :href="link.href"
+                       class="inline-flex items-center gap-2 px-6 py-3 glass rounded-lg hover:border-accent/50 transition-all"
+                       :aria-label="link.label"
+                       target="_blank" rel="noopener noreferrer">
+                        <span x-html="link.svg"></span>
+                        <span x-text="link.label"></span>
+                    </a>
+                </template>
             </div>
         </div>
     </section>
-    
-    <footer class="py-8 px-4 sm:px-6 lg:px-8 glass text-center text-gray-600 dark:text-gray-400">
-        <p>&copy; 2025 Evgeniy Gleba. <span x-text="t('footer')"></span></p>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="py-8 px-4 sm:px-6 lg:px-8 glass text-center text-gray-600 dark:text-gray-400" role="contentinfo">
+        <p>&copy; 2026 Evgeniy Gleba. <span x-text="t('footer')"></span></p>
     </footer>
-    
+
+    <!-- back-to-top -->
+    <button @click="window.scrollTo({top:0,behavior:'smooth'})"
+            class="fixed bottom-8 right-8 p-3 bg-gradient-to-r from-accent to-accent-light rounded-full shadow-lg hover:shadow-xl transition-all z-40"
+            :class="showTop ? 'opacity-100' : 'opacity-0 pointer-events-none'"
+            aria-label="Back to top">
+        <span class="material-symbols-outlined text-white text-xl" aria-hidden="true">arrow_upward</span>
+    </button>
+
+    <!-- ===== APP LOGIC ===== -->
     <script>
-        AOS.init({
-            duration: 800,
-            once: true,
-            offset: 100
-        });
-        
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    function app() {
+        return {
+            /* --- state (all in one scope — no nested x-data conflicts) --- */
+            theme:      Alpine.$persist('dark').as('theme'),
+            lang:       Alpine.$persist('en').as('language'),
+            langOpen:   false,
+            mobileMenu: false,
+            showTop:    false,
+            repos:      [],
+            stats:      null,
+            loading:    true,
+            error:      null,
+
+            langs: [
+                { code: 'en', flag: '🇬🇧', label: 'English'  },
+                { code: 'ru', flag: '🇷🇺', label: 'Русский'  },
+                { code: 'zh', flag: '🇨🇳', label: '中文'      }
+            ],
+
+            /* --- translations --- */
+            translations: {
+                en: {
+                    nav:  { about:'About', projects:'Projects', skills:'Skills', contact:'Contact' },
+                    hero: { tagline:'systems architect • game developer • reverse engineer', viewProjects:'View Projects' },
+                    about:{ title:'About',
+                        p1:'Systems programmer focused on performance and cross-platform development. Write C++20, build with CMake, profile with Tracy — every day. Work close to metal: graphics, game engines, native mobile apps for iOS and Android.',
+                        p2:'Simple principle: less code, fewer bugs. Every line must justify its existence. Prefer explicit over implicit, standard library over reinvention, Unix approach over framework magic.',
+                        p3:"Grew up on Valve engines — Half-Life, Source SDK, Garry's Mod. Shaped both taste and approach: modularity, modding culture, community respect. Still dig through source code for fun.",
+                        p4:'Outside code — look through telescope. Astronomy reminds me there are problems bigger than any deadline. Also play TF2, aim in Sniper Elite, build galactic empires in Stellaris, and sometimes break things to understand how they work.'
+                    },
+                    github:  { title:'GitHub Activity', stars:'Total Stars', repos:'Public Repos', forks:'Total Forks' },
+                    projects:{ title:'Latest Projects', noDesc:'No description available', view:'View' },
+                    skills:  { title:'Skills', languages:'Languages', systems:'Systems & Tools', graphics:'Graphics & Engines', mobile:'Mobile Development', reverse:'Reverse Engineering', practices:'Development Practices' },
+                    contact: { title:'Contact' },
+                    footer:  'Built with Tailwind CSS, Alpine.js, and AOS.'
+                },
+                ru: {
+                    nav:  { about:'О себе', projects:'Проекты', skills:'Навыки', contact:'Контакты' },
+                    hero: { tagline:'системный архитектор • разработчик игр • реверс-инжиниринг', viewProjects:'Проекты' },
+                    about:{ title:'О себе',
+                        p1:'Системный программист с фокусом на производительность и кросс-платформенную разработку. Пишу на C++20, собираю через CMake, профилирую через Tracy — и так каждый день. Работаю близко к железу: графика, игровые движки, нативные мобильные приложения под iOS и Android.',
+                        p2:'Верю в простой принцип: меньше кода — меньше багов. Каждая строчка должна оправдывать своё существование. Предпочитаю явное неявному, стандартную библиотеку — велосипедам, а Unix-подход — магии фреймворков.',
+                        p3:"Вырос на движках Valve — Half-Life, Source SDK, Garry's Mod. Это сформировало и вкус, и подход: модульность, моддинг-культура, уважение к сообществу. До сих пор копаюсь в исходниках ради удовольствия.",
+                        p4:'Вне кода — смотрю в телескоп. Астрономия для меня — способ помнить, что есть задачи масштабнее любого дедлайна. А ещё играю в TF2, целюсь в Sniper Elite, строю галактические империи в Stellaris и иногда ломаю вещи, чтобы понять, как они работают.'
+                    },
+                    github:  { title:'Активность на GitHub', stars:'Всего звёзд', repos:'Публичных репозиториев', forks:'Всего форков' },
+                    projects:{ title:'Последние проекты', noDesc:'Описание отсутствует', view:'Смотреть' },
+                    skills:  { title:'Навыки', languages:'Языки программирования', systems:'Системы и инструменты', graphics:'Графика и движки', mobile:'Мобильная разработка', reverse:'Реверс-инжиниринг', practices:'Практики разработки' },
+                    contact: { title:'Контакты' },
+                    footer:  'Собрано с Tailwind CSS, Alpine.js и AOS.'
+                },
+                zh: {
+                    nav:  { about:'关于', projects:'项目', skills:'技能', contact:'联系' },
+                    hero: { tagline:'系统架构师 • 游戏开发 • 逆向工程', viewProjects:'查看项目' },
+                    about:{ title:'关于',
+                        p1:'专注性能和跨平台开发的系统程序员。编写C++20，使用CMake构建，通过Tracy分析性能——每天如此。贴近底层工作：图形、游戏引擎、iOS和Android原生移动应用。',
+                        p2:'信奉简单原则：代码越少，错误越少。每一行代码都必须证明其存在价值。偏好显式而非隐式、标准库而非重复造轮、Unix方式而非框架魔法。',
+                        p3:"在Valve引擎上成长——Half-Life、Source SDK、Garry's Mod。这塑造了品味和方法：模块化、模组文化、尊重社区。至今仍为乐趣而挖掘源代码。",
+                        p4:'代码之外——望远镜观星。天文学提醒我，有些问题比任何截止日期都重要。还玩TF2、在Sniper Elite中瞄准、在Stellaris中建立银河帝国，有时拆解东西以理解其工作原理。'
+                    },
+                    github:  { title:'GitHub 活动', stars:'总星标数', repos:'公共仓库', forks:'总分叉数' },
+                    projects:{ title:'最新项目', noDesc:'暂无描述', view:'查看' },
+                    skills:  { title:'技能', languages:'编程语言', systems:'系统与工具', graphics:'图形与引擎', mobile:'移动开发', reverse:'逆向工程', practices:'开发实践' },
+                    contact: { title:'联系方式' },
+                    footer:  '使用 Tailwind CSS、Alpine.js 和 AOS 构建。'
                 }
-            });
-        });
+            },
+
+            /* --- data-driven sections --- */
+            fallbackRepos: [
+                { name:'kyocera-drivers', color:'#FF6B9D', desc:'Fully reverse-engineered Kyocera PPD and filter solution for Linux printing. Modern CMake build system with automated installation.', tags:['C/C++20','CMake','CUPS'], url:'https://github.com/e-gleba/kyocera-drivers' },
+                { name:'basic-game-engine', color:'#FF8C42', desc:'C++ game engine powered by SDL 3.0 and OpenGL. Implements ECS architecture with EnTT for entity management.', tags:['C++','SDL 3','OpenGL'], url:'https://github.com/e-gleba/basic-game-engine' },
+                { name:'template-cpp-project', color:'#C792EA', desc:'Modern C++23 project template with CMake, code quality tools, Docker support, and cross-platform compatibility.', tags:['C++23','CMake','Docker'], url:'https://github.com/e-gleba/template-cpp-project' }
+            ],
+
+            skillCategories: [
+                { key:'languages', color:'#FF6B9D', icon:'code', items:[
+                    { img:'https://cdn.simpleicons.org/cplusplus/FF6B9D', label:'C++17/20/23' },
+                    { img:'https://cdn.simpleicons.org/c/FF8C42', label:'C17/99' },
+                    { img:'https://cdn.simpleicons.org/python/C792EA', label:'Python 3' },
+                    { img:'https://cdn.simpleicons.org/gnubash/FF6B9D', label:'Bash/Shell' },
+                    { icon:'code_blocks', iconColor:'#FF8C42', label:'Objective-C/C++' }
+                ]},
+                { key:'systems', color:'#FF8C42', icon:'settings', items:[
+                    { img:'https://cdn.simpleicons.org/cmake/FF8C42', label:'CMake 3.16+' },
+                    { img:'https://cdn.simpleicons.org/linux/C792EA', label:'Linux (Fedora, Alt)' },
+                    { img:'https://cdn.simpleicons.org/git/FF6B9D', label:'Git/GitHub' },
+                    { img:'https://cdn.simpleicons.org/docker/FF8C42', label:'Docker' },
+                    { icon:'terminal', iconColor:'#C792EA', label:'Ninja/Make' }
+                ]},
+                { key:'graphics', color:'#C792EA', icon:'sports_esports', items:[
+                    { img:'https://cdn.simpleicons.org/opengl/C792EA', label:'OpenGL (GLSL)' },
+                    { icon:'sports_esports', iconColor:'#FF6B9D', label:'SDL 2/3' },
+                    { icon:'account_tree', iconColor:'#FF8C42', label:'Game architecture' },
+                    { icon:'view_in_ar', iconColor:'#C792EA', label:'ECS patterns' },
+                    { icon:'animation', iconColor:'#FF6B9D', label:'Sprite systems' }
+                ]},
+                { key:'mobile', color:'#FF6B9D', icon:'smartphone', items:[
+                    { img:'https://cdn.simpleicons.org/android/FF6B9D', label:'Android NDK' },
+                    { img:'https://cdn.simpleicons.org/apple/FF8C42', label:'iOS development' },
+                    { icon:'devices', iconColor:'#C792EA', label:'Cross-platform' },
+                    { icon:'link', iconColor:'#FF6B9D', label:'JNI/Native binding' },
+                    { icon:'phone_android', iconColor:'#FF8C42', label:'Mobile UI' }
+                ]},
+                { key:'reverse', color:'#FF8C42', icon:'bug_report', items:[
+                    { icon:'search', iconColor:'#FF6B9D', label:'Ghidra analysis' },
+                    { icon:'construction', iconColor:'#FF8C42', label:'Binary patching' },
+                    { icon:'memory', iconColor:'#C792EA', label:'Memory analysis' },
+                    { icon:'extension', iconColor:'#FF6B9D', label:'DLL injection' },
+                    { icon:'folder_zip', iconColor:'#FF8C42', label:'Asset extraction' }
+                ]},
+                { key:'practices', color:'#C792EA', icon:'verified', items:[
+                    { icon:'error', iconColor:'#FF6B9D', label:'Explicit error handling' },
+                    { icon:'speed', iconColor:'#FF8C42', label:'Performance profiling' },
+                    { icon:'compress', iconColor:'#C792EA', label:'Minimal code footprint' },
+                    { icon:'book', iconColor:'#FF6B9D', label:'Standard library idioms' },
+                    { icon:'cloud_done', iconColor:'#FF8C42', label:'Production deployment' }
+                ]}
+            ],
+
+            contactLinks: [
+                { label:'GitHub',   href:'https://github.com/e-gleba',               svg:'<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>' },
+                { label:'VK',       href:'https://vk.ru/e_gleba',                    svg:'<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M13.162 18.994c.609 0 .858-.406.851-.915-.031-1.917.714-2.949 2.059-1.604 1.488 1.488 1.796 2.519 3.603 2.519h3.2c.808 0 1.126-.26 1.126-.668 0-.863-1.421-2.386-2.625-3.504-1.686-1.565-1.765-1.602-.313-3.486 1.801-2.339 4.157-5.336 2.073-5.336h-3.981c-.772 0-.828.435-1.103 1.083-.995 2.347-2.886 5.387-3.604 4.922-.751-.485-.407-2.406-.35-5.261.015-.754.011-1.271-1.141-1.539-.629-.145-1.241-.205-1.809-.205-2.273 0-3.841.953-2.95 1.119 1.571.293 1.42 3.692 1.054 5.16-.638 2.556-3.036-2.024-4.035-4.305-.241-.548-.315-.974-1.175-.974h-3.255c-.492 0-.787.16-.787.516 0 .602 2.96 6.72 5.786 9.77 2.756 2.975 5.48 2.708 7.376 2.708z"/></svg>' },
+                { label:'Email',    href:'mailto:i@egleba.ru',                        svg:'<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>' },
+                { label:'Steam',    href:'https://steamcommunity.com/id/egleba',      svg:'<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z"/></svg>' },
+                { label:'Telegram', href:'https://t.me/egleba',                       svg:'<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>' }
+            ],
+
+            /* --- methods --- */
+            t(key) {
+                return key.split('.').reduce((o, k) => o?.[k], this.translations[this.lang]) ?? key;
+            },
+
+            toggleTheme() {
+                this.langOpen   = false;   // close any open dropdown first
+                this.mobileMenu = false;
+                this.theme = this.theme === 'dark' ? 'light' : 'dark';
+            },
+
+            async fetchGitHubData() {
+                const ctrl = new AbortController();
+                const tid  = setTimeout(() => ctrl.abort(), 5000);
+                try {
+                    const [reposRes, userRes] = await Promise.allSettled([
+                        fetch('https://api.github.com/users/e-gleba/repos?sort=updated&per_page=6', {
+                            headers: { Accept: 'application/vnd.github.v3+json' },
+                            signal: ctrl.signal
+                        }),
+                        fetch('https://api.github.com/users/e-gleba', {
+                            headers: { Accept: 'application/vnd.github.v3+json' },
+                            signal: ctrl.signal
+                        })
+                    ]);
+                    clearTimeout(tid);
+
+                    if (reposRes.status === 'fulfilled' && reposRes.value.ok) {
+                        const data = await reposRes.value.json();
+                        this.repos = Array.isArray(data) ? data : [];
+                    }
+                    if (userRes.status === 'fulfilled' && userRes.value.ok) {
+                        this.stats = await userRes.value.json();
+                    }
+                } catch (e) {
+                    console.warn('github api unavailable:', e.message);
+                    this.repos = [];
+                    this.stats = { public_repos: 0 };
+                } finally {
+                    clearTimeout(tid);
+                    this.loading = false;
+                }
+            },
+
+            init() {
+                this.fetchGitHubData();
+
+                window.addEventListener('scroll', () => {
+                    this.showTop = window.scrollY > 500;
+                }, { passive: true });
+
+                document.addEventListener('DOMContentLoaded', () => {
+                    if (typeof AOS !== 'undefined') {
+                        AOS.init({ duration: 600, once: true, offset: 80, disable: 'mobile' });
+                    }
+                });
+
+                // smooth-scroll for anchor links
+                document.addEventListener('click', (e) => {
+                    const a = e.target.closest('a[href^="#"]');
+                    if (!a) return;
+                    e.preventDefault();
+                    const el = document.querySelector(a.getAttribute('href'));
+                    el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            }
+        };
+    }
     </script>
 </body>
 </html>
