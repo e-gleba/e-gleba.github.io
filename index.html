@@ -194,7 +194,7 @@
       <div class="flex flex-wrap justify-center gap-2 mb-8" x-show="techBadges.length">
         <template x-for="badge in techBadges" :key="badge.label">
           <div class="tech-badge" :class="badge.dark ? 'dark' : ''">
-            <img :src="badge.icon" class="w-4 h-4" alt="" loading="lazy" width="16" height="16" decoding="async">
+            <img :src="badge.icon" class="w-4 h-4" :data-tint="badge.tint || ''" alt="" loading="lazy" width="16" height="16" decoding="async">
             <span x-text="badge.label"></span>
           </div>
         </template>
@@ -222,9 +222,9 @@
   </section>
 
   <!-- about / summary -->
-  <section id="about" class="py-14 lg:py-20 px-6 lg:px-10 no-print" style="content-visibility:auto">
+  <section id="about" class="py-10 lg:py-14 px-6 lg:px-10 no-print" style="content-visibility:auto">
     <div class="max-w-6xl mx-auto">
-      <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-8 lg:mb-10" x-text="t('about.label')"></h2>
+      <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-6 lg:mb-8" x-text="t('about.label')"></h2>
       <div class="grid lg:grid-cols-5 gap-8 lg:gap-12">
         <div class="lg:col-span-3 space-y-5 text-[17px] text-slate-600 dark:text-slate-400 leading-[1.75]">
           <p x-text="t('about.p1')"></p>
@@ -253,9 +253,9 @@
   </section>
 
   <!-- experience -->
-  <section id="experience" class="py-14 lg:py-20 px-6 lg:px-10 no-print" style="content-visibility:auto">
+  <section id="experience" class="py-10 lg:py-14 px-6 lg:px-10 no-print" style="content-visibility:auto">
     <div class="max-w-6xl mx-auto">
-      <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-8 lg:mb-10" x-text="t('experience.label')"></h2>
+      <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-6 lg:mb-8" x-text="t('experience.label')"></h2>
       <div class="max-w-3xl">
         <div class="timeline">
           <template x-for="(item, idx) in (t('experience.items') || [])" :key="idx">
@@ -280,9 +280,9 @@
   </section>
 
   <!-- projects -->
-  <section id="projects" class="py-14 lg:py-20 px-6 lg:px-10 no-print" style="content-visibility:auto">
+  <section id="projects" class="py-10 lg:py-14 px-6 lg:px-10 no-print" style="content-visibility:auto">
     <div class="max-w-6xl mx-auto">
-      <div class="flex items-center gap-4 mb-8 lg:mb-10">
+      <div class="flex items-center gap-4 mb-6 lg:mb-8">
         <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold" x-text="t('projects.label')"></h2>
         <span x-show="rateLimited" class="inline-flex items-center gap-1.5 text-[12px] font-semibold text-brand-orange bg-brand-orange/10 px-3 py-1 rounded-full">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
@@ -352,9 +352,9 @@
   </section>
 
   <!-- skills -->
-  <section id="skills" class="py-14 lg:py-20 px-6 lg:px-10 no-print" style="content-visibility:auto">
+  <section id="skills" class="py-10 lg:py-14 px-6 lg:px-10 no-print" style="content-visibility:auto">
     <div class="max-w-6xl mx-auto">
-      <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-8 lg:mb-10" x-text="t('skills.label')"></h2>
+      <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-6 lg:mb-8" x-text="t('skills.label')"></h2>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         <template x-for="cat in skillCategories" :key="cat.key">
           <div class="card card-glass card-glow p-6 lg:p-8">
@@ -379,7 +379,7 @@
   </section>
 
   <!-- contact -->
-  <section id="contact" class="py-14 lg:py-20 px-6 lg:px-10 no-print" style="content-visibility:auto">
+  <section id="contact" class="py-10 lg:py-14 px-6 lg:px-10 no-print" style="content-visibility:auto">
     <div class="max-w-6xl mx-auto text-center">
       <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-6 lg:mb-8" x-text="t('contact.label')"></h2>
       <p class="text-[17px] text-slate-500 dark:text-slate-400 mb-10 max-w-xl mx-auto leading-[1.75]" x-text="t('contact.text')"></p>
