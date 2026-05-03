@@ -229,7 +229,7 @@ html {
 }
 .timeline-entry {
   position: relative;
-  padding-bottom: 2rem;
+  padding-bottom: 2.5rem;
 }
 .timeline-entry:last-child { padding-bottom: 0; }
 .timeline-entry::before {
@@ -291,6 +291,15 @@ html {
   margin-bottom: 0.25rem;
   line-height: 1.4;
 }
+
+.timeline-company {
+  font-size: 0.85rem;
+  color: #8a8a95;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.dark .timeline-company { color: #6b7280; }
+
 .timeline-desc {
   font-size: 0.9rem;
   line-height: 1.6;

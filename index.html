@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <meta name="description" content="Evgeniy Gleba — C++ Systems Engineer. Cross-platform systems, game engines, reverse engineering.">
+  <meta name="description" content="Evgeniy Gleba — C++ Systems Engineer. Cross-platform game engines, reverse engineering, performance-critical systems.">
   <meta name="color-scheme" content="dark light">
   <meta name="theme-color" content="#0a0a0f" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Evgeniy Gleba">
-  <meta property="og:title" content="Evgeniy Gleba — Systems Engineer">
-  <meta property="og:description" content="Performance-first systems programming. C++, game engines, reverse engineering.">
+  <meta property="og:title" content="Evgeniy Gleba — C++ Systems Engineer">
+  <meta property="og:description" content="Cross-platform C++ systems. Game engines, reverse engineering, performance optimization.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://e-gleba.github.io">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Evgeniy Gleba — Systems Engineer">
-  <meta name="twitter:description" content="Performance-first systems programming. C++, game engines, reverse engineering.">
-  <title>Evgeniy Gleba — Systems Engineer</title>
+  <meta name="twitter:title" content="Evgeniy Gleba — C++ Systems Engineer">
+  <meta name="twitter:description" content="Cross-platform C++ systems. Game engines, reverse engineering, performance optimization.">
+  <title>Evgeniy Gleba — C++ Systems Engineer</title>
 
   <script type="application/ld+json">
   {
@@ -25,8 +25,8 @@
     "name": "Evgeniy Gleba",
     "url": "https://e-gleba.github.io",
     "email": "i@egleba.ru",
-    "jobTitle": "Systems Engineer",
-    "knowsAbout": ["C++", "Systems Programming", "Game Development", "Reverse Engineering"],
+    "jobTitle": "C++ Systems Engineer",
+    "knowsAbout": ["C++", "Systems Programming", "Game Engine Development", "Reverse Engineering", "Cross-Platform Development"],
     "sameAs": [
       "https://github.com/e-gleba",
       "https://t.me/egleba",
@@ -107,7 +107,7 @@
         </a>
         <div class="hidden md:flex items-center gap-0.5 text-[16px] font-medium">
           <a href="#about" class="px-3 py-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors" x-text="t('nav.about')"></a>
-          <a href="#timeline" class="px-3 py-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors" x-text="t('nav.timeline')"></a>
+          <a href="#experience" class="px-3 py-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors" x-text="t('nav.experience')"></a>
           <a href="#projects" class="px-3 py-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors" x-text="t('nav.projects')"></a>
           <a href="#skills" class="px-3 py-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors" x-text="t('nav.skills')"></a>
           <a href="#contact" class="px-3 py-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors" x-text="t('nav.contact')"></a>
@@ -150,7 +150,7 @@
       <div x-show="mobileMenu" x-transition @keydown.escape.window="mobileMenu = false" class="md:hidden border-t border-slate-200 dark:border-slate-800 py-2 no-print">
         <div class="flex flex-col gap-0.5 pb-2">
           <a href="#about" @click="mobileMenu = false" class="px-4 py-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-[16px] font-medium" x-text="t('nav.about')"></a>
-          <a href="#timeline" @click="mobileMenu = false" class="px-4 py-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-[16px] font-medium" x-text="t('nav.timeline')"></a>
+          <a href="#experience" @click="mobileMenu = false" class="px-4 py-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-[16px] font-medium" x-text="t('nav.experience')"></a>
           <a href="#projects" @click="mobileMenu = false" class="px-4 py-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-[16px] font-medium" x-text="t('nav.projects')"></a>
           <a href="#skills" @click="mobileMenu = false" class="px-4 py-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-[16px] font-medium" x-text="t('nav.skills')"></a>
           <a href="#contact" @click="mobileMenu = false" class="px-4 py-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-[16px] font-medium" x-text="t('nav.contact')"></a>
@@ -178,7 +178,7 @@
         <span class="block">Evgeniy</span>
         <span class="block gradient-text animate-shimmer">Gleba</span>
       </h1>
-      <p class="text-[clamp(1.15rem,2.4vw,1.5rem)] text-slate-500 dark:text-slate-400 mb-10 max-w-xl mx-auto font-light leading-relaxed" x-text="t('hero.tagline')"></p>
+      <p class="text-[clamp(1.15rem,2.4vw,1.5rem)] text-slate-500 dark:text-slate-400 mb-10 max-w-2xl mx-auto font-light leading-relaxed" x-text="t('hero.tagline')"></p>
       <div class="flex flex-wrap justify-center gap-3 mb-10">
         <a href="#projects" class="group inline-flex items-center gap-2 px-7 py-3.5 text-[16px] bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-semibold hover:opacity-90 transition-opacity">
           <span x-text="t('hero.viewProjects')"></span>
@@ -196,7 +196,7 @@
           <div class="text-[14px] text-slate-500 dark:text-slate-400 mt-1" x-text="t('stats.years')"></div>
         </div>
         <div class="stat-cell stat-glass stat-float" style="animation-delay:0.15s">
-          <div class="text-2xl md:text-3xl font-bold gradient-text">C++</div>
+          <div class="text-2xl md:text-3xl font-bold gradient-text">C++20</div>
           <div class="text-[14px] text-slate-500 dark:text-slate-400 mt-1" x-text="t('stats.standard')"></div>
         </div>
         <div class="stat-cell stat-glass stat-float" style="animation-delay:0.3s">
@@ -211,35 +211,54 @@
     </div>
   </section>
 
-  <!-- about -->
+  <!-- about / summary -->
   <section id="about" class="py-14 lg:py-20 px-6 lg:px-10 no-print" style="content-visibility:auto">
     <div class="max-w-6xl mx-auto">
       <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-8 lg:mb-10" x-text="t('about.label')"></h2>
-      <div class="grid lg:grid-cols-2 gap-8 lg:gap-12">
-        <div class="space-y-5 text-[17px] text-slate-600 dark:text-slate-400 leading-[1.75]">
+      <div class="grid lg:grid-cols-5 gap-8 lg:gap-12">
+        <div class="lg:col-span-3 space-y-5 text-[17px] text-slate-600 dark:text-slate-400 leading-[1.75]">
           <p x-text="t('about.p1')"></p>
           <p x-text="t('about.p2')"></p>
-          <p x-text="t('about.p4')"></p>
+          <p x-text="t('about.p3')"></p>
         </div>
-        <div class="card-glass p-6 lg:p-8">
-          <p class="font-mono text-[15px] text-brand-pink mb-3 font-semibold" x-text="t('about.philosophy')"></p>
-          <p class="text-[16px] text-slate-600 dark:text-slate-400 leading-[1.75]" x-text="t('about.p3')"></p>
+        <div class="lg:col-span-2 space-y-4">
+          <div class="card-glass p-6">
+            <p class="font-mono text-[13px] text-brand-pink mb-3 font-semibold uppercase tracking-wider" x-text="t('about.philosophy')"></p>
+            <p class="text-[15px] text-slate-600 dark:text-slate-400 leading-[1.7]" x-text="t('about.p4')"></p>
+          </div>
+          <div class="card-glass p-6">
+            <p class="font-mono text-[13px] text-brand-orange mb-3 font-semibold uppercase tracking-wider" x-text="t('about.impact.label')"></p>
+            <ul class="space-y-2 text-[15px] text-slate-600 dark:text-slate-400">
+              <template x-for="item in (t('about.impact.items') || [])" :key="item">
+                <li class="flex items-start gap-2">
+                  <span class="text-brand-pink mt-1">›</span>
+                  <span x-text="item"></span>
+                </li>
+              </template>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- timeline -->
-  <section id="timeline" class="py-14 lg:py-20 px-6 lg:px-10 no-print" style="content-visibility:auto">
+  <!-- experience -->
+  <section id="experience" class="py-14 lg:py-20 px-6 lg:px-10 no-print" style="content-visibility:auto">
     <div class="max-w-6xl mx-auto">
-      <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-8 lg:mb-10" x-text="t('timeline.label')"></h2>
+      <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-8 lg:mb-10" x-text="t('experience.label')"></h2>
       <div class="max-w-3xl">
         <div class="timeline">
-          <template x-for="(item, idx) in (t('timeline.items') || [])" :key="idx">
+          <template x-for="(item, idx) in (t('experience.items') || [])" :key="idx">
             <div class="timeline-entry">
               <span class="timeline-year" x-text="item.year"></span>
               <div class="timeline-title" x-text="item.title"></div>
+              <div class="timeline-company" x-show="item.company" x-text="item.company"></div>
               <div class="timeline-desc" x-text="item.desc"></div>
+              <div class="flex flex-wrap gap-2 mt-3" x-show="item.tags && item.tags.length">
+                <template x-for="tag in item.tags" :key="tag">
+                  <span class="px-2.5 py-1 text-[12px] rounded-md bg-slate-100 dark:bg-white/[0.05] font-mono border border-slate-200 dark:border-white/[0.06] text-slate-500 dark:text-slate-400" x-text="tag"></span>
+                </template>
+              </div>
               <a x-show="item.link" :href="item.link" target="_blank" rel="noopener noreferrer"
                  class="inline-flex items-center gap-1 text-[15px] text-brand-pink hover:underline mt-2 font-medium"
                  x-text="item.linkText || 'Watch →'"></a>
@@ -369,11 +388,11 @@
   <section id="share" class="py-10 px-6 lg:px-10 no-print border-t border-rc-light-border dark:border-rc-dark-border bg-rc-light-card dark:bg-rc-dark-card" style="content-visibility:auto">
     <div class="max-w-6xl mx-auto text-center">
       <p class="text-[14px] text-slate-500 dark:text-slate-400 mb-4" x-text="t('share.subtitle')"></p>
-      <div class="shareon flex flex-wrap justify-center gap-2" data-url="https://e-gleba.github.io" data-title="Evgeniy Gleba — Systems Engineer">
-        <a class="twitter" data-title="Evgeniy Gleba — Systems Engineer"></a>
-        <a class="bluesky" data-title="Evgeniy Gleba — Systems Engineer"></a>
-        <a class="telegram" data-title="Evgeniy Gleba — Systems Engineer"></a>
-        <a class="linkedin" data-title="Evgeniy Gleba — Systems Engineer"></a>
+      <div class="shareon flex flex-wrap justify-center gap-2" data-url="https://e-gleba.github.io" data-title="Evgeniy Gleba — C++ Systems Engineer">
+        <a class="twitter" data-title="Evgeniy Gleba — C++ Systems Engineer"></a>
+        <a class="bluesky" data-title="Evgeniy Gleba — C++ Systems Engineer"></a>
+        <a class="telegram" data-title="Evgeniy Gleba — C++ Systems Engineer"></a>
+        <a class="linkedin" data-title="Evgeniy Gleba — C++ Systems Engineer"></a>
         <a class="copy-url"></a>
       </div>
     </div>
@@ -401,22 +420,22 @@
   <div class="print-only max-w-[210mm] mx-auto p-[20mm] text-slate-900 bg-white font-sans text-[11pt] leading-relaxed">
     <header class="border-b-2 border-slate-900 pb-4 mb-6">
       <h1 class="text-[28pt] font-bold tracking-tight">Evgeniy Gleba</h1>
-      <p class="text-[12pt] text-slate-600 mt-1">Systems Engineer · Game Developer · Reverse Engineer</p>
+      <p class="text-[12pt] text-slate-600 mt-1">C++ Systems Engineer · Game Engine Developer · Reverse Engineer</p>
       <div class="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-[10pt] text-slate-700">
         <span>i@egleba.ru</span>
         <span>github.com/e-gleba</span>
         <span>t.me/egleba</span>
-        <span>Minsk</span>
+        <span>Minsk, Belarus</span>
       </div>
     </header>
     <section class="mb-5">
-      <h2 class="text-[12pt] font-bold uppercase tracking-wider border-b border-slate-300 pb-1 mb-2">Summary</h2>
-      <p class="text-[10.5pt]">Systems programmer shipping cross-platform C++ daily. Build with CMake, profile with Tracy, target Linux, Windows, macOS, iOS, and Android. Write code that runs on bare metal — graphics pipelines, game engines, native mobile apps.</p>
+      <h2 class="text-[12pt] font-bold uppercase tracking-wider border-b border-slate-300 pb-1 mb-2">Professional Summary</h2>
+      <p class="text-[10.5pt]">Systems engineer with 3+ years shipping cross-platform C++ in production game engines. Specialized in performance-critical systems: graphics pipelines, asset streaming, memory management. Proven track record at Lesta Games (Engine Core, Tanks Blitz). Reverse engineering background with published open-source tooling. 25+ public repositories, 5-platform deployment (Linux, Windows, macOS, iOS, Android).</p>
     </section>
     <section class="mb-5">
       <h2 class="text-[12pt] font-bold uppercase tracking-wider border-b border-slate-300 pb-1 mb-2">Core Competencies</h2>
       <div class="grid grid-cols-2 gap-x-6 gap-y-1 text-[10pt]">
-        <div><strong class="text-[10.5pt]">Languages:</strong> C++, C17/C99, Python 3, Bash</div>
+        <div><strong class="text-[10.5pt]">Languages:</strong> C++20, C17, Python 3, Bash</div>
         <div><strong class="text-[10.5pt]">Systems:</strong> CMake, Linux, Git/GitHub Actions, Docker, LLVM/Clang</div>
         <div><strong class="text-[10.5pt]">Engine:</strong> SDL3, OpenGL/GLSL, Tracy Profiler, Wwise Audio</div>
         <div><strong class="text-[10.5pt]">Mobile:</strong> Android SDK/NDK, iOS/Obj-C++, Cross-platform Native</div>
@@ -425,13 +444,14 @@
       </div>
     </section>
     <section class="mb-5">
-      <h2 class="text-[12pt] font-bold uppercase tracking-wider border-b border-slate-300 pb-1 mb-2">Experience</h2>
+      <h2 class="text-[12pt] font-bold uppercase tracking-wider border-b border-slate-300 pb-1 mb-2">Professional Experience</h2>
       <div class="space-y-2 text-[10pt]">
-        <template x-for="(item, idx) in (t('timeline.items') || [])" :key="idx">
+        <template x-for="(item, idx) in (t('experience.items') || [])" :key="idx">
           <div class="flex gap-3">
-            <div class="shrink-0 w-16 text-right font-mono font-bold text-[10.5pt]" x-text="item.year"></div>
+            <div class="shrink-0 w-20 text-right font-mono font-bold text-[10.5pt]" x-text="item.year"></div>
             <div class="flex-1">
               <div class="font-bold text-[10.5pt]" x-text="item.title"></div>
+              <div class="text-slate-600 italic" x-show="item.company" x-text="item.company"></div>
               <div class="text-slate-700" x-text="item.desc"></div>
             </div>
           </div>
@@ -446,21 +466,21 @@
             <strong class="text-[11pt]">airstrike3d-tools</strong>
             <span class="text-slate-500">github.com/e-gleba/airstrike3d-tools</span>
           </div>
-          <p class="text-slate-700">Toolkit for AirStrike 3D game analysis and APK asset extraction. Reverse engineering for game preservation. C, Ghidra.</p>
+          <p class="text-slate-700">Reverse engineering toolkit for AirStrike 3D. Binary analysis, APK asset extraction, game preservation tooling. 17 stars.</p>
         </div>
         <div>
           <div class="flex justify-between items-baseline">
             <strong class="text-[11pt]">cxx-skeleton</strong>
             <span class="text-slate-500">github.com/e-gleba/cxx-skeleton</span>
           </div>
-          <p class="text-slate-700">Production-ready C++ project template. Modern standards, cross-platform builds, integrated tooling. C++, CMake, Docker.</p>
+          <p class="text-slate-700">Production-ready C++ project template. Modern CMake, cross-platform CI/CD, Docker, static analysis integration. 7 stars.</p>
         </div>
         <div>
           <div class="flex justify-between items-baseline">
             <strong class="text-[11pt]">euengine</strong>
             <span class="text-slate-500">github.com/e-gleba/euengine</span>
           </div>
-          <p class="text-slate-700">3D game engine built on SDL3-GPU with hot reload. Modern C++ architecture. C++, SDL3, GPU.</p>
+          <p class="text-slate-700">3D game engine on SDL3-GPU with hot reload. Modern C++ architecture, data-oriented design.</p>
         </div>
       </div>
     </section>
