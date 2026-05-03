@@ -219,12 +219,12 @@
   </section>
 
   <section id="about" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900/30 no-print">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="text-4xl sm:text-5xl font-bold mb-10 flex items-center gap-3">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-4xl sm:text-5xl font-bold mb-12 flex items-center gap-3">
         <span class="text-brand-pink font-mono text-4xl" aria-hidden="true">//</span>
         <span x-text="t('about.title')"></span>
       </h2>
-      <div class="space-y-6 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+      <div class="max-w-4xl space-y-6 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
         <p x-text="t('about.p1')"></p>
         <p x-text="t('about.p2')"></p>
         <div class="bg-white dark:bg-slate-950/50 border-l-4 border-brand-pink rounded-r-2xl p-6 sm:p-8">
@@ -237,19 +237,21 @@
   </section>
 
   <section id="timeline" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 no-print">
-    <div class="max-w-3xl mx-auto">
+    <div class="max-w-7xl mx-auto">
       <h2 class="text-4xl sm:text-5xl font-bold mb-12 flex items-center gap-3">
         <span class="text-brand-pink font-mono text-4xl" aria-hidden="true">//</span>
         <span x-text="t('timeline.title')"></span>
       </h2>
-      <div class="timeline">
-        <template x-for="(item, idx) in (t('timeline.items') || [])" :key="idx">
-          <div class="timeline-entry">
-            <span class="timeline-year" x-text="item.year"></span>
-            <div class="timeline-title" x-text="item.title"></div>
-            <div class="timeline-desc" x-text="item.desc"></div>
-          </div>
-        </template>
+      <div class="max-w-3xl">
+        <div class="timeline">
+          <template x-for="(item, idx) in (t('timeline.items') || [])" :key="idx">
+            <div class="timeline-entry">
+              <span class="timeline-year" x-text="item.year"></span>
+              <div class="timeline-title" x-text="item.title"></div>
+              <div class="timeline-desc" x-text="item.desc"></div>
+            </div>
+          </template>
+        </div>
       </div>
     </div>
   </section>
@@ -358,18 +360,20 @@
   </section>
 
   <section id="contact" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900/30 no-print">
-    <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-4xl sm:text-5xl font-bold mb-12 flex items-center justify-center gap-3">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-4xl sm:text-5xl font-bold mb-12 flex items-center gap-3">
         <span class="text-brand-pink font-mono text-4xl" aria-hidden="true">//</span>
         <span x-text="t('contact.title')"></span>
       </h2>
-      <div class="flex flex-wrap justify-center gap-3">
-        <template x-for="link in contactLinks" :key="link.label">
-          <a :href="link.href" class="inline-flex items-center gap-2 px-6 py-3 text-base bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 rounded-xl font-medium hover:border-brand-pink/50 hover:text-brand-pink transition-all" target="_blank" rel="noopener noreferrer" :aria-label="link.label">
-            <span x-html="link.svg"></span>
-            <span x-text="link.label"></span>
-          </a>
-        </template>
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="flex flex-wrap justify-center gap-3">
+          <template x-for="link in contactLinks" :key="link.label">
+            <a :href="link.href" class="inline-flex items-center gap-2 px-6 py-3 text-base bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 rounded-xl font-medium hover:border-brand-pink/50 hover:text-brand-pink transition-all" target="_blank" rel="noopener noreferrer" :aria-label="link.label">
+              <span x-html="link.svg"></span>
+              <span x-text="link.label"></span>
+            </a>
+          </template>
+        </div>
       </div>
     </div>
   </section>
