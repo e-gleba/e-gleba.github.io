@@ -437,6 +437,20 @@
       </div>
     </section>
     <section class="mb-5">
+      <h2 class="text-[12pt] font-bold uppercase tracking-wider border-b border-slate-300 pb-1 mb-2">Experience</h2>
+      <div class="space-y-2 text-[10pt]">
+        <template x-for="(item, idx) in (t('timeline.items') || [])" :key="idx">
+          <div class="flex gap-3">
+            <div class="shrink-0 w-16 text-right font-mono font-bold text-[10.5pt]" x-text="item.year"></div>
+            <div class="flex-1">
+              <div class="font-bold text-[10.5pt]" x-text="item.title"></div>
+              <div class="text-slate-700" x-text="item.desc"></div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </section>
+    <section class="mb-5">
       <h2 class="text-[12pt] font-bold uppercase tracking-wider border-b border-slate-300 pb-1 mb-2">Selected Projects</h2>
       <div class="space-y-3 text-[10pt]">
         <div>
