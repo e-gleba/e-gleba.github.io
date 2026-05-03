@@ -237,27 +237,19 @@
   </section>
 
   <section id="timeline" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 no-print">
-    <div class="max-w-5xl mx-auto">
-      <h2 class="text-4xl sm:text-5xl font-bold mb-16 flex items-center gap-3">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-4xl sm:text-5xl font-bold mb-12 flex items-center gap-3">
         <span class="text-brand-pink font-mono text-4xl" aria-hidden="true">//</span>
         <span x-text="t('timeline.title')"></span>
       </h2>
-      <div class="relative">
-        <div class="timeline-line"></div>
-        <div class="space-y-12">
-          <template x-for="(item, idx) in (t('timeline.items') || [])" :key="item.year + item.title">
-            <div class="timeline-item relative">
-              <div class="timeline-dot" :style="`top: ${idx === 0 ? '0.5rem' : '1.5rem'}`"></div>
-              <div class="timeline-card bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 hover:-translate-y-0.5 hover:shadow-lg transition-all">
-                <div class="flex items-center gap-3 mb-2">
-                  <span class="font-mono text-sm font-bold text-brand-pink bg-brand-pink/10 px-2 py-0.5 rounded" x-text="item.year"></span>
-                  <h3 class="text-lg font-bold" x-text="item.title"></h3>
-                </div>
-                <p class="text-base text-slate-600 dark:text-slate-400 leading-relaxed" x-text="item.desc"></p>
-              </div>
-            </div>
-          </template>
-        </div>
+      <div class="timeline">
+        <template x-for="(item, idx) in (t('timeline.items') || [])" :key="idx">
+          <div class="timeline-entry">
+            <span class="timeline-year" x-text="item.year"></span>
+            <div class="timeline-title" x-text="item.title"></div>
+            <div class="timeline-desc" x-text="item.desc"></div>
+          </div>
+        </template>
       </div>
     </div>
   </section>
