@@ -96,7 +96,7 @@
   </div>
 
   <!-- nav -->
-  <nav class="sticky top-0 z-50 bg-white/80 dark:bg-rc-dark-bg/80 backdrop-blur-xl border-b border-rc-light-border dark:border-rc-dark-border/70 no-print" role="navigation" aria-label="Main navigation">
+  <nav class="sticky top-0 z-50 nav-glass border-b border-rc-light-border dark:border-rc-dark-border/70 no-print" role="navigation" aria-label="Main navigation">
     <div class="max-w-6xl mx-auto px-6 lg:px-10">
       <div class="flex items-center justify-between h-[60px]">
         <a href="#" class="font-mono font-bold text-[18px] tracking-tight flex items-center gap-1.5" aria-label="Home">
@@ -116,7 +116,7 @@
               <span x-text="lang"></span>
               <svg class="w-3.5 h-3.5 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
             </button>
-            <div x-show="langOpen" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 w-40 rounded-xl bg-white dark:bg-rc-dark-card shadow-2xl border border-rc-light-border dark:border-rc-dark-border py-2 z-50 overflow-hidden" role="menu">
+            <div x-show="langOpen" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 w-40 rounded-xl glass-card shadow-2xl border border-rc-light-border dark:border-rc-dark-border py-2 z-50 overflow-hidden" role="menu">
               <template x-for="l in langs" :key="l.code">
                 <button @click="lang = l.code; langOpen = false"
                         class="w-full px-4 py-2.5 text-left text-[16px] hover:bg-brand-pink/10 transition-colors flex items-center gap-3"
@@ -165,9 +165,9 @@
   </nav>
 
   <!-- hero -->
-  <section id="hero" class="relative flex flex-col items-center justify-center px-6 lg:px-10 pt-14 pb-16 lg:pt-16 lg:pb-20 no-print">
+  <section id="hero" class="relative flex flex-col items-center justify-center px-6 lg:px-10 pt-12 pb-14 lg:pt-14 lg:pb-16 no-print">
     <div class="max-w-4xl mx-auto w-full text-center relative z-10">
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-white/[0.05] border border-slate-200 dark:border-white/[0.08] text-[14px] font-medium text-slate-500 dark:text-slate-400 mb-7">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full badge-glass border border-slate-200/50 dark:border-white/[0.08] text-[14px] font-medium text-slate-500 dark:text-slate-400 mb-6">
         <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
         <span x-text="t('hero.status')"></span>
       </div>
@@ -176,7 +176,7 @@
         <span class="block gradient-text">Gleba</span>
       </h1>
       <p class="text-[clamp(1.15rem,2.4vw,1.5rem)] text-slate-500 dark:text-slate-400 mb-10 max-w-xl mx-auto font-light leading-relaxed" x-text="t('hero.tagline')"></p>
-      <div class="flex flex-wrap justify-center gap-3 mb-12">
+      <div class="flex flex-wrap justify-center gap-3 mb-10">
         <a href="#projects" class="group inline-flex items-center gap-2 px-7 py-3.5 text-[16px] bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-semibold hover:opacity-90 transition-opacity">
           <span x-text="t('hero.viewProjects')"></span>
           <svg class="w-5 h-5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
@@ -188,19 +188,19 @@
       </div>
       <!-- stats -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-xl mx-auto">
-        <div class="stat-cell">
+        <div class="stat-cell stat-glass">
           <div class="text-2xl md:text-3xl font-bold gradient-text">3+</div>
           <div class="text-[14px] text-slate-500 dark:text-slate-400 mt-1" x-text="t('stats.years')"></div>
         </div>
-        <div class="stat-cell">
+        <div class="stat-cell stat-glass">
           <div class="text-2xl md:text-3xl font-bold gradient-text">C++</div>
           <div class="text-[14px] text-slate-500 dark:text-slate-400 mt-1" x-text="t('stats.standard')"></div>
         </div>
-        <div class="stat-cell">
+        <div class="stat-cell stat-glass">
           <div class="text-2xl md:text-3xl font-bold gradient-text">25+</div>
           <div class="text-[14px] text-slate-500 dark:text-slate-400 mt-1" x-text="t('stats.repos')"></div>
         </div>
-        <div class="stat-cell">
+        <div class="stat-cell stat-glass">
           <div class="text-2xl md:text-3xl font-bold gradient-text">5</div>
           <div class="text-[14px] text-slate-500 dark:text-slate-400 mt-1" x-text="t('stats.platforms')"></div>
         </div>
@@ -209,27 +209,27 @@
   </section>
 
   <!-- about -->
-  <section id="about" class="py-20 lg:py-28 px-6 lg:px-10 no-print" style="content-visibility:auto">
+  <section id="about" class="py-14 lg:py-20 px-6 lg:px-10 no-print" style="content-visibility:auto">
     <div class="max-w-6xl mx-auto">
-      <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-10 lg:mb-14" x-text="t('about.label')"></h2>
-      <div class="grid lg:grid-cols-2 gap-10 lg:gap-16">
-        <div class="space-y-6 text-[18px] text-slate-600 dark:text-slate-400 leading-[1.75]">
+      <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-8 lg:mb-10" x-text="t('about.label')"></h2>
+      <div class="grid lg:grid-cols-2 gap-8 lg:gap-12">
+        <div class="space-y-5 text-[17px] text-slate-600 dark:text-slate-400 leading-[1.75]">
           <p x-text="t('about.p1')"></p>
           <p x-text="t('about.p2')"></p>
           <p x-text="t('about.p4')"></p>
         </div>
-        <div class="card p-7 lg:p-10">
-          <p class="font-mono text-[16px] text-brand-pink mb-4 font-semibold" x-text="t('about.philosophy')"></p>
-          <p class="text-[17px] text-slate-600 dark:text-slate-400 leading-[1.75]" x-text="t('about.p3')"></p>
+        <div class="card-glass p-6 lg:p-8">
+          <p class="font-mono text-[15px] text-brand-pink mb-3 font-semibold" x-text="t('about.philosophy')"></p>
+          <p class="text-[16px] text-slate-600 dark:text-slate-400 leading-[1.75]" x-text="t('about.p3')"></p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- timeline -->
-  <section id="timeline" class="py-20 lg:py-28 px-6 lg:px-10 no-print" style="content-visibility:auto">
+  <section id="timeline" class="py-14 lg:py-20 px-6 lg:px-10 no-print" style="content-visibility:auto">
     <div class="max-w-6xl mx-auto">
-      <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-10 lg:mb-14" x-text="t('timeline.label')"></h2>
+      <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-8 lg:mb-10" x-text="t('timeline.label')"></h2>
       <div class="max-w-3xl">
         <div class="timeline">
           <template x-for="(item, idx) in (t('timeline.items') || [])" :key="idx">
@@ -248,9 +248,9 @@
   </section>
 
   <!-- projects -->
-  <section id="projects" class="py-20 lg:py-28 px-6 lg:px-10 no-print" style="content-visibility:auto">
+  <section id="projects" class="py-14 lg:py-20 px-6 lg:px-10 no-print" style="content-visibility:auto">
     <div class="max-w-6xl mx-auto">
-      <div class="flex items-center gap-4 mb-10 lg:mb-14">
+      <div class="flex items-center gap-4 mb-8 lg:mb-10">
         <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold" x-text="t('projects.label')"></h2>
         <span x-show="rateLimited" class="inline-flex items-center gap-1.5 text-[12px] font-semibold text-brand-orange bg-brand-orange/10 px-3 py-1 rounded-full">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
@@ -264,7 +264,7 @@
       </div>
       <div x-show="!loading && repos.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <template x-for="repo in repos" :key="repo.id">
-          <article class="card p-6 group">
+          <article class="card card-glass p-6 group">
             <div class="flex items-start justify-between mb-4">
               <h3 class="text-[17px] font-bold font-mono text-brand-pink truncate max-w-[70%]" x-text="repo.name"></h3>
               <span x-show="isHot(repo)" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider bg-gradient-to-r from-brand-pink to-brand-orange text-white">Hot</span>
@@ -294,7 +294,7 @@
       </div>
       <div x-show="!loading && repos.length === 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <template x-for="fb in fallbackRepos" :key="fb.name">
-          <article class="card p-6 group">
+          <article class="card card-glass p-6 group">
             <div class="flex items-start justify-between mb-4">
               <h3 class="text-[17px] font-bold font-mono truncate max-w-[70%]" :style="'color:'+fb.color" x-text="fb.name"></h3>
               <span x-show="fb.hot" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider bg-gradient-to-r from-brand-pink to-brand-orange text-white">Hot</span>
@@ -320,19 +320,19 @@
   </section>
 
   <!-- skills -->
-  <section id="skills" class="py-20 lg:py-28 px-6 lg:px-10 no-print" style="content-visibility:auto">
+  <section id="skills" class="py-14 lg:py-20 px-6 lg:px-10 no-print" style="content-visibility:auto">
     <div class="max-w-6xl mx-auto">
-      <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-10 lg:mb-14" x-text="t('skills.label')"></h2>
+      <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-8 lg:mb-10" x-text="t('skills.label')"></h2>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         <template x-for="cat in skillCategories" :key="cat.key">
-          <div class="card p-7 lg:p-10">
-            <h3 class="text-[20px] font-bold mb-8 flex items-center gap-3" :style="'color:'+cat.color">
+          <div class="card card-glass p-6 lg:p-8">
+            <h3 class="text-[18px] font-bold mb-6 flex items-center gap-3" :style="'color:'+cat.color">
               <span x-text="cat.icon" class="text-xl"></span>
               <span x-text="t('skills.' + cat.key)"></span>
             </h3>
-            <ul class="space-y-4">
+            <ul class="space-y-3">
               <template x-for="item in cat.items" :key="item.label">
-                <li class="flex items-center gap-3.5 text-[16px] text-slate-600 dark:text-slate-400">
+                <li class="flex items-center gap-3 text-[15px] text-slate-600 dark:text-slate-400">
                   <span x-show="item.svg" x-html="item.svg" class="w-5 h-5 inline-flex items-center justify-center text-brand-pink shrink-0 skill-svg" aria-hidden="true"></span>
                   <img x-show="item.img && !item.svg" :src="item.img" class="w-5 h-5 shrink-0" alt="" loading="lazy" width="20" height="20" decoding="async">
                   <span x-show="!item.img && !item.svg" class="text-brand-pink" aria-hidden="true">·</span>
@@ -347,10 +347,10 @@
   </section>
 
   <!-- contact -->
-  <section id="contact" class="py-20 lg:py-28 px-6 lg:px-10 no-print" style="content-visibility:auto">
+  <section id="contact" class="py-14 lg:py-20 px-6 lg:px-10 no-print" style="content-visibility:auto">
     <div class="max-w-6xl mx-auto text-center">
-      <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-7 lg:mb-10" x-text="t('contact.label')"></h2>
-      <p class="text-[18px] text-slate-500 dark:text-slate-400 mb-12 max-w-xl mx-auto leading-[1.75]" x-text="t('contact.text')"></p>
+      <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-6 lg:mb-8" x-text="t('contact.label')"></h2>
+      <p class="text-[17px] text-slate-500 dark:text-slate-400 mb-10 max-w-xl mx-auto leading-[1.75]" x-text="t('contact.text')"></p>
       <div class="flex flex-wrap justify-center gap-3">
         <template x-for="link in contactLinks" :key="link.label">
           <a :href="link.href" class="inline-flex items-center gap-2.5 px-6 py-3 text-[15px] bg-rc-light-card dark:bg-rc-dark-card border border-rc-light-border dark:border-rc-dark-border rounded-xl font-medium hover:border-brand-pink/40 hover:text-brand-pink transition-all" target="_blank" rel="noopener noreferrer" :aria-label="link.label">
@@ -363,9 +363,9 @@
   </section>
 
   <!-- share -->
-  <section id="share" class="py-12 px-6 lg:px-10 no-print border-t border-rc-light-border dark:border-rc-dark-border bg-rc-light-card dark:bg-rc-dark-card" style="content-visibility:auto">
+  <section id="share" class="py-10 px-6 lg:px-10 no-print border-t border-rc-light-border dark:border-rc-dark-border bg-rc-light-card dark:bg-rc-dark-card" style="content-visibility:auto">
     <div class="max-w-6xl mx-auto text-center">
-      <p class="text-[14px] text-slate-500 dark:text-slate-400 mb-5" x-text="t('share.subtitle')"></p>
+      <p class="text-[14px] text-slate-500 dark:text-slate-400 mb-4" x-text="t('share.subtitle')"></p>
       <div class="shareon flex flex-wrap justify-center gap-2" data-url="https://e-gleba.github.io" data-title="Evgeniy Gleba — Systems Engineer">
         <a class="twitter" data-title="Evgeniy Gleba — Systems Engineer"></a>
         <a class="bluesky" data-title="Evgeniy Gleba — Systems Engineer"></a>
@@ -377,7 +377,7 @@
   </section>
 
   <!-- footer -->
-  <footer class="py-7 px-6 lg:px-10 bg-rc-light-bg dark:bg-rc-dark-bg border-t border-rc-light-border dark:border-rc-dark-border text-center text-[14px] text-slate-500 no-print" role="contentinfo">
+  <footer class="py-6 px-6 lg:px-10 bg-rc-light-bg dark:bg-rc-dark-bg border-t border-rc-light-border dark:border-rc-dark-border text-center text-[14px] text-slate-500 no-print" role="contentinfo">
     <p>
       © 2026 Evgeniy Gleba ·
       <span x-text="t('footer')"></span> ·
