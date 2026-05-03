@@ -249,6 +249,9 @@
               <span class="timeline-year" x-text="item.year"></span>
               <div class="timeline-title" x-text="item.title"></div>
               <div class="timeline-desc" x-text="item.desc"></div>
+              <a x-show="item.link" :href="item.link" target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center gap-1 text-sm text-brand-pink hover:underline mt-2"
+                 x-text="item.linkText || 'Watch →'"></a>
             </div>
           </template>
         </div>
