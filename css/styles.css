@@ -41,58 +41,75 @@ html {
   }
 }
 
-.timeline-line {
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
   position: absolute;
-  left: 1.5rem;
-  top: 0;
-  bottom: 0;
+  left: 0;
+  top: 0.5rem;
+  bottom: 0.5rem;
   width: 2px;
   background: linear-gradient(to bottom, #FF6B9D, #FF8C42, #C792EA);
+  border-radius: 1px;
 }
 
-@media (min-width: 768px) {
-  .timeline-line {
-    left: 50%;
-    transform: translateX(-50%);
-  }
+.timeline-entry {
+  position: relative;
+  padding-bottom: 2rem;
 }
 
-.timeline-dot {
+.timeline-entry:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-entry::before {
+  content: '';
   position: absolute;
-  left: 1.5rem;
-  width: 1rem;
-  height: 1rem;
+  left: -2rem;
+  top: 0.35rem;
+  width: 0.625rem;
+  height: 0.625rem;
   border-radius: 50%;
   background: linear-gradient(135deg, #FF6B9D, #FF8C42);
-  border: 3px solid white;
-  transform: translateX(-50%);
-  z-index: 10;
+  border: 2.5px solid white;
+  transform: translateX(calc(-50% + 1px));
+  z-index: 2;
 }
 
-.dark .timeline-dot {
+.dark .timeline-entry::before {
   border-color: #0f172a;
 }
 
-@media (min-width: 768px) {
-  .timeline-dot {
-    left: 50%;
-  }
+.timeline-year {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #FF6B9D;
+  background: rgba(255, 107, 157, 0.1);
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.375rem;
+  display: inline-block;
+  margin-bottom: 0.375rem;
 }
 
-.timeline-card {
-  position: relative;
-  margin-left: 3.5rem;
+.timeline-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: inherit;
+  margin-bottom: 0.25rem;
+  line-height: 1.4;
 }
 
-@media (min-width: 768px) {
-  .timeline-card {
-    margin-left: 0;
-    width: calc(50% - 2.5rem);
-  }
-  .timeline-item:nth-child(odd) .timeline-card {
-    margin-right: auto;
-  }
-  .timeline-item:nth-child(even) .timeline-card {
-    margin-left: auto;
-  }
+.timeline-desc {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #64748b;
+}
+
+.dark .timeline-desc {
+  color: #94a3b8;
 }
