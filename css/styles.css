@@ -40,3 +40,59 @@ html {
     transition-duration: .01ms !important;
   }
 }
+
+.timeline-line {
+  position: absolute;
+  left: 1.5rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, #FF6B9D, #FF8C42, #C792EA);
+}
+
+@media (min-width: 768px) {
+  .timeline-line {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.timeline-dot {
+  position: absolute;
+  left: 1.5rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF6B9D, #FF8C42);
+  border: 3px solid white;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.dark .timeline-dot {
+  border-color: #0f172a;
+}
+
+@media (min-width: 768px) {
+  .timeline-dot {
+    left: 50%;
+  }
+}
+
+.timeline-card {
+  position: relative;
+  margin-left: 3.5rem;
+}
+
+@media (min-width: 768px) {
+  .timeline-card {
+    margin-left: 0;
+    width: calc(50% - 2.5rem);
+  }
+  .timeline-item:nth-child(odd) .timeline-card {
+    margin-right: auto;
+  }
+  .timeline-item:nth-child(even) .timeline-card {
+    margin-left: auto;
+  }
+}
