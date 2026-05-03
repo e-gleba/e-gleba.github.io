@@ -91,6 +91,12 @@ html {
 .tech-badge img {
   filter: none;
 }
+.tech-badge img[data-tint="windows"] {
+  filter: invert(42%) sepia(93%) saturate(1352%) hue-rotate(185deg) brightness(95%) contrast(101%);
+}
+.dark .tech-badge img[data-tint="windows"] {
+  filter: invert(42%) sepia(93%) saturate(1352%) hue-rotate(185deg) brightness(115%) contrast(101%);
+}
 
 /* ===== AURORA BACKGROUND (Raycast-style) ===== */
 .aurora-bg {

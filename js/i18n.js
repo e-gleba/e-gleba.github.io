@@ -1,7 +1,7 @@
 const I18N = {
   en: {
     nav: { about:'About', projects:'Projects', skills:'Skills', experience:'Experience', contact:'Contact' },
-    hero: { status:'Lesta Games · Engine Core', tagline:'C++ Engineer · Reverse Engineer', viewProjects:'View Projects' },
+    hero: { status:'Lesta Games · Engine Core', tagline:'C++ Engineer · Reverse Engineer · Investigator', viewProjects:'View Projects' },
     stats: { years:'Years Production', standard:'C++ Standard', repos:'Open Source', platforms:'Platforms' },
     share: { title:'Share', subtitle:'Spread the word' },
     about: { label:'About',
@@ -36,7 +36,7 @@ const I18N = {
   },
   ru: {
     nav: { about:'О себе', projects:'Проекты', skills:'Навыки', experience:'Опыт', contact:'Контакты' },
-    hero: { status:'Lesta Games · Engine Core', tagline:'Системный инженер C++ · Реверс-инжиниринг', viewProjects:'Проекты' },
+    hero: { status:'Lesta Games · Engine Core', tagline:'Системный инженер C++ · Реверс-инжиниринг · Исследователь', viewProjects:'Проекты' },
     stats: { years:'Лет в продакшене', standard:'Стандарт C++', repos:'Open Source', platforms:'Платформ' },
     share: { title:'Поделиться', subtitle:'Расскажите друзьям' },
     about: { label:'О себе',
@@ -71,7 +71,7 @@ const I18N = {
   },
   zh: {
     nav: { about:'关于', projects:'项目', skills:'技能', experience:'经历', contact:'联系' },
-    hero: { status:'Lesta Games · Engine Core', tagline:'C++工程师 · 逆向工程', viewProjects:'查看项目' },
+    hero: { status:'Lesta Games · Engine Core', tagline:'C++工程师 · 逆向工程 · 研究员', viewProjects:'查看项目' },
     stats: { years:'生产经验', standard:'C++标准', repos:'开源项目', platforms:'平台数' },
     share: { title:'分享', subtitle:'分享给好友' },
     about: { label:'关于',
