@@ -18,14 +18,14 @@ function app() {
     translations: I18N,
 
     techBadges: [
-      { label:'C++', icon:'https://cdn.simpleicons.org/cplusplus/00599C', dark:true },
-      { label:'Python', icon:'https://cdn.simpleicons.org/python/3776AB', dark:true },
-      { label:'Linux', icon:'https://cdn.simpleicons.org/linux/FCC624', dark:false },
-      { label:'Android Native', icon:'https://cdn.simpleicons.org/android/3DDC84', dark:true },
-      { label:'iOS Native', icon:'https://cdn.simpleicons.org/apple/000000', dark:false },
-      { label:'macOS Native', icon:'https://cdn.simpleicons.org/apple/000000', dark:false },
+      { label:'C++', icon:'https://cdn.simpleicons.org/cplusplus/FF6B9D', dark:true },
+      { label:'Python', icon:'https://cdn.simpleicons.org/python/FF8C42', dark:true },
+      { label:'Linux', icon:'https://cdn.simpleicons.org/linux/FF8C42', dark:false },
+      { label:'Android Native', icon:'https://cdn.simpleicons.org/android/FF6B9D', dark:true },
+      { label:'iOS Native', icon:'https://cdn.simpleicons.org/apple/FF8C42', dark:false },
+      { label:'macOS Native', icon:'https://cdn.simpleicons.org/apple/FF6B9D', dark:false },
       { label:'Windows Native', icon:'https://cdn.jsdelivr.net/npm/@material-design-icons/svg@0.14.15/outlined/laptop_windows.svg', dark:true },
-      { label:'CMake', icon:'https://cdn.simpleicons.org/cmake/064F8C', dark:true },
+      { label:'CMake', icon:'https://cdn.simpleicons.org/cmake/C792EA', dark:true },
     ],
 
     fallbackRepos: [

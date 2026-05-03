@@ -195,28 +195,13 @@ html {
   box-shadow: 0 8px 32px -12px rgba(0,0,0,0.35);
 }
 
-/* card glow border effect */
+/* card glow border effect - DISABLED */
 .card-glow {
   position: relative;
 }
 .card-glow::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: 15px;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(255,107,157,0.2), rgba(255,140,66,0.15), rgba(199,146,234,0.2));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-.card-glow:hover::before { opacity: 1; }
-.dark .card-glow::before {
-  background: linear-gradient(135deg, rgba(255,107,157,0.35), rgba(255,140,66,0.25), rgba(199,146,234,0.3));
+  content: none;
+  display: none;
 }
 
 .stat-glass {
