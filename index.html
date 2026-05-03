@@ -194,7 +194,8 @@
       <div class="flex flex-wrap justify-center gap-2 mb-8" x-show="techBadges.length">
         <template x-for="badge in techBadges" :key="badge.label">
           <div class="tech-badge" :class="badge.dark ? 'dark' : ''">
-            <img :src="badge.icon" class="w-4 h-4" :data-tint="badge.tint || ''" alt="" loading="lazy" width="16" height="16" decoding="async">
+            <img x-show="badge.icon" :src="badge.icon" class="w-4 h-4" alt="" loading="lazy" width="16" height="16" decoding="async">
+            <span x-show="badge.svg" x-html="badge.svg" class="w-4 h-4 inline-flex items-center justify-center"></span>
             <span x-text="badge.label"></span>
           </div>
         </template>
