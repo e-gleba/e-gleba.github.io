@@ -24,7 +24,7 @@ function app() {
       { label:'Android Native', icon:'https://cdn.simpleicons.org/android/FF6B9D', dark:true },
       { label:'iOS Native', icon:'https://cdn.simpleicons.org/apple/FF8C42', dark:false },
       { label:'macOS Native', icon:'https://cdn.simpleicons.org/apple/FF6B9D', dark:false },
-      { label:'Windows Native', icon:'https://cdn.jsdelivr.net/npm/@material-design-icons/svg@0.14.15/outlined/laptop_windows.svg', dark:true, tint:'#0078D6' },
+      { label:'Windows Native', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="#0078D6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M2 12h20"/><path d="M12 3v18"/></svg>', dark:false },
       { label:'CMake', icon:'https://cdn.simpleicons.org/cmake/C792EA', dark:true },
     ],
 
