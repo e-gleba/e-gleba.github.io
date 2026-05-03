@@ -37,7 +37,7 @@
   }
   </script>
 
-  <noscript><style>[x-cloak]{display:revert!important}</style></noscript>
+  <style>[x-cloak]{display:none!important}</style>
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF6B9D'/%3E%3Cstop offset='50%25' style='stop-color:%23FF8C42'/%3E%3Cstop offset='100%25' style='stop-color:%23C792EA'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%230f172a'/%3E%3Cpath d='M44 16 C28 14 14 22 14 32 C14 42 28 50 44 48 M14 32 L38 32 M44 16 C48 17 50 20 48 22' stroke='url(%23g)' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='48' cy='22' r='2.5' fill='%23FF6B9D' opacity='.8'/%3E%3C/svg%3E">
   <link rel="canonical" href="https://e-gleba.github.io">
@@ -47,12 +47,16 @@
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   <link rel="dns-prefetch" href="https://cdn.simpleicons.org">
   <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://api.github.com">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://api.github.com">
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  <link href="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.min.css" rel="stylesheet">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.min.css"></noscript>
   <script src="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.iife.js" defer init></script>
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -77,8 +81,8 @@
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
 
   <link rel="stylesheet" href="css/styles.css">
-  <script src="js/i18n.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/i18n.js" defer></script>
+  <script src="js/app.js" defer></script>
 </head>
 
 <body class="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300" x-cloak>
@@ -155,7 +159,7 @@
 
   <section id="hero" class="relative min-h-[60vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 lg:py-20 no-print">
     <div class="max-w-4xl mx-auto w-full text-center">
-      <h1 class="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight mb-5">
+      <h1 class="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight mb-5" fetchpriority="high">
         Evgeniy<br><span class="gradient-text">Gleba</span>
       </h1>
       <p class="text-2xl sm:text-3xl lg:text-4xl text-slate-500 dark:text-slate-400 mb-8 max-w-2xl mx-auto font-light" x-text="t('hero.tagline')"></p>
@@ -218,7 +222,7 @@
     </div>
   </section>
 
-  <section id="about" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900/30 no-print">
+  <section id="about" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900/30 no-print" style="content-visibility:auto">
     <div class="max-w-7xl mx-auto">
       <h2 class="text-4xl sm:text-5xl font-bold mb-12 flex items-center gap-3">
         <span class="text-brand-pink font-mono text-4xl" aria-hidden="true">//</span>
@@ -236,7 +240,7 @@
     </div>
   </section>
 
-  <section id="timeline" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 no-print">
+  <section id="timeline" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 no-print" style="content-visibility:auto">
     <div class="max-w-7xl mx-auto">
       <h2 class="text-4xl sm:text-5xl font-bold mb-12 flex items-center gap-3">
         <span class="text-brand-pink font-mono text-4xl" aria-hidden="true">//</span>
@@ -259,7 +263,7 @@
     </div>
   </section>
 
-  <section id="projects" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900/30 no-print">
+  <section id="projects" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900/30 no-print" style="content-visibility:auto">
     <div class="max-w-7xl mx-auto">
       <div class="flex items-center gap-3 mb-12">
         <h2 class="text-4xl sm:text-5xl font-bold flex items-center gap-3">
@@ -333,7 +337,7 @@
     </div>
   </section>
 
-  <section id="skills" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 no-print">
+  <section id="skills" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 no-print" style="content-visibility:auto">
     <div class="max-w-7xl mx-auto">
       <h2 class="text-4xl sm:text-5xl font-bold mb-12 flex items-center gap-3">
         <span class="text-brand-pink font-mono text-4xl" aria-hidden="true">//</span>
@@ -362,7 +366,7 @@
     </div>
   </section>
 
-  <section id="contact" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900/30 no-print">
+  <section id="contact" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900/30 no-print" style="content-visibility:auto">
     <div class="max-w-7xl mx-auto">
       <h2 class="text-4xl sm:text-5xl font-bold mb-12 flex items-center gap-3">
         <span class="text-brand-pink font-mono text-4xl" aria-hidden="true">//</span>
@@ -381,7 +385,7 @@
     </div>
   </section>
 
-  <section id="share" class="py-10 px-4 sm:px-6 lg:px-8 no-print border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
+  <section id="share" class="py-10 px-4 sm:px-6 lg:px-8 no-print border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950" style="content-visibility:auto">
     <div class="max-w-4xl mx-auto text-center">
       <p class="text-sm text-slate-500 dark:text-slate-400 mb-4" x-text="t('share.subtitle')"></p>
       <div class="shareon flex flex-wrap justify-center gap-2" data-url="https://e-gleba.github.io" data-title="Evgeniy Gleba — Systems Engineer">
