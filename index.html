@@ -245,7 +245,7 @@
       <div class="relative">
         <div class="timeline-line"></div>
         <div class="space-y-12">
-          <template x-for="(item, idx) in timelineItems()" :key="item.year + item.title">
+          <template x-for="(item, idx) in (t('timeline.items') || [])" :key="item.year + item.title">
             <div class="timeline-item relative">
               <div class="timeline-dot" :style="`top: ${idx === 0 ? '0.5rem' : '1.5rem'}`"></div>
               <div class="timeline-card bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 hover:-translate-y-0.5 hover:shadow-lg transition-all">
