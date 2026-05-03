@@ -19,7 +19,8 @@ const I18N = {
         { year:'2021', title:'BSU RFCT — First Year, Satellite Thermal Sensors', desc:'Started at BSU RFCT (Radio Physics & Computer Technology faculty). Built parsing models for thermal sensors aboard the second BSU CubeSat-2 satellite.' },
         { year:'2022', title:'Higher Flight School & MSU Rocketry', desc:'Developed drones at the Higher Flight School. Competed in rocket engineering with Moscow State University — adult league, real hardware, live launches.' },
         { year:'2023', title:'Advanced C++ — Leonid Chaika', desc:'September 25 — completed Leonid Chaika\'s intensive C++ course. Joined his team at Lesta Games, working on cross-platform C++ game engine internals.' },
-        { year:'2025', title:'BSU RFCT — Graduation & Andrei Sakharov Scholarship', desc:'Graduated from BSU RFCT. Named to the university Honor Board. Received the Andrei Sakharov named scholarship for academic excellence.' }
+        { year:'2025', title:'BSU RFCT — Graduation & Andrei Sakharov Scholarship', desc:'Graduated from BSU RFCT. Named to the university Honor Board. Received the Andrei Sakharov named scholarship for academic excellence.' },
+        { year:'2026', title:'Lesta Games — Engine Core, Tanks Blitz', desc:'Engine Core team at Lesta Games, shipping Tanks Blitz. Building open source tools and libraries in parallel.' }
       ]
     },
     projects:{ title:'Projects', noDesc:'No description available', view:'View' },
@@ -47,7 +48,8 @@ const I18N = {
         { year:'2021', title:'РФиКТ БГУ — первый курс, спутниковые датчики', desc:'Поступил на РФиКТ БГУ. На первом курсе разрабатывал модели парсинга тепловых датчиков спутника БГУ (CubeSat-2).' },
         { year:'2022', title:'Высшая летная школа и МГУ — ракетостроение', desc:'Разработка дронов в Высшей летной школе. Соревнования с МГУ по ракетостроению. Взрослая лига — серьёзное железо, реальные запуски.' },
         { year:'2023', title:'Продвинутый C++ — Леонид Чайка', desc:'25 сентября — завершил курс продвинутого C++ у Леонида Чайки. Попал в его команду в Lesta Games, работаю над кросс-платформенным C++ движком.' },
-        { year:'2025', title:'РФиКТ БГУ — выпуск, доска почёта и стипендия Сахарова', desc:'Окончил РФиКТ БГУ. Попал на доску почёта университета. Получил именную стипендию имени Андрея Сахарова за академические успехи.' }
+        { year:'2025', title:'РФиКТ БГУ — выпуск, доска почёта и стипендия Сахарова', desc:'Окончил РФиКТ БГУ. Попал на доску почёта университета. Получил именную стипендию имени Андрея Сахарова за академические успехи.' },
+        { year:'2026', title:'Lesta Games — Engine Core, Tanks Blitz', desc:'Отдел Engine Core в Lesta Games, проект Tanks Blitz. Параллельно развиваю собственные open source проекты и инструменты.' }
       ]
     },
     projects:{ title:'Проекты', noDesc:'Описание отсутствует', view:'Смотреть' },
@@ -75,7 +77,8 @@ const I18N = {
         { year:'2021', title:'白俄罗斯国立大学射频与计算机技术系 — 大一，卫星热传感器', desc:'入读白俄罗斯国立大学射频与计算机技术系。大一期间为BSU卫星（CubeSat-2）开发热传感器解析模型。' },
         { year:'2022', title:'高级飞行学校与莫斯科国立大学 — 火箭工程', desc:'在高级飞行学校开发无人机。与莫斯科国立大学参加火箭工程竞赛。成人联赛——硬核硬件，真实发射。' },
         { year:'2023', title:'高级C++课程 — Leonid Chaika', desc:'9月25日完成Leonid Chaika的高级C++课程。加入他在Lesta Games的团队，从事跨平台C++游戏引擎开发。' },
-        { year:'2025', title:'白俄罗斯国立大学毕业 — 荣誉榜与萨哈罗夫奖学金', desc:'毕业于白俄罗斯国立大学射频与计算机技术系。登上大学荣誉榜。获得安德烈·萨哈罗夫命名奖学金以表彰学术卓越。' }
+        { year:'2025', title:'白俄罗斯国立大学毕业 — 荣誉榜与萨哈罗夫奖学金', desc:'毕业于白俄罗斯国立大学射频与计算机技术系。登上大学荣誉榜。获得安德烈·萨哈罗夫命名奖学金以表彰学术卓越。' },
+        { year:'2026', title:'Lesta Games — Engine Core, Tanks Blitz', desc:'在Lesta Games Engine Core团队，负责Tanks Blitz项目。同时构建开源工具和库。' }
       ]
     },
     projects:{ title:'项目', noDesc:'暂无描述', view:'查看' },
