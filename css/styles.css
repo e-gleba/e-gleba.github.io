@@ -1,0 +1,42 @@
+[x-cloak] { display: none !important; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #FF6B9D, #FF8C42, #C792EA);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+:focus-visible {
+  outline: 2px solid #FF6B9D;
+  outline-offset: 2px;
+}
+
+.skill-svg svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+@media print {
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+  body { background: white !important; color: #111 !important; }
+  a { text-decoration: none !important; color: #111 !important; }
+  section { break-inside: avoid; page-break-inside: avoid; }
+}
+
+.print-only { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
