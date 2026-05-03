@@ -2,18 +2,51 @@
 <html lang="en" x-data="app()" :lang="lang" :class="theme" class="antialiased">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta name="description" content="Evgeniy Gleba — C++ Systems Engineer. Cross-platform systems, game engines, reverse engineering.">
-  <meta name="theme-color" content="#0f172a">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="robots" content="index, follow">
   <meta name="author" content="Evgeniy Gleba">
   <meta property="og:title" content="Evgeniy Gleba — Systems Engineer">
   <meta property="og:description" content="Performance-first systems programming. C++23, game engines, reverse engineering.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://e-gleba.github.io">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Evgeniy Gleba — Systems Engineer">
+  <meta name="twitter:description" content="Performance-first systems programming. C++23, game engines, reverse engineering.">
   <title>Evgeniy Gleba — Systems Engineer</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Evgeniy Gleba",
+    "url": "https://e-gleba.github.io",
+    "email": "i@egleba.ru",
+    "jobTitle": "Systems Engineer",
+    "knowsAbout": ["C++", "Systems Programming", "Game Development", "Reverse Engineering"],
+    "sameAs": [
+      "https://github.com/e-gleba",
+      "https://t.me/egleba",
+      "https://vk.ru/e_gleba",
+      "https://steamcommunity.com/id/egleba"
+    ]
+  }
+  </script>
+
+  <!-- show page content when JS is disabled (x-cloak on body would blank the page) -->
+  <noscript><style>[x-cloak]{display:revert!important}</style></noscript>
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF6B9D'/%3E%3Cstop offset='50%25' style='stop-color:%23FF8C42'/%3E%3Cstop offset='100%25' style='stop-color:%23C792EA'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%230f172a'/%3E%3Cpath d='M44 16 C28 14 14 22 14 32 C14 42 28 50 44 48 M14 32 L38 32 M44 16 C48 17 50 20 48 22' stroke='url(%23g)' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='48' cy='22' r='2.5' fill='%23FF6B9D' opacity='.8'/%3E%3C/svg%3E">
   <link rel="canonical" href="https://e-gleba.github.io">
+
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="https://cdn.simpleicons.org">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,6 +92,14 @@
       section { break-inside: avoid; page-break-inside: avoid; }
     }
     .print-only { display: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
   </style>
 </head>
 
@@ -85,7 +126,7 @@
           <div class="relative">
             <button @click="langOpen = !langOpen" @click.outside="langOpen = false"
                     class="flex items-center gap-1 px-2 py-1 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-xs font-mono font-semibold uppercase"
-                    :aria-expanded="langOpen">
+                    :aria-expanded="langOpen" aria-label="Select language">
               <span x-text="lang"></span>
               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
             </button>
@@ -93,7 +134,8 @@
               <template x-for="l in langs" :key="l.code">
                 <button @click="lang = l.code; langOpen = false"
                         class="w-full px-4 py-2 text-left text-sm hover:bg-brand-pink/10 transition-colors flex items-center gap-3"
-                        :class="lang === l.code ? 'text-brand-pink font-medium' : 'text-slate-600 dark:text-slate-300'">
+                        :class="lang === l.code ? 'text-brand-pink font-medium' : 'text-slate-600 dark:text-slate-300'"
+                        role="menuitem">
                   <span x-text="l.flag"></span>
                   <span x-text="l.label"></span>
                 </button>
@@ -119,7 +161,7 @@
         </div>
       </div>
 
-      <div x-show="mobileMenu" x-transition class="md:hidden border-t border-slate-200 dark:border-slate-800 py-3 no-print">
+      <div x-show="mobileMenu" x-transition @keydown.escape.window="mobileMenu = false" class="md:hidden border-t border-slate-200 dark:border-slate-800 py-3 no-print">
         <div class="flex flex-col gap-1">
           <a href="#about" @click="mobileMenu = false" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-medium" x-text="t('nav.about')"></a>
           <a href="#projects" @click="mobileMenu = false" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-medium" x-text="t('nav.projects')"></a>
@@ -139,7 +181,7 @@
   </nav>
 
   <!-- HERO -->
-  <section class="relative min-h-[60vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 lg:py-20 no-print" role="banner">
+  <section id="hero" class="relative min-h-[60vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 lg:py-20 no-print">
     <div class="max-w-4xl mx-auto w-full text-center">
       <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-4">
         Evgeniy<br><span class="gradient-text">Gleba</span>
@@ -148,19 +190,19 @@
 
       <div class="flex flex-wrap justify-center gap-2 mb-8">
         <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium">
-          <img src="https://cdn.simpleicons.org/cplusplus/FF6B9D" class="w-4 h-4" alt="" loading="lazy"> C++23
+          <img src="https://cdn.simpleicons.org/cplusplus/FF6B9D" class="w-4 h-4" alt="" width="16" height="16" loading="lazy"> C++23
         </span>
         <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium">
-          <img src="https://cdn.simpleicons.org/python/C792EA" class="w-4 h-4" alt="" loading="lazy"> Python
+          <img src="https://cdn.simpleicons.org/python/C792EA" class="w-4 h-4" alt="" width="16" height="16" loading="lazy"> Python
         </span>
         <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium">
-          <img src="https://cdn.simpleicons.org/cmake/FF8C42" class="w-4 h-4" alt="" loading="lazy"> CMake
+          <img src="https://cdn.simpleicons.org/cmake/FF8C42" class="w-4 h-4" alt="" width="16" height="16" loading="lazy"> CMake
         </span>
         <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium">
-          <img src="https://cdn.simpleicons.org/linux/C792EA" class="w-4 h-4" alt="" loading="lazy"> Linux
+          <img src="https://cdn.simpleicons.org/linux/C792EA" class="w-4 h-4" alt="" width="16" height="16" loading="lazy"> Linux
         </span>
         <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium">
-          <img src="https://cdn.simpleicons.org/apple/FF6B9D" class="w-4 h-4" alt="" loading="lazy"> iOS
+          <img src="https://cdn.simpleicons.org/apple/FF6B9D" class="w-4 h-4" alt="" width="16" height="16" loading="lazy"> iOS
         </span>
       </div>
 
@@ -200,7 +242,7 @@
   <section id="about" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 no-print">
     <div class="max-w-4xl mx-auto">
       <h2 class="text-3xl sm:text-4xl font-bold mb-8 flex items-center gap-3">
-        <span class="text-brand-pink font-mono text-2xl">//</span>
+        <span class="text-brand-pink font-mono text-2xl" aria-hidden="true">//</span>
         <span x-text="t('about.title')"></span>
       </h2>
       <div class="space-y-5 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
@@ -220,7 +262,7 @@
     <div class="max-w-7xl mx-auto">
       <div class="flex items-center gap-3 mb-10">
         <h2 class="text-3xl sm:text-4xl font-bold flex items-center gap-3">
-          <span class="text-brand-pink font-mono text-2xl">//</span>
+          <span class="text-brand-pink font-mono text-2xl" aria-hidden="true">//</span>
           <span x-text="t('projects.title')"></span>
         </h2>
         <span x-show="rateLimited" class="inline-flex items-center gap-1 text-xs font-medium text-brand-orange bg-brand-orange/10 px-2 py-1 rounded-full">
@@ -229,7 +271,7 @@
         </span>
       </div>
 
-      <div x-show="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div x-show="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" aria-busy="true">
         <template x-for="i in 6" :key="i">
           <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 h-48 animate-pulse"></div>
         </template>
@@ -249,11 +291,19 @@
                 <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                 <span x-text="repo.stargazers_count"></span>
               </span>
+              <span class="px-2 py-0.5 text-xs rounded-full bg-slate-100 dark:bg-slate-800 flex items-center gap-1" x-show="repo.forks_count > 0">
+                <svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z"/></svg>
+                <span x-text="repo.forks_count"></span>
+              </span>
             </div>
-            <a :href="repo.html_url" class="inline-flex items-center gap-1 text-sm font-medium text-brand-pink hover:underline" target="_blank" rel="noopener noreferrer">
-              <span x-text="t('projects.view')"></span>
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-            </a>
+            <div class="flex items-center justify-between">
+              <a :href="repo.html_url" class="inline-flex items-center gap-1 text-sm font-medium text-brand-pink hover:underline" target="_blank" rel="noopener noreferrer">
+                <span x-text="t('projects.view')"></span>
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+              <time class="text-[11px] text-slate-400 font-mono" :datetime="repo.updated_at"
+                    x-text="new Date(repo.updated_at).toLocaleDateString(undefined, {year:'numeric',month:'short',day:'numeric'})"></time>
+            </div>
           </article>
         </template>
       </div>
@@ -289,7 +339,7 @@
   <section id="skills" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 no-print">
     <div class="max-w-7xl mx-auto">
       <h2 class="text-3xl sm:text-4xl font-bold mb-10 flex items-center gap-3">
-        <span class="text-brand-pink font-mono text-2xl">//</span>
+        <span class="text-brand-pink font-mono text-2xl" aria-hidden="true">//</span>
         <span x-text="t('skills.title')"></span>
       </h2>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -302,8 +352,8 @@
             <ul class="space-y-2.5">
               <template x-for="item in cat.items" :key="item.label">
                 <li class="flex items-center gap-2.5 text-[0.9375rem] text-slate-600 dark:text-slate-400">
-                  <img x-show="item.img" :src="item.img" class="w-4 h-4" alt="" loading="lazy">
-                  <span x-show="!item.img" class="text-brand-pink">·</span>
+                  <img x-show="item.img" :src="item.img" class="w-4 h-4" alt="" loading="lazy" width="16" height="16">
+                  <span x-show="!item.img" class="text-brand-pink" aria-hidden="true">·</span>
                   <span x-text="item.label"></span>
                 </li>
               </template>
@@ -318,12 +368,12 @@
   <section id="contact" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900/30 no-print">
     <div class="max-w-4xl mx-auto text-center">
       <h2 class="text-3xl sm:text-4xl font-bold mb-10 flex items-center justify-center gap-3">
-        <span class="text-brand-pink font-mono text-2xl">//</span>
+        <span class="text-brand-pink font-mono text-2xl" aria-hidden="true">//</span>
         <span x-text="t('contact.title')"></span>
       </h2>
       <div class="flex flex-wrap justify-center gap-2">
         <template x-for="link in contactLinks" :key="link.label">
-          <a :href="link.href" class="inline-flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg font-medium hover:border-brand-pink/50 hover:text-brand-pink transition-all" target="_blank" rel="noopener noreferrer">
+          <a :href="link.href" class="inline-flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg font-medium hover:border-brand-pink/50 hover:text-brand-pink transition-all" target="_blank" rel="noopener noreferrer" :aria-label="link.label">
             <span x-html="link.svg"></span>
             <span x-text="link.label"></span>
           </a>
@@ -414,7 +464,10 @@
   <script>
     function app() {
       return {
-        theme: Alpine.$persist('dark').as('theme'),
+        // use OS preference as default for first-time visitors; $persist keeps manual override
+        theme: Alpine.$persist(
+            window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        ).as('theme'),
         lang: Alpine.$persist('en').as('language'),
         langOpen: false,
         mobileMenu: false,
@@ -558,7 +611,6 @@
             const res = await fetch('https://api.github.com/users/e-gleba/repos?sort=stars&direction=desc&per_page=30', {
               headers: { Accept:'application/vnd.github.v3+json' }, signal: ctrl.signal
             });
-            clearTimeout(tid);
             if (res.status === 403 || res.status === 429) {
               this.rateLimited = true;
               this.repos = [];
@@ -569,6 +621,8 @@
                 .filter(r => !r.fork)
                 .sort((a, b) => (b.stargazers_count + b.forks_count * 2) - (a.stargazers_count + a.forks_count * 2))
                 .slice(0, 6);
+              const rl = res.headers.get('x-ratelimit-remaining');
+              if (rl !== null && parseInt(rl, 10) <= 5) this.rateLimited = true;
             } else {
               this.repos = [];
             }
@@ -576,8 +630,8 @@
             console.warn('github api unavailable:', e.message);
             this.repos = [];
           } finally {
-            this.loading = false;
             clearTimeout(tid);
+            this.loading = false;
           }
         },
 
