@@ -23,10 +23,10 @@ const I18N = {
       label:'Experience',
       items:[
         { year:'2023–now', title:'C++ Systems Engineer', company:'Lesta Games — Engine Core, Tanks Blitz', desc:'Shipping cross-platform game engine internals. CMake build systems, Tracy profiling, SDL3-GPU integration, Wwise audio pipelines. Performance optimization for mobile and desktop.', tags:['C++','CMake','SDL3','Tracy','Wwise'] },
-        { year:'2023–2025', title:'Simulation Developer', company:'Military Contract — ZRK Osa Air Defense', desc:'Built cross-platform simulator in Godot for military training. Networked multiplayer between radar, command center, and launch units. Real-time coordination across heterogeneous platforms.', tags:['Godot','Networking','Multi-platform','Real-time'] },
+        { year:'2023–2025', title:'Simulation Developer · Team Lead', company:'Military Contract — ZRK Osa Air Defense', desc:'Led a student team building a cross-platform simulator in Godot for military training. Managed 4 developers, set milestones, reviewed code, coordinated with military stakeholders. Delivered networked multiplayer between radar, command center, and launch units with real-time coordination across heterogeneous platforms.', tags:['Godot','Networking','Multi-platform','Real-time','Team Lead'] },
         { year:'2021–2025', title:'BSU RFCT — Satellite & Aerospace', company:'Belarusian State University', desc:'Developed thermal sensor parsing models for CubeSat-2 satellite. Competed in rocket engineering with Moscow State University — adult league, live launches, drone development.', tags:['C++','Embedded','Hardware','Space'] },
         { year:'2023', title:'Advanced C++ Certification', company:'Leonid Chaika Intensive Program', desc:'Completed intensive C++ course. Joined Lesta Games through program alumni network. Focus: modern standards, generic programming, performance optimization.', tags:['C++20','Generic Programming','Performance'] },
-        { year:'2018–2020', title:'Game Modding & RE', company:'Community Projects', desc:'Reverse-engineered game binaries for Russian localization (World Conqueror 4). Contributed to Millennium Dawn mod for Hearts of Iron IV. Published open-source tooling.', tags:['Reverse Engineering','Modding','Community'] }
+        { year:'2018–2020', title:'Game Modding & RE · Project Manager', company:'Community Projects', desc:'Reverse-engineered game binaries for full Russian localization of World Conqueror 4. Managed translation workflow, coordinated with voice actors, integrated audio assets. Built monetization strategy via Patreon and community donations. Video review by popular YouTuber — 42K+ views. Published open-source extraction toolkit.', link:'https://www.youtube.com/watch?v=fuOPZzfWoCY', linkText:'Video review →', tags:['Reverse Engineering','Project Management','Audio Integration','Monetization','Community'] }
       ]
     },
     projects:{ label:'Projects', noDesc:'No description available', view:'View' },
@@ -58,10 +58,10 @@ const I18N = {
       label:'Опыт работы',
       items:[
         { year:'2023–н.в.', title:'Системный инженер C++', company:'Lesta Games — Engine Core, Tanks Blitz', desc:'Разработка кросс-платформенных internals игрового движка. Системы сборки CMake, профилирование Tracy, интеграция SDL3-GPU, аудио-пайплайны Wwise. Оптимизация производительности под мобильные и десктопные платформы.', tags:['C++','CMake','SDL3','Tracy','Wwise'] },
-        { year:'2023–2025', title:'Разработчик симуляторов', company:'Военный контракт — ЗРК «Оса»', desc:'Кросс-платформенный симулятор на Godot для военной подготовки. Сетевое взаимодействие между радаром, пунктом управления и пусковыми установками. Реальное время, гетерогенные платформы.', tags:['Godot','Networking','Multi-platform','Real-time'] },
+        { year:'2023–2025', title:'Разработчик симуляторов · Тимлид', company:'Военный контракт — ЗРК «Оса»', desc:'Руководил студенческой командой из 4 разработчиков при создании кросс-платформенного симулятора на Godot для военной подготовки. Планировал milestones, ревьюил код, координировал работу с военными заказчиками. Доставил сетевое взаимодействие между радаром, пунктом управления и пусковыми установками в реальном времени на гетерогенных платформах.', tags:['Godot','Networking','Multi-platform','Real-time','Team Lead'] },
         { year:'2021–2025', title:'РФиКТ БГУ — спутники и аэрокосмика', company:'Белорусский государственный университет', desc:'Модели парсинга тепловых датчиков для спутника CubeSat-2. Соревнования по ракетостроению с МГУ — взрослая лига, реальные запуски, разработка дронов.', tags:['C++','Embedded','Hardware','Space'] },
         { year:'2023', title:'Сертификация Advanced C++', company:'Интенсив Леонида Чайки', desc:'Завершил интенсивный курс C++. Попал в Lesta Games через alumni-нетворкинг. Фокус: современные стандарты, generic programming, оптимизация производительности.', tags:['C++20','Generic Programming','Performance'] },
-        { year:'2018–2020', title:'Моддинг и реверс-инжиниринг', company:'Комьюнити-проекты', desc:'Реверсинг бинарников для русификации игр (World Conqueror 4). Участие в моде Millennium Dawn для Hearts of Iron IV. Публикация open-source инструментов.', tags:['Reverse Engineering','Modding','Community'] }
+        { year:'2018–2020', title:'Моддинг и реверс-инжиниринг · Проджект-менеджер', company:'Комьюнити-проекты', desc:'Реверсил бинарники для полной русификации World Conqueror 4. Управлял workflow перевода, координировал работу с актёрами озвучки, интегрировал аудио-ассеты. Выстроил монетизацию через Patreon и донаты сообщества. Видео-обзор популярного ютубера — 42К+ просмотров. Опубликовал open-source инструментарий для экстракции.', link:'https://www.youtube.com/watch?v=fuOPZzfWoCY', linkText:'Видео-обзор →', tags:['Reverse Engineering','Project Management','Audio Integration','Monetization','Community'] }
       ]
     },
     projects:{ label:'Проекты', noDesc:'Описание отсутствует', view:'Смотреть' },
@@ -93,10 +93,10 @@ const I18N = {
       label:'工作经历',
       items:[
         { year:'2023–至今', title:'C++系统工程师', company:'Lesta Games — Engine Core, Tanks Blitz', desc:'跨平台游戏引擎内部开发。CMake构建系统，Tracy性能分析，SDL3-GPU集成，Wwise音频管线。移动端和桌面端性能优化。', tags:['C++','CMake','SDL3','Tracy','Wwise'] },
-        { year:'2023–2025', title:'模拟器开发工程师', company:'军方合同 — ZRK Osa防空系统', desc:'使用Godot开发跨平台军事训练模拟器。雷达、指挥中心、发射单元之间的网络多人协作。异构平台实时协调。', tags:['Godot','Networking','Multi-platform','Real-time'] },
+        { year:'2023–2025', title:'模拟器开发工程师 · 团队负责人', company:'军方合同 — ZRK Osa防空系统', desc:'带领4人学生团队使用Godot开发跨平台军事训练模拟器。管理里程碑、代码审查、与军方利益相关者协调。实现雷达、指挥中心、发射单元之间的网络多人实时协作，支持异构平台。', tags:['Godot','Networking','Multi-platform','Real-time','Team Lead'] },
         { year:'2021–2025', title:'白俄罗斯国立大学 — 卫星与航天', company:'白俄罗斯国立大学', desc:'为CubeSat-2卫星开发热传感器解析模型。与莫斯科国立大学参加火箭工程竞赛——成人联赛，实弹发射，无人机开发。', tags:['C++','Embedded','Hardware','Space'] },
         { year:'2023', title:'高级C++认证', company:'Leonid Chaika强化课程', desc:'完成强化C++课程。通过校友网络加入Lesta Games。重点：现代标准、泛型编程、性能优化。', tags:['C++20','Generic Programming','Performance'] },
-        { year:'2018–2020', title:'游戏修改与逆向工程', company:'社区项目', desc:'逆向分析游戏二进制文件完成俄化翻译（World Conqueror 4）。参与Hearts of Iron IV的Millennium Dawn模组。发布开源工具。', tags:['Reverse Engineering','Modding','Community'] }
+        { year:'2018–2020', title:'游戏修改与逆向工程 · 项目经理', company:'社区项目', desc:'逆向分析游戏二进制文件完成World Conqueror 4完整汉化。管理翻译流程，协调配音演员工作，集成音频资源。通过Patreon和社区捐赠建立变现策略。知名YouTuber视频评测——4.2万+次观看。发布开源提取工具。', link:'https://www.youtube.com/watch?v=fuOPZzfWoCY', linkText:'视频评测 →', tags:['Reverse Engineering','Project Management','Audio Integration','Monetization','Community'] }
       ]
     },
     projects:{ label:'项目', noDesc:'暂无描述', view:'查看' },
