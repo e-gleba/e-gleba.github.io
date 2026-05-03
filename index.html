@@ -189,6 +189,15 @@
           <span>PDF</span>
         </button>
       </div>
+      <!-- tech badges -->
+      <div class="flex flex-wrap justify-center gap-2 mb-8" x-show="techBadges.length">
+        <template x-for="badge in techBadges" :key="badge.label">
+          <div class="tech-badge" :class="badge.dark ? 'dark' : ''">
+            <img :src="badge.icon" class="w-4 h-4" alt="" loading="lazy" width="16" height="16" decoding="async">
+            <span x-text="badge.label"></span>
+          </div>
+        </template>
+      </div>
       <!-- stats -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-xl mx-auto">
         <div class="stat-cell stat-glass stat-float" style="animation-delay:0s">

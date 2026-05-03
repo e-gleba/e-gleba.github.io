@@ -17,6 +17,20 @@ function app() {
 
     translations: I18N,
 
+    techBadges: [
+      { label:'C++', icon:'https://cdn.simpleicons.org/cplusplus/00599C', dark:true },
+      { label:'Python', icon:'https://cdn.simpleicons.org/python/3776AB', dark:true },
+      { label:'Linux', icon:'https://cdn.simpleicons.org/linux/FCC624', dark:false },
+      { label:'Android', icon:'https://cdn.simpleicons.org/android/3DDC84', dark:true },
+      { label:'iOS', icon:'https://cdn.simpleicons.org/apple/000000', dark:false },
+      { label:'Windows', icon:'https://cdn.simpleicons.org/windows/0078D6', dark:true },
+      { label:'CMake', icon:'https://cdn.simpleicons.org/cmake/064F8C', dark:true },
+      { label:'Docker', icon:'https://cdn.simpleicons.org/docker/2496ED', dark:true },
+      { label:'Git', icon:'https://cdn.simpleicons.org/git/F05032', dark:true },
+      { label:'OpenGL', icon:'https://cdn.simpleicons.org/opengl/5586A4', dark:true },
+      { label:'SDL', icon:'https://cdn.simpleicons.org/sdl/0C5A94', dark:true },
+    ],
+
     fallbackRepos: [
       { name:'airstrike3d-tools', color:'#FF6B9D', stars:17, hot:true, desc:'Toolkit for AirStrike 3D game analysis and APK asset extraction. Reverse engineering for game preservation.', tags:['C','Ghidra','RE'], url:'https://github.com/e-gleba/airstrike3d-tools' },
       { name:'cxx-skeleton', color:'#FF8C42', stars:7, hot:true, desc:'Production-ready C++ project template. Modern standards, cross-platform builds, integrated tooling.', tags:['C++','CMake','Docker'], url:'https://github.com/e-gleba/cxx-skeleton' },
