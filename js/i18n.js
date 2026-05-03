@@ -8,17 +8,18 @@ const I18N = {
       philosophy:'// philosophy',
       p1:'Systems programmer shipping cross-platform C++ daily. Build with CMake, profile with Tracy, target Linux, Windows, macOS, iOS, and Android. Write code that runs on bare metal — graphics pipelines, game engines, native mobile apps.',
       p2:"Grew up on Valve engines — Half-Life, Source SDK, Garry's Mod. That ecosystem shaped everything: modularity, modding culture, respect for the community. Still reverse-engineer game binaries for fun and publish open-source tooling.",
-      p3:"Static analysis over runtime checks. Contracts over exceptions. Generic programming over hierarchies. Every abstraction must compile down to what you'd write by hand.",
+      p3:'Static analysis over runtime checks. Contracts over exceptions. Generic programming over hierarchies. Every abstraction must compile down to what you\'d write by hand.',
       p4:'Beyond code — drawn to design, sound, and music. Integrate Wwise audio pipelines into game engines, obsess over UI details, and prototype visual systems for the joy of it. Offline — telescope, Stellaris empires, Sniper Elite headshots, and occasionally breaking things just to understand how they work.'
     },
     timeline: {
       title:'Timeline',
       items:[
-        { year:'2018', title:'World Conqueror 4 — Russian Localization', desc:'Led a community-driven translation of World Conqueror 4 into Russian. Featured in a video review.' },
+        { year:'2018', title:'World Conqueror 4 — Reverse Engineering & Russian Localization', desc:'Reverse-engineered game binaries to build a full Russian localization. Community-driven project that gained traction — featured in a video review.' },
         { year:'2020', title:'Hearts of Iron IV — Millennium Dawn', desc:'Contributed to the Millennium Dawn mod for HOI4, focusing on gameplay systems and balance tuning.' },
         { year:'2021', title:'BSU RFCT — First Year, Satellite Thermal Sensors', desc:'Started at BSU RFCT (Radio Physics & Computer Technology faculty). Built parsing models for thermal sensors aboard the second BSU CubeSat-2 satellite.' },
         { year:'2022', title:'Higher Flight School & MSU Rocketry', desc:'Developed drones at the Higher Flight School. Competed in rocket engineering with Moscow State University — adult league, real hardware, live launches.' },
         { year:'2023', title:'Advanced C++ — Leonid Chaika', desc:'September 25 — completed Leonid Chaika\'s intensive C++ course. Joined his team at Lesta Games, working on cross-platform C++ game engine internals.' },
+        { year:'2023–2025', title:'Military Simulator — ZRK Osa in Godot', desc:'Built a cross-platform ZRK Osa air defense simulator for the military in Godot. Networked multiplayer between different platforms — radar, command center, launch units.' },
         { year:'2025', title:'BSU RFCT — Graduation & Andrei Sakharov Scholarship', desc:'Graduated from BSU RFCT. Named to the university Honor Board. Received the Andrei Sakharov named scholarship for academic excellence.' },
         { year:'2026', title:'Lesta Games — Engine Core, Tanks Blitz', desc:'Engine Core team at Lesta Games, shipping Tanks Blitz. Building open source tools and libraries in parallel.' }
       ]
@@ -43,11 +44,12 @@ const I18N = {
     timeline: {
       title:'Путь',
       items:[
-        { year:'2018', title:'World Conqueror 4 — русификация', desc:'Руководил переводом World Conqueror 4 на русский. Крупный комьюнити-проект, есть видео-обзор.' },
+        { year:'2018', title:'World Conqueror 4 — реверс-инжиниринг и русификация', desc:'Реверсил бинарники игры, чтобы сделать полную русификацию. Комьюнити-проект, который выстрелил — есть видео-обзор.' },
         { year:'2020', title:'Hearts of Iron IV — Millennium Dawn', desc:'Участие в моде Millennium Dawn для HOI4, работа над игровыми системами и балансом.' },
         { year:'2021', title:'РФиКТ БГУ — первый курс, спутниковые датчики', desc:'Поступил на РФиКТ БГУ. На первом курсе разрабатывал модели парсинга тепловых датчиков спутника БГУ (CubeSat-2).' },
         { year:'2022', title:'Высшая летная школа и МГУ — ракетостроение', desc:'Разработка дронов в Высшей летной школе. Соревнования с МГУ по ракетостроению. Взрослая лига — серьёзное железо, реальные запуски.' },
         { year:'2023', title:'Продвинутый C++ — Леонид Чайка', desc:'25 сентября — завершил курс продвинутого C++ у Леонида Чайки. Попал в его команду в Lesta Games, работаю над кросс-платформенным C++ движком.' },
+        { year:'2023–2025', title:'Военный симулятор ЗРК «Оса» на Godot', desc:'Разработал кросс-платформенный симулятор ЗРК «Оса» для военных на Godot. Сетевая связь между разными платформами — радар, пункт управления, пусковые установки.' },
         { year:'2025', title:'РФиКТ БГУ — выпуск, доска почёта и стипендия Сахарова', desc:'Окончил РФиКТ БГУ. Попал на доску почёта университета. Получил именную стипендию имени Андрея Сахарова за академические успехи.' },
         { year:'2026', title:'Lesta Games — Engine Core, Tanks Blitz', desc:'Отдел Engine Core в Lesta Games, проект Tanks Blitz. Параллельно развиваю собственные open source проекты и инструменты.' }
       ]
@@ -72,11 +74,12 @@ const I18N = {
     timeline: {
       title:'经历',
       items:[
-        { year:'2018', title:'World Conqueror 4 俄化项目', desc:'主导World Conqueror 4俄化翻译。大型社区项目，有视频报道。' },
+        { year:'2018', title:'World Conqueror 4 — 逆向工程与俄化', desc:'逆向分析游戏二进制文件，完成完整俄化翻译。社区项目，获得关注——有视频报道。' },
         { year:'2020', title:'Hearts of Iron IV — Millennium Dawn', desc:'参与HOI4的Millennium Dawn模组，负责游戏系统和平衡。' },
         { year:'2021', title:'白俄罗斯国立大学射频与计算机技术系 — 大一，卫星热传感器', desc:'入读白俄罗斯国立大学射频与计算机技术系。大一期间为BSU卫星（CubeSat-2）开发热传感器解析模型。' },
         { year:'2022', title:'高级飞行学校与莫斯科国立大学 — 火箭工程', desc:'在高级飞行学校开发无人机。与莫斯科国立大学参加火箭工程竞赛。成人联赛——硬核硬件，真实发射。' },
         { year:'2023', title:'高级C++课程 — Leonid Chaika', desc:'9月25日完成Leonid Chaika的高级C++课程。加入他在Lesta Games的团队，从事跨平台C++游戏引擎开发。' },
+        { year:'2023–2025', title:'军事模拟器 — Godot中的ZRK Osa防空系统', desc:'在Godot中为军方开发跨平台ZRK Osa防空模拟器。不同平台之间的网络多人游戏——雷达、指挥中心、发射单元。' },
         { year:'2025', title:'白俄罗斯国立大学毕业 — 荣誉榜与萨哈罗夫奖学金', desc:'毕业于白俄罗斯国立大学射频与计算机技术系。登上大学荣誉榜。获得安德烈·萨哈罗夫命名奖学金以表彰学术卓越。' },
         { year:'2026', title:'Lesta Games — Engine Core, Tanks Blitz', desc:'在Lesta Games Engine Core团队，负责Tanks Blitz项目。同时构建开源工具和库。' }
       ]
