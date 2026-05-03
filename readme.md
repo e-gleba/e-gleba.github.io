@@ -1,42 +1,69 @@
-# geugenm.github.io
+# e-gleba.github.io
 
-> just my website :)
+[![pages](https://img.shields.io/badge/github%20pages-live-brightgreen?logo=github)](https://e-gleba.github.io)
+[![license](https://img.shields.io/badge/license-MIT-blue?logo=opensourceinitiative)](./license)
+[![html5](https://img.shields.io/badge/html5-%23E34F26.svg?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![tailwindcss](https://img.shields.io/badge/tailwind%20css-%2338B2AC.svg?logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
+[![alpine.js](https://img.shields.io/badge/alpine.js-%238BC0D0.svg?logo=alpine.js&logoColor=black)](https://alpinejs.dev)
 
-## what this is
+> personal portfolio & digital business card. multilingual, zero-build, performance-first.
 
-my digital business card that doesn't require 500mb of node_modules to display a few lines of text.
+## overview
 
-**stack:** vanilla html/css/js because apparently that's revolutionary in 2025.
+static portfolio site deployed on github pages. no build step, no node_modules, no webpack. vanilla html with alpine.js for reactivity, tailwind css via cdn, and aos for scroll animations.
 
-**philosophy:** if it needs a build process to say "hello world", you're doing it wrong.
+- **live:** [https://e-gleba.github.io](https://e-gleba.github.io)
+- **stack:** html5, alpine.js, tailwind css, aos
+- **languages:** english, russian, chinese
+- **theme:** dark / light toggle with persistent preference
 
-## what you'll find here
+## features
 
-- contact info that actually works
-- projects that don't break on ie6 (kidding, nobody cares about ie6)
-- minimal design that loads faster than your webpack config
+- **fully static** — single `index.html`, loads in < 100 kb first paint
+- **multilingual** — runtime i18n with 3 languages, no external json
+- **github api integration** — auto-fetches public repos with rate-limit aware fallback
+- **responsive** — mobile-first, sticky nav, hamburger menu, reduced-motion support
+- **theming** — dark / light mode with css custom properties and alpine.js persist
+- **accessibility** — semantic html, aria labels, focus-visible, prefers-reduced-motion
+- **zero build** — clone and serve, or just open the file
 
-## why no frameworks
+## quick start
 
-because downloading react to display static text is like using a forklift to move a coffee cup.
+```bash
+# clone
+git clone https://github.com/e-gleba/e-gleba.github.io.git
+cd e-gleba.github.io
 
-## local dev
-
-```
-# the sophisticated deployment process
-git clone https://github.com/geugenm/geugenm.github.io.git
-cd geugenm.github.io
-python -m http.server 8000
-# or just double-click index.html like it's 1995
+# serve (any static server works)
+python3 -m http.server 8000
+# or: npx serve ., or simply open index.html
 ```
 
 ## deployment
 
-```
+pushes to `main` auto-deploy via github pages. no ci/cd required.
+
+```bash
 git push origin main
-# github pages does the rest because it's not overthinking it
 ```
 
-## contact
+## project structure
 
-if you need to reach me, the website literally exists for that purpose.
+```
+e-gleba.github.io/
+├── index.html          # single-page app (html + inline css + js)
+├── license             # mit license
+└── readme.md           # this file
+```
+
+## contributing
+
+see [contributing.md](./.github/contributing.md).
+
+## security
+
+see [security.md](./.github/security.md).
+
+## license
+
+distributed under the mit license. see [license](./license) for details.
