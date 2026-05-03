@@ -94,6 +94,7 @@
         </a>
         <div class="hidden md:flex items-center gap-8 text-base font-medium">
           <a href="#about" class="hover:text-brand-pink transition-colors" x-text="t('nav.about')"></a>
+          <a href="#timeline" class="hover:text-brand-pink transition-colors" x-text="t('nav.timeline')"></a>
           <a href="#projects" class="hover:text-brand-pink transition-colors" x-text="t('nav.projects')"></a>
           <a href="#skills" class="hover:text-brand-pink transition-colors" x-text="t('nav.skills')"></a>
           <a href="#contact" class="hover:text-brand-pink transition-colors" x-text="t('nav.contact')"></a>
@@ -135,6 +136,7 @@
       <div x-show="mobileMenu" x-transition @keydown.escape.window="mobileMenu = false" class="md:hidden border-t border-slate-200 dark:border-slate-800 py-3 no-print">
         <div class="flex flex-col gap-1">
           <a href="#about" @click="mobileMenu = false" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-base font-medium" x-text="t('nav.about')"></a>
+          <a href="#timeline" @click="mobileMenu = false" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-base font-medium" x-text="t('nav.timeline')"></a>
           <a href="#projects" @click="mobileMenu = false" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-base font-medium" x-text="t('nav.projects')"></a>
           <a href="#skills" @click="mobileMenu = false" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-base font-medium" x-text="t('nav.skills')"></a>
           <a href="#contact" @click="mobileMenu = false" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-base font-medium" x-text="t('nav.contact')"></a>
@@ -234,7 +236,33 @@
     </div>
   </section>
 
-  <section id="projects" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 no-print">
+  <section id="timeline" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 no-print">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-4xl sm:text-5xl font-bold mb-16 flex items-center gap-3">
+        <span class="text-brand-pink font-mono text-4xl" aria-hidden="true">//</span>
+        <span x-text="t('timeline.title')"></span>
+      </h2>
+      <div class="relative">
+        <div class="timeline-line"></div>
+        <div class="space-y-12">
+          <template x-for="(item, idx) in timelineItems()" :key="item.year + item.title">
+            <div class="timeline-item relative">
+              <div class="timeline-dot" :style="`top: ${idx === 0 ? '0.5rem' : '1.5rem'}`"></div>
+              <div class="timeline-card bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 hover:-translate-y-0.5 hover:shadow-lg transition-all">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="font-mono text-sm font-bold text-brand-pink bg-brand-pink/10 px-2 py-0.5 rounded" x-text="item.year"></span>
+                  <h3 class="text-lg font-bold" x-text="item.title"></h3>
+                </div>
+                <p class="text-base text-slate-600 dark:text-slate-400 leading-relaxed" x-text="item.desc"></p>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900/30 no-print">
     <div class="max-w-7xl mx-auto">
       <div class="flex items-center gap-3 mb-12">
         <h2 class="text-4xl sm:text-5xl font-bold flex items-center gap-3">
@@ -308,7 +336,7 @@
     </div>
   </section>
 
-  <section id="skills" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900/30 no-print">
+  <section id="skills" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 no-print">
     <div class="max-w-7xl mx-auto">
       <h2 class="text-4xl sm:text-5xl font-bold mb-12 flex items-center gap-3">
         <span class="text-brand-pink font-mono text-4xl" aria-hidden="true">//</span>
@@ -316,7 +344,7 @@
       </h2>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         <template x-for="cat in skillCategories" :key="cat.key">
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8">
+          <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8">
             <h3 class="text-xl font-bold mb-6 flex items-center gap-2" :style="'color:'+cat.color">
               <span x-text="cat.icon"></span>
               <span x-text="t('skills.' + cat.key)"></span>
@@ -337,7 +365,7 @@
     </div>
   </section>
 
-  <section id="contact" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 no-print">
+  <section id="contact" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900/30 no-print">
     <div class="max-w-4xl mx-auto text-center">
       <h2 class="text-4xl sm:text-5xl font-bold mb-12 flex items-center justify-center gap-3">
         <span class="text-brand-pink font-mono text-4xl" aria-hidden="true">//</span>
@@ -434,10 +462,6 @@
           <p class="text-slate-700">3D game engine built on SDL3-GPU with hot reload. Modern C++ architecture. C++, SDL3, GPU.</p>
         </div>
       </div>
-    </section>
-    <section class="mb-5">
-      <h2 class="text-[12pt] font-bold uppercase tracking-wider border-b border-slate-300 pb-1 mb-2">Philosophy</h2>
-      <p class="text-[10.5pt]">Static analysis over runtime checks. Contracts over exceptions. Generic programming over hierarchies. Every abstraction must compile down to what you'd write by hand.</p>
     </section>
     <section>
       <h2 class="text-[12pt] font-bold uppercase tracking-wider border-b border-slate-300 pb-1 mb-2">Languages</h2>

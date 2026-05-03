@@ -79,6 +79,10 @@ function app() {
 
     t(key) { return key.split('.').reduce((o,k) => o?.[k], this.translations[this.lang]) ?? key; },
 
+    timelineItems() {
+      return this.translations[this.lang]?.timeline?.items ?? this.translations.en.timeline.items;
+    },
+
     toggleTheme() {
       this.theme = this.theme === 'dark' ? 'light' : 'dark';
       this.langOpen = false;

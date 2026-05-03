@@ -1,6 +1,6 @@
 const I18N = {
   en: {
-    nav: { about:'About', projects:'Projects', skills:'Skills', contact:'Contact' },
+    nav: { about:'About', projects:'Projects', skills:'Skills', timeline:'Timeline', contact:'Contact' },
     hero: { tagline:'Systems Engineer · Game Developer · Reverse Engineer', viewProjects:'View Projects' },
     stats: { years:'Years in Systems', standard:'Latest Standard', repos:'Public Repos', platforms:'Platforms' },
     share: { title:'Share', subtitle:'Spread the word' },
@@ -11,22 +11,44 @@ const I18N = {
       p3:"Static analysis over runtime checks. Contracts over exceptions. Generic programming over hierarchies. Every abstraction must compile down to what you'd write by hand.",
       p4:'Beyond code — drawn to design, sound, and music. Integrate Wwise audio pipelines into game engines, obsess over UI details, and prototype visual systems for the joy of it. Offline — telescope, Stellaris empires, Sniper Elite headshots, and occasionally breaking things just to understand how they work.'
     },
+    timeline: {
+      title:'Timeline',
+      items:[
+        { year:'2018', title:'World Conqueror 4 — Russian Localization', desc:'Led translation of World Conqueror 4 into Russian. Major community project with video coverage.' },
+        { year:'2020', title:'Hearts of Iron IV — Millennium Dawn', desc:'Contributed to the Millennium Dawn mod for HOI4, working on gameplay systems and balance.' },
+        { year:'2021', title:'BSU RFCT — Student of the Year', desc:'Graduated from BSU RFCT. Named Student of the Year. Built satellite thermal sensor parsing models for the second BSU satellite (CubeSat-2) during freshman year.' },
+        { year:'2022', title:'Advanced Aviation & MGU Rocketry', desc:'Developed drones at Higher Flight School. Competed with MGU in rocket engineering. Adult league — serious hardware, real launches.' },
+        { year:'2023', title:'Honor Board & Named Scholarship', desc:'Made the university Honor Board. Received a named scholarship for academic excellence.' },
+        { year:'2023', title:'C++ with Leonid Chaika — Lesta Games', desc:'September 25 — completed Leonid Chaika\'s advanced C++ course. Joined his team at Lesta Games, working on cross-platform C++ game engine internals.' }
+      ]
+    },
     projects:{ title:'Projects', noDesc:'No description available', view:'View' },
     skills: { title:'Skills', languages:'Languages', systems:'Systems & Tools', engine:'Engine & Multimedia', mobile:'Mobile', reverse:'Reverse Engineering', practices:'Practices & AI' },
     contact: { title:'Contact' },
     footer: 'Built with Tailwind CSS & Alpine.js'
   },
   ru: {
-    nav: { about:'О себе', projects:'Проекты', skills:'Навыки', contact:'Контакты' },
+    nav: { about:'О себе', projects:'Проекты', skills:'Навыки', timeline:'Путь', contact:'Контакты' },
     hero: { tagline:'Системный инженер · Разработчик игр · Реверс-инженер', viewProjects:'Проекты' },
     stats: { years:'Лет в системах', standard:'Стандарт', repos:'Репозиториев', platforms:'Платформ' },
     share: { title:'Поделиться', subtitle:'Расскажите друзьям' },
     about: { title:'О себе',
       philosophy:'// философия',
       p1:'Системный программист, ежедневно работающий с кросс-платформенным C++. Сборка через CMake, профилирование через Tracy, целевые платформы — Linux, Windows, macOS, iOS, Android. Пишу код, работающий на голом железе: графические конвейеры, игровые движки, нативные мобильные приложения.',
-      p2:"Вырос на движках Valve — Half-Life, Source SDK, Garry's Mod. Эта экосистема сформировала всё: модульность, культуру моддинга, уважение к сообществу. До сих пор реверсю бинарники игр ради интереса и публикую open-source инструменты.",
+      p2:"Вырос на движках Valve — Half-Life, Source SDK, Garry's Mod. Эта экосистема сформировала всё: модульность, культура моддинга, уважение к сообществу. До сих пор реверсю бинарники игр ради интереса и публикую open-source инструменты.",
       p3:'Статический анализ вместо рантайм-проверок. Контракты вместо исключений. Обобщённое программирование вместо иерархий. Каждая абстракция должна компилироваться в то, что вы написали бы вручную.',
       p4:'Помимо кода — увлекаюсь дизайном, звуком и музыкой. Интегрирую аудио-пайплайны на Wwise в игровые движки, зацикливаюсь на деталях UI, прототипирую визуальные системы ради удовольствия. Вне экрана — телескоп, империи в Stellaris, хедшоты в Sniper Elite и периодическое разрушение вещей ради понимания, как они работают.'
+    },
+    timeline: {
+      title:'Путь',
+      items:[
+        { year:'2018', title:'World Conqueror 4 — русификация', desc:'Руководил переводом World Conqueror 4 на русский. Крупный проект для сообщества, есть видео-обзор.' },
+        { year:'2020', title:'Hearts of Iron IV — Millennium Dawn', desc:'Участие в моде Millennium Dawn для HOI4, работа над игровыми системами и балансом.' },
+        { year:'2021', title:'РФиКТ БГУ — Студент года', desc:'Окончил РФиКТ БГУ. Студент года. На первом курсе разрабатывал модели парсинга тепловых датчиков спутника БГУ (CubeSat-2).' },
+        { year:'2022', title:'Высшая летная школа и МГУ — ракетостроение', desc:'Разработка дронов в Высшей летной школе. Соревнования с МГУ по ракетостроению. Взрослая лига — серьёзное железо, реальные запуски.' },
+        { year:'2023', title:'Доска почёта и именная стипендия', desc:'Попал на доску почёта университета. Получил именную стипендию за академические успехи.' },
+        { year:'2023', title:'C++ у Леонида Чайки — Lesta Games', desc:'25 сентября — завершил курс продвинутого C++ у Леонида Чайки. Попал в его команду в Lesta Games, работаю над кросс-платформенным C++ движком.' }
+      ]
     },
     projects:{ title:'Проекты', noDesc:'Описание отсутствует', view:'Смотреть' },
     skills: { title:'Навыки', languages:'Языки', systems:'Системы и инструменты', engine:'Движок и мультимедиа', mobile:'Мобильная', reverse:'Реверс-инжиниринг', practices:'Практики и AI' },
@@ -34,7 +56,7 @@ const I18N = {
     footer: 'Tailwind CSS & Alpine.js'
   },
   zh: {
-    nav: { about:'关于', projects:'项目', skills:'技能', contact:'联系' },
+    nav: { about:'关于', projects:'项目', skills:'技能', timeline:'经历', contact:'联系' },
     hero: { tagline:'系统工程师 · 游戏开发者 · 逆向工程师', viewProjects:'查看项目' },
     stats: { years:'年系统经验', standard:'最新标准', repos:'公共仓库', platforms:'个平台' },
     share: { title:'分享', subtitle:'分享给好友' },
@@ -44,6 +66,17 @@ const I18N = {
       p2:"在Valve引擎上成长——Half-Life、Source SDK、Garry's Mod。这个生态塑造了一切：模块化、模组文化、尊重社区。至今仍为乐趣逆向分析游戏二进制文件并发布开源工具。",
       p3:'静态分析优于运行时检查。契约优于异常。泛型编程优于层次继承。每个抽象都必须编译为你手写的代码。',
       p4:'代码之外——热衷设计、声音与音乐。在游戏引擎中集成Wwise音频管线，痴迷UI细节，纯粹为了乐趣而制作视觉原型。线下——望远镜、Stellaris帝国、Sniper Elite爆头，偶尔拆解东西只为理解其工作原理。'
+    },
+    timeline: {
+      title:'经历',
+      items:[
+        { year:'2018', title:'World Conqueror 4 俄化项目', desc:'主导World Conqueror 4俄化翻译。大型社区项目，有视频报道。' },
+        { year:'2020', title:'Hearts of Iron IV — Millennium Dawn', desc:'参与HOI4的Millennium Dawn模组，负责游戏系统和平衡。' },
+        { year:'2021', title:'白俄罗斯国立大学射频与计算机技术系 — 年度学生', desc:'毕业于BSU RFCT。年度学生。大一期间为BSU卫星（CubeSat-2）开发热传感器解析模型。' },
+        { year:'2022', title:'高级飞行学校与莫斯科国立大学 — 火箭工程', desc:'在高级飞行学校开发无人机。与莫斯科国立大学参加火箭工程竞赛。成人联赛——硬核硬件，真实发射。' },
+        { year:'2023', title:'荣誉榜与命名奖学金', desc:'登上大学荣誉榜。获得命名奖学金以表彰学术卓越。' },
+        { year:'2023', title:'Leonid Chaika的C++课程 — Lesta Games', desc:'9月25日完成Leonid Chaika的高级C++课程。加入他在Lesta Games的团队，从事跨平台C++游戏引擎开发。' }
+      ]
     },
     projects:{ title:'项目', noDesc:'暂无描述', view:'查看' },
     skills: { title:'技能', languages:'编程语言', systems:'系统与工具', engine:'引擎与多媒体', mobile:'移动开发', reverse:'逆向工程', practices:'开发实践与AI' },
