@@ -54,6 +54,7 @@
   <link rel="preconnect" href="https://api.github.com">
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0&display=swap" rel="stylesheet">
 
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.min.css"></noscript>
@@ -200,19 +201,19 @@
       </div>
       <!-- stats -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-xl mx-auto">
-        <div class="stat-cell stat-glass stat-float" style="animation-delay:0s">
+        <div class="stat-cell stat-glass" style="animation-delay:0s">
           <div class="text-2xl md:text-3xl font-bold gradient-text">3+</div>
           <div class="text-[14px] text-slate-500 dark:text-slate-400 mt-1" x-text="t('stats.years')"></div>
         </div>
-        <div class="stat-cell stat-glass stat-float" style="animation-delay:0.15s">
+        <div class="stat-cell stat-glass" style="animation-delay:0.15s">
           <div class="text-2xl md:text-3xl font-bold gradient-text">C++20</div>
           <div class="text-[14px] text-slate-500 dark:text-slate-400 mt-1" x-text="t('stats.standard')"></div>
         </div>
-        <div class="stat-cell stat-glass stat-float" style="animation-delay:0.3s">
+        <div class="stat-cell stat-glass" style="animation-delay:0.3s">
           <div class="text-2xl md:text-3xl font-bold gradient-text">25+</div>
           <div class="text-[14px] text-slate-500 dark:text-slate-400 mt-1" x-text="t('stats.repos')"></div>
         </div>
-        <div class="stat-cell stat-glass stat-float" style="animation-delay:0.45s">
+        <div class="stat-cell stat-glass" style="animation-delay:0.45s">
           <div class="text-2xl md:text-3xl font-bold gradient-text">5</div>
           <div class="text-[14px] text-slate-500 dark:text-slate-400 mt-1" x-text="t('stats.platforms')"></div>
         </div>
@@ -358,7 +359,7 @@
         <template x-for="cat in skillCategories" :key="cat.key">
           <div class="card card-glass card-glow p-6 lg:p-8">
             <h3 class="text-[18px] font-bold mb-6 flex items-center gap-3" :style="'color:'+cat.color">
-              <span x-text="cat.icon" class="text-xl"></span>
+              <span class="material-icon" x-text="cat.icon"></span>
               <span x-text="t('skills.' + cat.key)"></span>
             </h3>
             <ul class="space-y-3">
