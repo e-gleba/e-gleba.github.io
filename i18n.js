@@ -22,13 +22,15 @@ const I18N = {
       items: [
         {
           year: '2018',
-          title: 'First Major Project',
-          desc: 'Russian localization of World Conqueror 4. Large-scale translation project with video coverage.',
+          title: 'World Conqueror 4 — Reverse Engineering & Localization',
+          desc: 'Reverse-engineered game binaries for Russian localization. Community project that gained traction — 42K views video coverage.',
+          link: 'https://www.youtube.com/watch?v=fuOPZzfWoCY',
+          linkText: 'Video review →',
         },
         {
           year: '2020',
-          title: 'Mod Development',
-          desc: 'Contributed to Hearts of Iron IV: Millennium Dawn mod — strategy game content development.',
+          title: 'Hearts of Iron IV — Millennium Dawn',
+          desc: 'Contributed to Millennium Dawn mod for Hearts of Iron IV — strategy game content and systems development.',
         },
         {
           year: '2021',
@@ -37,23 +39,28 @@ const I18N = {
         },
         {
           year: '2022',
-          title: 'Flight School & MSU',
+          title: 'Higher Flight School & MSU',
           desc: 'Drone engineering at Higher Flight School. Rocketry and advanced engineering at Moscow State University.',
         },
         {
           year: '2023',
-          title: 'Lesta Games',
-          desc: 'September 25 — completed Leonid Chaika C++ course and joined Lesta Games cross-platform C++ engine team.',
+          title: 'Advanced C++ — Leonid Chaika',
+          desc: 'September 25 — completed Leonid Chaika advanced C++ course.',
+        },
+        {
+          year: '2023–2025',
+          title: 'Military Simulator — ZRK Osa in Godot',
+          desc: 'Cross-platform air defense simulator for military use in Godot. Networked multiplayer: radar, command center, launch units across platforms.',
         },
         {
           year: '2025',
-          title: 'Graduation & Honors',
+          title: 'BSU RFCT — Graduation & Honors',
           desc: 'Graduated BSU RFCT. Honor Board, Student of the Year, Andrei Sakharov named scholarship.',
         },
         {
           year: '2026',
-          title: 'Present',
-          desc: 'Active C++ cross-platform engine development at Lesta Games. Building open source tools and libraries.',
+          title: 'Lesta Games — Engine Core, Tanks Blitz',
+          desc: 'Engine Core team at Lesta Games, shipping Tanks Blitz. Building open source tools and libraries in parallel.',
         },
       ],
     },
@@ -130,13 +137,15 @@ const I18N = {
       items: [
         {
           year: '2018',
-          title: 'Первый крупный проект',
-          desc: 'Русификация World Conqueror 4. Масштабный перевод с видео-обзором.',
+          title: 'World Conqueror 4 — реверс-инжиниринг и локализация',
+          desc: 'Реверс-инжиниринг бинарников для русификации. Проект набрал обороты — видео-обзор набрал 42K просмотров.',
+          link: 'https://www.youtube.com/watch?v=fuOPZzfWoCY',
+          linkText: 'Видео-обзор →',
         },
         {
           year: '2020',
-          title: 'Моддинг',
-          desc: 'Работа над модом Millennium Dawn для Hearts of Iron IV.',
+          title: 'Hearts of Iron IV — Millennium Dawn',
+          desc: 'Работа над модом Millennium Dawn для Hearts of Iron IV — разработка контента и систем стратегии.',
         },
         {
           year: '2021',
@@ -145,23 +154,28 @@ const I18N = {
         },
         {
           year: '2022',
-          title: 'Вышка и МГУ',
-          desc: 'Разработка дронов в Высшей лётной школе. Ракетостроение и инженерия в МГУ.',
+          title: 'Высшая лётная школа и МГУ',
+          desc: 'Разработка дронов в Высшей лётной школе. Ракетостроение и инженерия в Московском государственном университете.',
         },
         {
           year: '2023',
-          title: 'Lesta Games',
-          desc: '25 сентября — окончил курсы C++ Леонида Чайки, присоединился к команде движка Lesta Games.',
+          title: 'Продвинутый C++ — Леонид Чайка',
+          desc: '25 сентября — окончил курсы продвинутого C++ Леонида Чайки.',
+        },
+        {
+          year: '2023–2025',
+          title: 'Военный симулятор — ЗРК Оса в Godot',
+          desc: 'Кроссплатформенный симулятор ЗРК Оса для военных на Godot. Сетевая многопользовательская игра: радар, пункт управления, пусковые установки на разных платформах.',
         },
         {
           year: '2025',
-          title: 'Выпуск и награды',
+          title: 'РФиКТ БГУ — выпуск и награды',
           desc: 'Окончил РФиКТ БГУ. Доска почёта, Студент года, именная стипендия имени Андрея Сахарова.',
         },
         {
           year: '2026',
-          title: 'Настоящее время',
-          desc: 'Активная разработка кроссплатформенного движка C++ в Lesta Games. Собственные open source проекты.',
+          title: 'Lesta Games — Engine Core, Tanks Blitz',
+          desc: 'Отдел Engine Core в Lesta Games, проект Tanks Blitz. Параллельно развиваю собственные open source проекты и инструменты.',
         },
       ],
     },
@@ -238,13 +252,15 @@ const I18N = {
       items: [
         {
           year: '2018',
-          title: '首个大型项目',
-          desc: 'World Conqueror 4俄语本地化。大型翻译项目，包含视频报道。',
+          title: 'World Conqueror 4 — 逆向工程与本地化',
+          desc: '逆向工程游戏二进制文件进行俄语本地化。社区项目获得关注 — 视频评测42K次观看。',
+          link: 'https://www.youtube.com/watch?v=fuOPZzfWoCY',
+          linkText: '视频评测 →',
         },
         {
           year: '2020',
-          title: '模组开发',
-          desc: '参与Hearts of Iron IV: Millennium Dawn模组 — 策略游戏内容开发。',
+          title: 'Hearts of Iron IV — Millennium Dawn',
+          desc: '参与Hearts of Iron IV: Millennium Dawn模组 — 策略游戏内容与系统开发。',
         },
         {
           year: '2021',
@@ -258,18 +274,23 @@ const I18N = {
         },
         {
           year: '2023',
-          title: 'Lesta Games',
-          desc: '9月25日 — 完成Leonid Chaika C++课程，加入Lesta Games跨平台C++引擎团队。',
+          title: '高级C++ — Leonid Chaika',
+          desc: '9月25日 — 完成Leonid Chaika高级C++课程。',
+        },
+        {
+          year: '2023–2025',
+          title: '军事模拟器 — Godot中的ZRK Osa',
+          desc: '在Godot中为军方开发的跨平台防空导弹模拟器。网络化多人游戏：雷达、指挥中心、发射单元跨平台运行。',
         },
         {
           year: '2025',
-          title: '毕业与荣誉',
+          title: 'BSU RFCT — 毕业与荣誉',
           desc: '毕业于BSU RFCT。荣誉榜、年度学生、安德烈·萨哈罗夫命名奖学金。',
         },
         {
           year: '2026',
-          title: '现在',
-          desc: '在Lesta Games积极进行C++跨平台引擎开发。构建开源工具和库。',
+          title: 'Lesta Games — Engine Core, Tanks Blitz',
+          desc: '在Lesta Games Engine Core团队，负责Tanks Blitz项目。同时构建开源工具和库。',
         },
       ],
     },
