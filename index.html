@@ -52,7 +52,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://api.github.com">
-  <link rel="preconnect" href="https://cdn.simpleicons.org">
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0&display=swap" rel="stylesheet">
@@ -61,10 +60,9 @@
   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.min.css"></noscript>
   <script src="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.iife.js" defer init></script>
 
-  <script src="https://cdn.tailwindcss.com" defer></script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    window.tailwind = window.tailwind || {};
-    window.tailwind.config = {
+    tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
@@ -81,7 +79,7 @@
           }
         }
       }
-    };
+    }
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.14.9/dist/cdn.min.js" defer></script>
@@ -292,7 +290,7 @@
           API limit
         </span>
       </div>
-      <div x-show="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 min-h-[400px]" aria-busy="true">
+      <div x-show="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" aria-busy="true">
         <template x-for="i in 6" :key="i">
           <div class="card h-48 animate-pulse"></div>
         </template>
@@ -486,14 +484,14 @@
             <strong class="text-[11pt]">cxx-skeleton</strong>
             <span class="text-slate-500">github.com/e-gleba/cxx-skeleton</span>
           </div>
-          <p class="text-slate-700">Production-ready C++ project template. Modern standards, cross-platform builds, integrated tooling. 7 stars.</p>
+          <p class="text-slate-700">Production-ready C++ project template. Modern CMake, cross-platform CI/CD, Docker, static analysis integration. 7 stars.</p>
         </div>
         <div>
           <div class="flex justify-between items-baseline">
             <strong class="text-[11pt]">euengine</strong>
             <span class="text-slate-500">github.com/e-gleba/euengine</span>
           </div>
-          <p class="text-slate-700">3D game engine built on SDL3-GPU with hot reload. Modern C++ architecture, data-oriented design.</p>
+          <p class="text-slate-700">3D game engine on SDL3-GPU with hot reload. Modern C++ architecture, data-oriented design.</p>
         </div>
       </div>
     </section>
