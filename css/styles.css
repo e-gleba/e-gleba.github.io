@@ -20,9 +20,79 @@ html {
   background-clip: text;
 }
 
+/* shimmer animation on gradient text */
+.animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 4s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+}
+
 :focus-visible { outline: 2px solid #FF6B9D; outline-offset: 2px; }
 
 .skill-svg svg { width: 100%; height: 100%; display: block; }
+
+/* ===== AURORA BACKGROUND (Raycast-style) ===== */
+.aurora-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255,107,157,0.15), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 50%, rgba(255,140,66,0.08), transparent),
+    radial-gradient(ellipse 70% 50% at 20% 80%, rgba(199,146,234,0.1), transparent);
+}
+.dark .aurora-bg {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255,107,157,0.25), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 50%, rgba(255,140,66,0.15), transparent),
+    radial-gradient(ellipse 70% 50% at 20% 80%, rgba(199,146,234,0.18), transparent);
+}
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: blobFloat 20s ease-in-out infinite;
+}
+.dark .aurora-blob { opacity: 0.5; filter: blur(100px); }
+
+.blob-1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(255,107,157,0.4), transparent 70%);
+  top: -10%; left: -10%;
+  animation-duration: 25s;
+}
+.blob-2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(255,140,66,0.35), transparent 70%);
+  top: 40%; right: -5%;
+  animation-duration: 30s;
+  animation-delay: -5s;
+}
+.blob-3 {
+  width: 450px; height: 450px;
+  background: radial-gradient(circle, rgba(199,146,234,0.4), transparent 70%);
+  bottom: -10%; left: 30%;
+  animation-duration: 22s;
+  animation-delay: -10s;
+}
+
+@keyframes blobFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -40px) scale(1.1); }
+  50% { transform: translate(-20px, 20px) scale(0.95); }
+  75% { transform: translate(40px, 30px) scale(1.05); }
+}
+
+.aurora-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, transparent 0%, var(--bg-color, #ffffff) 60%);
+}
+.dark .aurora-overlay { --bg-color: #0a0a0f; }
 
 /* ===== LIQUID GLASS ===== */
 .nav-glass {
@@ -34,13 +104,15 @@ html {
   background: rgba(10,10,15,0.72);
 }
 
-.badge-glass {
+.badge-glow {
   background: rgba(255,255,255,0.55);
   backdrop-filter: blur(12px) saturate(140%);
   -webkit-backdrop-filter: blur(12px) saturate(140%);
+  box-shadow: 0 0 20px rgba(255,107,157,0.08), 0 0 40px rgba(255,140,66,0.04);
 }
-.dark .badge-glass {
+.dark .badge-glow {
   background: rgba(255,255,255,0.06);
+  box-shadow: 0 0 30px rgba(255,107,157,0.12), 0 0 60px rgba(255,140,66,0.06);
 }
 
 .card-glass {
@@ -65,6 +137,30 @@ html {
   box-shadow: 0 8px 32px -12px rgba(0,0,0,0.35);
 }
 
+/* card glow border effect */
+.card-glow {
+  position: relative;
+}
+.card-glow::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 15px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255,107,157,0.2), rgba(255,140,66,0.15), rgba(199,146,234,0.2));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.card-glow:hover::before { opacity: 1; }
+.dark .card-glow::before {
+  background: linear-gradient(135deg, rgba(255,107,157,0.35), rgba(255,140,66,0.25), rgba(199,146,234,0.3));
+}
+
 .stat-glass {
   background: rgba(245,245,247,0.6);
   border: 1px solid rgba(229,229,234,0.5);
@@ -81,6 +177,14 @@ html {
 }
 .stat-glass:hover { transform: translateY(-2px); }
 
+.stat-float {
+  animation: statFloat 6s ease-in-out infinite;
+}
+@keyframes statFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
 .glass-card {
   background: rgba(255,255,255,0.85);
   backdrop-filter: blur(20px) saturate(160%);
@@ -89,47 +193,6 @@ html {
 .dark .glass-card {
   background: rgba(19,19,24,0.85);
 }
-
-/* ===== LIGHT BEAMS ===== */
-.light-beams {
-  position: absolute;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
-  background: conic-gradient(
-    from 180deg at 50% 50%,
-    rgba(255, 107, 157, 0.03) 0deg,
-    rgba(255, 140, 66, 0.02) 60deg,
-    transparent 120deg,
-    rgba(199, 146, 234, 0.02) 180deg,
-    rgba(255, 107, 157, 0.03) 240deg,
-    transparent 300deg,
-    rgba(255, 107, 157, 0.03) 360deg
-  );
-  animation: beamRotate 30s linear infinite;
-  opacity: 0.6;
-}
-.dark .light-beams {
-  background: conic-gradient(
-    from 180deg at 50% 50%,
-    rgba(255, 107, 157, 0.08) 0deg,
-    rgba(255, 140, 66, 0.05) 60deg,
-    transparent 120deg,
-    rgba(199, 146, 234, 0.05) 180deg,
-    rgba(255, 107, 157, 0.08) 240deg,
-    transparent 300deg,
-    rgba(255, 107, 157, 0.08) 360deg
-  );
-  opacity: 0.4;
-}
-@keyframes beamRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-.light-beams-overlay {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, transparent 0%, var(--bg-color, #ffffff) 55%);
-}
-.dark .light-beams-overlay { --bg-color: #0a0a0f; }
 
 /* ===== CARDS (fallback) ===== */
 .card {
@@ -251,5 +314,5 @@ html {
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
-  .light-beams { animation: none !important; }
+  .aurora-blob, .animate-shimmer, .stat-float { animation: none !important; }
 }

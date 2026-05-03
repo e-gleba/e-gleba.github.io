@@ -89,14 +89,17 @@
 
 <body class="bg-rc-light-bg dark:bg-rc-dark-bg text-slate-900 dark:text-white font-sans transition-colors duration-300" x-cloak>
 
-  <!-- light beams background -->
+  <!-- animated gradient background -->
   <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
-    <div class="light-beams"></div>
-    <div class="light-beams-overlay"></div>
+    <div class="aurora-bg"></div>
+    <div class="aurora-blob blob-1"></div>
+    <div class="aurora-blob blob-2"></div>
+    <div class="aurora-blob blob-3"></div>
+    <div class="aurora-overlay"></div>
   </div>
 
   <!-- nav -->
-  <nav class="sticky top-0 z-50 nav-glass border-b border-rc-light-border dark:border-rc-dark-border/70 no-print" role="navigation" aria-label="Main navigation">
+  <nav class="sticky top-0 z-50 nav-glass border-b border-rc-light-border/40 dark:border-rc-dark-border/40 no-print" role="navigation" aria-label="Main navigation">
     <div class="max-w-6xl mx-auto px-6 lg:px-10">
       <div class="flex items-center justify-between h-[60px]">
         <a href="#" class="font-mono font-bold text-[18px] tracking-tight flex items-center gap-1.5" aria-label="Home">
@@ -167,13 +170,13 @@
   <!-- hero -->
   <section id="hero" class="relative flex flex-col items-center justify-center px-6 lg:px-10 pt-12 pb-14 lg:pt-14 lg:pb-16 no-print">
     <div class="max-w-4xl mx-auto w-full text-center relative z-10">
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full badge-glass border border-slate-200/50 dark:border-white/[0.08] text-[14px] font-medium text-slate-500 dark:text-slate-400 mb-6">
-        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full badge-glow border border-slate-200/50 dark:border-white/[0.08] text-[14px] font-medium text-slate-500 dark:text-slate-400 mb-6">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
         <span x-text="t('hero.status')"></span>
       </div>
       <h1 class="text-[clamp(3rem,8vw,6rem)] font-black tracking-tight leading-[1.05] mb-5" fetchpriority="high">
         <span class="block">Evgeniy</span>
-        <span class="block gradient-text">Gleba</span>
+        <span class="block gradient-text animate-shimmer">Gleba</span>
       </h1>
       <p class="text-[clamp(1.15rem,2.4vw,1.5rem)] text-slate-500 dark:text-slate-400 mb-10 max-w-xl mx-auto font-light leading-relaxed" x-text="t('hero.tagline')"></p>
       <div class="flex flex-wrap justify-center gap-3 mb-10">
@@ -188,19 +191,19 @@
       </div>
       <!-- stats -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-xl mx-auto">
-        <div class="stat-cell stat-glass">
+        <div class="stat-cell stat-glass stat-float" style="animation-delay:0s">
           <div class="text-2xl md:text-3xl font-bold gradient-text">3+</div>
           <div class="text-[14px] text-slate-500 dark:text-slate-400 mt-1" x-text="t('stats.years')"></div>
         </div>
-        <div class="stat-cell stat-glass">
+        <div class="stat-cell stat-glass stat-float" style="animation-delay:0.15s">
           <div class="text-2xl md:text-3xl font-bold gradient-text">C++</div>
           <div class="text-[14px] text-slate-500 dark:text-slate-400 mt-1" x-text="t('stats.standard')"></div>
         </div>
-        <div class="stat-cell stat-glass">
+        <div class="stat-cell stat-glass stat-float" style="animation-delay:0.3s">
           <div class="text-2xl md:text-3xl font-bold gradient-text">25+</div>
           <div class="text-[14px] text-slate-500 dark:text-slate-400 mt-1" x-text="t('stats.repos')"></div>
         </div>
-        <div class="stat-cell stat-glass">
+        <div class="stat-cell stat-glass stat-float" style="animation-delay:0.45s">
           <div class="text-2xl md:text-3xl font-bold gradient-text">5</div>
           <div class="text-[14px] text-slate-500 dark:text-slate-400 mt-1" x-text="t('stats.platforms')"></div>
         </div>
@@ -264,7 +267,7 @@
       </div>
       <div x-show="!loading && repos.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <template x-for="repo in repos" :key="repo.id">
-          <article class="card card-glass p-6 group">
+          <article class="card card-glass card-glow p-6 group">
             <div class="flex items-start justify-between mb-4">
               <h3 class="text-[17px] font-bold font-mono text-brand-pink truncate max-w-[70%]" x-text="repo.name"></h3>
               <span x-show="isHot(repo)" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider bg-gradient-to-r from-brand-pink to-brand-orange text-white">Hot</span>
@@ -294,7 +297,7 @@
       </div>
       <div x-show="!loading && repos.length === 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <template x-for="fb in fallbackRepos" :key="fb.name">
-          <article class="card card-glass p-6 group">
+          <article class="card card-glass card-glow p-6 group">
             <div class="flex items-start justify-between mb-4">
               <h3 class="text-[17px] font-bold font-mono truncate max-w-[70%]" :style="'color:'+fb.color" x-text="fb.name"></h3>
               <span x-show="fb.hot" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider bg-gradient-to-r from-brand-pink to-brand-orange text-white">Hot</span>
@@ -325,7 +328,7 @@
       <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-8 lg:mb-10" x-text="t('skills.label')"></h2>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         <template x-for="cat in skillCategories" :key="cat.key">
-          <div class="card card-glass p-6 lg:p-8">
+          <div class="card card-glass card-glow p-6 lg:p-8">
             <h3 class="text-[18px] font-bold mb-6 flex items-center gap-3" :style="'color:'+cat.color">
               <span x-text="cat.icon" class="text-xl"></span>
               <span x-text="t('skills.' + cat.key)"></span>
