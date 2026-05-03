@@ -21,14 +21,10 @@ function app() {
       { label:'C++', icon:'https://cdn.simpleicons.org/cplusplus/00599C', dark:true },
       { label:'Python', icon:'https://cdn.simpleicons.org/python/3776AB', dark:true },
       { label:'Linux', icon:'https://cdn.simpleicons.org/linux/FCC624', dark:false },
-      { label:'Android', icon:'https://cdn.simpleicons.org/android/3DDC84', dark:true },
-      { label:'iOS', icon:'https://cdn.simpleicons.org/apple/000000', dark:false },
-      { label:'Windows', icon:'https://cdn.simpleicons.org/windows/0078D6', dark:true },
+      { label:'Android Native', icon:'https://cdn.simpleicons.org/android/3DDC84', dark:true },
+      { label:'iOS Native', icon:'https://cdn.simpleicons.org/apple/000000', dark:false },
+      { label:'Windows Native', icon:'https://cdn.simpleicons.org/windows/0078D6', dark:true },
       { label:'CMake', icon:'https://cdn.simpleicons.org/cmake/064F8C', dark:true },
-      { label:'Docker', icon:'https://cdn.simpleicons.org/docker/2496ED', dark:true },
-      { label:'Git', icon:'https://cdn.simpleicons.org/git/F05032', dark:true },
-      { label:'OpenGL', icon:'https://cdn.simpleicons.org/opengl/5586A4', dark:true },
-      { label:'SDL', icon:'https://cdn.simpleicons.org/sdl/0C5A94', dark:true },
     ],
 
     fallbackRepos: [
