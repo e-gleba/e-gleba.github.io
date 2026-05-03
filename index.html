@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta name="description" content="Evgeniy Gleba — C++ Systems Engineer. Cross-platform systems, game engines, reverse engineering.">
   <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)">
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Evgeniy Gleba">
   <meta property="og:title" content="Evgeniy Gleba — Systems Engineer">
@@ -39,7 +39,7 @@
 
   <style>[x-cloak]{display:none!important}</style>
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF6B9D'/%3E%3Cstop offset='50%25' style='stop-color:%23FF8C42'/%3E%3Cstop offset='100%25' style='stop-color:%23C792EA'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%230f172a'/%3E%3Cpath d='M44 16 C28 14 14 22 14 32 C14 42 28 50 44 48 M14 32 L38 32 M44 16 C48 17 50 20 48 22' stroke='url(%23g)' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='48' cy='22' r='2.5' fill='%23FF6B9D' opacity='.8'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF6B9D'/%3E%3Cstop offset='50%25' style='stop-color:%23FF8C42'/%3E%3Cstop offset='100%25' style='stop-color:%23C792EA'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%230f1115'/%3E%3Cpath d='M44 16 C28 14 14 22 14 32 C14 42 28 50 44 48 M14 32 L38 32 M44 16 C48 17 50 20 48 22' stroke='url(%23g)' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='48' cy='22' r='2.5' fill='%23FF6B9D' opacity='.8'/%3E%3C/svg%3E">
   <link rel="canonical" href="https://e-gleba.github.io">
 
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -66,11 +66,15 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
+            sans: ['Inter','system-ui','-apple-system','BlinkMacSystemFont','sans-serif'],
+            mono: ['JetBrains Mono','monospace'],
           },
           colors: {
-            brand: { pink: '#FF6B9D', orange: '#FF8C42', purple: '#C792EA' }
+            brand: { pink:'#FF6B9D', orange:'#FF8C42', purple:'#C792EA' },
+            rc: {
+              dark: { bg:'#0f1115', card:'#181b21', border:'#2a2e37', muted:'#8b8f98' },
+              light:{ bg:'#fafafa', card:'#ffffff', border:'#e5e5e5', muted:'#6b7280' },
+            }
           }
         }
       }
@@ -83,34 +87,39 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 
-<body class="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300" x-cloak>
+<body class="bg-rc-light-bg dark:bg-rc-dark-bg text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300" x-cloak>
 
-  <div class="fixed inset-0 -z-10 opacity-[0.03] dark:opacity-[0.05] pointer-events-none"
-       style="background-image: radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0); background-size: 32px 32px;"></div>
+  <!-- ambient glow orb -->
+  <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div class="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-brand-pink/5 dark:bg-brand-pink/10 blur-[120px]"></div>
+    <div class="absolute top-1/2 -left-40 w-[400px] h-[400px] rounded-full bg-brand-purple/5 dark:bg-brand-purple/10 blur-[100px]"></div>
+  </div>
 
-  <nav class="sticky top-0 z-50 bg-white/70 dark:bg-slate-950/70 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/50 no-print" role="navigation" aria-label="Main navigation">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <a href="#" class="font-mono font-semibold text-2xl tracking-tight" aria-label="Home">
+  <!-- nav -->
+  <nav class="sticky top-0 z-50 bg-rc-light-bg/80 dark:bg-rc-dark-bg/80 backdrop-blur-xl border-b border-rc-light-border dark:border-rc-dark-border no-print" role="navigation" aria-label="Main navigation">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="flex items-center justify-between h-14">
+        <a href="#" class="font-mono font-semibold text-lg tracking-tight flex items-center gap-1.5" aria-label="Home">
           <span class="text-brand-pink">e</span><span class="text-slate-400">-</span><span>gleba</span>
         </a>
-        <div class="hidden md:flex items-center gap-8 text-base font-medium">
-          <a href="#about" class="hover:text-brand-pink transition-colors" x-text="t('nav.about')"></a>
-          <a href="#timeline" class="hover:text-brand-pink transition-colors" x-text="t('nav.timeline')"></a>
-          <a href="#projects" class="hover:text-brand-pink transition-colors" x-text="t('nav.projects')"></a>
-          <a href="#skills" class="hover:text-brand-pink transition-colors" x-text="t('nav.skills')"></a>
-          <a href="#contact" class="hover:text-brand-pink transition-colors" x-text="t('nav.contact')"></a>
+        <div class="hidden md:flex items-center gap-1 text-sm font-medium">
+          <a href="#about" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" x-text="t('nav.about')"></a>
+          <a href="#timeline" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" x-text="t('nav.timeline')"></a>
+          <a href="#projects" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" x-text="t('nav.projects')"></a>
+          <a href="#skills" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" x-text="t('nav.skills')"></a>
+          <a href="#contact" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" x-text="t('nav.contact')"></a>
+          <div class="w-px h-4 bg-slate-200 dark:bg-slate-700 mx-1"></div>
           <div class="relative">
             <button @click="langOpen = !langOpen" @click.outside="langOpen = false"
-                    class="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-sm font-mono font-semibold uppercase"
+                    class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors text-xs font-mono font-semibold uppercase"
                     :aria-expanded="langOpen" aria-label="Select language">
               <span x-text="lang"></span>
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              <svg class="w-3.5 h-3.5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
             </button>
-            <div x-show="langOpen" x-transition class="absolute right-0 mt-2 w-40 rounded-lg bg-white dark:bg-slate-900 shadow-xl border border-slate-200 dark:border-slate-700 py-1 z-50" role="menu">
+            <div x-show="langOpen" x-transition class="absolute right-0 mt-2 w-36 rounded-xl bg-white dark:bg-rc-dark-card shadow-2xl border border-rc-light-border dark:border-rc-dark-border py-1 z-50 overflow-hidden" role="menu">
               <template x-for="l in langs" :key="l.code">
                 <button @click="lang = l.code; langOpen = false"
-                        class="w-full px-4 py-2 text-left text-base hover:bg-brand-pink/10 transition-colors flex items-center gap-3"
+                        class="w-full px-4 py-2 text-left text-sm hover:bg-brand-pink/10 transition-colors flex items-center gap-3"
                         :class="lang === l.code ? 'text-brand-pink font-medium' : 'text-slate-600 dark:text-slate-300'"
                         role="menuitem">
                   <span x-text="l.flag"></span>
@@ -119,32 +128,32 @@
               </template>
             </div>
           </div>
-          <button @click="toggleTheme()" class="p-2.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" :aria-label="theme === 'dark' ? 'Light mode' : 'Dark mode'">
+          <button @click="toggleTheme()" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 transition-colors" :aria-label="theme === 'dark' ? 'Light mode' : 'Dark mode'">
+            <svg x-show="theme === 'dark'" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            <svg x-show="theme !== 'dark'" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          </button>
+        </div>
+        <div class="md:hidden flex items-center gap-1 no-print">
+          <button @click="toggleTheme()" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5" :aria-label="theme === 'dark' ? 'Light mode' : 'Dark mode'">
             <svg x-show="theme === 'dark'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
             <svg x-show="theme !== 'dark'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
           </button>
-        </div>
-        <div class="md:hidden flex items-center gap-2 no-print">
-          <button @click="toggleTheme()" class="p-2.5 rounded-md bg-slate-100 dark:bg-slate-800" :aria-label="theme === 'dark' ? 'Light mode' : 'Dark mode'">
-            <svg x-show="theme === 'dark'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-            <svg x-show="theme !== 'dark'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
-          </button>
-          <button @click="mobileMenu = !mobileMenu" class="p-2.5 rounded-md bg-slate-100 dark:bg-slate-800" :aria-expanded="mobileMenu" aria-label="Menu">
-            <svg x-show="!mobileMenu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            <svg x-show="mobileMenu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          <button @click="mobileMenu = !mobileMenu" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5" :aria-expanded="mobileMenu" aria-label="Menu">
+            <svg x-show="!mobileMenu" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <svg x-show="mobileMenu" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
         </div>
       </div>
-      <div x-show="mobileMenu" x-transition @keydown.escape.window="mobileMenu = false" class="md:hidden border-t border-slate-200 dark:border-slate-800 py-3 no-print">
-        <div class="flex flex-col gap-1">
-          <a href="#about" @click="mobileMenu = false" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-base font-medium" x-text="t('nav.about')"></a>
-          <a href="#timeline" @click="mobileMenu = false" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-base font-medium" x-text="t('nav.timeline')"></a>
-          <a href="#projects" @click="mobileMenu = false" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-base font-medium" x-text="t('nav.projects')"></a>
-          <a href="#skills" @click="mobileMenu = false" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-base font-medium" x-text="t('nav.skills')"></a>
-          <a href="#contact" @click="mobileMenu = false" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-base font-medium" x-text="t('nav.contact')"></a>
+      <div x-show="mobileMenu" x-transition @keydown.escape.window="mobileMenu = false" class="md:hidden border-t border-slate-200 dark:border-slate-800 py-2 no-print">
+        <div class="flex flex-col gap-0.5 pb-2">
+          <a href="#about" @click="mobileMenu = false" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 text-sm font-medium" x-text="t('nav.about')"></a>
+          <a href="#timeline" @click="mobileMenu = false" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 text-sm font-medium" x-text="t('nav.timeline')"></a>
+          <a href="#projects" @click="mobileMenu = false" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 text-sm font-medium" x-text="t('nav.projects')"></a>
+          <a href="#skills" @click="mobileMenu = false" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 text-sm font-medium" x-text="t('nav.skills')"></a>
+          <a href="#contact" @click="mobileMenu = false" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/5 text-sm font-medium" x-text="t('nav.contact')"></a>
           <div class="flex gap-2 px-3 pt-2">
             <template x-for="l in langs" :key="l.code">
-              <button @click="lang = l.code; mobileMenu = false" class="px-3 py-1.5 rounded text-sm font-mono uppercase border"
+              <button @click="lang = l.code; mobileMenu = false" class="px-3 py-1.5 rounded-lg text-xs font-mono uppercase border"
                       :class="lang === l.code ? 'border-brand-pink text-brand-pink bg-brand-pink/10' : 'border-slate-300 dark:border-slate-700 text-slate-500'">
                 <span x-text="l.code"></span>
               </button>
@@ -155,109 +164,73 @@
     </div>
   </nav>
 
-  <section id="hero" class="relative min-h-[60vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 lg:py-20 no-print">
+  <!-- hero -->
+  <section id="hero" class="relative flex items-center justify-center px-5 sm:px-8 pt-20 pb-16 lg:pt-28 lg:pb-24 no-print">
     <div class="max-w-4xl mx-auto w-full text-center">
-      <h1 class="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight mb-5" fetchpriority="high">
-        Evgeniy<br><span class="gradient-text">Gleba</span>
-      </h1>
-      <p class="text-2xl sm:text-3xl lg:text-4xl text-slate-500 dark:text-slate-400 mb-8 max-w-2xl mx-auto font-light" x-text="t('hero.tagline')"></p>
-      <div class="flex flex-wrap justify-center gap-2 mb-10">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium">
-          <img src="https://cdn.simpleicons.org/cplusplus/FF6B9D" class="w-4 h-4" alt="" width="16" height="16" loading="lazy" decoding="async"> C++
-        </span>
-        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium">
-          <img src="https://cdn.simpleicons.org/python/C792EA" class="w-4 h-4" alt="" width="16" height="16" loading="lazy" decoding="async"> Python
-        </span>
-        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium">
-          <img src="https://cdn.simpleicons.org/cmake/FF8C42" class="w-4 h-4" alt="" width="16" height="16" loading="lazy" decoding="async"> CMake
-        </span>
-        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium">
-          <img src="https://cdn.simpleicons.org/linux/C792EA" class="w-4 h-4" alt="" width="16" height="16" loading="lazy" decoding="async"> Linux
-        </span>
-        <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base font-medium">
-          <img src="https://cdn.simpleicons.org/apple/FF6B9D" class="w-5 h-5" alt="" width="20" height="20" loading="lazy" decoding="async">
-          <span class="flex flex-col leading-none text-left">
-            <span>iOS</span>
-            <span class="text-[10px] font-normal opacity-60 tracking-wide">native</span>
-          </span>
-        </span>
-        <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base font-medium">
-          <img src="https://cdn.simpleicons.org/android/FF6B9D" class="w-5 h-5" alt="" width="20" height="20" loading="lazy" decoding="async">
-          <span class="flex flex-col leading-none text-left">
-            <span>Android</span>
-            <span class="text-[10px] font-normal opacity-60 tracking-wide">native</span>
-          </span>
-        </span>
-        <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base font-medium">
-          <img src="https://api.iconify.design/material-symbols/window.svg?color=%23FF8C42" class="w-5 h-5" alt="" width="20" height="20" loading="lazy" decoding="async">
-          <span class="flex flex-col leading-none text-left">
-            <span>Windows</span>
-            <span class="text-[10px] font-normal opacity-60 tracking-wide">msvc</span>
-          </span>
-        </span>
-        <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-base font-medium">
-          <img src="https://cdn.simpleicons.org/apple/C792EA" class="w-5 h-5" alt="" width="20" height="20" loading="lazy" decoding="async">
-          <span class="flex flex-col leading-none text-left">
-            <span>macOS</span>
-            <span class="text-[10px] font-normal opacity-60 tracking-wide">native</span>
-          </span>
-        </span>
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-medium text-slate-600 dark:text-slate-400 mb-8">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span x-text="t('hero.status')"></span>
       </div>
-      <div class="flex flex-wrap justify-center items-center gap-5">
-        <a href="#projects" class="group inline-flex items-center gap-2 px-8 py-4 text-lg bg-gradient-to-r from-brand-pink to-brand-orange rounded-xl font-semibold text-white shadow-xl hover:shadow-2xl transition-all">
+      <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-5" fetchpriority="high">
+        Evgeniy <span class="gradient-text">Gleba</span>
+      </h1>
+      <p class="text-lg sm:text-xl text-slate-500 dark:text-slate-400 mb-10 max-w-xl mx-auto font-light leading-relaxed" x-text="t('hero.tagline')"></p>
+      <div class="flex flex-wrap justify-center gap-3 mb-12">
+        <a href="#projects" class="group inline-flex items-center gap-2 px-6 py-3 text-sm bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-semibold hover:opacity-90 transition-opacity">
           <span x-text="t('hero.viewProjects')"></span>
-          <svg class="w-5 h-5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
         </a>
-        <button @click="window.print()" class="inline-flex items-center gap-1.5 text-slate-500 dark:text-slate-400 hover:text-brand-pink transition-colors text-base" title="Print resume">
+        <button @click="window.print()" class="inline-flex items-center gap-2 px-6 py-3 text-sm bg-white dark:bg-rc-dark-card border border-slate-200 dark:border-rc-dark-border rounded-xl font-medium hover:border-brand-pink/50 hover:text-brand-pink transition-all" title="Print resume">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
           <span>PDF</span>
         </button>
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-14">
-        <div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 text-center">
-          <div class="text-4xl lg:text-5xl font-bold gradient-text mb-1">3+</div>
-          <div class="text-base text-slate-500 dark:text-slate-400" x-text="t('stats.years')"></div>
+      <!-- bento stats -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-2xl mx-auto">
+        <div class="bento-cell text-center p-5">
+          <div class="text-3xl font-bold gradient-text mb-1">3+</div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 font-medium" x-text="t('stats.years')"></div>
         </div>
-        <div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 text-center">
-          <div class="text-4xl lg:text-5xl font-bold gradient-text mb-1">C++</div>
-          <div class="text-base text-slate-500 dark:text-slate-400" x-text="t('stats.standard')"></div>
+        <div class="bento-cell text-center p-5">
+          <div class="text-3xl font-bold gradient-text mb-1">C++</div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 font-medium" x-text="t('stats.standard')"></div>
         </div>
-        <div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 text-center">
-          <div class="text-4xl lg:text-5xl font-bold gradient-text mb-1">25+</div>
-          <div class="text-base text-slate-500 dark:text-slate-400" x-text="t('stats.repos')"></div>
+        <div class="bento-cell text-center p-5">
+          <div class="text-3xl font-bold gradient-text mb-1">25+</div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 font-medium" x-text="t('stats.repos')"></div>
         </div>
-        <div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 text-center">
-          <div class="text-4xl lg:text-5xl font-bold gradient-text mb-1">5</div>
-          <div class="text-base text-slate-500 dark:text-slate-400" x-text="t('stats.platforms')"></div>
+        <div class="bento-cell text-center p-5">
+          <div class="text-3xl font-bold gradient-text mb-1">5</div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 font-medium" x-text="t('stats.platforms')"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="about" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900/30 no-print" style="content-visibility:auto">
-    <div class="max-w-7xl mx-auto">
-      <h2 class="text-4xl sm:text-5xl font-bold mb-12 flex items-center gap-3">
-        <span class="text-brand-pink font-mono text-4xl" aria-hidden="true">//</span>
-        <span x-text="t('about.title')"></span>
-      </h2>
-      <div class="max-w-4xl space-y-6 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
-        <p x-text="t('about.p1')"></p>
-        <p x-text="t('about.p2')"></p>
-        <div class="bg-white dark:bg-slate-950/50 border-l-4 border-brand-pink rounded-r-2xl p-6 sm:p-8">
-          <p class="font-mono text-lg text-brand-pink mb-3" x-text="t('about.philosophy')"></p>
-          <p class="text-lg" x-text="t('about.p3')"></p>
+  <!-- about -->
+  <section id="about" class="py-16 sm:py-24 px-5 sm:px-8 no-print" style="content-visibility:auto">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-sm font-mono font-medium text-brand-pink uppercase tracking-wider mb-8" x-text="t('about.label')"></h2>
+      <div class="grid lg:grid-cols-5 gap-12">
+        <div class="lg:col-span-3 space-y-5 text-base text-slate-600 dark:text-slate-400 leading-relaxed">
+          <p x-text="t('about.p1')"></p>
+          <p x-text="t('about.p2')"></p>
+          <p x-text="t('about.p4')"></p>
         </div>
-        <p x-text="t('about.p4')"></p>
+        <div class="lg:col-span-2">
+          <div class="bento-cell p-6 h-full">
+            <p class="font-mono text-sm text-brand-pink mb-3" x-text="t('about.philosophy')"></p>
+            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed" x-text="t('about.p3')"></p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="timeline" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 no-print" style="content-visibility:auto">
-    <div class="max-w-7xl mx-auto">
-      <h2 class="text-4xl sm:text-5xl font-bold mb-12 flex items-center gap-3">
-        <span class="text-brand-pink font-mono text-4xl" aria-hidden="true">//</span>
-        <span x-text="t('timeline.title')"></span>
-      </h2>
+  <!-- timeline -->
+  <section id="timeline" class="py-16 sm:py-24 px-5 sm:px-8 no-print" style="content-visibility:auto">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-sm font-mono font-medium text-brand-pink uppercase tracking-wider mb-10" x-text="t('timeline.label')"></h2>
       <div class="max-w-3xl">
         <div class="timeline">
           <template x-for="(item, idx) in (t('timeline.items') || [])" :key="idx">
@@ -266,7 +239,7 @@
               <div class="timeline-title" x-text="item.title"></div>
               <div class="timeline-desc" x-text="item.desc"></div>
               <a x-show="item.link" :href="item.link" target="_blank" rel="noopener noreferrer"
-                 class="inline-flex items-center gap-1 text-sm text-brand-pink hover:underline mt-2"
+                 class="inline-flex items-center gap-1 text-xs text-brand-pink hover:underline mt-2 font-medium"
                  x-text="item.linkText || 'Watch →'"></a>
             </div>
           </template>
@@ -275,44 +248,42 @@
     </div>
   </section>
 
-  <section id="projects" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900/30 no-print" style="content-visibility:auto">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex items-center gap-3 mb-12">
-        <h2 class="text-4xl sm:text-5xl font-bold flex items-center gap-3">
-          <span class="text-brand-pink font-mono text-4xl" aria-hidden="true">//</span>
-          <span x-text="t('projects.title')"></span>
-        </h2>
-        <span x-show="rateLimited" class="inline-flex items-center gap-1 text-xs font-medium text-brand-orange bg-brand-orange/10 px-2 py-1 rounded-full">
+  <!-- projects -->
+  <section id="projects" class="py-16 sm:py-24 px-5 sm:px-8 no-print" style="content-visibility:auto">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex items-center gap-3 mb-10">
+        <h2 class="text-sm font-mono font-medium text-brand-pink uppercase tracking-wider" x-text="t('projects.label')"></h2>
+        <span x-show="rateLimited" class="inline-flex items-center gap-1 text-[10px] font-medium text-brand-orange bg-brand-orange/10 px-2 py-0.5 rounded-full">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
           API limit
         </span>
       </div>
-      <div x-show="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" aria-busy="true">
+      <div x-show="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3" aria-busy="true">
         <template x-for="i in 6" :key="i">
-          <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 h-48 animate-pulse"></div>
+          <div class="bento-cell h-40 animate-pulse"></div>
         </template>
       </div>
-      <div x-show="!loading && repos.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div x-show="!loading && repos.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         <template x-for="repo in repos" :key="repo.id">
-          <article class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 hover:-translate-y-1 hover:shadow-lg transition-all">
-            <div class="flex items-start justify-between mb-2">
-              <h3 class="text-base font-bold font-mono text-brand-pink truncate max-w-[70%]" x-text="repo.name"></h3>
-              <span x-show="isHot(repo)" class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r from-brand-pink to-brand-orange text-white">Hot</span>
+          <article class="bento-cell p-5 group hover:-translate-y-0.5 transition-all duration-200">
+            <div class="flex items-start justify-between mb-3">
+              <h3 class="text-sm font-bold font-mono text-brand-pink truncate max-w-[70%]" x-text="repo.name"></h3>
+              <span x-show="isHot(repo)" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r from-brand-pink to-brand-orange text-white">Hot</span>
             </div>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mb-3 line-clamp-2" x-text="repo.description || t('projects.noDesc')"></p>
-            <div class="flex flex-wrap gap-2 mb-3">
-              <span class="px-2 py-0.5 text-xs rounded-full bg-white dark:bg-slate-800 font-mono" x-show="repo.language" x-text="repo.language"></span>
-              <span class="px-2 py-0.5 text-xs rounded-full bg-white dark:bg-slate-800 flex items-center gap-1">
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 line-clamp-2 leading-relaxed" x-text="repo.description || t('projects.noDesc')"></p>
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="px-2 py-0.5 text-[11px] rounded-md bg-slate-100 dark:bg-white/5 font-mono border border-slate-200 dark:border-white/10" x-show="repo.language" x-text="repo.language"></span>
+              <span class="px-2 py-0.5 text-[11px] rounded-md bg-slate-100 dark:bg-white/5 flex items-center gap-1 border border-slate-200 dark:border-white/10">
                 <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                 <span x-text="repo.stargazers_count"></span>
               </span>
-              <span class="px-2 py-0.5 text-xs rounded-full bg-white dark:bg-slate-800 flex items-center gap-1" x-show="repo.forks_count > 0">
-                <svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z"/></svg>
+              <span class="px-2 py-0.5 text-[11px] rounded-md bg-slate-100 dark:bg-white/5 flex items-center gap-1 border border-slate-200 dark:border-white/10" x-show="repo.forks_count > 0">
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z"/></svg>
                 <span x-text="repo.forks_count"></span>
               </span>
             </div>
             <div class="flex items-center justify-between">
-              <a :href="repo.html_url" class="inline-flex items-center gap-1 text-sm font-medium text-brand-pink hover:underline" target="_blank" rel="noopener noreferrer">
+              <a :href="repo.html_url" class="inline-flex items-center gap-1 text-xs font-medium text-brand-pink hover:underline" target="_blank" rel="noopener noreferrer">
                 <span x-text="t('projects.view')"></span>
                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
               </a>
@@ -322,24 +293,24 @@
           </article>
         </template>
       </div>
-      <div x-show="!loading && repos.length === 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div x-show="!loading && repos.length === 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         <template x-for="fb in fallbackRepos" :key="fb.name">
-          <article class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 hover:-translate-y-1 hover:shadow-lg transition-all">
-            <div class="flex items-start justify-between mb-2">
-              <h3 class="text-base font-bold font-mono truncate max-w-[70%]" :style="'color:'+fb.color" x-text="fb.name"></h3>
-              <span x-show="fb.hot" class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r from-brand-pink to-brand-orange text-white">Hot</span>
+          <article class="bento-cell p-5 group hover:-translate-y-0.5 transition-all duration-200">
+            <div class="flex items-start justify-between mb-3">
+              <h3 class="text-sm font-bold font-mono truncate max-w-[70%]" :style="'color:'+fb.color" x-text="fb.name"></h3>
+              <span x-show="fb.hot" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r from-brand-pink to-brand-orange text-white">Hot</span>
             </div>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mb-3 line-clamp-2" x-text="fb.desc"></p>
-            <div class="flex flex-wrap gap-2 mb-3">
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 line-clamp-2 leading-relaxed" x-text="fb.desc"></p>
+            <div class="flex flex-wrap gap-1.5 mb-4">
               <template x-for="tag in fb.tags" :key="tag">
-                <span class="px-2 py-0.5 text-xs rounded-full bg-white dark:bg-slate-800 font-mono" x-text="tag"></span>
+                <span class="px-2 py-0.5 text-[11px] rounded-md bg-slate-100 dark:bg-white/5 font-mono border border-slate-200 dark:border-white/10" x-text="tag"></span>
               </template>
-              <span class="px-2 py-0.5 text-xs rounded-full bg-white dark:bg-slate-800 flex items-center gap-1" x-show="fb.stars">
+              <span class="px-2 py-0.5 text-[11px] rounded-md bg-slate-100 dark:bg-white/5 flex items-center gap-1 border border-slate-200 dark:border-white/10" x-show="fb.stars">
                 <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                 <span x-text="fb.stars"></span>
               </span>
             </div>
-            <a :href="fb.url" class="inline-flex items-center gap-1 text-sm font-medium hover:underline" :style="'color:'+fb.color" target="_blank" rel="noopener noreferrer">
+            <a :href="fb.url" class="inline-flex items-center gap-1 text-xs font-medium hover:underline" :style="'color:'+fb.color" target="_blank" rel="noopener noreferrer">
               <span x-text="t('projects.view')"></span>
               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
             </a>
@@ -349,24 +320,22 @@
     </div>
   </section>
 
-  <section id="skills" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 no-print" style="content-visibility:auto">
-    <div class="max-w-7xl mx-auto">
-      <h2 class="text-4xl sm:text-5xl font-bold mb-12 flex items-center gap-3">
-        <span class="text-brand-pink font-mono text-4xl" aria-hidden="true">//</span>
-        <span x-text="t('skills.title')"></span>
-      </h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <!-- skills -->
+  <section id="skills" class="py-16 sm:py-24 px-5 sm:px-8 no-print" style="content-visibility:auto">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-sm font-mono font-medium text-brand-pink uppercase tracking-wider mb-10" x-text="t('skills.label')"></h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
         <template x-for="cat in skillCategories" :key="cat.key">
-          <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8">
-            <h3 class="text-xl font-bold mb-6 flex items-center gap-2" :style="'color:'+cat.color">
+          <div class="bento-cell p-6">
+            <h3 class="text-sm font-bold mb-5 flex items-center gap-2" :style="'color:'+cat.color">
               <span x-text="cat.icon"></span>
               <span x-text="t('skills.' + cat.key)"></span>
             </h3>
             <ul class="space-y-3">
               <template x-for="item in cat.items" :key="item.label">
-                <li class="flex items-center gap-3 text-lg text-slate-600 dark:text-slate-400">
-                  <span x-show="item.svg" x-html="item.svg" class="w-5 h-5 inline-flex items-center justify-center text-brand-pink shrink-0 skill-svg" aria-hidden="true"></span>
-                  <img x-show="item.img && !item.svg" :src="item.img" class="w-5 h-5 shrink-0" alt="" loading="lazy" width="20" height="20" decoding="async">
+                <li class="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
+                  <span x-show="item.svg" x-html="item.svg" class="w-4 h-4 inline-flex items-center justify-center text-brand-pink shrink-0 skill-svg" aria-hidden="true"></span>
+                  <img x-show="item.img && !item.svg" :src="item.img" class="w-4 h-4 shrink-0" alt="" loading="lazy" width="16" height="16" decoding="async">
                   <span x-show="!item.img && !item.svg" class="text-brand-pink" aria-hidden="true">·</span>
                   <span x-text="item.label"></span>
                 </li>
@@ -378,16 +347,15 @@
     </div>
   </section>
 
-  <section id="contact" class="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900/30 no-print" style="content-visibility:auto">
-    <div class="max-w-7xl mx-auto">
-      <h2 class="text-4xl sm:text-5xl font-bold mb-12 flex items-center gap-3">
-        <span class="text-brand-pink font-mono text-4xl" aria-hidden="true">//</span>
-        <span x-text="t('contact.title')"></span>
-      </h2>
-      <div class="max-w-4xl mx-auto text-center">
-        <div class="flex flex-wrap justify-center gap-3">
+  <!-- contact -->
+  <section id="contact" class="py-16 sm:py-24 px-5 sm:px-8 no-print" style="content-visibility:auto">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-sm font-mono font-medium text-brand-pink uppercase tracking-wider mb-10" x-text="t('contact.label')"></h2>
+      <div class="max-w-3xl mx-auto text-center">
+        <p class="text-lg text-slate-500 dark:text-slate-400 mb-8" x-text="t('contact.text')"></p>
+        <div class="flex flex-wrap justify-center gap-2">
           <template x-for="link in contactLinks" :key="link.label">
-            <a :href="link.href" class="inline-flex items-center gap-2 px-6 py-3 text-base bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 rounded-xl font-medium hover:border-brand-pink/50 hover:text-brand-pink transition-all" target="_blank" rel="noopener noreferrer" :aria-label="link.label">
+            <a :href="link.href" class="inline-flex items-center gap-2 px-5 py-2.5 text-sm bg-white dark:bg-rc-dark-card border border-slate-200 dark:border-rc-dark-border rounded-xl font-medium hover:border-brand-pink/50 hover:text-brand-pink transition-all" target="_blank" rel="noopener noreferrer" :aria-label="link.label">
               <span x-html="link.svg"></span>
               <span x-text="link.label"></span>
             </a>
@@ -397,9 +365,10 @@
     </div>
   </section>
 
-  <section id="share" class="py-10 px-4 sm:px-6 lg:px-8 no-print border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950" style="content-visibility:auto">
-    <div class="max-w-4xl mx-auto text-center">
-      <p class="text-sm text-slate-500 dark:text-slate-400 mb-4" x-text="t('share.subtitle')"></p>
+  <!-- share -->
+  <section id="share" class="py-10 px-5 sm:px-8 no-print border-t border-slate-200 dark:border-rc-dark-border bg-white dark:bg-rc-dark-card" style="content-visibility:auto">
+    <div class="max-w-6xl mx-auto text-center">
+      <p class="text-xs text-slate-500 dark:text-slate-400 mb-4" x-text="t('share.subtitle')"></p>
       <div class="shareon flex flex-wrap justify-center gap-2" data-url="https://e-gleba.github.io" data-title="Evgeniy Gleba — Systems Engineer">
         <a class="twitter" data-title="Evgeniy Gleba — Systems Engineer"></a>
         <a class="bluesky" data-title="Evgeniy Gleba — Systems Engineer"></a>
@@ -410,7 +379,8 @@
     </div>
   </section>
 
-  <footer class="py-6 px-4 bg-slate-50 dark:bg-slate-900/30 border-t border-slate-200 dark:border-slate-800 text-center text-sm text-slate-500 no-print" role="contentinfo">
+  <!-- footer -->
+  <footer class="py-6 px-5 bg-rc-light-bg dark:bg-rc-dark-bg border-t border-slate-200 dark:border-rc-dark-border text-center text-xs text-slate-500 no-print" role="contentinfo">
     <p>
       © 2026 Evgeniy Gleba ·
       <span x-text="t('footer')"></span> ·
@@ -421,11 +391,13 @@
     </p>
   </footer>
 
-  <button @click="window.scrollTo({top:0,behavior:'smooth'})" class="no-print fixed bottom-6 right-6 p-2.5 bg-gradient-to-r from-brand-pink to-brand-orange rounded-full shadow-lg transition-all z-40"
+  <!-- back to top -->
+  <button @click="window.scrollTo({top:0,behavior:'smooth'})" class="no-print fixed bottom-5 right-5 p-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl shadow-lg transition-all z-40"
           :class="showTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'" aria-label="Back to top">
-    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
   </button>
 
+  <!-- print resume -->
   <div class="print-only max-w-[210mm] mx-auto p-[20mm] text-slate-900 bg-white font-sans text-[11pt] leading-relaxed">
     <header class="border-b-2 border-slate-900 pb-4 mb-6">
       <h1 class="text-[28pt] font-bold tracking-tight">Evgeniy Gleba</h1>
