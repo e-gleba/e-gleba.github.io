@@ -23,7 +23,8 @@ function app() {
       { label:'Linux', icon:'https://cdn.simpleicons.org/linux/FCC624', dark:false },
       { label:'Android Native', icon:'https://cdn.simpleicons.org/android/3DDC84', dark:true },
       { label:'iOS Native', icon:'https://cdn.simpleicons.org/apple/000000', dark:false },
-      { label:'Windows Native', icon:'https://cdn.simpleicons.org/windows/0078D6', dark:true },
+      { label:'macOS Native', icon:'https://cdn.simpleicons.org/apple/000000', dark:false },
+      { label:'Windows Native', icon:'https://cdn.jsdelivr.net/npm/@material-design-icons/svg@0.14.15/outlined/laptop_windows.svg', dark:true },
       { label:'CMake', icon:'https://cdn.simpleicons.org/cmake/064F8C', dark:true },
     ],
 
@@ -34,13 +35,13 @@ function app() {
     ],
 
     skillCategories: [
-      { key:'languages', color:'#FF6B9D', icon:'< >', items:[
+      { key:'languages', color:'#FF6B9D', icon:'code', items:[
         { img:'https://cdn.simpleicons.org/cplusplus/FF6B9D', label:'C++' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 19c-1.5 1.5-3.5 2-5.5 2-4.5 0-8-3.5-8-8s3.5-8 8-8c2 0 4 1 5.5 2.5"/></svg>', label:'C17 / C99' },
         { img:'https://cdn.simpleicons.org/python/C792EA', label:'Python 3' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>', label:'Bash / Shell' }
       ]},
-      { key:'systems', color:'#FF8C42', icon:'$', items:[
+      { key:'systems', color:'#FF8C42', icon:'terminal', items:[
         { img:'https://cdn.simpleicons.org/cmake/FF8C42', label:'CMake 3.16+' },
         { img:'https://cdn.simpleicons.org/linux/C792EA', label:'Linux (Fedora, Alt)' },
         { img:'https://cdn.simpleicons.org/git/FF6B9D', label:'Git / GitHub Actions' },
@@ -48,31 +49,31 @@ function app() {
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>', label:'Ninja / Make' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>', label:'Clang / LLVM / Xcode' }
       ]},
-      { key:'engine', color:'#C792EA', icon:'◆', items:[
+      { key:'engine', color:'#C792EA', icon:'view_in_ar', items:[
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="16" rx="4"/><circle cx="12" cy="12" r="2"/><circle cx="9" cy="9" r="1" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/></svg>', label:'SDL 3 (GPU, Input, Audio)' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 22h20L12 2z"/></svg>', label:'OpenGL / GLSL' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>', label:'Tracy Profiler' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>', label:'Wwise Integration & Mgmt' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>', label:'Hot Reload Systems' }
       ]},
-      { key:'mobile', color:'#FF6B9D', icon:'📱', items:[
+      { key:'mobile', color:'#FF6B9D', icon:'smartphone', items:[
         { img:'https://cdn.simpleicons.org/android/FF6B9D', label:'Android SDK / NDK' },
         { img:'https://cdn.simpleicons.org/apple/FF8C42', label:'iOS / Obj-C++' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>', label:'Java / Kotlin' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>', label:'Cross-platform Native' }
       ]},
-      { key:'reverse', color:'#FF8C42', icon:'⌘', items:[
+      { key:'reverse', color:'#FF8C42', icon:'security', items:[
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>', label:'Ghidra / IDA' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>', label:'Memory Analysis' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>', label:'API Hooking / DLL Inject' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>', label:'Asset Extraction' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>', label:'Binary Patching' }
       ]},
-      { key:'practices', color:'#C792EA', icon:'✓', items:[
+      { key:'practices', color:'#C792EA', icon:'check_circle', items:[
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>', label:'Static Analysis > Runtime' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg>', label:'C++ Contracts (P2900)' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>', label:'Generic Programming (Stepanov)' },
-        { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>', label:'constexpr / consteval / [[nodiscard]]' },
+        { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2z"/></svg>', label:'constexpr / consteval / [[nodiscard]]' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>', label:'STL / Boost / GSL' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L9.5 8.5 3 9.5 8 13.5 6.5 20 12 16.5 17.5 20 16 13.5 21 9.5 14.5 8.5 12 2z"/></svg>', label:'Claude Code / AI-Assisted Eng.' }
       ]}
