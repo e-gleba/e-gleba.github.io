@@ -1,7 +1,7 @@
 # e-gleba.github.io
 
 [![pages](https://img.shields.io/badge/github%20pages-live-brightgreen?logo=github)](https://e-gleba.github.io)
-[![license](https://img.shields.io/badge/license-MIT-blue?logo=opensourceinitiative)](./license)
+[![license](https://img.shields.io/badge/license-MIT-blue?logo=opensourceinitiative)](./license.md)
 [![html5](https://img.shields.io/badge/html5-%23E34F26.svg?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![tailwindcss](https://img.shields.io/badge/tailwind%20css-%2338B2AC.svg?logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
 [![alpine.js](https://img.shields.io/badge/alpine.js-%238BC0D0.svg?logo=alpine.js&logoColor=black)](https://alpinejs.dev)
@@ -52,7 +52,7 @@ git push origin main
 ```
 e-gleba.github.io/
 ├── index.html          # single-page app (html + inline css + js)
-├── license             # mit license
+├── license.md          # agpl-3.0 license
 └── readme.md           # this file
 ```
 
@@ -63,7 +63,3 @@ see [contributing.md](./.github/contributing.md).
 ## security
 
 see [security.md](./.github/security.md).
-
-## license
-
-distributed under the mit license. see [license](./license) for details.
