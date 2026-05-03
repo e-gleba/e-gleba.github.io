@@ -14,7 +14,7 @@ const I18N = {
     timeline: {
       title:'Timeline',
       items:[
-        { year:'2018', title:'World Conqueror 4 — Reverse Engineering & Russian Localization', desc:'Reverse-engineered game binaries to build a full Russian localization. Community-driven project that gained traction — featured in a video review.' },
+        { year:'2018', title:'World Conqueror 4 — Reverse Engineering & Russian Localization', desc:'Reverse-engineered game binaries to build a full Russian localization. Community-driven project that gained traction — featured in a video review.', link:'https://www.youtube.com/watch?v=fuOPZzfWoCY', linkText:'Video review →' },
         { year:'2020', title:'Hearts of Iron IV — Millennium Dawn', desc:'Contributed to the Millennium Dawn mod for HOI4, focusing on gameplay systems and balance tuning.' },
         { year:'2021', title:'BSU RFCT — First Year, Satellite Thermal Sensors', desc:'Started at BSU RFCT (Radio Physics & Computer Technology faculty). Built parsing models for thermal sensors aboard the second BSU CubeSat-2 satellite.' },
         { year:'2022', title:'Higher Flight School & MSU Rocketry', desc:'Developed drones at the Higher Flight School. Competed in rocket engineering with Moscow State University — adult league, real hardware, live launches.' },
@@ -44,7 +44,7 @@ const I18N = {
     timeline: {
       title:'Путь',
       items:[
-        { year:'2018', title:'World Conqueror 4 — реверс-инжиниринг и русификация', desc:'Реверсил бинарники игры, чтобы сделать полную русификацию. Комьюнити-проект, который выстрелил — есть видео-обзор.' },
+        { year:'2018', title:'World Conqueror 4 — реверс-инжиниринг и русификация', desc:'Реверсил бинарники игры, чтобы сделать полную русификацию. Комьюнити-проект, который выстрелил — есть видео-обзор.', link:'https://www.youtube.com/watch?v=fuOPZzfWoCY', linkText:'Видео-обзор →' },
         { year:'2020', title:'Hearts of Iron IV — Millennium Dawn', desc:'Участие в моде Millennium Dawn для HOI4, работа над игровыми системами и балансом.' },
         { year:'2021', title:'РФиКТ БГУ — первый курс, спутниковые датчики', desc:'Поступил на РФиКТ БГУ. На первом курсе разрабатывал модели парсинга тепловых датчиков спутника БГУ (CubeSat-2).' },
         { year:'2022', title:'Высшая летная школа и МГУ — ракетостроение', desc:'Разработка дронов в Высшей летной школе. Соревнования с МГУ по ракетостроению. Взрослая лига — серьёзное железо, реальные запуски.' },
@@ -74,7 +74,7 @@ const I18N = {
     timeline: {
       title:'经历',
       items:[
-        { year:'2018', title:'World Conqueror 4 — 逆向工程与俄化', desc:'逆向分析游戏二进制文件，完成完整俄化翻译。社区项目，获得关注——有视频报道。' },
+        { year:'2018', title:'World Conqueror 4 — 逆向工程与俄化', desc:'逆向分析游戏二进制文件，完成完整俄化翻译。社区项目，获得关注——有视频报道。', link:'https://www.youtube.com/watch?v=fuOPZzfWoCY', linkText:'视频评测 →' },
         { year:'2020', title:'Hearts of Iron IV — Millennium Dawn', desc:'参与HOI4的Millennium Dawn模组，负责游戏系统和平衡。' },
         { year:'2021', title:'白俄罗斯国立大学射频与计算机技术系 — 大一，卫星热传感器', desc:'入读白俄罗斯国立大学射频与计算机技术系。大一期间为BSU卫星（CubeSat-2）开发热传感器解析模型。' },
         { year:'2022', title:'高级飞行学校与莫斯科国立大学 — 火箭工程', desc:'在高级飞行学校开发无人机。与莫斯科国立大学参加火箭工程竞赛。成人联赛——硬核硬件，真实发射。' },
