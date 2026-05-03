@@ -206,14 +206,14 @@
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg> Native
         </span>
       </div>
-      <div class="flex flex-wrap justify-center gap-4">
+      <div class="flex flex-wrap justify-center items-center gap-5">
         <a href="#projects" class="group inline-flex items-center gap-2 px-8 py-4 text-lg bg-gradient-to-r from-brand-pink to-brand-orange rounded-xl font-semibold text-white shadow-xl hover:shadow-2xl transition-all">
           <span x-text="t('hero.viewProjects')"></span>
           <svg class="w-5 h-5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
         </a>
-        <button @click="window.print()" class="inline-flex items-center gap-2 px-8 py-4 text-lg bg-slate-100 dark:bg-slate-800 rounded-xl font-semibold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-          <span>Resume PDF</span>
+        <button @click="window.print()" class="inline-flex items-center gap-1.5 text-slate-500 dark:text-slate-400 hover:text-brand-pink transition-colors text-base" title="Print resume">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <span>PDF</span>
         </button>
       </div>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-14">
