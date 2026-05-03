@@ -14,12 +14,12 @@ const I18N = {
     timeline: {
       title:'Timeline',
       items:[
-        { year:'2018', title:'World Conqueror 4 — Russian Localization', desc:'Led translation of World Conqueror 4 into Russian. Major community project with video coverage.' },
-        { year:'2020', title:'Hearts of Iron IV — Millennium Dawn', desc:'Contributed to the Millennium Dawn mod for HOI4, working on gameplay systems and balance.' },
-        { year:'2021', title:'BSU RFCT — Student of the Year', desc:'Graduated from BSU RFCT. Named Student of the Year. Built satellite thermal sensor parsing models for the second BSU satellite (CubeSat-2) during freshman year.' },
-        { year:'2022', title:'Advanced Aviation & MGU Rocketry', desc:'Developed drones at Higher Flight School. Competed with MGU in rocket engineering. Adult league — serious hardware, real launches.' },
-        { year:'2023', title:'Honor Board & Named Scholarship', desc:'Made the university Honor Board. Received a named scholarship for academic excellence.' },
-        { year:'2023', title:'C++ with Leonid Chaika — Lesta Games', desc:'September 25 — completed Leonid Chaika\'s advanced C++ course. Joined his team at Lesta Games, working on cross-platform C++ game engine internals.' }
+        { year:'2018', title:'World Conqueror 4 — Russian Localization', desc:'Led a community-driven translation of World Conqueror 4 into Russian. Featured in a video review.' },
+        { year:'2020', title:'Hearts of Iron IV — Millennium Dawn', desc:'Contributed to the Millennium Dawn mod for HOI4, focusing on gameplay systems and balance tuning.' },
+        { year:'2021', title:'BSU RFCT — First Year, Satellite Thermal Sensors', desc:'Started at BSU RFCT (Radio Physics & Computer Technology faculty). Built parsing models for thermal sensors aboard the second BSU CubeSat-2 satellite.' },
+        { year:'2022', title:'Higher Flight School & MSU Rocketry', desc:'Developed drones at the Higher Flight School. Competed in rocket engineering with Moscow State University — adult league, real hardware, live launches.' },
+        { year:'2023', title:'Advanced C++ — Leonid Chaika', desc:'September 25 — completed Leonid Chaika\'s intensive C++ course. Joined his team at Lesta Games, working on cross-platform C++ game engine internals.' },
+        { year:'2025', title:'BSU RFCT — Graduation & Andrei Sakharov Scholarship', desc:'Graduated from BSU RFCT. Named to the university Honor Board. Received the Andrei Sakharov named scholarship for academic excellence.' }
       ]
     },
     projects:{ title:'Projects', noDesc:'No description available', view:'View' },
@@ -42,12 +42,12 @@ const I18N = {
     timeline: {
       title:'Путь',
       items:[
-        { year:'2018', title:'World Conqueror 4 — русификация', desc:'Руководил переводом World Conqueror 4 на русский. Крупный проект для сообщества, есть видео-обзор.' },
+        { year:'2018', title:'World Conqueror 4 — русификация', desc:'Руководил переводом World Conqueror 4 на русский. Крупный комьюнити-проект, есть видео-обзор.' },
         { year:'2020', title:'Hearts of Iron IV — Millennium Dawn', desc:'Участие в моде Millennium Dawn для HOI4, работа над игровыми системами и балансом.' },
-        { year:'2021', title:'РФиКТ БГУ — Студент года', desc:'Окончил РФиКТ БГУ. Студент года. На первом курсе разрабатывал модели парсинга тепловых датчиков спутника БГУ (CubeSat-2).' },
+        { year:'2021', title:'РФиКТ БГУ — первый курс, спутниковые датчики', desc:'Поступил на РФиКТ БГУ. На первом курсе разрабатывал модели парсинга тепловых датчиков спутника БГУ (CubeSat-2).' },
         { year:'2022', title:'Высшая летная школа и МГУ — ракетостроение', desc:'Разработка дронов в Высшей летной школе. Соревнования с МГУ по ракетостроению. Взрослая лига — серьёзное железо, реальные запуски.' },
-        { year:'2023', title:'Доска почёта и именная стипендия', desc:'Попал на доску почёта университета. Получил именную стипендию за академические успехи.' },
-        { year:'2023', title:'C++ у Леонида Чайки — Lesta Games', desc:'25 сентября — завершил курс продвинутого C++ у Леонида Чайки. Попал в его команду в Lesta Games, работаю над кросс-платформенным C++ движком.' }
+        { year:'2023', title:'Продвинутый C++ — Леонид Чайка', desc:'25 сентября — завершил курс продвинутого C++ у Леонида Чайки. Попал в его команду в Lesta Games, работаю над кросс-платформенным C++ движком.' },
+        { year:'2025', title:'РФиКТ БГУ — выпуск, доска почёта и стипендия Сахарова', desc:'Окончил РФиКТ БГУ. Попал на доску почёта университета. Получил именную стипендию имени Андрея Сахарова за академические успехи.' }
       ]
     },
     projects:{ title:'Проекты', noDesc:'Описание отсутствует', view:'Смотреть' },
@@ -72,10 +72,10 @@ const I18N = {
       items:[
         { year:'2018', title:'World Conqueror 4 俄化项目', desc:'主导World Conqueror 4俄化翻译。大型社区项目，有视频报道。' },
         { year:'2020', title:'Hearts of Iron IV — Millennium Dawn', desc:'参与HOI4的Millennium Dawn模组，负责游戏系统和平衡。' },
-        { year:'2021', title:'白俄罗斯国立大学射频与计算机技术系 — 年度学生', desc:'毕业于BSU RFCT。年度学生。大一期间为BSU卫星（CubeSat-2）开发热传感器解析模型。' },
+        { year:'2021', title:'白俄罗斯国立大学射频与计算机技术系 — 大一，卫星热传感器', desc:'入读白俄罗斯国立大学射频与计算机技术系。大一期间为BSU卫星（CubeSat-2）开发热传感器解析模型。' },
         { year:'2022', title:'高级飞行学校与莫斯科国立大学 — 火箭工程', desc:'在高级飞行学校开发无人机。与莫斯科国立大学参加火箭工程竞赛。成人联赛——硬核硬件，真实发射。' },
-        { year:'2023', title:'荣誉榜与命名奖学金', desc:'登上大学荣誉榜。获得命名奖学金以表彰学术卓越。' },
-        { year:'2023', title:'Leonid Chaika的C++课程 — Lesta Games', desc:'9月25日完成Leonid Chaika的高级C++课程。加入他在Lesta Games的团队，从事跨平台C++游戏引擎开发。' }
+        { year:'2023', title:'高级C++课程 — Leonid Chaika', desc:'9月25日完成Leonid Chaika的高级C++课程。加入他在Lesta Games的团队，从事跨平台C++游戏引擎开发。' },
+        { year:'2025', title:'白俄罗斯国立大学毕业 — 荣誉榜与萨哈罗夫奖学金', desc:'毕业于白俄罗斯国立大学射频与计算机技术系。登上大学荣誉榜。获得安德烈·萨哈罗夫命名奖学金以表彰学术卓越。' }
       ]
     },
     projects:{ title:'项目', noDesc:'暂无描述', view:'查看' },
