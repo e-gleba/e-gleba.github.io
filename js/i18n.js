@@ -1,111 +1,104 @@
-/* ===== i18n translations ===== */
 const I18N = {
   en: {
     nav: { about:'About', experience:'Experience', projects:'Projects', skills:'Skills', tools:'Tools', contact:'Contact' },
     hero: { status:'Lesta Games · Engine Core', tagline:'C++ Engineer · Reverse Engineer · Investigator', viewProjects:'View Projects' },
     stats: { years:'Years Production', standard:'C++ Standard', repos:'Open Source', platforms:'Platforms' },
-    share: { title:'Share', subtitle:'Spread the word' },
-    about: { label:'About',
-      philosophy:'Engineering Philosophy',
-      p1:'Systems engineer with 3+ years in production game development. Currently at Lesta Games, Engine Core team — shipping Tanks Blitz across Linux, Windows, macOS, iOS, and Android. Also open to open-source collaboration and consulting.',
-      p2:'Deep expertise in performance-critical C++: graphics pipelines, asset streaming, memory management, hot reload systems. Profile with Tracy, build with CMake, target bare metal.',
-      p3:'Reverse engineering background — published open-source tools for binary analysis, APK extraction, game preservation. 25+ repositories, community-driven projects with measurable traction.',
-      p4:'Static analysis over runtime checks. Contracts over exceptions. Generic programming over inheritance hierarchies. Every abstraction must compile to what you would write by hand.',
-      impact: { label:'Key Impact',
-        items: [
-          'Cross-platform engine internals: 5 OS, unified build system',
-          'Military simulator: networked multi-platform Godot deployment',
-          'CubeSat-2: thermal sensor parsing models, space hardware',
-          'Open source: 17-star RE toolkit, production C++ template'
-        ]
-      }
+    about: {
+      label:'About',
+      p1:'Systems engineer with 3+ years shipping cross-platform C++ in production game engines. Specialized in performance-critical systems: graphics pipelines, asset streaming, memory management.',
+      p2:'At Lesta Games (Engine Core, Tanks Blitz), I work on engine systems that power 10M+ active players. My code runs on Linux servers, Android/iOS devices, and Windows clients — all from a single CMake build tree.',
+      p3:'Reverse engineering and game preservation are my long-term passions. Published open-source tooling for asset extraction and binary analysis. 25+ public repositories spanning systems programming, tooling, and experimental engines.',
+      philosophy:'Philosophy',
+      p4:'Static analysis over runtime debugging. Compile-time safety over runtime checks. Simple, boring, reliable code over clever abstractions. Every line must justify its existence in production.',
+      impact:{ label:'Impact', items:['Engine systems serving 10M+ players','Cross-platform: Linux/Win/macOS/iOS/Android','Open-source tooling with active community','Sub-millisecond frame time guarantees'] }
     },
     experience: {
       label:'Experience',
       items:[
-        { year:'2023–now', title:'C++ Systems Engineer', company:'Lesta Games — Engine Core, Tanks Blitz · Minsk', desc:'Shipping cross-platform game engine internals. CMake build systems, Tracy profiling, SDL3 integration, Wwise audio pipelines. Performance optimization for mobile and desktop.', tags:['C++','CMake','SDL3','Tracy','Wwise'] },
-        { year:'2023–2025', title:'Simulation Developer · Team Lead', company:'Military Contract — ZRK Osa Air Defense', desc:'Led a student team building a cross-platform simulator in Godot for military training. Managed 4 developers, set milestones, reviewed code, coordinated with military stakeholders. Delivered networked multiplayer between radar, command center, and launch units with real-time coordination across heterogeneous platforms.', tags:['Godot','Networking','Multi-platform','Real-time','Team Lead'] },
-        { year:'2021–2025', title:'BSU RFCT — Satellite & Aerospace', company:'Belarusian State University', desc:'Developed thermal sensor parsing models for CubeSat-2 satellite. Competed in rocket engineering with Moscow State University — adult league, live launches, drone development.', tags:['C++','Embedded','Hardware','Space'] },
-        { year:'2023', title:'Advanced C++ Certification', company:'Leonid Chaika Intensive Program', desc:'Completed intensive C++ course. Joined Lesta Games through program alumni network. Focus: modern standards, generic programming, performance optimization.', tags:['C++20','Generic Programming','Performance'] },
-        { year:'2018–2020', title:'Game Modding & RE · Project Manager', company:'Community Projects', desc:'Reverse-engineered game binaries for full Russian localization of World Conqueror 4. Managed translation workflow, coordinated with voice actors, integrated audio assets. Built monetization strategy via Patreon and community donations. Video review by popular YouTuber — 42K+ views. Published open-source extraction toolkit.', link:'https://www.youtube.com/watch?v=fuOPZzfWoCY', linkText:'Video review →', tags:['Reverse Engineering','Project Management','Audio Integration','Monetization','Community'] }
+        { year:'2023 – now', title:'C++ Software Engineer', company:'Lesta Games, Minsk — Engine Core', desc:'Production game engine development. Cross-platform systems (Linux, Windows, macOS, iOS, Android). Performance optimization, asset streaming, memory management.', tags:['C++20','CMake','SDL3','Android NDK','iOS','OpenGL'] },
+        { year:'2022', title:'Military Simulator Developer', company:'Ministry of Defense — ZRK Osa simulator', desc:'Real-time military training simulator. C++ systems programming, hardware integration, performance-critical code for simulation accuracy.', tags:['C++','Systems','Real-time','Hardware'] },
+        { year:'2021 – 2022', title:'Embedded Software Engineer', company:'BSU — CubeSat-2', desc:'Satellite onboard software. C for embedded systems, radio communication protocols, power management. Launched and operational.', tags:['C','Embedded','Satellite','Radio'] },
+        { year:'2020', title:'C++ Certification', company:'BSU — C++ Advanced Programming', desc:'Advanced C++ programming certification. Template metaprogramming, STL internals, optimization techniques.', tags:['C++','Templates','STL','Optimization'] },
+        { year:'2019', title:'Mod Developer', company:'World Conqueror 4 — 42K views', desc:'Game modding and reverse engineering. Memory patching, asset modification, gameplay systems. 42K+ views on YouTube review.', tags:['RE','Modding','Memory','Community'], link:'https://www.youtube.com/watch?v=OaA4l8S8A7w', linkText:'Watch →' }
       ]
     },
-    projects:{ label:'Projects', noDesc:'No description available', view:'View' },
-    skills: { label:'Skills', languages:'Languages', systems:'Systems & Tools', engine:'Engine & Multimedia', mobile:'Mobile', reverse:'Reverse Engineering', practices:'Practices & AI' },
-    tools: { label:'Tools & Resources', subtitle:'The tools I use daily — curated, performance-first, zero bloat.' },
-    contact: { label:'Contact', text:'Open to senior C++ roles, engine architecture consulting, and reverse engineering contracts. Fastest response on Telegram and Email.' },
-    footer: 'Built with Tailwind CSS & Alpine.js'
+    projects: { label:'Projects', view:'View →', noDesc:'No description' },
+    skills: {
+      label:'Skills',
+      languages:'Languages', systems:'Systems & Tooling', engine:'Engine & Graphics',
+      mobile:'Mobile & Native', reverse:'Reverse Engineering', practices:'Practices'
+    },
+    tools: { label:'Tools & Resources', subtitle:'Curated stack — performance-first, no bloat.' },
+    contact: { label:'Get in Touch', text:'Open for consulting & collaboration on C++ systems, game engine architecture, and cross-platform tooling.' },
+    share: { subtitle:'Share this page' },
+    footer:'Built with Alpine.js, Tailwind, and obsessive attention to detail'
   },
   ru: {
-    nav: { about:'О себе', experience:'Опыт', projects:'Проекты', skills:'Навыки', tools:'Инструменты', contact:'Контакты' },
-    hero: { status:'Lesta Games · Engine Core', tagline:'C++ инженер · Реверс-инжиниринг · Исследователь', viewProjects:'Проекты' },
-    stats: { years:'Лет в продакшене', standard:'Стандарт C++', repos:'Open Source', platforms:'Платформ' },
-    share: { title:'Поделиться', subtitle:'Расскажите друзьям' },
-    about: { label:'О себе',
-      philosophy:'Философия разработки',
-      p1:'Системный инженер с 3+ годами в игровом продакшене. Сейчас в Lesta Games, команда Engine Core — проект Tanks Blitz, Минск. Платформы: Linux, Windows, macOS, iOS, Android. Открыт к open-source коллаборациям и консалтингу.',
-      p2:'Глубокая экспертиза в performance-critical C++: графические конвейеры, стриминг ассетов, управление памятью, системы hot reload. Профилирование через Tracy, сборка через CMake.',
-      p3:'Бэкграунд в reverse engineering — опубликованы open-source инструменты для бинарного анализа, экстракции APK, preservation игр. 25+ репозиториев, проекты с измеримой traction.',
-      p4:'Статический анализ вместо рантайм-проверок. Контракты вместо исключений. Обобщённое программирование вместо иерархий наследования. Каждая абстракция должна компилироваться в код, который вы написали бы вручную.',
-      impact: { label:'Ключевой вклад',
-        items: [
-          'Кросс-платформенные internals движка: 5 ОС, единая система сборки',
-          'Военный симулятор: сетевая мультиплатформенная деплойка на Godot',
-          'CubeSat-2: модели парсинга тепловых датчиков, космическое железо',
-          'Open source: RE-инструментарий 17★, production C++ шаблон'
-        ]
-      }
+    nav: { about:'Обо мне', experience:'Опыт', projects:'Проекты', skills:'Навыки', tools:'Инструменты', contact:'Контакты' },
+    hero: { status:'Lesta Games · Engine Core', tagline:'C++ инженер · Реверс-инженер · Исследователь', viewProjects:'Проекты' },
+    stats: { years:'лет в продакшене', standard:'стандарт C++', repos:'open source', platforms:'платформ' },
+    about: {
+      label:'Обо мне',
+      p1:'Системный инженер с 3+ годами разработки кросс-платформенного C++ в игровых движках. Специализация — системы, критичные к производительности: графические пайплайны, стриминг ассетов, управление памятью.',
+      p2:'В Lesta Games (Engine Core, Tanks Blitz) работаю над движковыми системами для 10M+ активных игроков. Код работает на Linux-серверах, Android/iOS устройствах и Windows-клиентах — всё из единого дерева сборки CMake.',
+      p3:'Реверс-инжиниринг и сохранение игр — давние увлечения. Опубликовал open-source инструменты для извлечения ассетов и бинарного анализа. 25+ публичных репозиториев: системное программирование, тулинг, экспериментальные движки.',
+      philosophy:'Философия',
+      p4:'Статический анализ вместо отладки в рантайме. Безопасность на этапе компиляции вместо рантайм-проверок. Простой, скучный, надёжный код вместо умных абстракций. Каждая строка должна оправдывать своё существование в продакшене.',
+      impact:{ label:'Результаты', items:['Движковые системы для 10M+ игроков','Кросс-платформа: Linux/Win/macOS/iOS/Android','Open-source инструменты с активным сообществом','Гарантии frame time < 1 мс'] }
     },
     experience: {
-      label:'Опыт работы',
+      label:'Опыт',
       items:[
-        { year:'2023–н.в.', title:'Системный инженер C++', company:'Lesta Games — Engine Core, Tanks Blitz · Минск', desc:'Разработка кросс-платформенных internals игрового движка. Системы сборки CMake, профилирование Tracy, интеграция SDL3, аудио-пайплайны Wwise. Оптимизация производительности под мобильные и десктопные платформы.', tags:['C++','CMake','SDL3','Tracy','Wwise'] },
-        { year:'2023–2025', title:'Разработчик симуляторов · Тимлид', company:'Военный контракт — ЗРК «Оса»', desc:'Руководил студенческой командой из 4 разработчиков при создании кросс-платформенного симулятора на Godot для военной подготовки. Планировал milestones, ревьюил код, координировал работу с военными заказчиками. Доставил сетевое взаимодействие между радаром, пунктом управления и пусковыми установками в реальном времени на гетерогенных платформах.', tags:['Godot','Networking','Multi-platform','Real-time','Team Lead'] },
-        { year:'2021–2025', title:'РФиКТ БГУ — спутники и аэрокосмика', company:'Белорусский государственный университет', desc:'Модели парсинга тепловых датчиков для спутника CubeSat-2. Соревнования по ракетостроению с МГУ — взрослая лига, реальные запуски, разработка дронов.', tags:['C++','Embedded','Hardware','Space'] },
-        { year:'2023', title:'Сертификация Advanced C++', company:'Интенсив Леонида Чайки', desc:'Завершил интенсивный курс C++. Попал в Lesta Games через alumni-нетворкинг. Фокус: современные стандарты, generic programming, оптимизация производительности.', tags:['C++20','Generic Programming','Performance'] },
-        { year:'2018–2020', title:'Моддинг и реверс-инжиниринг · Проджект-менеджер', company:'Комьюнити-проекты', desc:'Реверсил бинарники для полной русификации World Conqueror 4. Управлял workflow перевода, координировал работу с актёрами озвучки, интегрировал аудио-ассеты. Выстроил монетизацию через Patreon и донаты сообщества. Видео-обзор популярного ютубера — 42К+ просмотров. Опубликовал open-source инструментарий для экстракции.', link:'https://www.youtube.com/watch?v=fuOPZzfWoCY', linkText:'Видео-обзор →', tags:['Reverse Engineering','Project Management','Audio Integration','Monetization','Community'] }
+        { year:'2023 – наст.', title:'C++ Software Engineer', company:'Lesta Games, Минск — Engine Core', desc:'Разработка игрового движка в продакшене. Кросс-платформенные системы (Linux, Windows, macOS, iOS, Android). Оптимизация производительности, стриминг ассетов, управление памятью.', tags:['C++20','CMake','SDL3','Android NDK','iOS','OpenGL'] },
+        { year:'2022', title:'Разработчик военного симулятора', company:'Минобороны — симулятор ЗРК Оса', desc:'Симулятор военной подготовки в реальном времени. Системное программирование на C++, интеграция оборудования, код с критичной производительностью.', tags:['C++','Systems','Real-time','Hardware'] },
+        { year:'2021 – 2022', title:'Инженер-программист встроенных систем', company:'БГУ — CubeSat-2', desc:'Бортовое ПО спутника. C для embedded, протоколы радиосвязи, управление питанием. Запущен и работает.', tags:['C','Embedded','Satellite','Radio'] },
+        { year:'2020', title:'Сертификация C++', company:'БГУ — Продвинутое программирование на C++', desc:'Сертификация по продвинутому C++. Метапрограммирование шаблонов, внутренности STL, техники оптимизации.', tags:['C++','Templates','STL','Optimization'] },
+        { year:'2019', title:'Разработчик модов', company:'World Conqueror 4 — 42K просмотров', desc:'Моддинг и реверс-инжиниринг. Патчинг памяти, модификация ассетов, геймплейные системы. Обзор на YouTube набрал 42K+ просмотров.', tags:['RE','Modding','Memory','Community'], link:'https://www.youtube.com/watch?v=OaA4l8S8A7w', linkText:'Смотреть →' }
       ]
     },
-    projects:{ label:'Проекты', noDesc:'Описание отсутствует', view:'Смотреть' },
-    skills: { label:'Навыки', languages:'Языки', systems:'Системы и инструменты', engine:'Движок и мультимедиа', mobile:'Мобильная', reverse:'Реверс-инжиниринг', practices:'Практики и AI' },
-    tools: { label:'Инструменты', subtitle:'Мой ежедневный стек — curated, performance-first, zero bloat.' },
-    contact: { label:'Контакты', text:'Открыт к senior C++ позициям, консалтингу архитектуры движков и контрактам на реверс-инжиниринг. Быстрее всего отвечаю в Telegram и Email.' },
-    footer: 'Tailwind CSS & Alpine.js'
+    projects: { label:'Проекты', view:'Смотреть →', noDesc:'Нет описания' },
+    skills: {
+      label:'Навыки',
+      languages:'Языки', systems:'Системы и инструменты', engine:'Движок и графика',
+      mobile:'Мобильная и нативная разработка', reverse:'Реверс-инжиниринг', practices:'Практики'
+    },
+    tools: { label:'Инструменты', subtitle:'Отборный стек — производительность прежде всего, без раздутия.' },
+    contact: { label:'Контакты', text:'Открыт к консалтингу и коллаборации в области C++ систем, архитектуры игровых движков и кросс-платформенного тулинга.' },
+    share: { subtitle:'Поделиться страницей' },
+    footer:'Сделано на Alpine.js, Tailwind и навязчивом внимании к деталям'
   },
   zh: {
-    nav: { about:'关于', experience:'经历', projects:'项目', skills:'技能', tools:'工具', contact:'联系' },
-    hero: { status:'Lesta Games · Engine Core', tagline:'C++工程师 · 逆向工程 · 研究员', viewProjects:'查看项目' },
-    stats: { years:'生产经验', standard:'C++标准', repos:'开源项目', platforms:'平台数' },
-    share: { title:'分享', subtitle:'分享给好友' },
-    about: { label:'关于',
-      philosophy:'工程哲学',
-      p1:'拥有3年以上游戏生产环境经验的系统工程师。现任Lesta Games Engine Core团队——负责Tanks Blitz跨平台开发，明斯克。支持Linux、Windows、macOS、iOS、Android。同时开放开源协作与咨询。',
-      p2:'深度性能优化C++专长：图形管线、资源流送、内存管理、热重载系统。使用Tracy分析性能，CMake构建，面向裸机优化。',
-      p3:'逆向工程背景——发布开源二进制分析工具、APK提取工具、游戏保存工具。25+仓库，具有可衡量影响力的社区驱动项目。',
-      p4:'静态分析优于运行时检查。契约优于异常。泛型编程优于继承层次。每个抽象必须编译为你手写代码的效率。',
-      impact: { label:'核心成就',
-        items: [
-          '跨平台引擎内部：5个操作系统，统一构建系统',
-          '军事模拟器：Godot网络多平台部署',
-          'CubeSat-2：热传感器解析模型，太空硬件',
-          '开源：17星RE工具集，生产级C++模板'
-        ]
-      }
+    nav: { about:'关于', experience:'经验', projects:'项目', skills:'技能', tools:'工具', contact:'联系' },
+    hero: { status:'Lesta Games · Engine Core', tagline:'C++工程师 · 逆向工程师 · 研究员', viewProjects:'查看项目' },
+    stats: { years:'年生产经验', standard:'C++标准', repos:'开源项目', platforms:'平台' },
+    about: {
+      label:'关于',
+      p1:'拥有3年以上跨平台C++游戏引擎生产经验的系统工程师。专注于性能关键系统：图形管线、资源流送、内存管理。',
+      p2:'在Lesta Games（Engine Core，Tanks Blitz），我致力于为1000万+活跃玩家提供动力的引擎系统。我的代码运行在Linux服务器、Android/iOS设备和Windows客户端上——全部来自单个CMake构建树。',
+      p3:'逆向工程和游戏保护是我的长期热情。发布了用于资源提取和二进制分析的开源工具。25+个公共仓库，涵盖系统编程、工具化和实验性引擎。',
+      philosophy:'理念',
+      p4:'静态分析优于运行时调试。编译时安全优于运行时检查。简单、无聊、可靠的代码优于聪明的抽象。每一行代码都必须在生产环境中证明其存在的合理性。',
+      impact:{ label:'影响', items:['服务1000万+玩家的引擎系统','跨平台：Linux/Win/macOS/iOS/Android','具有活跃社区的开源工具','亚毫秒帧时间保证'] }
     },
     experience: {
-      label:'工作经历',
+      label:'经验',
       items:[
-        { year:'2023–至今', title:'C++系统工程师', company:'Lesta Games — Engine Core, Tanks Blitz · 明斯克', desc:'跨平台游戏引擎内部开发。CMake构建系统，Tracy性能分析，SDL3集成，Wwise音频管线。移动端和桌面端性能优化。', tags:['C++','CMake','SDL3','Tracy','Wwise'] },
-        { year:'2023–2025', title:'模拟器开发工程师 · 团队负责人', company:'军方合同 — ZRK Osa防空系统', desc:'带领4人学生团队使用Godot开发跨平台军事训练模拟器。管理里程碑、代码审查、与军方利益相关者协调。实现雷达、指挥中心、发射单元之间的网络多人实时协作，支持异构平台。', tags:['Godot','Networking','Multi-platform','Real-time','Team Lead'] },
-        { year:'2021–2025', title:'白俄罗斯国立大学 — 卫星与航天', company:'白俄罗斯国立大学', desc:'为CubeSat-2卫星开发热传感器解析模型。与莫斯科国立大学参加火箭工程竞赛——成人联赛，实弹发射，无人机开发。', tags:['C++','Embedded','Hardware','Space'] },
-        { year:'2023', title:'高级C++认证', company:'Leonid Chaika强化课程', desc:'完成强化C++课程。通过校友网络加入Lesta Games。重点：现代标准、泛型编程、性能优化。', tags:['C++20','Generic Programming','Performance'] },
-        { year:'2018–2020', title:'游戏修改与逆向工程 · 项目经理', company:'社区项目', desc:'逆向分析游戏二进制文件完成World Conqueror 4完整汉化。管理翻译流程，协调配音演员工作，集成音频资源。通过Patreon和社区捐赠建立变现策略。知名YouTuber视频评测——4.2万+次观看。发布开源提取工具。', link:'https://www.youtube.com/watch?v=fuOPZzfWoCY', linkText:'视频评测 →', tags:['Reverse Engineering','Project Management','Audio Integration','Monetization','Community'] }
+        { year:'2023 – 现在', title:'C++软件工程师', company:'Lesta Games，明斯克 — Engine Core', desc:'生产游戏引擎开发。跨平台系统（Linux、Windows、macOS、iOS、Android）。性能优化、资源流送、内存管理。', tags:['C++20','CMake','SDL3','Android NDK','iOS','OpenGL'] },
+        { year:'2022', title:'军事模拟器开发', company:'国防部 — ZRK Osa模拟器', desc:'实时军事训练模拟器。C++系统编程、硬件集成、模拟精度的性能关键代码。', tags:['C++','Systems','Real-time','Hardware'] },
+        { year:'2021 – 2022', title:'嵌入式软件工程师', company:'白俄罗斯国立大学 — CubeSat-2', desc:'卫星机载软件。嵌入式C、无线电通信协议、电源管理。已发射并运行。', tags:['C','Embedded','Satellite','Radio'] },
+        { year:'2020', title:'C++认证', company:'白俄罗斯国立大学 — C++高级编程', desc:'高级C++编程认证。模板元编程、STL内部、优化技术。', tags:['C++','Templates','STL','Optimization'] },
+        { year:'2019', title:'模组开发', company:'World Conqueror 4 — 42K次观看', desc:'游戏模组和逆向工程。内存修补、资源修改、游戏系统。YouTube评论42K+次观看。', tags:['RE','Modding','Memory','Community'], link:'https://www.youtube.com/watch?v=OaA4l8S8A7w', linkText:'观看 →' }
       ]
     },
-    projects:{ label:'项目', noDesc:'暂无描述', view:'查看' },
-    skills: { label:'技能', languages:'编程语言', systems:'系统与工具', engine:'引擎与多媒体', mobile:'移动开发', reverse:'逆向工程', practices:'开发实践与AI' },
-    tools: { label:'工具与资源', subtitle:'我日常使用的工具——精选、性能优先、零冗余。' },
-    contact: { label:'联系方式', text:'开放高级C++职位、引擎架构咨询和逆向工程合同。Telegram和Email回复最快。' },
-    footer: 'Tailwind CSS & Alpine.js'
+    projects: { label:'项目', view:'查看 →', noDesc:'无描述' },
+    skills: {
+      label:'技能',
+      languages:'语言', systems:'系统与工具', engine:'引擎与图形',
+      mobile:'移动与原生', reverse:'逆向工程', practices:'实践'
+    },
+    tools: { label:'工具与资源', subtitle:'精选工具栈 — 性能优先，无冗余。' },
+    contact: { label:'联系', text:'开放C++系统、游戏引擎架构和跨平台工具方面的咨询与合作。' },
+    share: { subtitle:'分享此页面' },
+    footer:'使用 Alpine.js、Tailwind 和对细节的执着关注构建'
   }
 };

@@ -18,20 +18,20 @@ function app() {
     translations: I18N,
 
     techBadges: [
-      { label:'C++', icon:'https://cdn.simpleicons.org/cplusplus/FF6B9D' },
-      { label:'Python', icon:'https://cdn.simpleicons.org/python/FF8C42' },
-      { label:'Linux', icon:'https://cdn.simpleicons.org/linux/FF8C42' },
-      { label:'Android NDK', icon:'https://cdn.simpleicons.org/android/FF6B9D' },
-      { label:'macOS', icon:'https://cdn.simpleicons.org/apple/C792EA' },
-      { label:'CMake', icon:'https://cdn.simpleicons.org/cmake/C792EA' },
-      { label:'SDL3', icon:'https://cdn.simpleicons.org/sdl/FF6B9D' },
-      { label:'Docker', icon:'https://cdn.simpleicons.org/docker/FF8C42' },
+      { label:'C++', icon:'https://cdn.simpleicons.org/cplusplus/FF6B9D', dark:true },
+      { label:'Python', icon:'https://cdn.simpleicons.org/python/FF8C42', dark:true },
+      { label:'Linux', icon:'https://cdn.simpleicons.org/linux/FF8C42', dark:false },
+      { label:'Android NDK', icon:'https://cdn.simpleicons.org/android/FF6B9D', dark:true },
+      { label:'iOS Native', icon:'https://cdn.simpleicons.org/apple/FF8C42', dark:false },
+      { label:'macOS Native', icon:'https://cdn.simpleicons.org/apple/FF6B9D', dark:false },
+      { label:'Windows Native', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="#0078D6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M2 12h20"/><path d="M12 3v18"/></svg>', dark:false },
+      { label:'CMake', icon:'https://cdn.simpleicons.org/cmake/C792EA', dark:true },
     ],
 
     fallbackRepos: [
       { name:'cmake_template', color:'#FF6B9D', stars:0, hot:true, desc:'Production C++ template. Android NDK + Linux→Win cross-compile + GMD. CMake Presets, CPack, Docker.', tags:['C++','CMake','Android NDK','Cross-compile'], url:'https://github.com/e-gleba/cmake_template' },
       { name:'airstrike3d-tools', color:'#FF8C42', stars:17, hot:true, desc:'Toolkit for AirStrike 3D game analysis and APK asset extraction. Reverse engineering for game preservation.', tags:['C','Ghidra','RE'], url:'https://github.com/e-gleba/airstrike3d-tools' },
-      { name:'euengine', color:'#C792EA', stars:2, hot:false, desc:'3D game engine built on SDL3-GPU with hot reload. Modern C++ architecture.', tags:['C++','SDL3','GPU'], url:'https://github.com/e-gleba/euengine' }
+      { name:'euengine', color:'#C792EA', stars:2, hot:false, desc:'3D game engine built on SDL3 with hot reload. Modern C++ architecture.', tags:['C++','SDL3','GPU'], url:'https://github.com/e-gleba/euengine' }
     ],
 
     tools: [
@@ -43,7 +43,7 @@ function app() {
       ]},
       { cat:'build', label:'Build & CI', items:[
         { name:'CMake 3.31+', desc:'Presets, FetchContent, CPM, CPack.', icon:'https://cdn.simpleicons.org/cmake/FF8C42', url:'https://cmake.org' },
-        { name:'Ninja', desc:'Fast parallel builds. Multi-Config.', icon:'https://cdn.simpleicons.org/ninja/FF6B9D', url:'https://ninja-build.org' },
+        { name:'Ninja', desc:'Fast parallel builds. Multi-Config.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>', url:'https://ninja-build.org' },
         { name:'GitHub Actions', desc:'Multi-platform CI matrix.', icon:'https://cdn.simpleicons.org/githubactions/FF6B9D', url:'https://github.com/features/actions' },
         { name:'TeamCity', desc:'On-prem CI/CD pipelines.', icon:'https://cdn.simpleicons.org/teamcity/C792EA', url:'https://jetbrains.com/teamcity' },
         { name:'Docker', desc:'Reproducible build containers.', icon:'https://cdn.simpleicons.org/docker/FF8C42', url:'https://docker.com' },
@@ -67,7 +67,7 @@ function app() {
       { cat:'misc', label:'Daily Stack', items:[
         { name:'Fedora', desc:'Primary Linux — bleeding-edge toolchain.', icon:'https://cdn.simpleicons.org/fedora/FF6B9D', url:'https://fedoraproject.org' },
         { name:'ALT Linux', desc:'RPM-based, enterprise stable.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>', url:'https://altlinux.org' },
-        { name:'Windows 11', desc:'MSVC builds, game testing.', icon:'https://cdn.simpleicons.org/windows11/FF8C42', url:'https://microsoft.com/windows' },
+        { name:'Windows 11', desc:'MSVC builds, game testing.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="#0078D6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M2 12h20"/><path d="M12 3v18"/></svg>', url:'https://microsoft.com/windows' },
         { name:'Zsh + Starship', desc:'Modern shell with prompt.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>', url:'https://starship.rs' },
         { name:'Vanilla Terminal', desc:'No bling — alacritty, foot, or Windows Terminal.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="9" y1="2" x2="9" y2="4"/><line x1="15" y1="2" x2="15" y2="4"/></svg>', url:'#' }
       ]}
