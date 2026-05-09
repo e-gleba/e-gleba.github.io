@@ -131,11 +131,20 @@ function app() {
     t(key) { return key.split('.').reduce((o,k) => o?.[k], this.translations[this.lang]) ?? key; },
 
     toggleTheme() {
+      const btn = document.querySelector('.theme-toggle-btn');
+      if (btn) {
+        const rect = btn.getBoundingClientRect();
+        const ripple = document.createElement('div');
+        ripple.className = 'theme-ripple';
+        ripple.style.cssText = `position:fixed;top:${rect.top+rect.height/2}px;left:${rect.left+rect.width/2}px;width:10px;height:10px;border-radius:50%;background:rgba(255,107,157,0.3);pointer-events:none;z-index:99999;animation:themeRipple 0.6s ease-out forwards;`;
+        document.body.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 700);
+      }
       document.body.classList.add('theme-transitioning');
       this.theme = this.theme === 'dark' ? 'light' : 'dark';
       this.langOpen = false;
       this.mobileMenu = false;
-      setTimeout(() => document.body.classList.remove('theme-transitioning'), 350);
+      setTimeout(() => document.body.classList.remove('theme-transitioning'), 500);
     },
 
     isHot(repo) {
@@ -186,23 +195,10 @@ function app() {
       document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observer.observe(el));
     },
 
-    triggerPrintReveal() {
-      this.$nextTick(() => {
-        document.querySelectorAll('.print-reveal').forEach((el, i) => {
-          el.style.animation = 'none';
-          el.offsetHeight;
-          el.style.animation = `printReveal 0.7s cubic-bezier(0.4, 0, 0.2, 1) ${i * 0.2}s forwards`;
-        });
-      });
-    },
-
     init() {
       this.fetchGitHubData();
       window.addEventListener('scroll', () => { this.showTop = window.scrollY > 400; }, { passive: true });
-      this.$nextTick(() => {
-        this.observeReveal();
-        this.triggerPrintReveal();
-      });
+      this.$nextTick(() => this.observeReveal());
     }
   };
 }
