@@ -39,17 +39,6 @@ html {
   50% { background-position: 100% center; }
 }
 
-/* ===== PRINT/TYPEWRITER REVEAL ===== */
-@keyframes printReveal {
-  0% { clip-path: inset(0 100% 0 0); opacity: 0; }
-  30% { opacity: 1; }
-  100% { clip-path: inset(0 0 0 0); opacity: 1; }
-}
-.print-reveal {
-  animation: printReveal 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-.print-reveal-delay { animation-delay: 0.2s; }
-
 :focus-visible { outline: 2px solid #FF6B9D; outline-offset: 2px; border-radius: 4px; }
 
 .skill-svg svg { width: 100%; height: 100%; display: block; }
@@ -95,7 +84,7 @@ html {
   box-shadow: 0 2px 8px rgba(255,140,66,0.1);
 }
 
-/* ===== NOISE GRAIN OVERLAY ===== */
+/* ===== NOISE GRAIN OVERLAY — warp.dev texture ===== */
 body::before {
   content: '';
   position: fixed;
@@ -160,19 +149,38 @@ body::before {
 }
 .dark .aurora-overlay { --bg-color: #0a0a0f; }
 
-/* ===== RAYCAST-STYLE LIQUID GLASS SYSTEM ===== */
+/* ===== THEME RIPPLE ===== */
+@keyframes themeRipple {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(250); opacity: 0; }
+}
+
+/* ===== THEME FLASH OVERLAY ===== */
+.theme-flash {
+  position: fixed; inset: 0;
+  z-index: 99998;
+  pointer-events: none;
+  background: transparent;
+  animation: flashIn 0.15s ease-out forwards, flashOut 0.4s 0.15s ease-out forwards;
+}
+@keyframes flashIn {
+  0% { background: rgba(255,107,157,0.08); }
+  100% { background: rgba(255,107,157,0.04); }
+}
+@keyframes flashOut {
+  0% { background: rgba(255,107,157,0.04); }
+  100% { background: transparent; }
+}
+
+/* ===== LIQUID GLASS SYSTEM ===== */
 
 .nav-glass {
-  background: rgba(255,255,255,0.68);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   transform: translateZ(0);
-  box-shadow: 0 1px 0 rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.03);
 }
-.dark .nav-glass {
-  background: rgba(10,10,15,0.68);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.04), 0 4px 16px rgba(0,0,0,0.2);
-}
+.dark .nav-glass { background: rgba(10,10,15,0.72); }
 
 .badge-glow {
   background: rgba(255,255,255,0.55);
@@ -186,15 +194,15 @@ body::before {
   box-shadow: 0 0 30px rgba(255,107,157,0.12), 0 0 60px rgba(255,140,66,0.06);
 }
 
-/* ===== PDF GLASS BUTTON ===== */
+/* ===== PDF GLASS BUTTON — Raycast-style ===== */
 .pdf-glass {
-  background: rgba(255,255,255,0.5);
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
-  border: 1px solid rgba(229,229,234,0.45);
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border: 1px solid rgba(229,229,234,0.5);
   border-radius: 12px;
   transform: translateZ(0);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
 }
@@ -205,48 +213,51 @@ body::before {
   border-radius: 12px;
   background: linear-gradient(135deg, rgba(255,107,157,0.06), rgba(199,146,234,0.06));
   opacity: 0;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.3s ease;
   z-index: 0;
   pointer-events: none;
 }
-.pdf-glass:hover::before { opacity: 1; }
+.pdf-glass:hover::before {
+  opacity: 1;
+}
 .pdf-glass:hover {
   border-color: rgba(255,107,157,0.4);
-  box-shadow: 0 0 20px rgba(255,107,157,0.08), 0 4px 12px rgba(255,107,157,0.04);
+  box-shadow: 0 0 24px rgba(255,107,157,0.1), 0 4px 16px rgba(255,107,157,0.06);
   transform: translateY(-1px) translateZ(0);
 }
 .dark .pdf-glass {
-  background: rgba(19,19,24,0.5);
-  border-color: rgba(30,30,40,0.45);
+  background: rgba(19,19,24,0.55);
+  border-color: rgba(30,30,40,0.5);
 }
 .dark .pdf-glass::before {
   background: linear-gradient(135deg, rgba(255,140,66,0.08), rgba(199,146,234,0.06));
 }
 .dark .pdf-glass:hover {
   border-color: rgba(255,140,66,0.4);
-  box-shadow: 0 0 20px rgba(255,140,66,0.1), 0 4px 12px rgba(255,140,66,0.06);
+  box-shadow: 0 0 24px rgba(255,140,66,0.12), 0 4px 16px rgba(255,140,66,0.08);
 }
 .pdf-glass > * { position: relative; z-index: 1; }
 
 .card-glass {
-  background: rgba(245,245,247,0.7);
-  border: 1px solid rgba(229,229,234,0.55);
+  background: rgba(245,245,247,0.75);
+  border: 1px solid rgba(229,229,234,0.6);
   border-radius: 14px;
   backdrop-filter: blur(16px) saturate(140%);
   -webkit-backdrop-filter: blur(16px) saturate(140%);
   transform: translateZ(0);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 .dark .card-glass {
-  background: rgba(19,19,24,0.6);
-  border-color: rgba(30,30,40,0.55);
+  background: rgba(19,19,24,0.65);
+  border-color: rgba(30,30,40,0.6);
 }
 
+/* Gradient edge highlight on hover */
 .card-glass-hover { position: relative; overflow: hidden; }
 .card-glass-hover::after {
   content: ''; position: absolute; inset: 0; border-radius: 14px; pointer-events: none;
   background: linear-gradient(135deg, rgba(255,107,157,0), rgba(255,140,66,0), rgba(199,146,234,0));
-  z-index: 0; opacity: 0; transition: opacity 0.3s ease;
+  z-index: 0; opacity: 0; transition: opacity 0.35s ease;
 }
 .card-glass-hover:hover::after {
   opacity: 1;
@@ -255,18 +266,18 @@ body::before {
 .card-glass-hover > * { position: relative; z-index: 1; }
 
 .card-glass:hover {
-  border-color: rgba(255,107,157,0.2);
-  box-shadow: 0 8px 32px -12px rgba(0,0,0,0.1);
+  border-color: rgba(255,107,157,0.25);
+  box-shadow: 0 8px 32px -12px rgba(0,0,0,0.12);
   transform: translateY(-2px) translateZ(0);
 }
 .dark .card-glass:hover {
-  border-color: rgba(255,140,66,0.2);
-  box-shadow: 0 8px 32px -12px rgba(0,0,0,0.3);
+  border-color: rgba(255,140,66,0.25);
+  box-shadow: 0 8px 32px -12px rgba(0,0,0,0.35);
 }
 
 .stat-glass {
-  background: rgba(245,245,247,0.55);
-  border: 1px solid rgba(229,229,234,0.45);
+  background: rgba(245,245,247,0.6);
+  border: 1px solid rgba(229,229,234,0.5);
   border-radius: 14px; padding: 1.25rem 0.75rem;
   text-align: center;
   backdrop-filter: blur(10px) saturate(120%);
@@ -275,17 +286,17 @@ body::before {
   transition: transform 0.2s ease;
 }
 .dark .stat-glass {
-  background: rgba(19,19,24,0.45); border-color: rgba(30,30,40,0.45);
+  background: rgba(19,19,24,0.5); border-color: rgba(30,30,40,0.5);
 }
 .stat-glass:hover { transform: translateY(-2px) translateZ(0); }
 
 .glass-card {
-  background: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.85);
   backdrop-filter: blur(20px) saturate(160%);
   -webkit-backdrop-filter: blur(20px) saturate(160%);
   transform: translateZ(0);
 }
-.dark .glass-card { background: rgba(19,19,24,0.8); }
+.dark .glass-card { background: rgba(19,19,24,0.85); }
 
 /* ===== FALLBACKS ===== */
 @supports not (backdrop-filter: blur(1px)) {
@@ -494,15 +505,15 @@ body::before {
   color: #FF8C42;
 }
 
-/* ===== THEME TRANSITION — snappy, fast ===== */
+/* ===== THEME TRANSITION — snappy with staggered timing ===== */
 body.theme-transitioning *,
 body.theme-transitioning *::before,
 body.theme-transitioning *::after {
   transition:
-    background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-    border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-    color 0.15s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 /* ===== PRINT ===== */
@@ -523,7 +534,7 @@ body.theme-transitioning *::after {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .aurora-blob, .animate-shimmer, .print-reveal { animation: none !important; }
+  .aurora-blob, .animate-shimmer { animation: none !important; }
   .reveal, .reveal-stagger > * { opacity: 1 !important; transform: none !important; }
   html { scroll-behavior: auto; }
 }
