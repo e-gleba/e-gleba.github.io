@@ -7,7 +7,7 @@ html {
   text-size-adjust: 100%;
 }
 
-/* ===== SCROLLBAR — thin & elegant ===== */
+/* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 3px; }
@@ -67,7 +67,7 @@ html {
   border: 1px solid rgba(229,229,234,0.5);
   color: #475569;
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  transform: translateZ(0); /* GPU composite */
+  transform: translateZ(0);
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .dark .tech-badge {
@@ -82,6 +82,20 @@ html {
   border-color: rgba(255,140,66,0.3);
   box-shadow: 0 2px 8px rgba(255,140,66,0.1);
 }
+
+/* ===== NOISE GRAIN OVERLAY — warp.dev texture ===== */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+.dark body::before { opacity: 0.05; }
 
 /* ===== AURORA BACKGROUND ===== */
 .aurora-bg {
@@ -134,9 +148,8 @@ html {
 }
 .dark .aurora-overlay { --bg-color: #0a0a0f; }
 
-/* ===== LIQUID GLASS SYSTEM — warp.dev inspired layered depth ===== */
+/* ===== LIQUID GLASS SYSTEM ===== */
 
-/* Nav — closest to user, lightest blur */
 .nav-glass {
   background: rgba(255,255,255,0.72);
   backdrop-filter: blur(20px) saturate(180%);
@@ -145,7 +158,6 @@ html {
 }
 .dark .nav-glass { background: rgba(10,10,15,0.72); }
 
-/* Badge — subtle glow, medium blur */
 .badge-glow {
   background: rgba(255,255,255,0.55);
   backdrop-filter: blur(12px) saturate(140%);
@@ -158,7 +170,6 @@ html {
   box-shadow: 0 0 30px rgba(255,107,157,0.12), 0 0 60px rgba(255,140,66,0.06);
 }
 
-/* Cards — deeper layer, heavier blur, gradient edge highlight */
 .card-glass {
   background: rgba(245,245,247,0.75);
   border: 1px solid rgba(229,229,234,0.6);
@@ -173,19 +184,18 @@ html {
   border-color: rgba(30,30,40,0.6);
 }
 
-/* Gradient edge highlight on hover — the "light refracting off glass edge" */
-.card-glass-hover {
-  position: relative; overflow: hidden;
-}
+/* Gradient edge highlight on hover */
+.card-glass-hover { position: relative; overflow: hidden; }
 .card-glass-hover::after {
-  content: ''; position: absolute; inset: -1px; border-radius: 14px;
+  content: ''; position: absolute; inset: 0; border-radius: 14px; pointer-events: none;
   background: linear-gradient(135deg, rgba(255,107,157,0.0), rgba(255,140,66,0.0), rgba(199,146,234,0.0));
-  z-index: -1; opacity: 0; transition: opacity 0.3s ease;
+  z-index: 0; opacity: 0; transition: opacity 0.35s ease;
 }
 .card-glass-hover:hover::after {
   opacity: 1;
   background: linear-gradient(135deg, rgba(255,107,157,0.08), rgba(255,140,66,0.06), rgba(199,146,234,0.08));
 }
+.card-glass-hover > * { position: relative; z-index: 1; }
 
 .card-glass:hover {
   border-color: rgba(255,107,157,0.25);
@@ -197,7 +207,6 @@ html {
   box-shadow: 0 8px 32px -12px rgba(0,0,0,0.35);
 }
 
-/* Stat blocks — lightest glass */
 .stat-glass {
   background: rgba(245,245,247,0.6);
   border: 1px solid rgba(229,229,234,0.5);
@@ -213,7 +222,6 @@ html {
 }
 .stat-glass:hover { transform: translateY(-2px) translateZ(0); }
 
-/* Dropdown glass — heavy blur, strong border */
 .glass-card {
   background: rgba(255,255,255,0.85);
   backdrop-filter: blur(20px) saturate(160%);
@@ -222,7 +230,7 @@ html {
 }
 .dark .glass-card { background: rgba(19,19,24,0.85); }
 
-/* ===== FALLBACKS (no backdrop-filter support) ===== */
+/* ===== FALLBACKS ===== */
 @supports not (backdrop-filter: blur(1px)) {
   .nav-glass { background: rgba(255,255,255,0.95); }
   .dark .nav-glass { background: rgba(10,10,15,0.95); }
@@ -323,7 +331,6 @@ html {
   transform: translateY(0);
 }
 
-/* Stagger children */
 .reveal-stagger > * {
   opacity: 0;
   transform: translateY(20px);
@@ -360,7 +367,7 @@ html {
   .bento-cell.span-2-row { grid-column: span 1; grid-row: span 1; }
 }
 
-/* ===== TOOLS GRID ===== */
+/* ===== TOOL CHIPS ===== */
 .tool-chip {
   display: inline-flex; align-items: center; gap: 0.5rem;
   padding: 0.5rem 1rem; border-radius: 10px;
@@ -370,6 +377,9 @@ html {
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   transform: translateZ(0);
   transition: border-color 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 }
 .dark .tool-chip {
   background: rgba(19,19,24,0.6); border-color: rgba(30,30,40,0.5);
@@ -390,6 +400,7 @@ body.theme-transitioning * {
   .no-print { display: none !important; }
   .print-only { display: block !important; }
   body { background: white !important; color: #111 !important; }
+  body::before { display: none !important; }
   a { text-decoration: none !important; color: #111 !important; }
   section { break-inside: avoid; page-break-inside: avoid; }
 }
