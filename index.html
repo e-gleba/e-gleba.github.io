@@ -80,7 +80,7 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 
-<body class="bg-rc-light-bg dark:bg-rc-dark-bg text-slate-900 dark:text-white font-sans transition-colors duration-300" x-cloak>
+<body class="bg-rc-light-bg dark:bg-rc-dark-bg text-slate-900 dark:text-white font-sans transition-colors duration-200" x-cloak>
 
   <!-- Aurora background -->
   <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
@@ -92,7 +92,7 @@
   </div>
 
   <!-- Nav -->
-  <nav class="sticky top-0 z-50 nav-glass border-b border-rc-light-border/40 dark:border-rc-dark-border/40 no-print" role="navigation" aria-label="Main navigation">
+  <nav class="sticky top-0 z-50 nav-glass border-b border-rc-light-border/30 dark:border-rc-dark-border/30 no-print" role="navigation" aria-label="Main navigation">
     <div class="max-w-6xl mx-auto px-6 lg:px-10">
       <div class="flex items-center justify-between h-[56px]">
         <a href="#" class="font-mono font-bold text-[18px] tracking-tight flex items-center gap-1.5" aria-label="Home">
@@ -125,13 +125,13 @@
               </template>
             </div>
           </div>
-          <button @click="toggleTheme()" class="theme-toggle-btn p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors" :aria-label="theme === 'dark' ? 'Light mode' : 'Dark mode'">
+          <button @click="toggleTheme()" class="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors" :aria-label="theme === 'dark' ? 'Light mode' : 'Dark mode'">
             <svg x-show="theme === 'dark'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
             <svg x-show="theme !== 'dark'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
           </button>
         </div>
         <div class="md:hidden flex items-center gap-1 no-print">
-          <button @click="toggleTheme()" class="theme-toggle-btn p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5" :aria-label="theme === 'dark' ? 'Light mode' : 'Dark mode'">
+          <button @click="toggleTheme()" class="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5" :aria-label="theme === 'dark' ? 'Light mode' : 'Dark mode'">
             <svg x-show="theme === 'dark'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
             <svg x-show="theme !== 'dark'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
           </button>
@@ -170,8 +170,8 @@
         <span x-text="t('hero.status')"></span>
       </div>
       <h1 class="text-[clamp(3rem,8vw,6rem)] font-black tracking-tight leading-[1.05] mb-4" fetchpriority="high">
-        <span class="block">Evgeniy</span>
-        <span class="block gradient-text animate-shimmer">Gleba</span>
+        <span class="block print-reveal">Evgeniy</span>
+        <span class="block gradient-text animate-shimmer print-reveal print-reveal-delay">Gleba</span>
       </h1>
       <p class="text-[clamp(1.15rem,2.4vw,1.5rem)] text-slate-500 dark:text-slate-400 mb-8 max-w-2xl mx-auto font-light leading-relaxed" x-text="t('hero.tagline')"></p>
       <div class="flex flex-wrap justify-center gap-3 mb-8">
