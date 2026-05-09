@@ -5,6 +5,7 @@ html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  overflow-x: hidden;
 }
 
 /* ===== SCROLLBAR ===== */
@@ -148,6 +149,12 @@ body::before {
 }
 .dark .aurora-overlay { --bg-color: #0a0a0f; }
 
+/* ===== THEME RIPPLE ===== */
+@keyframes themeRipple {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0.5; }
+  100% { transform: translate(-50%, -50%) scale(200); opacity: 0; }
+}
+
 /* ===== LIQUID GLASS SYSTEM ===== */
 
 .nav-glass {
@@ -188,12 +195,12 @@ body::before {
 .card-glass-hover { position: relative; overflow: hidden; }
 .card-glass-hover::after {
   content: ''; position: absolute; inset: 0; border-radius: 14px; pointer-events: none;
-  background: linear-gradient(135deg, rgba(255,107,157,0.0), rgba(255,140,66,0.0), rgba(199,146,234,0.0));
+  background: linear-gradient(135deg, rgba(255,107,157,0), rgba(255,140,66,0), rgba(199,146,234,0));
   z-index: 0; opacity: 0; transition: opacity 0.35s ease;
 }
 .card-glass-hover:hover::after {
   opacity: 1;
-  background: linear-gradient(135deg, rgba(255,107,157,0.08), rgba(255,140,66,0.06), rgba(199,146,234,0.08));
+  background: linear-gradient(135deg, rgba(255,107,157,0.06), rgba(255,140,66,0.04), rgba(199,146,234,0.06));
 }
 .card-glass-hover > * { position: relative; z-index: 1; }
 
@@ -376,7 +383,7 @@ body::before {
   border: 1px solid rgba(229,229,234,0.5);
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   transform: translateZ(0);
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
   cursor: pointer;
   text-decoration: none;
   color: inherit;
@@ -385,14 +392,63 @@ body::before {
   background: rgba(19,19,24,0.6); border-color: rgba(30,30,40,0.5);
 }
 .tool-chip:hover {
-  border-color: rgba(255,107,157,0.3);
+  border-color: rgba(255,107,157,0.35);
+  background: rgba(255,107,157,0.04);
   transform: translateY(-1px) translateZ(0);
 }
-.dark .tool-chip:hover { border-color: rgba(255,140,66,0.3); }
+.dark .tool-chip:hover {
+  border-color: rgba(255,140,66,0.35);
+  background: rgba(255,140,66,0.05);
+}
+
+/* ===== CONTACT LINK CARDS ===== */
+.contact-link {
+  display: inline-flex; align-items: center; gap: 0.625rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.94rem;
+  background: rgba(245,245,247,0.7);
+  border: 1px solid rgba(229,229,234,0.5);
+  border-radius: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: inherit;
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  transform: translateZ(0);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease, color 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+.dark .contact-link {
+  background: rgba(19,19,24,0.6); border-color: rgba(30,30,40,0.5);
+}
+.contact-link::after {
+  content: ''; position: absolute; inset: 0; border-radius: 14px; pointer-events: none;
+  background: linear-gradient(135deg, rgba(255,107,157,0), rgba(255,140,66,0), rgba(199,146,234,0));
+  z-index: 0; opacity: 0; transition: opacity 0.3s ease;
+}
+.contact-link:hover::after {
+  opacity: 1;
+  background: linear-gradient(135deg, rgba(255,107,157,0.06), rgba(255,140,66,0.04), rgba(199,146,234,0.06));
+}
+.contact-link > * { position: relative; z-index: 1; }
+.contact-link:hover {
+  border-color: rgba(255,107,157,0.35);
+  box-shadow: 0 4px 20px -8px rgba(255,107,157,0.12);
+  transform: translateY(-2px) translateZ(0);
+  color: #FF6B9D;
+}
+.dark .contact-link:hover {
+  border-color: rgba(255,140,66,0.35);
+  color: #FF8C42;
+}
 
 /* ===== THEME TRANSITION ===== */
-body.theme-transitioning * {
-  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease !important;
+body.theme-transitioning *,
+body.theme-transitioning *::before,
+body.theme-transitioning *::after {
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 /* ===== PRINT ===== */

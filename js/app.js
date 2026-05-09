@@ -39,7 +39,7 @@ function app() {
         { name:'Neovim (LazyVim)', desc:'Primary editor. LazyVim distro — fast, modal, Lua-configured.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 3L3 8l4 5"/><path d="M17 3l4 5-4 5"/><line x1="12" y1="3" x2="12" y2="21"/></svg>', url:'https://www.lazyvim.org' },
         { name:'CLion', desc:'Heavy refactoring, CMake debugging, profiler integration.', icon:'https://cdn.simpleicons.org/jetbrains/C792EA', url:'https://jetbrains.com/clion' },
         { name:'Qt Creator', desc:'Qt projects, visual debugging.', icon:'https://cdn.simpleicons.org/qt/FF8C42', url:'https://qt.io' },
-        { name:'Visual Studio', desc:'MSVC toolchain, Windows debugging.', icon:'https://cdn.simpleicons.org/visualstudio/FF6B9D', url:'https://visualstudio.microsoft.com' }
+        { name:'Visual Studio', desc:'MSVC toolchain, Windows debugging.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="#A259FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 2L2 7.5v9L17.5 22l4.5-2.5v-15L17.5 2z"/><path d="M8 9.5l4.5 2.5-4.5 2.5"/></svg>', url:'https://visualstudio.microsoft.com' }
       ]},
       { cat:'build', label:'Build & CI', items:[
         { name:'CMake 3.31+', desc:'Presets, FetchContent, CPM, CPack.', icon:'https://cdn.simpleicons.org/cmake/FF8C42', url:'https://cmake.org' },
@@ -54,12 +54,12 @@ function app() {
         { name:'GDB', desc:'GNU Debugger — native Linux debugging.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="6" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>', url:'https://sourceware.org/gdb' },
         { name:'LLDB', desc:'LLVM debugger — macOS/iOS.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg>', url:'https://lldb.llvm.org' },
         { name:'Tracy', desc:'Real-time frame profiler for games.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>', url:'https://github.com/wolfpld/tracy' },
-        { name:'Ghidra', desc:'NSA reverse engineering framework.', icon:'https://cdn.simpleicons.org/ghidra/C792EA', url:'https://ghidra-sre.org' },
+        { name:'Ghidra', desc:'NSA reverse engineering framework.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="#C792EA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M7 7h10M7 12h10M7 17h6"/></svg>', url:'https://ghidra-sre.org' },
         { name:'IDA Pro', desc:'Industry-standard disassembler/debugger.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>', url:'https://hex-rays.com/ida-pro' },
-        { name:'Cutter', desc:'GUI for Rizin — open-source RE.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>', url:'https://cutter.re' }
+        { name:'cutter-re', desc:'GUI for Rizin — open-source RE.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>', url:'https://cutter.re' }
       ]},
       { cat:'engine', label:'Engine & GFX', items:[
-        { name:'SDL3', desc:'Cross-platform windowing, input, GPU.', icon:'https://cdn.simpleicons.org/sdl/FF6B9D', url:'https://libsdl.org' },
+        { name:'SDL3', desc:'Cross-platform windowing, input, GPU.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="#FF6B9D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="4"/><path d="M7 8h10M7 12h10M7 16h7"/></svg>', url:'https://libsdl.org' },
         { name:'OpenGL / GLSL', desc:'Graphics API and shader language.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 22h20L12 2z"/></svg>', url:'https://opengl.org' },
         { name:'RenderDoc', desc:'Graphics debugger, frame capture.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>', url:'https://renderdoc.org' },
         { name:'Wwise', desc:'AAA audio middleware integration.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>', url:'https://audiokinetic.com' }
@@ -131,11 +131,20 @@ function app() {
     t(key) { return key.split('.').reduce((o,k) => o?.[k], this.translations[this.lang]) ?? key; },
 
     toggleTheme() {
+      const btn = document.querySelector('.theme-toggle-btn');
+      if (btn) {
+        const rect = btn.getBoundingClientRect();
+        const ripple = document.createElement('div');
+        ripple.className = 'theme-ripple';
+        ripple.style.cssText = `position:fixed;top:${rect.top+rect.height/2}px;left:${rect.left+rect.width/2}px;width:10px;height:10px;border-radius:50%;background:rgba(255,107,157,0.3);pointer-events:none;z-index:99999;animation:themeRipple 0.6s ease-out forwards;`;
+        document.body.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 700);
+      }
       document.body.classList.add('theme-transitioning');
       this.theme = this.theme === 'dark' ? 'light' : 'dark';
       this.langOpen = false;
       this.mobileMenu = false;
-      setTimeout(() => document.body.classList.remove('theme-transitioning'), 400);
+      setTimeout(() => document.body.classList.remove('theme-transitioning'), 500);
     },
 
     isHot(repo) {
