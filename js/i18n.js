@@ -1,7 +1,7 @@
 const I18N = {
   en: {
     nav: { about:'About', experience:'Experience', projects:'Projects', skills:'Skills', tools:'Tools', contact:'Contact' },
-    hero: { status:'Open to open source & consulting', tagline:'C++ Engineer · Reverse Engineer · Investigator', viewProjects:'View Projects' },
+    hero: { status:'Open to open source & consulting', tagline:'C++ Engineer · Reverse Engineer · Investigator', viewProjects:'Projects' },
     stats: { years:'Years in Production', repos:'Open Source', platforms:'Platforms' },
     about: {
       label:'About',
@@ -22,7 +22,7 @@ const I18N = {
         { year:'2018–2020', title:'Game Modding & RE · Project Manager', company:'Community Projects', desc:'Reverse-engineered game binaries for full Russian localization of World Conqueror 4. Managed translation workflow, coordinated with voice actors, integrated audio assets. Built monetization strategy via Patreon and community donations. Video review by popular YouTuber — 42K+ views. Published open-source extraction toolkit.', link:'https://www.youtube.com/watch?v=fuOPZzfWoCY', linkText:'Video review →', tags:['Reverse Engineering','Project Management','Audio Integration','Monetization','Community'] }
       ]
     },
-    projects: { label:'Projects', view:'View →', noDesc:'No description' },
+    projects: { label:'Projects', view:'View', noDesc:'No description' },
     skills: {
       label:'Skills',
       languages:'Languages', systems:'Systems & Tooling', engine:'Engine & Graphics',
@@ -56,7 +56,7 @@ const I18N = {
         { year:'2018–2020', title:'Моддинг и RE · Project Manager', company:'Community Projects', desc:'Реверс-инжиниринг бинарных файлов игры для полной русской локализации World Conqueror 4. Управлял процессом перевода, координировал работу актёров озвучки, интегрировал аудио-ассеты. Монетизация через Patreon. Видео-обзор от популярного ютубера — 42K+ просмотров.', link:'https://www.youtube.com/watch?v=fuOPZzfWoCY', linkText:'Видео-обзор →', tags:['Reverse Engineering','Project Management','Audio Integration','Monetization','Community'] }
       ]
     },
-    projects: { label:'Проекты', view:'Смотреть →', noDesc:'Нет описания' },
+    projects: { label:'Проекты', view:'Смотреть', noDesc:'Нет описания' },
     skills: {
       label:'Навыки',
       languages:'Языки', systems:'Системы и инструменты', engine:'Движок и графика',
@@ -69,7 +69,7 @@ const I18N = {
   },
   zh: {
     nav: { about:'关于', experience:'经验', projects:'项目', skills:'技能', tools:'工具', contact:'联系' },
-    hero: { status:'开放开源与咨询', tagline:'C++工程师 · 逆向工程师 · 研究员', viewProjects:'查看项目' },
+    hero: { status:'开放开源与咨询', tagline:'C++工程师 · 逆向工程师 · 研究员', viewProjects:'项目' },
     stats: { years:'年生产经验', repos:'开源项目', platforms:'平台' },
     about: {
       label:'关于',
@@ -90,7 +90,7 @@ const I18N = {
         { year:'2018–2020', title:'游戏模组与逆向 · 项目经理', company:'社区项目', desc:'逆向工程游戏二进制文件，完成World Conqueror 4的完整俄语本地化。管理翻译工作流，协调配音演员，集成音频资源。通过Patreon和社区捐赠建立盈利策略。热门YouTuber视频评测 — 42K+观看。', link:'https://www.youtube.com/watch?v=fuOPZzfWoCY', linkText:'视频评测 →', tags:['Reverse Engineering','Project Management','Audio Integration','Monetization','Community'] }
       ]
     },
-    projects: { label:'项目', view:'查看 →', noDesc:'无描述' },
+    projects: { label:'项目', view:'查看', noDesc:'无描述' },
     skills: {
       label:'技能',
       languages:'语言', systems:'系统与工具', engine:'引擎与图形',
