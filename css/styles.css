@@ -151,8 +151,25 @@ body::before {
 
 /* ===== THEME RIPPLE ===== */
 @keyframes themeRipple {
-  0% { transform: translate(-50%, -50%) scale(0); opacity: 0.5; }
-  100% { transform: translate(-50%, -50%) scale(200); opacity: 0; }
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(250); opacity: 0; }
+}
+
+/* ===== THEME FLASH OVERLAY ===== */
+.theme-flash {
+  position: fixed; inset: 0;
+  z-index: 99998;
+  pointer-events: none;
+  background: transparent;
+  animation: flashIn 0.15s ease-out forwards, flashOut 0.4s 0.15s ease-out forwards;
+}
+@keyframes flashIn {
+  0% { background: rgba(255,107,157,0.08); }
+  100% { background: rgba(255,107,157,0.04); }
+}
+@keyframes flashOut {
+  0% { background: rgba(255,107,157,0.04); }
+  100% { background: transparent; }
 }
 
 /* ===== LIQUID GLASS SYSTEM ===== */
@@ -176,6 +193,50 @@ body::before {
   background: rgba(255,255,255,0.06);
   box-shadow: 0 0 30px rgba(255,107,157,0.12), 0 0 60px rgba(255,140,66,0.06);
 }
+
+/* ===== PDF GLASS BUTTON — Raycast-style ===== */
+.pdf-glass {
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border: 1px solid rgba(229,229,234,0.5);
+  border-radius: 12px;
+  transform: translateZ(0);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+.pdf-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(255,107,157,0.06), rgba(199,146,234,0.06));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+.pdf-glass:hover::before {
+  opacity: 1;
+}
+.pdf-glass:hover {
+  border-color: rgba(255,107,157,0.4);
+  box-shadow: 0 0 24px rgba(255,107,157,0.1), 0 4px 16px rgba(255,107,157,0.06);
+  transform: translateY(-1px) translateZ(0);
+}
+.dark .pdf-glass {
+  background: rgba(19,19,24,0.55);
+  border-color: rgba(30,30,40,0.5);
+}
+.dark .pdf-glass::before {
+  background: linear-gradient(135deg, rgba(255,140,66,0.08), rgba(199,146,234,0.06));
+}
+.dark .pdf-glass:hover {
+  border-color: rgba(255,140,66,0.4);
+  box-shadow: 0 0 24px rgba(255,140,66,0.12), 0 4px 16px rgba(255,140,66,0.08);
+}
+.pdf-glass > * { position: relative; z-index: 1; }
 
 .card-glass {
   background: rgba(245,245,247,0.75);
@@ -251,6 +312,8 @@ body::before {
   .dark .badge-glow { background: rgba(19,19,24,0.8); }
   .tech-badge { background: rgba(245,245,247,0.9); }
   .dark .tech-badge { background: rgba(19,19,24,0.8); }
+  .pdf-glass { background: rgba(255,255,255,0.95); }
+  .dark .pdf-glass { background: rgba(19,19,24,0.9); }
 }
 
 /* ===== CARDS ===== */
@@ -442,13 +505,15 @@ body::before {
   color: #FF8C42;
 }
 
-/* ===== THEME TRANSITION ===== */
+/* ===== THEME TRANSITION — snappy with staggered timing ===== */
 body.theme-transitioning *,
 body.theme-transitioning *::before,
 body.theme-transitioning *::after {
-  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              color 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition:
+    background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 /* ===== PRINT ===== */
