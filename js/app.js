@@ -34,6 +34,37 @@ function app() {
       { name:'euengine', color:'#C792EA', stars:2, hot:false, desc:'3D game engine built on SDL3-GPU with hot reload. Modern C++ architecture.', tags:['C++','SDL3','GPU'], url:'https://github.com/e-gleba/euengine' }
     ],
 
+    tools: [
+      { cat:'editor', label:'Editor', items:[
+        { name:'VS Codium', desc:'Daily driver. FOSS VSCode without telemetry.', icon:'https://cdn.simpleicons.org/vscodium/FF6B9D', url:'https://vscodium.com' },
+        { name:'CLion', desc:'Heavy refactoring, CMake debugging.', icon:'https://cdn.simpleicons.org/jetbrains/C792EA', url:'https://jetbrains.com/clion' },
+        { name:'Neovim', desc:'Quick edits, config files, terminal.', icon:'https://cdn.simpleicons.org/neovim/FF8C42', url:'https://neovim.io' }
+      ]},
+      { cat:'build', label:'Build & CI', items:[
+        { name:'CMake 3.31+', desc:'Presets, FetchContent, CPM, CPack.', icon:'https://cdn.simpleicons.org/cmake/FF8C42', url:'https://cmake.org' },
+        { name:'Ninja', desc:'Fast parallel builds. Multi-Config.', icon:'https://cdn.simpleicons.org/ninja/C792EA', url:'https://ninja-build.org' },
+        { name:'GitHub Actions', desc:'15+ platform CI matrix.', icon:'https://cdn.simpleicons.org/githubactions/FF6B9D', url:'https://github.com/features/actions' },
+        { name:'Docker', desc:'Reproducible build containers.', icon:'https://cdn.simpleicons.org/docker/FF8C42', url:'https://docker.com' }
+      ]},
+      { cat:'analysis', label:'Analysis', items:[
+        { name:'clang-tidy', desc:'Static analysis, modernize checks.', icon:'https://cdn.simpleicons.org/llvm/C792EA', url:'https://clang.llvm.org/extra/clang-tidy' },
+        { name:'clang-format', desc:'Consistent code style, CI-enforced.', icon:'https://cdn.simpleicons.org/llvm/FF6B9D', url:'https://clang.llvm.org/docs/ClangFormat.html' },
+        { name:'Tracy', desc:'Real-time frame profiler for games.', icon:'https://cdn.simpleicons.org/tracy/FF8C42', url:'https://github.com/wolfpld/tracy' },
+        { name:'Ghidra', desc:'NSA reverse engineering framework.', icon:'https://cdn.simpleicons.org/ghidra/C792EA', url:'https://ghidra-sre.org' }
+      ]},
+      { cat:'engine', label:'Engine & GFX', items:[
+        { name:'SDL3', desc:'Cross-platform windowing, input, GPU.', icon:'https://cdn.simpleicons.org/sdl/FF6B9D', url:'https://libsdl.org' },
+        { name:'RenderDoc', desc:'Graphics debugger, frame capture.', icon:'https://cdn.simpleicons.org/renderdoc/FF8C42', url:'https://renderdoc.org' },
+        { name:'Wwise', desc:'AAA audio middleware integration.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>', url:'https://audiokinetic.com' }
+      ]},
+      { cat:'misc', label:'Daily Stack', items:[
+        { name:'Fedora Linux', desc:'Primary OS. Bleeding-edge toolchain.', icon:'https://cdn.simpleicons.org/fedora/FF6B9D', url:'https://fedoraproject.org' },
+        { name:'Alpine Linux', desc:'Minimal containers, CI images.', icon:'https://cdn.simpleicons.org/alpinelinux/FF8C42', url:'https://alpinelinux.org' },
+        { name:'Fish Shell', desc:'Modern shell, autosuggestions.', icon:'https://cdn.simpleicons.org/fishshell/C792EA', url:'https://fishshell.com' },
+        { name:'Kitty Terminal', desc:'GPU-accelerated, minimal, fast.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="9" y1="2" x2="9" y2="4"/><line x1="15" y1="2" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="22"/><line x1="15" y1="20" x2="15" y2="22"/></svg>', url:'https://sw.kovidgoyal.net/kitty' }
+      ]}
+    ],
+
     skillCategories: [
       { key:'languages', color:'#FF6B9D', icon:'code', items:[
         { img:'https://cdn.simpleicons.org/cplusplus/FF6B9D', label:'C++' },
@@ -91,9 +122,11 @@ function app() {
     t(key) { return key.split('.').reduce((o,k) => o?.[k], this.translations[this.lang]) ?? key; },
 
     toggleTheme() {
+      document.body.classList.add('theme-transitioning');
       this.theme = this.theme === 'dark' ? 'light' : 'dark';
       this.langOpen = false;
       this.mobileMenu = false;
+      setTimeout(() => document.body.classList.remove('theme-transitioning'), 400);
     },
 
     isHot(repo) {
@@ -131,9 +164,25 @@ function app() {
       }
     },
 
+    /* Scroll-driven reveal — intersection observer */
+    observeReveal() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+      document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observer.observe(el));
+    },
+
     init() {
       this.fetchGitHubData();
       window.addEventListener('scroll', () => { this.showTop = window.scrollY > 400; }, { passive: true });
+      /* Run reveal observer after Alpine has rendered */
+      this.$nextTick(() => this.observeReveal());
     }
   };
 }
