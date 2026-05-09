@@ -22,7 +22,7 @@ function app() {
       { label:'Python', icon:'https://cdn.simpleicons.org/python/FF8C42' },
       { label:'Linux', icon:'https://cdn.simpleicons.org/linux/FF8C42' },
       { label:'Android NDK', icon:'https://cdn.simpleicons.org/android/FF6B9D' },
-      { label:'iOS', icon:'https://cdn.simpleicons.org/apple/FF8C42' },
+      { label:'macOS', icon:'https://cdn.simpleicons.org/apple/C792EA' },
       { label:'CMake', icon:'https://cdn.simpleicons.org/cmake/C792EA' },
       { label:'SDL3', icon:'https://cdn.simpleicons.org/sdl/FF6B9D' },
       { label:'Docker', icon:'https://cdn.simpleicons.org/docker/FF8C42' },
@@ -53,15 +53,15 @@ function app() {
         { name:'clang-tidy', desc:'Static analysis, modernize checks.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg>', url:'https://clang.llvm.org/extra/clang-tidy' },
         { name:'GDB', desc:'GNU Debugger — native Linux debugging.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="6" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>', url:'https://sourceware.org/gdb' },
         { name:'LLDB', desc:'LLVM debugger — macOS/iOS.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg>', url:'https://lldb.llvm.org' },
-        { name:'Tracy', desc:'Real-time frame profiler for games.', icon:'https://cdn.simpleicons.org/tracy/FF8C42', url:'https://github.com/wolfpld/tracy' },
+        { name:'Tracy', desc:'Real-time frame profiler for games.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>', url:'https://github.com/wolfpld/tracy' },
         { name:'Ghidra', desc:'NSA reverse engineering framework.', icon:'https://cdn.simpleicons.org/ghidra/C792EA', url:'https://ghidra-sre.org' },
         { name:'IDA Pro', desc:'Industry-standard disassembler/debugger.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>', url:'https://hex-rays.com/ida-pro' },
-        { name:'Cutter', desc:'GUI for Rizin — open-source RE.', icon:'https://cdn.simpleicons.org/rizin/FF6B9D', url:'https://cutter.re' }
+        { name:'Cutter', desc:'GUI for Rizin — open-source RE.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>', url:'https://cutter.re' }
       ]},
       { cat:'engine', label:'Engine & GFX', items:[
         { name:'SDL3', desc:'Cross-platform windowing, input, GPU.', icon:'https://cdn.simpleicons.org/sdl/FF6B9D', url:'https://libsdl.org' },
         { name:'OpenGL / GLSL', desc:'Graphics API and shader language.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 22h20L12 2z"/></svg>', url:'https://opengl.org' },
-        { name:'RenderDoc', desc:'Graphics debugger, frame capture.', icon:'https://cdn.simpleicons.org/renderdoc/FF8C42', url:'https://renderdoc.org' },
+        { name:'RenderDoc', desc:'Graphics debugger, frame capture.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>', url:'https://renderdoc.org' },
         { name:'Wwise', desc:'AAA audio middleware integration.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>', url:'https://audiokinetic.com' }
       ]},
       { cat:'misc', label:'Daily Stack', items:[
