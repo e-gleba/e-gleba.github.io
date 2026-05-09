@@ -175,13 +175,13 @@
       </h1>
       <p class="text-[clamp(1.15rem,2.4vw,1.5rem)] text-slate-500 dark:text-slate-400 mb-8 max-w-2xl mx-auto font-light leading-relaxed" x-text="t('hero.tagline')"></p>
       <div class="flex flex-wrap justify-center gap-3 mb-8">
-        <a href="#projects" class="group inline-flex items-center gap-2 px-6 py-3 text-[15px] bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-semibold hover:opacity-90 transition-opacity">
-          <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+        <a href="#projects" class="group inline-flex items-center gap-2.5 px-6 py-3.5 text-[15px] bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-semibold hover:opacity-90 transition-all hover:scale-[1.02]">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
           <span x-text="t('hero.viewProjects')"></span>
-          <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          <svg class="w-4 h-4 group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
         </a>
-        <button @click="window.print()" class="group inline-flex items-center gap-2 px-6 py-3 text-[15px] bg-rc-light-card dark:bg-rc-dark-card border border-rc-light-border dark:border-rc-dark-border rounded-xl font-medium hover:border-brand-pink/40 hover:text-brand-pink transition-all" title="Print resume">
-          <svg class="w-4.5 h-4.5 group-hover:scale-105 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+        <button @click="window.print()" class="group inline-flex items-center gap-2.5 px-6 py-3.5 text-[15px] bg-rc-light-card dark:bg-rc-dark-card border border-rc-light-border dark:border-rc-dark-border rounded-xl font-medium hover:border-brand-pink/40 hover:text-brand-pink transition-all hover:scale-[1.02]" title="Print resume">
+          <svg class="w-5 h-5 group-hover:scale-105 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
           <span>PDF</span>
         </button>
       </div>
