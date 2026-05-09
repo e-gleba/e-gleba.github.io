@@ -18,50 +18,58 @@ function app() {
     translations: I18N,
 
     techBadges: [
-      { label:'C++', icon:'https://cdn.simpleicons.org/cplusplus/FF6B9D', dark:true },
-      { label:'Python', icon:'https://cdn.simpleicons.org/python/FF8C42', dark:true },
-      { label:'Linux', icon:'https://cdn.simpleicons.org/linux/FF8C42', dark:false },
-      { label:'Android Native', icon:'https://cdn.simpleicons.org/android/FF6B9D', dark:true },
-      { label:'iOS Native', icon:'https://cdn.simpleicons.org/apple/FF8C42', dark:false },
-      { label:'macOS Native', icon:'https://cdn.simpleicons.org/apple/FF6B9D', dark:false },
-      { label:'Windows Native', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="#0078D6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M2 12h20"/><path d="M12 3v18"/></svg>', dark:false },
-      { label:'CMake', icon:'https://cdn.simpleicons.org/cmake/C792EA', dark:true },
+      { label:'C++', icon:'https://cdn.simpleicons.org/cplusplus/FF6B9D' },
+      { label:'Python', icon:'https://cdn.simpleicons.org/python/FF8C42' },
+      { label:'Linux', icon:'https://cdn.simpleicons.org/linux/FF8C42' },
+      { label:'Android NDK', icon:'https://cdn.simpleicons.org/android/FF6B9D' },
+      { label:'iOS', icon:'https://cdn.simpleicons.org/apple/FF8C42' },
+      { label:'CMake', icon:'https://cdn.simpleicons.org/cmake/C792EA' },
+      { label:'SDL3', icon:'https://cdn.simpleicons.org/sdl/FF6B9D' },
+      { label:'Docker', icon:'https://cdn.simpleicons.org/docker/FF8C42' },
     ],
 
     fallbackRepos: [
-      { name:'airstrike3d-tools', color:'#FF6B9D', stars:17, hot:true, desc:'Toolkit for AirStrike 3D game analysis and APK asset extraction. Reverse engineering for game preservation.', tags:['C','Ghidra','RE'], url:'https://github.com/e-gleba/airstrike3d-tools' },
-      { name:'cxx-skeleton', color:'#FF8C42', stars:7, hot:true, desc:'Production-ready C++ project template. Modern standards, cross-platform builds, integrated tooling.', tags:['C++','CMake','Docker'], url:'https://github.com/e-gleba/cxx-skeleton' },
+      { name:'cmake_template', color:'#FF6B9D', stars:0, hot:true, desc:'Production C++ template. Android NDK + Linux→Win cross-compile + GMD. CMake Presets, CPack, Docker.', tags:['C++','CMake','Android NDK','Cross-compile'], url:'https://github.com/e-gleba/cmake_template' },
+      { name:'airstrike3d-tools', color:'#FF8C42', stars:17, hot:true, desc:'Toolkit for AirStrike 3D game analysis and APK asset extraction. Reverse engineering for game preservation.', tags:['C','Ghidra','RE'], url:'https://github.com/e-gleba/airstrike3d-tools' },
       { name:'euengine', color:'#C792EA', stars:2, hot:false, desc:'3D game engine built on SDL3-GPU with hot reload. Modern C++ architecture.', tags:['C++','SDL3','GPU'], url:'https://github.com/e-gleba/euengine' }
     ],
 
     tools: [
       { cat:'editor', label:'Editor', items:[
-        { name:'VS Codium', desc:'Daily driver. FOSS VSCode without telemetry.', icon:'https://cdn.simpleicons.org/vscodium/FF6B9D', url:'https://vscodium.com' },
-        { name:'CLion', desc:'Heavy refactoring, CMake debugging.', icon:'https://cdn.simpleicons.org/jetbrains/C792EA', url:'https://jetbrains.com/clion' },
-        { name:'Neovim', desc:'Quick edits, config files, terminal.', icon:'https://cdn.simpleicons.org/neovim/FF8C42', url:'https://neovim.io' }
+        { name:'Neovim (LazyVim)', desc:'Primary editor. LazyVim distro — fast, modal, Lua-configured.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 3L3 8l4 5"/><path d="M17 3l4 5-4 5"/><line x1="12" y1="3" x2="12" y2="21"/></svg>', url:'https://www.lazyvim.org' },
+        { name:'CLion', desc:'Heavy refactoring, CMake debugging, profiler integration.', icon:'https://cdn.simpleicons.org/jetbrains/C792EA', url:'https://jetbrains.com/clion' },
+        { name:'Qt Creator', desc:'Qt projects, visual debugging.', icon:'https://cdn.simpleicons.org/qt/FF8C42', url:'https://qt.io' },
+        { name:'Visual Studio', desc:'MSVC toolchain, Windows debugging.', icon:'https://cdn.simpleicons.org/visualstudio/FF6B9D', url:'https://visualstudio.microsoft.com' }
       ]},
       { cat:'build', label:'Build & CI', items:[
         { name:'CMake 3.31+', desc:'Presets, FetchContent, CPM, CPack.', icon:'https://cdn.simpleicons.org/cmake/FF8C42', url:'https://cmake.org' },
-        { name:'Ninja', desc:'Fast parallel builds. Multi-Config.', icon:'https://cdn.simpleicons.org/ninja/C792EA', url:'https://ninja-build.org' },
-        { name:'GitHub Actions', desc:'15+ platform CI matrix.', icon:'https://cdn.simpleicons.org/githubactions/FF6B9D', url:'https://github.com/features/actions' },
-        { name:'Docker', desc:'Reproducible build containers.', icon:'https://cdn.simpleicons.org/docker/FF8C42', url:'https://docker.com' }
+        { name:'Ninja', desc:'Fast parallel builds. Multi-Config.', icon:'https://cdn.simpleicons.org/ninja/FF6B9D', url:'https://ninja-build.org' },
+        { name:'GitHub Actions', desc:'Multi-platform CI matrix.', icon:'https://cdn.simpleicons.org/githubactions/FF6B9D', url:'https://github.com/features/actions' },
+        { name:'TeamCity', desc:'On-prem CI/CD pipelines.', icon:'https://cdn.simpleicons.org/teamcity/C792EA', url:'https://jetbrains.com/teamcity' },
+        { name:'Docker', desc:'Reproducible build containers.', icon:'https://cdn.simpleicons.org/docker/FF8C42', url:'https://docker.com' },
+        { name:'Ansible', desc:'Infra-as-code, dotfiles, server mgmt.', icon:'https://cdn.simpleicons.org/ansible/FF6B9D', url:'https://ansible.com' }
       ]},
-      { cat:'analysis', label:'Analysis', items:[
-        { name:'clang-tidy', desc:'Static analysis, modernize checks.', icon:'https://cdn.simpleicons.org/llvm/C792EA', url:'https://clang.llvm.org/extra/clang-tidy' },
-        { name:'clang-format', desc:'Consistent code style, CI-enforced.', icon:'https://cdn.simpleicons.org/llvm/FF6B9D', url:'https://clang.llvm.org/docs/ClangFormat.html' },
+      { cat:'analysis', label:'Debug & Analysis', items:[
+        { name:'clang-tidy', desc:'Static analysis, modernize checks.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg>', url:'https://clang.llvm.org/extra/clang-tidy' },
+        { name:'GDB', desc:'GNU Debugger — native Linux debugging.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="6" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>', url:'https://sourceware.org/gdb' },
+        { name:'LLDB', desc:'LLVM debugger — macOS/iOS.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg>', url:'https://lldb.llvm.org' },
         { name:'Tracy', desc:'Real-time frame profiler for games.', icon:'https://cdn.simpleicons.org/tracy/FF8C42', url:'https://github.com/wolfpld/tracy' },
-        { name:'Ghidra', desc:'NSA reverse engineering framework.', icon:'https://cdn.simpleicons.org/ghidra/C792EA', url:'https://ghidra-sre.org' }
+        { name:'Ghidra', desc:'NSA reverse engineering framework.', icon:'https://cdn.simpleicons.org/ghidra/C792EA', url:'https://ghidra-sre.org' },
+        { name:'IDA Pro', desc:'Industry-standard disassembler/debugger.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>', url:'https://hex-rays.com/ida-pro' },
+        { name:'Cutter', desc:'GUI for Rizin — open-source RE.', icon:'https://cdn.simpleicons.org/rizin/FF6B9D', url:'https://cutter.re' }
       ]},
       { cat:'engine', label:'Engine & GFX', items:[
         { name:'SDL3', desc:'Cross-platform windowing, input, GPU.', icon:'https://cdn.simpleicons.org/sdl/FF6B9D', url:'https://libsdl.org' },
+        { name:'OpenGL / GLSL', desc:'Graphics API and shader language.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 22h20L12 2z"/></svg>', url:'https://opengl.org' },
         { name:'RenderDoc', desc:'Graphics debugger, frame capture.', icon:'https://cdn.simpleicons.org/renderdoc/FF8C42', url:'https://renderdoc.org' },
         { name:'Wwise', desc:'AAA audio middleware integration.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>', url:'https://audiokinetic.com' }
       ]},
       { cat:'misc', label:'Daily Stack', items:[
-        { name:'Fedora Linux', desc:'Primary OS. Bleeding-edge toolchain.', icon:'https://cdn.simpleicons.org/fedora/FF6B9D', url:'https://fedoraproject.org' },
-        { name:'Alpine Linux', desc:'Minimal containers, CI images.', icon:'https://cdn.simpleicons.org/alpinelinux/FF8C42', url:'https://alpinelinux.org' },
-        { name:'Fish Shell', desc:'Modern shell, autosuggestions.', icon:'https://cdn.simpleicons.org/fishshell/C792EA', url:'https://fishshell.com' },
-        { name:'Kitty Terminal', desc:'GPU-accelerated, minimal, fast.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="9" y1="2" x2="9" y2="4"/><line x1="15" y1="2" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="22"/><line x1="15" y1="20" x2="15" y2="22"/></svg>', url:'https://sw.kovidgoyal.net/kitty' }
+        { name:'Fedora', desc:'Primary Linux — bleeding-edge toolchain.', icon:'https://cdn.simpleicons.org/fedora/FF6B9D', url:'https://fedoraproject.org' },
+        { name:'ALT Linux', desc:'RPM-based, enterprise stable.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>', url:'https://altlinux.org' },
+        { name:'Windows 11', desc:'MSVC builds, game testing.', icon:'https://cdn.simpleicons.org/windows11/FF8C42', url:'https://microsoft.com/windows' },
+        { name:'Zsh + Starship', desc:'Modern shell with prompt.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>', url:'https://starship.rs' },
+        { name:'Vanilla Terminal', desc:'No bling — alacritty, foot, or Windows Terminal.', svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="9" y1="2" x2="9" y2="4"/><line x1="15" y1="2" x2="15" y2="4"/></svg>', url:'#' }
       ]}
     ],
 
@@ -73,10 +81,11 @@ function app() {
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>', label:'Bash / Shell' }
       ]},
       { key:'systems', color:'#FF8C42', icon:'terminal', items:[
-        { img:'https://cdn.simpleicons.org/cmake/FF8C42', label:'CMake 3.16+' },
-        { img:'https://cdn.simpleicons.org/linux/C792EA', label:'Linux (Fedora, Alt)' },
+        { img:'https://cdn.simpleicons.org/cmake/FF8C42', label:'CMake 3.31+' },
+        { img:'https://cdn.simpleicons.org/linux/C792EA', label:'Linux (Fedora, ALT)' },
         { img:'https://cdn.simpleicons.org/git/FF6B9D', label:'Git / GitHub Actions' },
         { img:'https://cdn.simpleicons.org/docker/FF8C42', label:'Docker' },
+        { img:'https://cdn.simpleicons.org/ansible/FF6B9D', label:'Ansible / IaC' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>', label:'Ninja / Make' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>', label:'Clang / LLVM / Xcode' }
       ]},
@@ -94,7 +103,7 @@ function app() {
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>', label:'Cross-platform Native' }
       ]},
       { key:'reverse', color:'#FF8C42', icon:'security', items:[
-        { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>', label:'Ghidra / IDA' },
+        { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>', label:'Ghidra / IDA Pro' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>', label:'Memory Analysis' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>', label:'API Hooking / DLL Inject' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>', label:'Asset Extraction' },
@@ -103,8 +112,8 @@ function app() {
       { key:'practices', color:'#C792EA', icon:'check_circle', items:[
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>', label:'Static Analysis > Runtime' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg>', label:'C++ Contracts (P2900)' },
-        { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>', label:'Generic Programming (Stepanov)' },
-        { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>', label:'constexpr / consteval / [[nodiscard]]' },
+        { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>', label:'Generic Programming' },
+        { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>', label:'constexpr / consteval' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>', label:'STL / Boost / GSL' },
         { svg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L9.5 8.5 3 9.5 8 13.5 6.5 20 12 16.5 17.5 20 16 13.5 21 9.5 14.5 8.5 12 2z"/></svg>', label:'Claude Code / AI-Assisted Eng.' }
       ]}
@@ -164,7 +173,6 @@ function app() {
       }
     },
 
-    /* Scroll-driven reveal — intersection observer */
     observeReveal() {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -181,7 +189,6 @@ function app() {
     init() {
       this.fetchGitHubData();
       window.addEventListener('scroll', () => { this.showTop = window.scrollY > 400; }, { passive: true });
-      /* Run reveal observer after Alpine has rendered */
       this.$nextTick(() => this.observeReveal());
     }
   };
