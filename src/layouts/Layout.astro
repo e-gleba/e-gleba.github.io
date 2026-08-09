@@ -1,0 +1,74 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  lang: 'en' | 'ru' | 'zh';
+  title?: string;
+  description?: string;
+}
+
+const {
+  lang,
+  title = 'Evgeniy Gleba — C++ Systems Engineer',
+  description = 'Cross-platform C++ systems. Game engines, reverse engineering, performance optimization.',
+} = Astro.props;
+---
+<!doctype html>
+<html lang={lang} class="antialiased">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Evgeniy Gleba" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <link rel="canonical" href={Astro.url.href} />
+    <link rel="alternate" hreflang="en" href="https://e-gleba.github.io/en/" />
+    <link rel="alternate" hreflang="ru" href="https://e-gleba.github.io/ru/" />
+    <link rel="alternate" hreflang="zh" href="https://e-gleba.github.io/zh/" />
+    <link rel="alternate" hreflang="x-default" href="https://e-gleba.github.io/en/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+    <script is:inline>
+      (() => {
+        const saved = localStorage.getItem('theme');
+        const dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.classList.toggle('dark', dark);
+      })();
+    </script>
+  </head>
+  <body class="bg-rc-light-bg dark:bg-rc-dark-bg text-slate-900 dark:text-white font-sans transition-colors duration-300">
+    <slot />
+    <script>
+      const themeButtons = document.querySelectorAll('[data-theme-toggle]');
+      themeButtons.forEach((button) => button.addEventListener('click', () => {
+        const dark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
+      }));
+
+      const topButton = document.querySelector('[data-back-to-top]');
+      const updateTopButton = () => topButton?.classList.toggle('is-visible', scrollY > 400);
+      updateTopButton();
+      addEventListener('scroll', updateTopButton, { passive: true });
+      topButton?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal, .reveal-stagger').forEach((element) => observer.observe(element));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "nav":{"about":"关于","experience":"经验","projects":"项目","skills":"技能","tools":"工具","contact":"联系"},
+  "hero":{"status":"开放开源与咨询","tagline":"C++工程师 · 逆向工程师 · 研究员","viewProjects":"项目"},
+  "stats":{"years":"年生产经验","repos":"开源项目","platforms":"平台"},
+  "about":{"label":"关于","p1":"拥有3年以上跨平台C++游戏引擎生产经验的系统工程师。","p2":"在Lesta Games致力于为1000万+活跃玩家提供动力的引擎系统。","p3":"逆向工程和游戏保护是我的长期热情。","philosophy":"理念","p4":"静态分析优于运行时调试。简单、可靠的代码优于聪明的抽象。","impact":{"label":"影响","items":["服务1000万+玩家的引擎系统","跨平台开发","开源工具","亚毫秒帧时间保证"]}},
+  "experience":{"label":"经验","items":[{"year":"2023–现在","title":"C++ Engine Core Engineer","company":"Lesta Games — Engine Core, Tanks Blitz","desc":"交付跨平台游戏引擎内部系统。","tags":["C++","CMake","SDL3","Tracy","Wwise"]}]},
+  "projects":{"label":"项目","view":"查看","noDesc":"无描述"},
+  "skills":{"label":"技能","languages":"语言","systems":"系统与工具","engine":"引擎与图形","mobile":"移动与原生","reverse":"逆向工程","practices":"实践"},
+  "tools":{"label":"工具与资源","subtitle":"精选工具栈 — 性能优先，无冗余。"},
+  "contact":{"label":"联系","text":"开放C++系统、游戏引擎架构和跨平台工具方面的咨询与合作。"}
+}

@@ -1,0 +1,5 @@
+[
+  {"name":"airstrike3d-tools","description":"Toolkit for AirStrike 3D game analysis and APK asset extraction.","language":"C","stargazers_count":17,"html_url":"https://github.com/e-gleba/airstrike3d-tools"},
+  {"name":"cxx-skeleton","description":"Production-ready C++ project template with modern CMake and CI.","language":"C++","stargazers_count":7,"html_url":"https://github.com/e-gleba/cxx-skeleton"},
+  {"name":"euengine","description":"3D game engine built on SDL3 with hot reload.","language":"C++","stargazers_count":2,"html_url":"https://github.com/e-gleba/euengine"}
+]

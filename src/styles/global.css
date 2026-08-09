@@ -1,0 +1,46 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-brand-pink: #ff6b9d;
+  --color-brand-orange: #ff8c42;
+  --color-brand-purple: #c792ea;
+  --color-rc-light-bg: #ffffff;
+  --color-rc-light-border: #e5e5ea;
+  --color-rc-dark-bg: #0a0a0f;
+  --color-rc-dark-border: #1e1e28;
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { margin: 0; min-height: 100vh; }
+.gradient-text { background: linear-gradient(135deg,#ff6b9d,#ff8c42,#c792ea); background-clip:text; color:transparent; }
+.animate-shimmer { background-size:200% auto; animation:shimmer 4s ease-in-out infinite; }
+@keyframes shimmer { 0%,100%{background-position:0 center} 50%{background-position:100% center} }
+body::before { content:""; position:fixed; inset:0; z-index:9999; pointer-events:none; opacity:.035; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size:200px 200px; }
+.dark body::before { opacity:.05; }
+.aurora { position:fixed; inset:0; z-index:-10; overflow:hidden; pointer-events:none; background:radial-gradient(ellipse 80% 50% at 50% -20%,rgb(255 107 157/.2),transparent),radial-gradient(ellipse 60% 40% at 80% 50%,rgb(255 140 66/.12),transparent),radial-gradient(ellipse 70% 50% at 20% 80%,rgb(199 146 234/.14),transparent); }
+.nav-glass { background:rgb(255 255 255/.72); backdrop-filter:blur(20px) saturate(180%); }
+.dark .nav-glass { background:rgb(10 10 15/.72); }
+.glass-card { background:rgb(245 245 247/.75); border:1px solid rgb(229 229 234/.6); border-radius:14px; backdrop-filter:blur(16px) saturate(140%); transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease; }
+.dark .glass-card { background:rgb(19 19 24/.65); border-color:rgb(30 30 40/.6); }
+.glass-card:hover { transform:translateY(-2px); border-color:rgb(255 107 157/.25); box-shadow:0 8px 32px -12px rgb(0 0 0/.12); }
+.dark .glass-card:hover { border-color:rgb(255 140 66/.25); box-shadow:0 8px 32px -12px rgb(0 0 0/.35); }
+.reveal { opacity:0; transform:translateY(24px); transition:opacity .6s ease-out,transform .6s ease-out; }
+.reveal.visible { opacity:1; transform:none; }
+.reveal-stagger>* { opacity:0; transform:translateY(20px); transition:opacity .5s ease-out,transform .5s ease-out; }
+.reveal-stagger.visible>* { opacity:1; transform:none; }
+.reveal-stagger.visible>*:nth-child(2){transition-delay:80ms}.reveal-stagger.visible>*:nth-child(3){transition-delay:160ms}.reveal-stagger.visible>*:nth-child(4){transition-delay:240ms}.reveal-stagger.visible>*:nth-child(5){transition-delay:320ms}.reveal-stagger.visible>*:nth-child(6){transition-delay:400ms}
+.timeline { position:relative; padding-left:2.5rem; }
+.timeline::before { content:""; position:absolute; left:0; top:.5rem; bottom:.5rem; width:2px; background:linear-gradient(#ff6b9d,#ff8c42,#c792ea); }
+.timeline-entry { position:relative; padding-bottom:2.5rem; }
+.timeline-entry::before { content:""; position:absolute; left:-2.5rem; top:.35rem; width:1rem; height:1rem; border-radius:50%; background:white; border:2.5px solid #ff6b9d; transform:translateX(calc(-50% + 1px)); }
+.dark .timeline-entry::before { background:#0a0a0f; border-color:#ff8c42; }
+.cv-auto { content-visibility:auto; contain-intrinsic-size:auto 600px; }
+[data-back-to-top] { opacity:0; transform:translateY(1rem); pointer-events:none; }
+[data-back-to-top].is-visible { opacity:1; transform:none; pointer-events:auto; }
+summary::-webkit-details-marker { display:none; }
+@media print { .no-print{display:none!important}.print-only{display:block!important} body{background:white!important;color:#111!important} body::before,.aurora{display:none!important} }
+.print-only { display:none; }
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.reveal,.reveal-stagger>*{opacity:1!important;transform:none!important}html{scroll-behavior:auto}}

@@ -1,0 +1,38 @@
+---
+interface Props {
+  lang: 'en' | 'ru' | 'zh';
+  nav: Record<string, string>;
+}
+const { lang, nav } = Astro.props;
+const links = ['about', 'experience', 'projects', 'skills', 'tools', 'contact'];
+---
+<nav class="sticky top-0 z-50 nav-glass border-b border-rc-light-border/40 dark:border-rc-dark-border/40 no-print" aria-label="Main navigation">
+  <div class="max-w-6xl mx-auto px-6 lg:px-10">
+    <div class="flex items-center justify-between h-[56px]">
+      <a href={`/${lang}/`} class="font-mono font-bold text-[18px] tracking-tight" aria-label="Home"><span class="text-brand-pink">e</span>-gleba</a>
+      <div class="hidden md:flex items-center gap-1 text-[15px] font-medium">
+        {links.map((key) => <a href={`#${key}`} class="px-3 py-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors">{nav[key]}</a>)}
+        <div class="w-px h-4 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+        <details class="relative locale-menu">
+          <summary class="list-none cursor-pointer px-2.5 py-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 font-mono font-semibold uppercase">{lang}</summary>
+          <div class="absolute right-0 mt-2 w-40 rounded-xl glass-card shadow-2xl border border-rc-light-border dark:border-rc-dark-border py-2 overflow-hidden">
+            <a class="block px-4 py-2.5 hover:bg-brand-pink/10" href="/en/">🇬🇧 English</a>
+            <a class="block px-4 py-2.5 hover:bg-brand-pink/10" href="/ru/">🇷🇺 Русский</a>
+            <a class="block px-4 py-2.5 hover:bg-brand-pink/10" href="/zh/">🇨🇳 中文</a>
+          </div>
+        </details>
+        <button data-theme-toggle class="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5" aria-label="Toggle color theme">◐</button>
+      </div>
+      <div class="md:hidden flex items-center gap-1">
+        <button data-theme-toggle class="p-2 rounded-lg" aria-label="Toggle color theme">◐</button>
+        <details class="mobile-menu relative">
+          <summary class="list-none cursor-pointer p-2" aria-label="Menu">☰</summary>
+          <div class="absolute right-0 mt-2 w-56 glass-card rounded-xl shadow-2xl border border-rc-light-border dark:border-rc-dark-border p-2">
+            {links.map((key) => <a href={`#${key}`} class="block px-4 py-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">{nav[key]}</a>)}
+            <div class="flex gap-2 px-4 pt-2"><a href="/en/">EN</a><a href="/ru/">RU</a><a href="/zh/">ZH</a></div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</nav>

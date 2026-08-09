@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: "0 5 * * 1" # weekly data refresh — mon 05:00 utc
+    - cron: "0 5 * * 1"
   workflow_dispatch:
 
 permissions:
@@ -22,41 +22,17 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v7
-
       - name: setup node
         uses: actions/setup-node@v7
         with:
           node-version: 22
-
-      - name: install toolchain
+          cache: npm
+      - name: install dependencies
         run: npm install
-
-      - name: build css
-        run: npm run build:css
-
-      - name: bake github repos -> data/repos.json
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mkdir -p dist/data
-          curl -sf -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GH_TOKEN" \
-            "https://api.github.com/users/e-gleba/repos?sort=stars&direction=desc&per_page=30" \
-            | jq '[.[] | select(.fork | not)]
-                  | sort_by(.stargazers_count + .forks_count * 2) | reverse | .[0:6]
-                  | map({id, name, description, language, stargazers_count, forks_count, html_url, updated_at, archived, fork})' \
-            > dist/data/repos.json || echo "[]" > dist/data/repos.json
-          echo "repos baked: $(jq length dist/data/repos.json)"
-
-      - name: assemble site
-        run: |
-          mkdir -p dist/css dist/js
-          cp index.html dist/
-          cp css/app.css css/styles.css dist/css/
-          cp js/i18n.js js/app.js dist/js/
-
+      - name: build static site
+        run: npm run build
       - name: setup pages
         uses: actions/configure-pages@v6
-
       - name: upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
@@ -69,6 +45,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: deploy to github pages
+      - name: deploy
         id: deployment
         uses: actions/deploy-pages@v5

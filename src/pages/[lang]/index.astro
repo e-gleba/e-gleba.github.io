@@ -1,0 +1,47 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import { languages, type Language } from '../../data/i18n';
+import tools from '../../data/tools.json';
+import skills from '../../data/skills.json';
+import contacts from '../../data/contacts.json';
+import repos from '../../data/repos.json';
+
+export function getStaticPaths() {
+  return (Object.keys(languages) as Language[]).map((lang) => ({ params: { lang }, props: { lang } }));
+}
+
+const { lang } = Astro.props as { lang: Language };
+const t = languages[lang];
+---
+<Layout lang={lang}>
+  <div class="aurora" aria-hidden="true"></div>
+  <Nav lang={lang} nav={t.nav} />
+  <main>
+    <section class="relative px-6 lg:px-10 pt-10 pb-12 text-center reveal">
+      <div class="max-w-4xl mx-auto">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card text-[13px] text-slate-500 dark:text-slate-400 mb-4"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>{t.hero.status}</div>
+        <h1 class="text-[clamp(3rem,8vw,6rem)] font-black tracking-tight leading-[1.05] mb-4"><span class="block">Evgeniy</span><span class="block gradient-text animate-shimmer">Gleba</span></h1>
+        <p class="text-[clamp(1.15rem,2.4vw,1.5rem)] text-slate-500 dark:text-slate-400 mb-8 font-light">{t.hero.tagline}</p>
+        <a href="#projects" class="inline-flex px-6 py-3.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-semibold">{t.hero.viewProjects}</a>
+        <div class="grid grid-cols-3 gap-3 max-w-md mx-auto mt-8 reveal-stagger">
+          {[['3+',t.stats.years],['25+',t.stats.repos],['5',t.stats.platforms]].map(([value,label]) => <div class="glass-card p-5"><div class="text-3xl font-bold gradient-text">{value}</div><div class="text-[13px] text-slate-500 mt-1">{label}</div></div>)}
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="py-12 px-6 lg:px-10 reveal cv-auto"><div class="max-w-6xl mx-auto"><h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-7">{t.about.label}</h2><div class="grid lg:grid-cols-5 gap-10"><div class="lg:col-span-3 space-y-4 text-slate-600 dark:text-slate-400 leading-[1.75]"><p>{t.about.p1}</p><p>{t.about.p2}</p><p>{t.about.p3}</p></div><div class="lg:col-span-2 space-y-4"><article class="glass-card p-5"><h3 class="font-mono text-xs text-brand-pink uppercase mb-2">{t.about.philosophy}</h3><p class="text-sm leading-relaxed">{t.about.p4}</p></article><article class="glass-card p-5"><h3 class="font-mono text-xs text-brand-orange uppercase mb-2">{t.about.impact.label}</h3><ul class="space-y-2 text-sm">{t.about.impact.items.map((item) => <li>› {item}</li>)}</ul></article></div></div></div></section>
+
+    <section id="experience" class="py-12 px-6 lg:px-10 reveal cv-auto"><div class="max-w-6xl mx-auto"><h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-7">{t.experience.label}</h2><div class="timeline max-w-3xl">{t.experience.items.map((item) => <article class="timeline-entry"><span class="font-mono text-sm text-brand-pink">{item.year}</span><h3 class="font-bold mt-1">{item.title}</h3><p class="text-sm text-slate-500">{item.company}</p><p class="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">{item.desc}</p><div class="flex flex-wrap gap-2 mt-2">{item.tags.map((tag) => <span class="px-2 py-0.5 text-[11px] rounded-md bg-slate-100 dark:bg-white/5">{tag}</span>)}</div></article>)}</div></div></section>
+
+    <section id="projects" class="py-12 px-6 lg:px-10 reveal cv-auto"><div class="max-w-6xl mx-auto"><h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-7">{t.projects.label}</h2><div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 reveal-stagger">{repos.map((repo) => <article class="glass-card p-5"><h3 class="font-mono font-bold text-brand-pink">{repo.name}</h3><p class="text-sm text-slate-500 my-4">{repo.description || t.projects.noDesc}</p><div class="flex gap-2 text-xs mb-4"><span>{repo.language}</span><span>★ {repo.stargazers_count}</span></div><a href={repo.html_url} target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-brand-pink">{t.projects.view} ↗</a></article>)}</div></div></section>
+
+    <section id="skills" class="py-12 px-6 lg:px-10 reveal cv-auto"><div class="max-w-6xl mx-auto"><h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-7">{t.skills.label}</h2><div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 reveal-stagger">{skills.map((group) => <article class="glass-card p-5"><h3 class="font-bold text-brand-pink mb-4">{t.skills[group.key]}</h3><ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">{group.items.map((item) => <li>{item}</li>)}</ul></article>)}</div></div></section>
+
+    <section id="tools" class="py-12 px-6 lg:px-10 reveal cv-auto"><div class="max-w-6xl mx-auto"><h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold">{t.tools.label}</h2><p class="text-slate-500 mt-2 mb-7">{t.tools.subtitle}</p><div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 reveal-stagger">{tools.map((group) => <article class="glass-card p-5"><h3 class="font-mono uppercase text-sm text-brand-pink mb-4">{group.label}</h3><div class="flex flex-wrap gap-2">{group.items.map((tool) => <a href={tool.url} target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-lg border border-slate-200 dark:border-white/10 text-xs">{tool.name}</a>)}</div></article>)}</div></div></section>
+
+    <section id="contact" class="py-12 px-6 lg:px-10 text-center reveal cv-auto"><div class="max-w-6xl mx-auto"><h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-6">{t.contact.label}</h2><p class="text-slate-500 mb-8">{t.contact.text}</p><div class="flex flex-wrap justify-center gap-3">{contacts.map((link) => <a href={link.href} target="_blank" rel="noopener noreferrer" class="glass-card px-6 py-3">{link.label}</a>)}</div></div></section>
+  </main>
+  <footer class="py-5 px-6 border-t border-rc-light-border dark:border-rc-dark-border text-center text-sm text-slate-500">© 2026 Evgeniy Gleba · Built with Astro, Tailwind, and obsessive attention to detail</footer>
+  <button data-back-to-top class="fixed bottom-5 right-5 p-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl shadow-xl transition-all z-40" aria-label="Back to top">↑</button>
+</Layout>
