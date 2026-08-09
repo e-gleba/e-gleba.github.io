@@ -39,11 +39,9 @@
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">
   <link rel="dns-prefetch" href="https://fonts.gstatic.com">
   <link rel="dns-prefetch" href="https://cdn.simpleicons.org">
-  <link rel="dns-prefetch" href="https://api.github.com">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://api.github.com">
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet">
 
@@ -265,13 +263,7 @@
   <!-- Projects — Bento Grid -->
   <section id="projects" class="py-8 lg:py-12 px-6 lg:px-10 no-print reveal" style="content-visibility:auto">
     <div class="max-w-6xl mx-auto">
-      <div class="flex items-center gap-4 mb-5 lg:mb-7">
-        <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold" x-text="t('projects.label')"></h2>
-        <span x-show="rateLimited" class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-brand-orange bg-brand-orange/10 px-3 py-1 rounded-full">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-          API limit
-        </span>
-      </div>
+      <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-5 lg:mb-7" x-text="t('projects.label')"></h2>
       <div x-show="loading" class="bento-grid" aria-busy="true">
         <template x-for="i in 6" :key="i">
           <div class="bento-cell card h-48 animate-pulse"></div>

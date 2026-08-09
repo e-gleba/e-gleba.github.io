@@ -7,7 +7,6 @@ function app() {
     showTop: false,
     repos: [],
     loading: true,
-    rateLimited: false,
 
     langs: [
       { code:'en', flag:'🇬🇧', label:'English' },
@@ -151,33 +150,20 @@ function app() {
       return !repo.fork && !repo.archived && repo.stargazers_count >= 5;
     },
 
-    async fetchGitHubData() {
-      const ctrl = new AbortController();
-      const tid = setTimeout(() => ctrl.abort(), 5000);
+    // Repos are baked at build time by the deploy workflow (data/repos.json).
+    // No runtime GitHub API call — no rate limits, no skeleton flash.
+    // Falls back to hardcoded fallbackRepos when the file is missing/empty
+    // (e.g. local file:// preview).
+    async loadRepos() {
       try {
-        const res = await fetch('https://api.github.com/users/e-gleba/repos?sort=stars&direction=desc&per_page=30', {
-          headers: { Accept:'application/vnd.github.v3+json' }, signal: ctrl.signal
-        });
-        if (res.status === 403 || res.status === 429) {
-          this.rateLimited = true;
-          this.repos = [];
-        } else if (res.ok) {
-          const data = await res.json();
-          if (!Array.isArray(data)) { this.repos = []; return; }
-          this.repos = data
-            .filter(r => !r.fork)
-            .sort((a, b) => (b.stargazers_count + b.forks_count * 2) - (a.stargazers_count + a.forks_count * 2))
-            .slice(0, 6);
-          const rl = res.headers.get('x-ratelimit-remaining');
-          if (rl !== null && parseInt(rl, 10) <= 5) this.rateLimited = true;
-        } else {
-          this.repos = [];
-        }
+        const res = await fetch('data/repos.json');
+        if (!res.ok) throw new Error(`http ${res.status}`);
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) this.repos = data;
       } catch(e) {
-        console.warn('github api unavailable:', e.message);
+        console.warn('repos.json unavailable, using fallback:', e.message);
         this.repos = [];
       } finally {
-        clearTimeout(tid);
         this.loading = false;
       }
     },
@@ -196,7 +182,7 @@ function app() {
     },
 
     init() {
-      this.fetchGitHubData();
+      this.loadRepos();
       window.addEventListener('scroll', () => { this.showTop = window.scrollY > 400; }, { passive: true });
       this.$nextTick(() => this.observeReveal());
     }
