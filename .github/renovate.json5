@@ -1,0 +1,64 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+
+  extends: [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticPrefixFixDepsChoreOthers"
+  ],
+
+  // ─── General ──────────────────────────────────────────────────────────────
+  timezone: "UTC",
+  schedule: ["before 8am on monday"],
+  prConcurrentLimit: 10,
+  prHourlyLimit: 3,
+  labels: ["dependencies"],
+  commitMessagePrefix: "chore(deps):",
+  commitMessageAction: "update",
+  commitMessageTopic: "{{depName}}",
+  commitMessageExtra: "to {{newValue}}",
+
+  // ─── Scope: web deps only ─────────────────────────────────────────────────
+  // Dependabot already covers github-actions + npm version bumps — disable
+  // those managers here so the two bots never open duplicate PRs.
+  "github-actions": {
+    enabled: false
+  },
+  npm: {
+    enabled: false
+  },
+
+  // ─── Vulnerability alerts ─────────────────────────────────────────────────
+  vulnerabilityAlerts: {
+    enabled: true,
+    schedule: ["at any time"],
+    labels: ["dependencies", "security"]
+  },
+
+  packageRules: [
+    {
+      description: "Auto-merge patch and pin updates after CI passes",
+      matchUpdateTypes: ["patch", "pin"],
+      automerge: true,
+      automergeStrategy: "squash",
+      platformAutomerge: true
+    }
+  ],
+
+  // ─── jsDelivr CDN pins in index.html ──────────────────────────────────────
+  // Tracks runtime web deps hard-pinned in <script>/<link> tags:
+  //   alpinejs          (component framework)
+  //   @alpinejs/persist (localStorage persistence plugin)
+  //   shareon           (share buttons)
+  customManagers: [
+    {
+      customType: "regex",
+      description: "Update jsDelivr CDN pins in index.html",
+      managerFilePatterns: ["/(^|/)index\\.html$/"],
+      matchStrings: [
+        "cdn\\.jsdelivr\\.net/npm/(?<depName>@?[^@/]+(?:/[^@/]+)?)@(?<currentValue>[^/\"']+)"
+      ],
+      datasourceTemplate: "npm"
+    }
+  ]
+}

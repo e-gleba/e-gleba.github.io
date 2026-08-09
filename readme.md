@@ -1,65 +1,33 @@
+<div align="center">
+
 # e-gleba.github.io
 
-[![pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen?logo=github)](https://e-gleba.github.io)
+Personal portfolio — multilingual, dark/light, performance-first.
+
+[![deploy](https://github.com/e-gleba/e-gleba.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/e-gleba/e-gleba.github.io/actions/workflows/deploy.yml)
 [![license](https://img.shields.io/badge/License-AGPL--3.0-blue?logo=opensourceinitiative)](./license.md)
-[![html5](https://img.shields.io/badge/HTML5-%23E34F26.svg?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
-[![tailwindcss](https://img.shields.io/badge/Tailwind%20CSS-%2338B2AC.svg?logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
-[![alpinejs](https://img.shields.io/badge/Alpine.js-%238BC0D0.svg?logo=alpine.js&logoColor=black)](https://alpinejs.dev)
+[![pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen?logo=github)](https://e-gleba.github.io)
 
-> Personal portfolio & digital business card. Multilingual, zero-build, performance-first.
+**[Live site](https://e-gleba.github.io) · [Contact](mailto:i@egleba.ru) · [GitHub](https://github.com/e-gleba)**
 
-## Overview
+</div>
 
-Static portfolio site deployed on [GitHub Pages](https://pages.github.com). No build step, no `node_modules`, no webpack. Vanilla HTML with [Alpine.js](https://alpinejs.dev) for reactivity, [Tailwind CSS](https://tailwindcss.com) via CDN, and [AOS](https://michalsnik.github.io/aos/) for scroll animations.
+## Stack
 
-- **Live:** [https://e-gleba.github.io](https://e-gleba.github.io)
-- **Stack:** HTML5, Alpine.js, Tailwind CSS, AOS
-- **Languages:** English, Russian, Chinese
-- **Theme:** Dark / light toggle with persistent preference
+- **Alpine.js** — reactivity, i18n, theme persistence
+- **Tailwind CSS v4** — precompiled in CI, zero runtime CSS generation
+- **GitHub Actions** — build, deploy, dependency updates (Dependabot + Renovate)
 
-## Features
-
-- **Fully Static** — Single `index.html`, loads in < 100 KB first paint
-- **Multilingual** — Runtime i18n with 3 languages, no external JSON
-- **GitHub API Integration** — Auto-fetches public repos with rate-limit aware fallback
-- **Responsive** — Mobile-first, sticky nav, hamburger menu, reduced-motion support
-- **Theming** — Dark / light mode with CSS custom properties and Alpine.js persist
-- **Accessibility** — Semantic HTML, ARIA labels, focus-visible, prefers-reduced-motion
-- **Zero Build** — Clone and serve, or just open the file
-
-## Quick Start
+## Develop
 
 ```bash
-# Clone
-git clone https://github.com/e-gleba/e-gleba.github.io.git
-cd e-gleba.github.io
-
-# Serve (any static server works)
-python3 -m http.server 8000
-# Or: npx serve ., or simply open index.html
+npm install                   # once — tailwind toolchain
+npm run build:css             # css/src.css -> css/app.css
+python3 -m http.server 8000   # any static server works
 ```
 
-## Deployment
+Push to `main` — CI builds and deploys.
 
-Pushes to `main` auto-deploy via GitHub Pages. No CI/CD required.
+## License
 
-```bash
-git push origin main
-```
-
-## Project Structure
-
-```
-e-gleba.github.io/
-├── index.html          # Single-page app (HTML + inline CSS + JS)
-├── license.md          # AGPL-3.0 license
-└── readme.md           # This file
-```
-
-## Contributing
-
-See [Contributing Guidelines](./.github/contributing.md).
-
-## Security
-
-See [Security Policy](./.github/security.md).
+AGPL-3.0 — see [license.md](./license.md)

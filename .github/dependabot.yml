@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=https://json.schemastore.org/dependabot-2.0.json
+version: 2
+
+updates:
+  # ─── GitHub Actions ────────────────────────────────────────────────────────
+  # Keep CI/CD actions up to date (checkout, setup-node, configure-pages,
+  # upload-pages-artifact, deploy-pages, etc.)
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  # ─── npm (build toolchain: tailwindcss, @tailwindcss/cli) ─────────────────
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "build"
+      include: "scope"
+    groups:
+      tailwind:
+        patterns:
+          - "*tailwind*"
+
+  # ─── CDN web deps (alpinejs, @alpinejs/persist, shareon in index.html) ────
+  # Dependabot cannot track jsDelivr script-tag pins — handled by Renovate's
+  # regex customManager instead. See .github/renovate.json5
