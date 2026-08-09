@@ -398,6 +398,13 @@ body::before {
 .reveal-stagger.visible > *:nth-child(5) { transition-delay: 320ms; opacity: 1; transform: translateY(0); }
 .reveal-stagger.visible > *:nth-child(6) { transition-delay: 400ms; opacity: 1; transform: translateY(0); }
 
+/* ===== CONTENT VISIBILITY ===== */
+/* Skip offscreen rendering; hold an estimated size so the scrollbar doesn't jump */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+
 /* ===== BENTO GRID ===== */
 .bento-grid {
   display: grid;
