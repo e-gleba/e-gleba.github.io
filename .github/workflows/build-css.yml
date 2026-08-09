@@ -1,0 +1,35 @@
+name: build css
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - css/src.css
+      - .github/workflows/build-css.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  tailwind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: compile css/app.css
+        run: npx --yes @tailwindcss/cli@4.3.3 --input css/src.css --output css/app.css --minify
+
+      - name: commit artifact
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add css/app.css
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: rebuild css/app.css"
+            git push
+          fi
