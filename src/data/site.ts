@@ -1,7 +1,7 @@
 // Static site data, ported 1:1 from the old Alpine runtime state (js/app.js).
 // Rendered at build time — nothing here ships to the client as JS.
 
-import type { SkillKey } from './i18n';
+import type { SkillKey, CommunityKey } from './i18n';
 
 export interface TechBadge {
   label: string;
@@ -34,35 +34,35 @@ export interface SkillCategory {
 
 export const skillCategories: SkillCategory[] = [
   { key: 'languages', color: '#FF6B9D', items: [
-    { img: 'https://cdn.simpleicons.org/cplusplus/FF6B9D', label: 'C++' },
-    { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 19c-1.5 1.5-3.5 2-5.5 2-4.5 0-8-3.5-8-8s3.5-8 8-8c2 0 4 1 5.5 2.5"/></svg>', label: 'C17 / C99' },
+    { img: 'https://cdn.simpleicons.org/cplusplus/FF6B9D', label: 'C++20 / C++23' },
+    { img: 'https://cdn.simpleicons.org/c/FF8C42', label: 'C17 / C23' },
     { img: 'https://cdn.simpleicons.org/python/C792EA', label: 'Python 3' },
-    { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>', label: 'Bash / Shell' },
+    { img: 'https://cdn.simpleicons.org/gnubash/C792EA', label: 'Bash / PowerShell' },
   ]},
   { key: 'systems', color: '#FF8C42', items: [
-    { img: 'https://cdn.simpleicons.org/cmake/FF8C42', label: 'CMake 3.31+' },
-    { img: 'https://cdn.simpleicons.org/linux/C792EA', label: 'Linux (Fedora, ALT)' },
+    { img: 'https://cdn.simpleicons.org/cmake/FF8C42', label: 'CMake' },
+    { img: 'https://cdn.simpleicons.org/linux/C792EA', label: 'Linux (ALT, Fedora)' },
     { img: 'https://cdn.simpleicons.org/git/FF6B9D', label: 'Git / GitHub Actions' },
     { img: 'https://cdn.simpleicons.org/docker/FF8C42', label: 'Docker' },
     { img: 'https://cdn.simpleicons.org/ansible/FF6B9D', label: 'Ansible / IaC' },
-    { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>', label: 'Ninja / Make' },
-    { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>', label: 'Clang / LLVM / Xcode' },
+    { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>', label: 'Ninja' },
+    { img: 'https://cdn.simpleicons.org/llvm/C792EA', label: 'Clang / LLVM / Xcode' },
   ]},
   { key: 'engine', color: '#C792EA', items: [
     { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="16" rx="4"/><circle cx="12" cy="12" r="2"/><circle cx="9" cy="9" r="1" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/></svg>', label: 'SDL 3 (GPU, Input, Audio)' },
-    { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 22h20L12 2z"/></svg>', label: 'OpenGL / GLSL' },
+    { img: 'https://cdn.simpleicons.org/opengl/FF8C42', label: 'OpenGL / GLSL' },
     { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>', label: 'Tracy Profiler' },
-    { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>', label: 'Wwise Integration & Mgmt' },
+    { img: 'https://cdn.simpleicons.org/wwise/FF6B9D', label: 'Wwise Integration & Mgmt' },
     { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>', label: 'Hot Reload Systems' },
   ]},
   { key: 'mobile', color: '#FF6B9D', items: [
     { img: 'https://cdn.simpleicons.org/android/FF6B9D', label: 'Android SDK / NDK' },
     { img: 'https://cdn.simpleicons.org/apple/FF8C42', label: 'iOS / Obj-C++' },
-    { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>', label: 'Java / Kotlin' },
+    { img: 'https://cdn.simpleicons.org/kotlin/C792EA', label: 'Java / Kotlin' },
     { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>', label: 'Cross-platform Native' },
   ]},
   { key: 'reverse', color: '#FF8C42', items: [
-    { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>', label: 'Ghidra / IDA Pro' },
+    { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>', label: 'Ghidra' },
     { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>', label: 'Memory Analysis' },
     { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>', label: 'API Hooking / DLL Inject' },
     { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>', label: 'Asset Extraction' },
@@ -91,42 +91,85 @@ export interface ToolGroup {
   items: ToolItem[];
 }
 
+// ALT Linux logo (simple-icons has no altlinux slug) — simplified white bird
+// on brand-blue disc, readable at 16px.
+const altLinuxSvg = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.5" fill="#1B62A4"/><path d="M5 13.4c3-.3 5.2-1.6 6.8-3.6.8-1 1.8-2.4 3.2-3-.4 1.5-1.2 3-2.4 4.3 2.1-.5 4-1.6 5.4-3.1-.7 2.2-2.1 4-4 5.3-2.3 1.5-5 1.6-9 .1z" fill="#fff"/></svg>';
+
 export const tools: ToolGroup[] = [
   { label: 'Editor', items: [
-    { name: 'Neovim (LazyVim)', desc: 'Primary editor. LazyVim distro — fast, modal, Lua-configured.', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 3L3 8l4 5"/><path d="M17 3l4 5-4 5"/><line x1="12" y1="3" x2="12" y2="21"/></svg>', url: 'https://www.lazyvim.org' },
-    { name: 'CLion', desc: 'Heavy refactoring, CMake debugging, profiler integration.', icon: 'https://cdn.simpleicons.org/jetbrains/C792EA', url: 'https://jetbrains.com/clion' },
+    { name: 'Neovim (LazyVim)', desc: 'Primary editor. LazyVim distro — fast, modal, Lua-configured.', icon: 'https://cdn.simpleicons.org/neovim/C792EA', url: 'https://www.lazyvim.org' },
+    { name: 'CLion', desc: 'Heavy refactoring, CMake debugging, profiler integration.', icon: 'https://cdn.simpleicons.org/clion/FF6B9D', url: 'https://jetbrains.com/clion' },
+    { name: 'Android Studio', desc: 'Android SDK/NDK work, emulator, APK profiling.', icon: 'https://cdn.simpleicons.org/androidstudio/FF8C42', url: 'https://developer.android.com/studio' },
     { name: 'Qt Creator', desc: 'Qt projects, visual debugging.', icon: 'https://cdn.simpleicons.org/qt/FF8C42', url: 'https://qt.io' },
     { name: 'Visual Studio', desc: 'MSVC toolchain, Windows debugging.', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="#A259FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 2L2 7.5v9L17.5 22l4.5-2.5v-15L17.5 2z"/><path d="M8 9.5l4.5 2.5-4.5 2.5"/></svg>', url: 'https://visualstudio.microsoft.com' },
   ]},
   { label: 'Build & CI', items: [
-    { name: 'CMake 3.31+', desc: 'Presets, FetchContent, CPM, CPack.', icon: 'https://cdn.simpleicons.org/cmake/FF8C42', url: 'https://cmake.org' },
+    { name: 'CMake', desc: 'Presets, FetchContent, CPM, CPack.', icon: 'https://cdn.simpleicons.org/cmake/FF8C42', url: 'https://cmake.org' },
     { name: 'Ninja', desc: 'Fast parallel builds. Multi-Config.', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>', url: 'https://ninja-build.org' },
     { name: 'GitHub Actions', desc: 'Multi-platform CI matrix.', icon: 'https://cdn.simpleicons.org/githubactions/FF6B9D', url: 'https://github.com/features/actions' },
+    { name: 'GitLab CI', desc: 'GitLab pipelines & runners.', icon: 'https://cdn.simpleicons.org/gitlab/FF8C42', url: 'https://docs.gitlab.com/ci/' },
     { name: 'TeamCity', desc: 'On-prem CI/CD pipelines.', icon: 'https://cdn.simpleicons.org/teamcity/C792EA', url: 'https://jetbrains.com/teamcity' },
+    { name: 'Dependabot', desc: 'Automated dependency update PRs.', icon: 'https://cdn.simpleicons.org/dependabot/C792EA', url: 'https://github.com/dependabot' },
     { name: 'Docker', desc: 'Reproducible build containers.', icon: 'https://cdn.simpleicons.org/docker/FF8C42', url: 'https://docker.com' },
     { name: 'Ansible', desc: 'Infra-as-code, dotfiles, server mgmt.', icon: 'https://cdn.simpleicons.org/ansible/FF6B9D', url: 'https://ansible.com' },
   ]},
   { label: 'Debug & Analysis', items: [
     { name: 'clang-tidy', desc: 'Static analysis, modernize checks.', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg>', url: 'https://clang.llvm.org/extra/clang-tidy' },
-    { name: 'GDB', desc: 'GNU Debugger — native Linux debugging.', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="6" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>', url: 'https://sourceware.org/gdb' },
-    { name: 'LLDB', desc: 'LLVM debugger — macOS/iOS.', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg>', url: 'https://lldb.llvm.org' },
+    { name: 'GDB', desc: 'GNU Debugger — native Linux debugging.', icon: 'https://cdn.simpleicons.org/gnu/FF8C42', url: 'https://sourceware.org/gdb' },
+    { name: 'LLDB', desc: 'LLVM debugger — macOS/iOS.', icon: 'https://cdn.simpleicons.org/llvm/C792EA', url: 'https://lldb.llvm.org' },
     { name: 'Tracy', desc: 'Real-time frame profiler for games.', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>', url: 'https://github.com/wolfpld/tracy' },
     { name: 'Ghidra', desc: 'NSA reverse engineering framework.', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="#C792EA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M7 7h10M7 12h10M7 17h6"/></svg>', url: 'https://ghidra-sre.org' },
-    { name: 'IDA Pro', desc: 'Industry-standard disassembler/debugger.', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>', url: 'https://hex-rays.com/ida-pro' },
     { name: 'cutter-re', desc: 'GUI for Rizin — open-source RE.', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>', url: 'https://cutter.re' },
   ]},
   { label: 'Engine & GFX', items: [
     { name: 'SDL3', desc: 'Cross-platform windowing, input, GPU.', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="#FF6B9D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="4"/><path d="M7 8h10M7 12h10M7 16h7"/></svg>', url: 'https://libsdl.org' },
-    { name: 'OpenGL / GLSL', desc: 'Graphics API and shader language.', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 22h20L12 2z"/></svg>', url: 'https://opengl.org' },
+    { name: 'OpenGL / GLSL', desc: 'Graphics API and shader language.', icon: 'https://cdn.simpleicons.org/opengl/FF8C42', url: 'https://opengl.org' },
     { name: 'RenderDoc', desc: 'Graphics debugger, frame capture.', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>', url: 'https://renderdoc.org' },
-    { name: 'Wwise', desc: 'AAA audio middleware integration.', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>', url: 'https://audiokinetic.com' },
+    { name: 'Wwise', desc: 'AAA audio middleware integration.', icon: 'https://cdn.simpleicons.org/wwise/FF6B9D', url: 'https://audiokinetic.com' },
   ]},
   { label: 'Daily Stack', items: [
-    { name: 'Fedora', desc: 'Primary Linux — bleeding-edge toolchain.', icon: 'https://cdn.simpleicons.org/fedora/FF6B9D', url: 'https://fedoraproject.org' },
-    { name: 'ALT Linux', desc: 'RPM-based, enterprise stable.', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>', url: 'https://altlinux.org' },
+    { name: 'ALT Linux', desc: 'Primary Linux — Russian RPM-based, enterprise stable.', svg: altLinuxSvg, url: 'https://altlinux.org' },
     { name: 'Windows 11', desc: 'MSVC builds, game testing.', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="#0078D6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M2 12h20"/><path d="M12 3v18"/></svg>', url: 'https://microsoft.com/windows' },
-    { name: 'Zsh + Starship', desc: 'Modern shell with prompt.', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>', url: 'https://starship.rs' },
-    { name: 'Vanilla Terminal', desc: 'No bling — alacritty, foot, or Windows Terminal.', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="9" y1="2" x2="9" y2="4"/><line x1="15" y1="2" x2="15" y2="4"/></svg>', url: '#' },
+    { name: 'Zsh + Starship', desc: 'Modern shell with prompt.', icon: 'https://cdn.simpleicons.org/starship/C792EA', url: 'https://starship.rs' },
+    { name: 'Vanilla Terminal', desc: 'No bling — alacritty, foot, or Windows Terminal.', icon: 'https://cdn.simpleicons.org/alacritty/FF6B9D', url: '#' },
+  ]},
+];
+
+// Community & soft-skill proofs — every claim links to a public artifact.
+// Copy lives in i18n.ts (per-locale); only locale-independent data here.
+
+const githubMark = '<svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>';
+const redditIcon = 'https://cdn.simpleicons.org/reddit/FF4500';
+
+export interface CommunityProof {
+  label: string;
+  url: string;
+  metric?: string;
+  icon?: string;
+  svg?: string;
+}
+
+export interface CommunityCard {
+  key: CommunityKey;
+  svg: string;
+  proofs: CommunityProof[];
+}
+
+export const communityCards: CommunityCard[] = [
+  { key: 'oss', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>', proofs: [
+    { label: 'airstrike3d-tools', url: 'https://github.com/e-gleba/airstrike3d-tools', metric: '23 ★', svg: githubMark },
+    { label: 'wemod_enhancer', url: 'https://github.com/e-gleba/wemod_enhancer', metric: '13 ★ · 5 forks · week 1', svg: githubMark },
+  ]},
+  { key: 'engage', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>', proofs: [
+    { label: 'r/cpp Show & Tell — noclip camera', url: 'https://www.reddit.com/r/cpp/comments/1olj18d/c_show_and_tell_november_2025/', metric: 'u/Ascendo_Aquila', icon: redditIcon },
+    { label: 'r/airstrike3d', url: 'https://www.reddit.com/r/airstrike3d/', metric: 'modding hub', icon: redditIcon },
+  ]},
+  { key: 'impact', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>', proofs: [
+    { label: 'GModPatchTool #232 — glibc TLS', url: 'https://github.com/solsticegamestudios/GModPatchTool/issues/232', metric: '5 👍 · in official FAQ', svg: githubMark },
+  ]},
+  { key: 'sharing', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>', proofs: [
+    { label: 'how-to', url: 'https://github.com/e-gleba/how-to', metric: 'C++/CMake guides', svg: githubMark },
+    { label: 'dev-glossary', url: 'https://github.com/e-gleba/dev-glossary', metric: 'no-fluff terms', svg: githubMark },
   ]},
 ];
 
