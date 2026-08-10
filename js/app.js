@@ -150,6 +150,26 @@ function app() {
       return !repo.fork && !repo.archived && repo.stargazers_count >= 5;
     },
 
+    // Bento "constructor": pick k leading bricks to render double-wide so the
+    // 3-col grid tiles into a perfect rectangle — (n + k) % 3 === 0, k <= n/2.
+    // Repos arrive pre-sorted by rank (bake sorts by stars + forks*2), so the
+    // biggest bricks are always the top projects. Wide/slim bricks interleave
+    // (wide, slim, wide, slim, …) so rows fill left-to-right with zero holes;
+    // grid-auto-flow: dense in CSS is only a safety net.
+    bentoLayout(list) {
+      const n = list.length;
+      let k = 0;
+      for (let cand = Math.floor(n / 2); cand > 0; cand--) {
+        if ((n + cand) % 3 === 0) { k = cand; break; }
+      }
+      const cells = list.map((r, i) => ({ r, wide: i < k }));
+      const normals = cells.slice(k);
+      const out = [];
+      for (let i = 0; i < k; i++) out.push(cells[i], normals[i]);
+      out.push(...normals.slice(k));
+      return out;
+    },
+
     // Repos are baked at build time by the deploy workflow (data/repos.json).
     // No runtime GitHub API call — no rate limits, no skeleton flash.
     // Falls back to hardcoded fallbackRepos when the file is missing/empty

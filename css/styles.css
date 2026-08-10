@@ -409,6 +409,7 @@ body::before {
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-auto-flow: dense; /* safety net — bentoLayout() already tiles hole-free */
   gap: 1rem;
 }
 @media (max-width: 1024px) {
@@ -418,12 +419,25 @@ body::before {
   .bento-grid { grid-template-columns: 1fr; }
 }
 .bento-cell {
+  display: flex;
+  flex-direction: column;
   border-radius: 14px; overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .bento-cell:hover { transform: translateY(-2px); }
 .bento-cell.span-2 { grid-column: span 2; }
 .bento-cell.span-2-row { grid-row: span 2; }
+
+/* Featured (double-wide) bricks — faint brand tint so the larger size reads as intentional */
+.bento-cell.bento-featured {
+  border-color: rgba(255,107,157,0.28);
+  background-image: linear-gradient(135deg, rgba(255,107,157,0.05), rgba(255,140,66,0.03), rgba(199,146,234,0.05));
+}
+.dark .bento-cell.bento-featured {
+  border-color: rgba(255,140,66,0.30);
+  background-image: linear-gradient(135deg, rgba(255,140,66,0.06), rgba(255,107,157,0.04), rgba(199,146,234,0.06));
+}
+
 @media (max-width: 640px) {
   .bento-cell.span-2,
   .bento-cell.span-2-row { grid-column: span 1; grid-row: span 1; }
