@@ -27,10 +27,12 @@ function app() {
       { label:'CMake', icon:'https://cdn.simpleicons.org/cmake/C792EA', dark:true },
     ],
 
+    // Real top-3 repos by the bake's ranking (stars + forks*2), descs verbatim
+    // from GitHub. Shown only when data/repos.json is missing (local preview).
     fallbackRepos: [
-      { name:'cmake_template', color:'#FF6B9D', stars:0, hot:true, desc:'Production C++ template. Android NDK + Linux→Win cross-compile + GMD. CMake Presets, CPack, Docker.', tags:['C++','CMake','Android NDK','Cross-compile'], url:'https://github.com/e-gleba/cmake_template' },
-      { name:'airstrike3d-tools', color:'#FF8C42', stars:17, hot:true, desc:'Toolkit for AirStrike 3D game analysis and APK asset extraction. Reverse engineering for game preservation.', tags:['C','Ghidra','RE'], url:'https://github.com/e-gleba/airstrike3d-tools' },
-      { name:'euengine', color:'#C792EA', stars:2, hot:false, desc:'3D game engine built on SDL3 with hot reload. Modern C++ architecture.', tags:['C++','SDL3','GPU'], url:'https://github.com/e-gleba/euengine' }
+      { name:'airstrike3d-tools', color:'#FF6B9D', stars:23, hot:true, desc:'Toolkit for AirStrike 3D game analysis and apk asset extraction/package + save file view. For educational research and game preservation.', tags:['C','Ghidra','Reverse Engineering'], url:'https://github.com/e-gleba/airstrike3d-tools' },
+      { name:'wemod_enhancer', color:'#FF8C42', stars:13, hot:true, desc:'Wemod patcher impl getting rid of C#', tags:['CMake','Native','Patcher'], url:'https://github.com/e-gleba/wemod_enhancer' },
+      { name:'cmake_template', color:'#C792EA', stars:8, hot:true, desc:'Production-ready C++ project template with modern standards, cross-platform builds, and integrated tooling', tags:['C++','CMake','Docker','Android NDK'], url:'https://github.com/e-gleba/cmake_template' }
     ],
 
     tools: [
