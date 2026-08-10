@@ -1,7 +1,0 @@
-[
-  {"label":"Editor","items":[{"name":"Neovim (LazyVim)","url":"https://www.lazyvim.org"},{"name":"CLion","url":"https://jetbrains.com/clion"},{"name":"Qt Creator","url":"https://qt.io"},{"name":"Visual Studio","url":"https://visualstudio.microsoft.com"}]},
-  {"label":"Build & CI","items":[{"name":"CMake 3.31+","url":"https://cmake.org"},{"name":"Ninja","url":"https://ninja-build.org"},{"name":"GitHub Actions","url":"https://github.com/features/actions"},{"name":"Docker","url":"https://docker.com"}]},
-  {"label":"Debug & Analysis","items":[{"name":"clang-tidy","url":"https://clang.llvm.org/extra/clang-tidy"},{"name":"GDB","url":"https://sourceware.org/gdb"},{"name":"LLDB","url":"https://lldb.llvm.org"},{"name":"Tracy","url":"https://github.com/wolfpld/tracy"},{"name":"Ghidra","url":"https://ghidra-sre.org"}]},
-  {"label":"Engine & GFX","items":[{"name":"SDL3","url":"https://libsdl.org"},{"name":"OpenGL / GLSL","url":"https://opengl.org"},{"name":"RenderDoc","url":"https://renderdoc.org"},{"name":"Wwise","url":"https://audiokinetic.com"}]},
-  {"label":"Daily Stack","items":[{"name":"Fedora","url":"https://fedoraproject.org"},{"name":"ALT Linux","url":"https://altlinux.org"},{"name":"Windows 11","url":"https://microsoft.com/windows"},{"name":"Zsh + Starship","url":"https://starship.rs"}]}
-]
