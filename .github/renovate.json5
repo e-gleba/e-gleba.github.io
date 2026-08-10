@@ -45,18 +45,16 @@
     }
   ],
 
-  // ─── jsDelivr CDN pins in index.html ──────────────────────────────────────
+  // ─── jsDelivr CDN pins in Astro layouts ───────────────────────────────────
   // Tracks runtime web deps hard-pinned in <script>/<link> tags:
-  //   alpinejs          (component framework)
-  //   @alpinejs/persist (localStorage persistence plugin)
-  //   shareon           (share buttons)
+  //   shareon (share buttons) — src/layouts/Layout.astro
   customManagers: [
     {
       customType: "regex",
-      description: "Update jsDelivr CDN pins in index.html",
-      managerFilePatterns: ["/(^|/)index\\.html$/"],
+      description: "Update jsDelivr CDN pins in Astro layouts",
+      managerFilePatterns: ["/(^|/)src/layouts/.*\\.astro$/"],
       matchStrings: [
-        "cdn\\.jsdelivr\\.net/npm/(?<depName>@?[^@/]+(?:/[^@/]+)?)@(?<currentValue>[^/\"']+)"
+        "cdn\\.jsdelivr\\.net/npm/(?<depName>@?[^@/]+(?:/[^@/]+)?)@(?<currentValue>[^/\\\"']+)"
       ],
       datasourceTemplate: "npm"
     }

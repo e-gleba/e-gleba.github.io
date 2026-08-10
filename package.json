@@ -2,12 +2,16 @@
   "name": "e-gleba-github-io",
   "private": true,
   "version": "0.0.0",
-  "description": "Personal portfolio — static site. Tailwind v4 compiled in CI, deployed via GitHub Actions.",
+  "type": "module",
+  "description": "Personal portfolio — Astro static site. Tailwind v4 via @tailwindcss/vite, deployed via GitHub Actions.",
   "scripts": {
-    "build:css": "tailwindcss --input css/src.css --output css/app.css --minify"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
   },
   "devDependencies": {
-    "@tailwindcss/cli": "4.3.3",
+    "@tailwindcss/vite": "4.3.2",
+    "astro": "7.2.0",
     "tailwindcss": "4.3.3"
   }
 }

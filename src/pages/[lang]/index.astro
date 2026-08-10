@@ -1,0 +1,14 @@
+---
+import Portfolio from '../../components/Portfolio.astro';
+import { languages, type Language } from '../../data/i18n';
+
+export function getStaticPaths() {
+  return (Object.keys(languages) as Language[])
+    .filter((lang) => lang !== 'en')
+    .map((lang) => ({ params: { lang }, props: { lang } }));
+}
+
+const { lang } = Astro.props as { lang: Language };
+---
+
+<Portfolio lang={lang} />
