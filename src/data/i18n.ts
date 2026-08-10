@@ -76,7 +76,7 @@ export const languages = {
       subtitle: 'Soft skills with receipts — research, tooling, and reports people actually use.',
       items: [
         { title: 'Community Research', metric: 'r/airstrike3d', desc: 'Published DivoGames engine-lineage research (Deaddybear era, shared .pak codebase ancestry) — cited by my airstrike3d-tools preservation toolkit, 23★.', link: 'https://www.reddit.com/r/airstrike3d/comments/16k254c/about_divogames_earlier_development_projects/', linkText: 'Research post' },
-        { title: 'Open Source Adoption', metric: '13★ · 5 forks', desc: 'wemod_enhancer — WeMod patcher reimplemented in native C++/CMake, dropping the C# runtime. Release post on r/PiratedGames drove real user adoption.', link: 'https://github.com/e-gleba/wemod_enhancer', linkText: 'Repository' },
+        { title: 'Community-Driven Release', metric: 'r/PiratedGames', desc: 'wemod_enhancer — WeMod patcher reimplemented in native C++/CMake, dropping the C# runtime. Release post (Win/Linux/Steam Deck) drove real user adoption.', link: 'https://www.reddit.com/r/PiratedGames/s/v5Rc6lvqZL', linkText: 'Release post' },
         { title: 'Team Leadership', metric: '4 devs', desc: 'Led a student team shipping a cross-platform military simulator: milestones, code review, coordination with military stakeholders.' },
         { title: 'Project Management', metric: '42K+ views', desc: 'Ran World Conqueror 4 RU localization end-to-end — translators, voice actors, Patreon monetization. Covered by a popular YouTuber.', link: 'https://www.youtube.com/watch?v=fuOPZzfWoCY', linkText: 'Video review' },
         { title: 'Knowledge Sharing', metric: 'misc', desc: 'Detailed bug reports with full env dumps and repro steps — e.g. GModPatchTool Linux TLS failure (5 👍). Personal cheatsheets: how-to, dev-glossary.', link: 'https://github.com/solsticegamestudios/GModPatchTool/issues/232', linkText: 'Issue #232' },
@@ -117,7 +117,7 @@ export const languages = {
       subtitle: 'Софт-скиллы с доказательствами — исследования, тулинг и репорты, которыми реально пользуются.',
       items: [
         { title: 'Исследования для сообщества', metric: 'r/airstrike3d', desc: 'Опубликовал исследование линейки движков DivoGames (эпоха Deaddybear, общее .pak-наследие кодовой базы) — используется в моём preservation-тулките airstrike3d-tools, 23★.', link: 'https://www.reddit.com/r/airstrike3d/comments/16k254c/about_divogames_earlier_development_projects/', linkText: 'Пост с исследованием' },
-        { title: 'Open source с пользователями', metric: '13★ · 5 форков', desc: 'wemod_enhancer — патчер WeMod, переписанный на нативном C++/CMake без C#-рантайма. Пост на r/PiratedGames дал реальный приток пользователей.', link: 'https://github.com/e-gleba/wemod_enhancer', linkText: 'Репозиторий' },
+        { title: 'Релиз для сообщества', metric: 'r/PiratedGames', desc: 'wemod_enhancer — патчер WeMod, переписанный на нативном C++/CMake без C#-рантайма. Релизный пост (Win/Linux/Steam Deck) дал реальный приток пользователей.', link: 'https://www.reddit.com/r/PiratedGames/s/v5Rc6lvqZL', linkText: 'Пост с релизом' },
         { title: 'Лидерство команды', metric: '4 разработчика', desc: 'Руководил студенческой командой, сдавшей кросс-платформенный военный симулятор: вехи, код-ревью, координация с военными заказчиками.' },
         { title: 'Управление проектами', metric: '42K+ просмотров', desc: 'Вёл русскую локализацию World Conqueror 4 от начала до конца — переводчики, актёры озвучки, монетизация через Patreon. Обзор от популярного ютубера.', link: 'https://www.youtube.com/watch?v=fuOPZzfWoCY', linkText: 'Видео-обзор' },
         { title: 'Обмен знаниями', metric: 'misc', desc: 'Детальные баг-репорты с полным окружением и шагами воспроизведения — например, Linux TLS-сбой в GModPatchTool (5 👍). Личные шпаргалки: how-to, dev-glossary.', link: 'https://github.com/solsticegamestudios/GModPatchTool/issues/232', linkText: 'Issue #232' },
@@ -158,7 +158,7 @@ export const languages = {
       subtitle: '有实证的软技能——研究、工具与真正被人使用的报告。',
       items: [
         { title: '社区研究', metric: 'r/airstrike3d', desc: '发布了DivoGames引擎谱系研究（Deaddybear时期，共享.pak代码库）——被我的airstrike3d-tools保护工具包引用，23★。', link: 'https://www.reddit.com/r/airstrike3d/comments/16k254c/about_divogames_earlier_development_projects/', linkText: '研究帖子' },
-        { title: '开源采纳', metric: '13★ · 5 forks', desc: 'wemod_enhancer——用原生C++/CMake重写的WeMod补丁器，摆脱C#运行时。r/PiratedGames发布帖推动了真实用户采纳。', link: 'https://github.com/e-gleba/wemod_enhancer', linkText: '仓库' },
+        { title: '社区驱动发布', metric: 'r/PiratedGames', desc: 'wemod_enhancer——用原生C++/CMake重写的WeMod补丁器，摆脱C#运行时。发布帖（Win/Linux/Steam Deck）推动了真实用户采纳。', link: 'https://www.reddit.com/r/PiratedGames/s/v5Rc6lvqZL', linkText: '发布帖' },
         { title: '团队领导', metric: '4名开发者', desc: '领导学生团队交付跨平台军事模拟器：里程碑、代码审查、与军方利益相关者协调。' },
         { title: '项目管理', metric: '42K+次观看', desc: '端到端负责World Conqueror 4俄语本地化——翻译、配音演员、Patreon盈利。获知名YouTuber评测。', link: 'https://www.youtube.com/watch?v=fuOPZzfWoCY', linkText: '视频评测' },
         { title: '知识分享', metric: 'misc', desc: '带完整环境信息和复现步骤的详细错误报告——例如GModPatchTool Linux TLS故障（5 👍）。个人备忘：how-to、dev-glossary。', link: 'https://github.com/solsticegamestudios/GModPatchTool/issues/232', linkText: 'Issue #232' },
