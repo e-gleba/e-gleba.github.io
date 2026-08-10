@@ -263,7 +263,7 @@ const formatDate = (iso: string) =>
       </div>
       <div class="grid md:grid-cols-2 gap-4">
         {communityCards.map((card) => (
-          <div class="card-glass card-glass-hover p-5 lg:p-6">
+          <div class="card-glass card-glass-hover p-5 lg:p-6 flex flex-col">
             <h3 class="text-[16px] font-bold mb-2 flex items-center gap-2.5">
               <span class="w-5 h-5 inline-flex items-center justify-center text-brand-pink shrink-0 skill-svg" aria-hidden="true" set:html={card.svg} />
               <span>{t.community.items[card.key].title}</span>
