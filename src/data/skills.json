@@ -1,8 +1,0 @@
-[
-  {"key":"languages","items":["C++","C17 / C99","Python 3","Bash / Shell"]},
-  {"key":"systems","items":["CMake 3.31+","Linux (Fedora, ALT)","Git / GitHub Actions","Docker","Ansible / IaC","Ninja / Make","Clang / LLVM / Xcode"]},
-  {"key":"engine","items":["SDL 3 (GPU, Input, Audio)","OpenGL / GLSL","Tracy Profiler","Wwise Integration & Mgmt","Hot Reload Systems"]},
-  {"key":"mobile","items":["Android SDK / NDK","iOS / Obj-C++","Java / Kotlin","Cross-platform Native"]},
-  {"key":"reverse","items":["Ghidra / IDA Pro","Memory Analysis","API Hooking / DLL Inject","Asset Extraction","Binary Patching"]},
-  {"key":"practices","items":["Static Analysis > Runtime","C++ Contracts (P2900)","Generic Programming","constexpr / consteval","STL / Boost / GSL","Claude Code / AI-Assisted Eng."]}
-]
