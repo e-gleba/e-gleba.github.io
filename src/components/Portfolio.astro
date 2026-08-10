@@ -71,7 +71,7 @@ const formatDate = (iso: string) =>
   <Nav lang={lang} nav={t.nav} />
 
   <!-- Hero -->
-  <section id="hero" class="relative flex flex-col items-center justify-center px-6 lg:px-10 pt-8 pb-10 lg:pt-10 lg:pb-12 no-print reveal">
+  <section id="hero" class="relative flex flex-col items-center justify-center px-6 lg:px-10 pt-8 pb-10 lg:pt-10 lg:pb-12 no-print">
     <div class="max-w-4xl mx-auto w-full text-center relative z-10">
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full badge-glow border border-slate-200/50 dark:border-white/[0.08] text-[13px] font-medium text-slate-500 dark:text-slate-400 mb-4">
         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -104,7 +104,7 @@ const formatDate = (iso: string) =>
         ))}
       </div>
       <!-- Stats — 3 cards only -->
-      <div class="grid grid-cols-3 gap-3 max-w-md mx-auto reveal-stagger">
+      <div class="grid grid-cols-3 gap-3 max-w-md mx-auto">
         <div class="stat-cell stat-glass">
           <div class="text-2xl md:text-3xl font-bold gradient-text">3+</div>
           <div class="text-[13px] text-slate-500 dark:text-slate-400 mt-1">{t.stats.years}</div>
@@ -122,7 +122,7 @@ const formatDate = (iso: string) =>
   </section>
 
   <!-- About -->
-  <section id="about" class="py-8 lg:py-12 px-6 lg:px-10 no-print reveal cv-auto">
+  <section id="about" class="py-8 lg:py-12 px-6 lg:px-10 no-print cv-auto">
     <div class="max-w-6xl mx-auto">
       <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-5 lg:mb-7">{t.about.label}</h2>
       <div class="grid lg:grid-cols-5 gap-8 lg:gap-12">
@@ -153,7 +153,7 @@ const formatDate = (iso: string) =>
   </section>
 
   <!-- Experience -->
-  <section id="experience" class="py-8 lg:py-12 px-6 lg:px-10 no-print reveal cv-auto">
+  <section id="experience" class="py-8 lg:py-12 px-6 lg:px-10 no-print cv-auto">
     <div class="max-w-6xl mx-auto">
       <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-5 lg:mb-7">{t.experience.label}</h2>
       <div class="max-w-3xl">
@@ -186,7 +186,7 @@ const formatDate = (iso: string) =>
   </section>
 
   <!-- Projects — Bento Grid -->
-  <section id="projects" class="py-8 lg:py-12 px-6 lg:px-10 no-print reveal cv-auto">
+  <section id="projects" class="py-8 lg:py-12 px-6 lg:px-10 no-print cv-auto">
     <div class="max-w-6xl mx-auto">
       <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-5 lg:mb-7">{t.projects.label}</h2>
       <div class="bento-grid">
@@ -228,10 +228,10 @@ const formatDate = (iso: string) =>
   </section>
 
   <!-- Skills — horizontal bento cards -->
-  <section id="skills" class="py-8 lg:py-12 px-6 lg:px-10 no-print reveal cv-auto">
+  <section id="skills" class="py-8 lg:py-12 px-6 lg:px-10 no-print cv-auto">
     <div class="max-w-6xl mx-auto">
       <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-5 lg:mb-7">{t.skills.label}</h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 reveal-stagger">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {skillCategories.map((cat) => (
           <div class="card-glass card-glass-hover p-5 lg:p-6">
             <h3 class="text-[17px] font-bold mb-4 flex items-center gap-3" style={`color:${cat.color}`}>
@@ -259,13 +259,13 @@ const formatDate = (iso: string) =>
   </section>
 
   <!-- Tools & Resources -->
-  <section id="tools" class="py-8 lg:py-12 px-6 lg:px-10 no-print reveal cv-auto">
+  <section id="tools" class="py-8 lg:py-12 px-6 lg:px-10 no-print cv-auto">
     <div class="max-w-6xl mx-auto">
       <div class="mb-5 lg:mb-7">
         <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold">{t.tools.label}</h2>
         <p class="text-[15px] text-slate-500 dark:text-slate-400 mt-2">{t.tools.subtitle}</p>
       </div>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 reveal-stagger">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {tools.map((group) => (
           <div class="card-glass card-glass-hover p-5">
             <h3 class="text-[14px] font-bold font-mono uppercase tracking-wider text-brand-pink mb-4">{group.label}</h3>
@@ -285,7 +285,7 @@ const formatDate = (iso: string) =>
   </section>
 
   <!-- Contact -->
-  <section id="contact" class="py-8 lg:py-12 px-6 lg:px-10 no-print reveal cv-auto">
+  <section id="contact" class="py-8 lg:py-12 px-6 lg:px-10 no-print cv-auto">
     <div class="max-w-6xl mx-auto text-center">
       <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold mb-4 lg:mb-6">{t.contact.label}</h2>
       <p class="text-[16px] text-slate-500 dark:text-slate-400 mb-8 max-w-xl mx-auto leading-[1.75]">{t.contact.text}</p>
@@ -301,7 +301,7 @@ const formatDate = (iso: string) =>
   </section>
 
   <!-- Share -->
-  <section id="share" class="py-8 px-6 lg:px-10 no-print border-t border-rc-light-border dark:border-rc-dark-border bg-rc-light-card dark:bg-rc-dark-card reveal cv-auto">
+  <section id="share" class="py-8 px-6 lg:px-10 no-print border-t border-rc-light-border dark:border-rc-dark-border bg-rc-light-card dark:bg-rc-dark-card cv-auto">
     <div class="max-w-6xl mx-auto text-center">
       <p class="text-[13px] text-slate-500 dark:text-slate-400 mb-4">{t.share.subtitle}</p>
       <div class="shareon flex flex-wrap justify-center gap-2" data-url="https://e-gleba.github.io" data-title="Evgeniy Gleba — C++ Systems Engineer">

@@ -384,29 +384,6 @@ body::before {
 .timeline-desc { font-size: 0.9rem; line-height: 1.6; color: #64748b; }
 .dark .timeline-desc { color: #8a8a95; }
 
-/* ===== SCROLL-DRIVEN REVEAL ===== */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.reveal-stagger > * {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-}
-.reveal-stagger.visible > *:nth-child(1) { transition-delay: 0ms; opacity: 1; transform: translateY(0); }
-.reveal-stagger.visible > *:nth-child(2) { transition-delay: 80ms; opacity: 1; transform: translateY(0); }
-.reveal-stagger.visible > *:nth-child(3) { transition-delay: 160ms; opacity: 1; transform: translateY(0); }
-.reveal-stagger.visible > *:nth-child(4) { transition-delay: 240ms; opacity: 1; transform: translateY(0); }
-.reveal-stagger.visible > *:nth-child(5) { transition-delay: 320ms; opacity: 1; transform: translateY(0); }
-.reveal-stagger.visible > *:nth-child(6) { transition-delay: 400ms; opacity: 1; transform: translateY(0); }
-
 /* ===== CONTENT VISIBILITY ===== */
 /* Skip offscreen rendering; hold an estimated size so the scrollbar doesn't jump */
 .cv-auto {
@@ -561,6 +538,5 @@ body.theme-transitioning *::after {
     transition-duration: 0.01ms !important;
   }
   .aurora-blob, .animate-shimmer { animation: none !important; }
-  .reveal, .reveal-stagger > * { opacity: 1 !important; transform: none !important; }
   html { scroll-behavior: auto; }
 }
