@@ -3,12 +3,12 @@ import type { Language } from '../data/i18n';
 
 interface Props {
   lang: Language;
-  nav: Record<'about' | 'experience' | 'projects' | 'skills' | 'tools' | 'contact', string>;
+  nav: Record<'about' | 'experience' | 'projects' | 'skills' | 'community' | 'tools' | 'contact', string>;
 }
 
 const { lang, nav } = Astro.props;
 
-const links = ['about', 'experience', 'projects', 'skills', 'tools', 'contact'] as const;
+const links = ['about', 'experience', 'projects', 'skills', 'community', 'tools', 'contact'] as const;
 
 const langs = [
   { code: 'en', flag: '🇬🇧', label: 'English', href: '/' },

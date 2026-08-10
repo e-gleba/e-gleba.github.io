@@ -14,8 +14,16 @@ export interface ExperienceItem {
   tags: string[];
 }
 
+export interface CommunityItem {
+  title: string;
+  desc: string;
+  metric?: string;
+  link?: string;
+  linkText?: string;
+}
+
 export interface Locale {
-  nav: Record<'about' | 'experience' | 'projects' | 'skills' | 'tools' | 'contact', string>;
+  nav: Record<'about' | 'experience' | 'projects' | 'skills' | 'community' | 'tools' | 'contact', string>;
   hero: { tagline: string; viewProjects: string };
   stats: { years: string; repos: string; platforms: string };
   about: {
@@ -30,6 +38,7 @@ export interface Locale {
   experience: { label: string; items: ExperienceItem[] };
   projects: { label: string; view: string; noDesc: string };
   skills: { label: string } & Record<SkillKey, string>;
+  community: { label: string; subtitle: string; items: CommunityItem[] };
   tools: { label: string; subtitle: string };
   contact: { label: string; text: string };
   share: { subtitle: string };
@@ -38,7 +47,7 @@ export interface Locale {
 
 export const languages = {
   en: {
-    nav: { about: 'About', experience: 'Experience', projects: 'Projects', skills: 'Skills', tools: 'Tools', contact: 'Contact' },
+    nav: { about: 'About', experience: 'Experience', projects: 'Projects', skills: 'Skills', community: 'Community', tools: 'Tools', contact: 'Contact' },
     hero: { tagline: 'R&D C++ engineer', viewProjects: 'Projects' },
     stats: { years: 'Years in Production', repos: 'Open Source', platforms: 'Platforms' },
     about: {
@@ -62,13 +71,24 @@ export const languages = {
     },
     projects: { label: 'Projects', view: 'View', noDesc: 'No description' },
     skills: { label: 'Skills', languages: 'Languages', systems: 'Systems & Tooling', engine: 'Engine & Graphics', mobile: 'Mobile & Native', reverse: 'Reverse Engineering', practices: 'Practices' },
+    community: {
+      label: 'Community',
+      subtitle: 'Soft skills with receipts — research, tooling, and reports people actually use.',
+      items: [
+        { title: 'Community Research', metric: 'r/airstrike3d', desc: 'Published DivoGames engine-lineage research (Deaddybear era, shared .pak codebase ancestry) — cited by my airstrike3d-tools preservation toolkit, 23★.', link: 'https://www.reddit.com/r/airstrike3d/comments/16k254c/about_divogames_earlier_development_projects/', linkText: 'Research post' },
+        { title: 'Open Source Adoption', metric: '13★ · 5 forks', desc: 'wemod_enhancer — WeMod patcher reimplemented in native C++/CMake, dropping the C# runtime. Release post on r/PiratedGames drove real user adoption.', link: 'https://github.com/e-gleba/wemod_enhancer', linkText: 'Repository' },
+        { title: 'Team Leadership', metric: '4 devs', desc: 'Led a student team shipping a cross-platform military simulator: milestones, code review, coordination with military stakeholders.' },
+        { title: 'Project Management', metric: '42K+ views', desc: 'Ran World Conqueror 4 RU localization end-to-end — translators, voice actors, Patreon monetization. Covered by a popular YouTuber.', link: 'https://www.youtube.com/watch?v=fuOPZzfWoCY', linkText: 'Video review' },
+        { title: 'Knowledge Sharing', metric: 'misc', desc: 'Detailed bug reports with full env dumps and repro steps — e.g. GModPatchTool Linux TLS failure (5 👍). Personal cheatsheets: how-to, dev-glossary.', link: 'https://github.com/solsticegamestudios/GModPatchTool/issues/232', linkText: 'Issue #232' },
+      ],
+    },
     tools: { label: 'Tools & Resources', subtitle: 'Curated stack — performance-first, no bloat.' },
     contact: { label: 'Get in Touch', text: 'Open to consulting & collaboration on C++ systems, game engine architecture, and cross-platform tooling.' },
     share: { subtitle: 'Share this page' },
     footer: 'Built with Astro, Tailwind, and obsessive attention to detail',
   },
   ru: {
-    nav: { about: 'Обо мне', experience: 'Опыт', projects: 'Проекты', skills: 'Навыки', tools: 'Инструменты', contact: 'Контакты' },
+    nav: { about: 'Обо мне', experience: 'Опыт', projects: 'Проекты', skills: 'Навыки', community: 'Сообщество', tools: 'Инструменты', contact: 'Контакты' },
     hero: { tagline: 'R&D C++ инженер', viewProjects: 'Проекты' },
     stats: { years: 'лет в продакшене', repos: 'open source', platforms: 'платформ' },
     about: {
@@ -92,13 +112,24 @@ export const languages = {
     },
     projects: { label: 'Проекты', view: 'Смотреть', noDesc: 'Нет описания' },
     skills: { label: 'Навыки', languages: 'Языки', systems: 'Системы и инструменты', engine: 'Движок и графика', mobile: 'Мобильная и нативная разработка', reverse: 'Реверс-инжиниринг', practices: 'Практики' },
+    community: {
+      label: 'Сообщество',
+      subtitle: 'Софт-скиллы с доказательствами — исследования, тулинг и репорты, которыми реально пользуются.',
+      items: [
+        { title: 'Исследования для сообщества', metric: 'r/airstrike3d', desc: 'Опубликовал исследование линейки движков DivoGames (эпоха Deaddybear, общее .pak-наследие кодовой базы) — используется в моём preservation-тулките airstrike3d-tools, 23★.', link: 'https://www.reddit.com/r/airstrike3d/comments/16k254c/about_divogames_earlier_development_projects/', linkText: 'Пост с исследованием' },
+        { title: 'Open source с пользователями', metric: '13★ · 5 форков', desc: 'wemod_enhancer — патчер WeMod, переписанный на нативном C++/CMake без C#-рантайма. Пост на r/PiratedGames дал реальный приток пользователей.', link: 'https://github.com/e-gleba/wemod_enhancer', linkText: 'Репозиторий' },
+        { title: 'Лидерство команды', metric: '4 разработчика', desc: 'Руководил студенческой командой, сдавшей кросс-платформенный военный симулятор: вехи, код-ревью, координация с военными заказчиками.' },
+        { title: 'Управление проектами', metric: '42K+ просмотров', desc: 'Вёл русскую локализацию World Conqueror 4 от начала до конца — переводчики, актёры озвучки, монетизация через Patreon. Обзор от популярного ютубера.', link: 'https://www.youtube.com/watch?v=fuOPZzfWoCY', linkText: 'Видео-обзор' },
+        { title: 'Обмен знаниями', metric: 'misc', desc: 'Детальные баг-репорты с полным окружением и шагами воспроизведения — например, Linux TLS-сбой в GModPatchTool (5 👍). Личные шпаргалки: how-to, dev-glossary.', link: 'https://github.com/solsticegamestudios/GModPatchTool/issues/232', linkText: 'Issue #232' },
+      ],
+    },
     tools: { label: 'Инструменты', subtitle: 'Отборный стек — производительность прежде всего, без раздутия.' },
     contact: { label: 'Контакты', text: 'Открыт к консалтингу и коллаборации в области C++ систем, архитектуры игровых движков и кросс-платформенного тулинга.' },
     share: { subtitle: 'Поделиться страницей' },
     footer: 'Сделано на Astro, Tailwind и навязчивом внимании к деталям',
   },
   zh: {
-    nav: { about: '关于', experience: '经验', projects: '项目', skills: '技能', tools: '工具', contact: '联系' },
+    nav: { about: '关于', experience: '经验', projects: '项目', skills: '技能', community: '社区', tools: '工具', contact: '联系' },
     hero: { tagline: 'R&D C++ 工程师', viewProjects: '项目' },
     stats: { years: '年生产经验', repos: '开源项目', platforms: '平台' },
     about: {
@@ -122,6 +153,17 @@ export const languages = {
     },
     projects: { label: '项目', view: '查看', noDesc: '无描述' },
     skills: { label: '技能', languages: '语言', systems: '系统与工具', engine: '引擎与图形', mobile: '移动与原生', reverse: '逆向工程', practices: '实践' },
+    community: {
+      label: '社区',
+      subtitle: '有实证的软技能——研究、工具与真正被人使用的报告。',
+      items: [
+        { title: '社区研究', metric: 'r/airstrike3d', desc: '发布了DivoGames引擎谱系研究（Deaddybear时期，共享.pak代码库）——被我的airstrike3d-tools保护工具包引用，23★。', link: 'https://www.reddit.com/r/airstrike3d/comments/16k254c/about_divogames_earlier_development_projects/', linkText: '研究帖子' },
+        { title: '开源采纳', metric: '13★ · 5 forks', desc: 'wemod_enhancer——用原生C++/CMake重写的WeMod补丁器，摆脱C#运行时。r/PiratedGames发布帖推动了真实用户采纳。', link: 'https://github.com/e-gleba/wemod_enhancer', linkText: '仓库' },
+        { title: '团队领导', metric: '4名开发者', desc: '领导学生团队交付跨平台军事模拟器：里程碑、代码审查、与军方利益相关者协调。' },
+        { title: '项目管理', metric: '42K+次观看', desc: '端到端负责World Conqueror 4俄语本地化——翻译、配音演员、Patreon盈利。获知名YouTuber评测。', link: 'https://www.youtube.com/watch?v=fuOPZzfWoCY', linkText: '视频评测' },
+        { title: '知识分享', metric: 'misc', desc: '带完整环境信息和复现步骤的详细错误报告——例如GModPatchTool Linux TLS故障（5 👍）。个人备忘：how-to、dev-glossary。', link: 'https://github.com/solsticegamestudios/GModPatchTool/issues/232', linkText: 'Issue #232' },
+      ],
+    },
     tools: { label: '工具与资源', subtitle: '精选工具栈 — 性能优先，无冗余。' },
     contact: { label: '联系', text: '开放C++系统、游戏引擎架构和跨平台工具方面的咨询与合作。' },
     share: { subtitle: '分享此页面' },
