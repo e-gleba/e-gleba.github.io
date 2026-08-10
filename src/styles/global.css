@@ -5,10 +5,15 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@theme {
-  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+/* Font families come from Astro's Fonts API (see astro.config.mjs) — the
+   cssVariables resolve to self-hosted @font-face families with metric-matched
+   fallbacks. @theme inline forwards the var() references into utilities. */
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+}
 
+@theme {
   --color-brand-pink: #ff6b9d;
   --color-brand-orange: #ff8c42;
   --color-brand-purple: #c792ea;

@@ -26,10 +26,10 @@ jobs:
       - name: setup node
         uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 24
 
       - name: install dependencies
-        run: npm install
+        run: npm install --no-audit --no-fund
 
       - name: bake github repos -> src/data/repos.json
         env:
