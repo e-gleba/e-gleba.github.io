@@ -35,6 +35,22 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent; /* no gray flash on mobile taps */
+}
+
+/* Hand cursor on every interactive control — Tailwind v4 preflight resets
+   buttons/summaries to cursor:default; web convention expects the pointer.
+   touch-action: manipulation kills the double-tap-zoom delay on touch. */
+button,
+summary,
+[role='button'] {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* Keep section tops clear of the 56px sticky nav on anchor jumps */
+section[id] {
+  scroll-margin-top: 4.5rem;
 }
 
 /* ===== SCROLLBAR ===== */
