@@ -1,35 +1,79 @@
 ---
+import type { Language } from '../data/i18n';
+
 interface Props {
-  lang: 'en' | 'ru' | 'zh';
-  nav: Record<string, string>;
+  lang: Language;
+  nav: Record<'about' | 'experience' | 'projects' | 'skills' | 'tools' | 'contact', string>;
 }
+
 const { lang, nav } = Astro.props;
-const links = ['about', 'experience', 'projects', 'skills', 'tools', 'contact'];
+
+const links = ['about', 'experience', 'projects', 'skills', 'tools', 'contact'] as const;
+
+const langs = [
+  { code: 'en', flag: '🇬🇧', label: 'English', href: '/' },
+  { code: 'ru', flag: '🇷🇺', label: 'Русский', href: '/ru/' },
+  { code: 'zh', flag: '🇨🇳', label: '中文', href: '/zh/' },
+];
 ---
+
 <nav class="sticky top-0 z-50 nav-glass border-b border-rc-light-border/40 dark:border-rc-dark-border/40 no-print" aria-label="Main navigation">
   <div class="max-w-6xl mx-auto px-6 lg:px-10">
     <div class="flex items-center justify-between h-[56px]">
-      <a href={`/${lang}/`} class="font-mono font-bold text-[18px] tracking-tight" aria-label="Home"><span class="text-brand-pink">e</span>-gleba</a>
-      <div class="hidden md:flex items-center gap-1 text-[15px] font-medium">
-        {links.map((key) => <a href={`#${key}`} class="px-3 py-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors">{nav[key]}</a>)}
-        <div class="w-px h-4 bg-slate-200 dark:bg-slate-700 mx-1"></div>
-        <details class="relative locale-menu">
-          <summary class="list-none cursor-pointer px-2.5 py-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 font-mono font-semibold uppercase">{lang}</summary>
-          <div class="absolute right-0 mt-2 w-40 rounded-xl glass-card shadow-2xl border border-rc-light-border dark:border-rc-dark-border py-2 overflow-hidden">
-            <a class="block px-4 py-2.5 hover:bg-brand-pink/10" href="/en/">🇬🇧 English</a>
-            <a class="block px-4 py-2.5 hover:bg-brand-pink/10" href="/ru/">🇷🇺 Русский</a>
-            <a class="block px-4 py-2.5 hover:bg-brand-pink/10" href="/zh/">🇨🇳 中文</a>
+      <a href="#" class="font-mono font-bold text-[18px] tracking-tight flex items-center gap-1.5" aria-label="Home">
+        <span class="text-brand-pink">e</span><span class="text-slate-400">-</span><span class="dark:text-white">gleba</span>
+      </a>
+      <div class="hidden md:flex items-center gap-0.5 text-[16px] font-medium">
+        {links.map((key) => (
+          <a href={`#${key}`} class="px-3 py-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors">{nav[key]}</a>
+        ))}
+        <div class="w-px h-4 bg-slate-200 dark:bg-slate-700 mx-1.5"></div>
+        <details class="relative" data-menu>
+          <summary class="list-none cursor-pointer flex items-center gap-1 px-2.5 py-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-[14px] font-mono font-semibold uppercase" aria-label="Select language">
+            <span>{lang}</span>
+            <svg class="w-3.5 h-3.5 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="absolute right-0 mt-2 w-40 rounded-xl glass-card shadow-2xl border border-rc-light-border dark:border-rc-dark-border py-2 z-50 overflow-hidden" role="menu">
+            {langs.map((l) => (
+              <a href={l.href} data-set-lang={l.code} role="menuitem"
+                 class={`w-full px-4 py-2.5 text-left text-[16px] hover:bg-brand-pink/10 transition-colors flex items-center gap-3 ${lang === l.code ? 'text-brand-pink font-semibold' : 'text-slate-600 dark:text-slate-300'}`}>
+                <span class="text-lg">{l.flag}</span>
+                <span>{l.label}</span>
+              </a>
+            ))}
           </div>
         </details>
-        <button data-theme-toggle class="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5" aria-label="Toggle color theme">◐</button>
+        <button type="button" data-theme-toggle class="theme-toggle-btn p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors" aria-label="Toggle color theme">
+          <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+        </button>
       </div>
-      <div class="md:hidden flex items-center gap-1">
-        <button data-theme-toggle class="p-2 rounded-lg" aria-label="Toggle color theme">◐</button>
-        <details class="mobile-menu relative">
-          <summary class="list-none cursor-pointer p-2" aria-label="Menu">☰</summary>
-          <div class="absolute right-0 mt-2 w-56 glass-card rounded-xl shadow-2xl border border-rc-light-border dark:border-rc-dark-border p-2">
-            {links.map((key) => <a href={`#${key}`} class="block px-4 py-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5">{nav[key]}</a>)}
-            <div class="flex gap-2 px-4 pt-2"><a href="/en/">EN</a><a href="/ru/">RU</a><a href="/zh/">ZH</a></div>
+      <div class="md:hidden flex items-center gap-1 no-print">
+        <button type="button" data-theme-toggle class="theme-toggle-btn p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5" aria-label="Toggle color theme">
+          <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+        </button>
+        <details class="md:hidden" data-menu>
+          <summary class="list-none cursor-pointer p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5" aria-label="Menu">
+            <svg class="w-5 h-5 menu-icon-open" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <svg class="w-5 h-5 menu-icon-close" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </summary>
+          <div class="absolute left-0 right-0 top-full nav-glass border-t border-b border-slate-200 dark:border-slate-800 no-print">
+            <div class="max-w-6xl mx-auto px-6 lg:px-10 py-2">
+              <div class="flex flex-col gap-0.5 pb-2">
+                {links.map((key) => (
+                  <a href={`#${key}`} class="px-4 py-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-[16px] font-medium">{nav[key]}</a>
+                ))}
+                <div class="flex gap-2 px-4 pt-2">
+                  {langs.map((l) => (
+                    <a href={l.href} data-set-lang={l.code}
+                       class={`px-3 py-1.5 rounded-lg text-[14px] font-mono uppercase border font-semibold ${lang === l.code ? 'border-brand-pink text-brand-pink bg-brand-pink/10' : 'border-slate-300 dark:border-slate-700 text-slate-500'}`}>
+                      {l.code}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </details>
       </div>

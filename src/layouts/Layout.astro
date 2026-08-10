@@ -1,74 +1,164 @@
 ---
 import '../styles/global.css';
+import type { Language } from '../data/i18n';
 
 interface Props {
-  lang: 'en' | 'ru' | 'zh';
+  lang: Language;
+  isHome?: boolean;
   title?: string;
   description?: string;
 }
 
 const {
   lang,
+  isHome = false,
   title = 'Evgeniy Gleba — C++ Systems Engineer',
   description = 'Cross-platform C++ systems. Game engines, reverse engineering, performance optimization.',
 } = Astro.props;
+
+const site = 'https://e-gleba.github.io';
+const canonical = Astro.url.href;
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Evgeniy Gleba',
+  url: site,
+  email: 'i@egleba.ru',
+  jobTitle: 'C++ Systems Engineer',
+  knowsAbout: ['C++', 'Systems Programming', 'Game Engine Development', 'Reverse Engineering', 'Cross-Platform Development'],
+  sameAs: ['https://github.com/e-gleba', 'https://t.me/egleba', 'https://vk.ru/e_gleba', 'https://steamcommunity.com/id/egleba', 'https://x.com/e_gleba'],
+};
 ---
+
 <!doctype html>
-<html lang={lang} class="antialiased">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <meta name="description" content={description} />
-    <meta name="color-scheme" content="dark light" />
-    <meta name="robots" content="index, follow" />
-    <meta name="author" content="Evgeniy Gleba" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url.href} />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <link rel="canonical" href={Astro.url.href} />
-    <link rel="alternate" hreflang="en" href="https://e-gleba.github.io/en/" />
-    <link rel="alternate" hreflang="ru" href="https://e-gleba.github.io/ru/" />
-    <link rel="alternate" hreflang="zh" href="https://e-gleba.github.io/zh/" />
-    <link rel="alternate" hreflang="x-default" href="https://e-gleba.github.io/en/" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet" />
-    <title>{title}</title>
-    <script is:inline>
-      (() => {
-        const saved = localStorage.getItem('theme');
-        const dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-        document.documentElement.classList.toggle('dark', dark);
-      })();
-    </script>
-  </head>
-  <body class="bg-rc-light-bg dark:bg-rc-dark-bg text-slate-900 dark:text-white font-sans transition-colors duration-300">
-    <slot />
-    <script>
-      const themeButtons = document.querySelectorAll('[data-theme-toggle]');
-      themeButtons.forEach((button) => button.addEventListener('click', () => {
+<html lang={lang} class="antialiased" data-home={isHome ? 'true' : undefined}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta name="description" content={description} />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" content="#0a0a0f" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Evgeniy Gleba" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <title>{title}</title>
+
+  <script type="application/ld+json" set:html={JSON.stringify(person)} />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FF6B9D'/%3E%3Cstop offset='50%25' style='stop-color:%23FF8C42'/%3E%3Cstop offset='100%25' style='stop-color:%23C792EA'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%230a0a0f'/%3E%3Cpath d='M44 16 C28 14 14 22 14 32 C14 42 28 50 44 48 M14 32 L38 32 M44 16 C48 17 50 20 48 22' stroke='url(%23g)' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='48' cy='22' r='2.5' fill='%23FF6B9D' opacity='.8'/%3E%3C/svg%3E" />
+  <link rel="canonical" href={canonical} />
+  <link rel="alternate" hreflang="en" href={`${site}/`} />
+  <link rel="alternate" hreflang="ru" href={`${site}/ru/`} />
+  <link rel="alternate" hreflang="zh" href={`${site}/zh/`} />
+  <link rel="alternate" hreflang="x-default" href={`${site}/`} />
+
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+  <link rel="dns-prefetch" href="https://cdn.simpleicons.org" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet" />
+
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.min.css" /></noscript>
+  <script src="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.iife.js" defer init></script>
+
+  <script is:inline>
+    (() => {
+      const saved = localStorage.getItem('theme');
+      const dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.classList.toggle('dark', dark);
+
+      // honor the explicitly chosen language when landing on the root page
+      const lang = localStorage.getItem('language');
+      if (document.documentElement.dataset.home === 'true' && (lang === 'ru' || lang === 'zh')) {
+        location.replace('/' + lang + '/');
+      }
+    })();
+  </script>
+</head>
+
+<body class="bg-rc-light-bg dark:bg-rc-dark-bg text-slate-900 dark:text-white font-sans transition-colors duration-300">
+  <!-- Icon sprite — skill category icons -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-cat-languages" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></symbol>
+    <symbol id="i-cat-systems" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></symbol>
+    <symbol id="i-cat-engine" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></symbol>
+    <symbol id="i-cat-mobile" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></symbol>
+    <symbol id="i-cat-reverse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+    <symbol id="i-cat-practices" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+  </svg>
+
+  <slot />
+
+  <script>
+    // theme toggle with ripple + staggered transition (parity with the old Alpine toggleTheme)
+    document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const rect = button.getBoundingClientRect();
+        const ripple = document.createElement('div');
+        ripple.style.cssText = `position:fixed;top:${rect.top + rect.height / 2}px;left:${rect.left + rect.width / 2}px;width:10px;height:10px;border-radius:50%;background:rgba(255,107,157,0.3);pointer-events:none;z-index:99999;animation:themeRipple 0.6s ease-out forwards;`;
+        document.body.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 700);
+
+        document.body.classList.add('theme-transitioning');
         const dark = document.documentElement.classList.toggle('dark');
         localStorage.setItem('theme', dark ? 'dark' : 'light');
-      }));
+        setTimeout(() => document.body.classList.remove('theme-transitioning'), 500);
+      });
+    });
 
-      const topButton = document.querySelector('[data-back-to-top]');
-      const updateTopButton = () => topButton?.classList.toggle('is-visible', scrollY > 400);
-      updateTopButton();
-      addEventListener('scroll', updateTopButton, { passive: true });
-      topButton?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+    // back to top
+    const topButton = document.querySelector('[data-back-to-top]');
+    const updateTopButton = () => topButton?.classList.toggle('is-visible', scrollY > 400);
+    updateTopButton();
+    addEventListener('scroll', updateTopButton, { passive: true });
+    topButton?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        });
-      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-      document.querySelectorAll('.reveal, .reveal-stagger').forEach((element) => observer.observe(element));
-    </script>
-  </body>
+    // scroll-driven reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach((element) => observer.observe(element));
+
+    // print resume
+    document.querySelectorAll('[data-print]').forEach((button) => {
+      button.addEventListener('click', () => window.print());
+    });
+
+    // <details> menus: close on outside click / escape, close mobile menu after navigation
+    document.addEventListener('click', (event) => {
+      document.querySelectorAll('details[data-menu][open]').forEach((menu) => {
+        if (event.target instanceof Node && !menu.contains(event.target)) menu.removeAttribute('open');
+      });
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      document.querySelectorAll('details[data-menu][open]').forEach((menu) => menu.removeAttribute('open'));
+    });
+    document.querySelectorAll('details[data-menu] a[href^="#"]').forEach((link) => {
+      link.addEventListener('click', () => link.closest('details')?.removeAttribute('open'));
+    });
+
+    // remember explicit language choice (parity with the old Alpine $persist('language'))
+    document.querySelectorAll('[data-set-lang]').forEach((link) => {
+      link.addEventListener('click', () => {
+        const code = link.getAttribute('data-set-lang');
+        if (code) localStorage.setItem('language', code);
+      });
+    });
+  </script>
+</body>
 </html>
