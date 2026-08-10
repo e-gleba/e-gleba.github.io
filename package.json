@@ -3,15 +3,15 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "description": "Personal portfolio — Astro static site deployed to GitHub Pages.",
+  "description": "Personal portfolio — Astro static site. Tailwind v4 via @tailwindcss/vite, deployed via GitHub Actions.",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview"
   },
-  "dependencies": {
-    "@astrojs/tailwind": "^6.0.2",
-    "astro": "^5.13.5",
-    "tailwindcss": "^4.1.12"
+  "devDependencies": {
+    "@tailwindcss/vite": "4.3.2",
+    "astro": "7.2.0",
+    "tailwindcss": "4.3.3"
   }
 }

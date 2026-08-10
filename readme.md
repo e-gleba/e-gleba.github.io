@@ -14,16 +14,17 @@ Personal portfolio — multilingual, dark/light, performance-first.
 
 ## Stack
 
-- **Alpine.js** — reactivity, i18n, theme persistence
-- **Tailwind CSS v4** — precompiled in CI, zero runtime CSS generation
+- **Astro** — build-time static generation, localized routes, zero client JS framework
+- **Tailwind CSS v4** — `@tailwindcss/vite`, Lightning CSS minification
 - **GitHub Actions** — build, deploy, dependency updates (Dependabot + Renovate)
 
 ## Develop
 
 ```bash
-npm install                   # once — tailwind toolchain
-npm run build:css             # css/src.css -> css/app.css
-python3 -m http.server 8000   # any static server works
+npm install        # once — astro + tailwind toolchain
+npm run dev        # local dev server
+npm run build      # static build -> dist/
+npm run preview    # serve the production build locally
 ```
 
 Push to `main` — CI builds and deploys.
