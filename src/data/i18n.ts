@@ -4,6 +4,9 @@
 export const skillKeys = ['languages', 'systems', 'engine', 'mobile', 'reverse', 'practices'] as const;
 export type SkillKey = (typeof skillKeys)[number];
 
+export const communityKeys = ['oss', 'engage', 'impact', 'sharing'] as const;
+export type CommunityKey = (typeof communityKeys)[number];
+
 export interface ExperienceItem {
   year: string;
   title: string;
@@ -15,7 +18,7 @@ export interface ExperienceItem {
 }
 
 export interface Locale {
-  nav: Record<'about' | 'experience' | 'projects' | 'skills' | 'tools' | 'contact', string>;
+  nav: Record<'about' | 'experience' | 'projects' | 'skills' | 'community' | 'tools' | 'contact', string>;
   hero: { tagline: string; viewProjects: string };
   stats: { years: string; repos: string; platforms: string };
   about: {
@@ -30,6 +33,11 @@ export interface Locale {
   experience: { label: string; items: ExperienceItem[] };
   projects: { label: string; view: string; noDesc: string };
   skills: { label: string } & Record<SkillKey, string>;
+  community: {
+    label: string;
+    subtitle: string;
+    items: Record<CommunityKey, { title: string; desc: string }>;
+  };
   tools: { label: string; subtitle: string };
   contact: { label: string; text: string };
   share: { subtitle: string };
@@ -38,14 +46,14 @@ export interface Locale {
 
 export const languages = {
   en: {
-    nav: { about: 'About', experience: 'Experience', projects: 'Projects', skills: 'Skills', tools: 'Tools', contact: 'Contact' },
+    nav: { about: 'About', experience: 'Experience', projects: 'Projects', skills: 'Skills', community: 'Community', tools: 'Tools', contact: 'Contact' },
     hero: { tagline: 'R&D C++ engineer', viewProjects: 'Projects' },
     stats: { years: 'Years in Production', repos: 'Open Source', platforms: 'Platforms' },
     about: {
       label: 'About',
       p1: 'Systems engineer with 3+ years shipping cross-platform C++ in production game engines. Specialized in performance-critical systems: graphics pipelines, asset streaming, memory management.',
       p2: 'At Lesta Games (Engine Core, Tanks Blitz), I work on engine systems that power 10M+ active players. My code runs on Linux servers, Android/iOS devices, and Windows clients — all from a single CMake build tree.',
-      p3: 'Reverse engineering and game preservation are my long-term passions. Published open-source tooling for asset extraction and binary analysis. 25+ public repositories spanning systems programming, tooling, and experimental engines.',
+      p3: 'Reverse engineering and game preservation are my long-term passions. Published open-source tooling for asset extraction and binary analysis. 30+ public repositories spanning systems programming, tooling, and experimental engines.',
       philosophy: 'Philosophy',
       p4: 'Static analysis over runtime debugging. Compile-time safety over runtime checks. Simple, boring, reliable code over clever abstractions. Every line must justify its existence in production.',
       impact: { label: 'Impact', items: ['Engine systems serving 10M+ players', 'Cross-platform: Linux/Win/macOS/iOS/Android', 'Open-source tooling with active community', 'Sub-millisecond frame time guarantees'] },
@@ -62,20 +70,30 @@ export const languages = {
     },
     projects: { label: 'Projects', view: 'View', noDesc: 'No description' },
     skills: { label: 'Skills', languages: 'Languages', systems: 'Systems & Tooling', engine: 'Engine & Graphics', mobile: 'Mobile & Native', reverse: 'Reverse Engineering', practices: 'Practices' },
+    community: {
+      label: 'Community & Soft Skills',
+      subtitle: 'Soft skills with receipts — every claim links to public proof.',
+      items: {
+        oss: { title: 'Open Source with Real Users', desc: 'Tools built in the open and adopted by the community — not portfolio demos. airstrike3d-tools grew into the go-to preservation toolkit for the AirStrike 3D series; wemod_enhancer hit 13 stars and 5 forks in its first week.' },
+        engage: { title: 'Community-Driven Development', desc: 'Share progress, gather feedback, iterate in public. Presented the AirStrike 3D noclip-camera research at r/cpp Show & Tell; active member of the r/airstrike3d modding community.' },
+        impact: { title: 'Bug Reports That Fix Things', desc: 'Detailed, reproducible reports with full environment context. GModPatchTool #232 (Fedora glibc static-TLS failure) earned 5 👍, produced a confirmed workaround, and is now linked from the project\u2019s official FAQ.' },
+        sharing: { title: 'Knowledge Sharing', desc: 'Write down what others can reuse — cross-compilation guides, CMake presets, debugging checklists, and a dev glossary without fluff.' },
+      },
+    },
     tools: { label: 'Tools & Resources', subtitle: 'Curated stack — performance-first, no bloat.' },
     contact: { label: 'Get in Touch', text: 'Open to consulting & collaboration on C++ systems, game engine architecture, and cross-platform tooling.' },
     share: { subtitle: 'Share this page' },
     footer: 'Built with Astro, Tailwind, and obsessive attention to detail',
   },
   ru: {
-    nav: { about: 'Обо мне', experience: 'Опыт', projects: 'Проекты', skills: 'Навыки', tools: 'Инструменты', contact: 'Контакты' },
+    nav: { about: 'Обо мне', experience: 'Опыт', projects: 'Проекты', skills: 'Навыки', community: 'Сообщество', tools: 'Инструменты', contact: 'Контакты' },
     hero: { tagline: 'R&D C++ инженер', viewProjects: 'Проекты' },
     stats: { years: 'лет в продакшене', repos: 'open source', platforms: 'платформ' },
     about: {
       label: 'Обо мне',
       p1: 'Системный инженер с 3+ годами разработки кросс-платформенного C++ в игровых движках. Специализация — системы, критичные к производительности: графические пайплайны, стриминг ассетов, управление памятью.',
       p2: 'В Lesta Games (Engine Core, Tanks Blitz) работаю над движковыми системами для 10M+ активных игроков. Код работает на Linux-серверах, Android/iOS устройствах и Windows-клиентах — всё из единого дерева сборки CMake.',
-      p3: 'Реверс-инжиниринг и сохранение игр — давние увлечения. Опубликовал open-source инструменты для извлечения ассетов и бинарного анализа. 25+ публичных репозиториев: системное программирование, тулинг, экспериментальные движки.',
+      p3: 'Реверс-инжиниринг и сохранение игр — давние увлечения. Опубликовал open-source инструменты для извлечения ассетов и бинарного анализа. 30+ публичных репозиториев: системное программирование, тулинг, экспериментальные движки.',
       philosophy: 'Философия',
       p4: 'Статический анализ вместо отладки в рантайме. Безопасность на этапе компиляции вместо рантайм-проверок. Простой, скучный, надёжный код вместо умных абстракций. Каждая строка должна оправдывать своё существование в продакшене.',
       impact: { label: 'Результаты', items: ['Движковые системы для 10M+ игроков', 'Кросс-платформа: Linux/Win/macOS/iOS/Android', 'Open-source инструменты с активным сообществом', 'Гарантии frame time < 1 мс'] },
@@ -92,20 +110,30 @@ export const languages = {
     },
     projects: { label: 'Проекты', view: 'Смотреть', noDesc: 'Нет описания' },
     skills: { label: 'Навыки', languages: 'Языки', systems: 'Системы и инструменты', engine: 'Движок и графика', mobile: 'Мобильная и нативная разработка', reverse: 'Реверс-инжиниринг', practices: 'Практики' },
+    community: {
+      label: 'Сообщество и soft skills',
+      subtitle: 'Soft skills с доказательствами — каждый пункт ведёт на публичный источник.',
+      items: {
+        oss: { title: 'Open Source с реальными пользователями', desc: 'Инструменты, созданные открыто и принятые сообществом — не демки для портфолио. airstrike3d-tools стал основным тулкитом для сохранения серии AirStrike 3D; wemod_enhancer набрал 13 звёзд и 5 форков за первую неделю.' },
+        engage: { title: 'Разработка вместе с сообществом', desc: 'Делюсь прогрессом, собираю обратную связь, итерирую публично. Представил исследование noclip-камеры AirStrike 3D в r/cpp Show & Tell; активный участник моддинг-сообщества r/airstrike3d.' },
+        impact: { title: 'Баг-репорты, которые чинят вещи', desc: 'Детальные воспроизводимые репорты с полным описанием окружения. GModPatchTool #232 (Fedora, сбой static-TLS в glibc) набрал 5 👍, привёл к подтверждённому обходному решению и теперь в официальном FAQ проекта.' },
+        sharing: { title: 'Передача знаний', desc: 'Записываю то, что другие могут переиспользовать: гайды по кросс-компиляции, пресеты CMake, чек-листы отладки и глоссарий без воды.' },
+      },
+    },
     tools: { label: 'Инструменты', subtitle: 'Отборный стек — производительность прежде всего, без раздутия.' },
     contact: { label: 'Контакты', text: 'Открыт к консалтингу и коллаборации в области C++ систем, архитектуры игровых движков и кросс-платформенного тулинга.' },
     share: { subtitle: 'Поделиться страницей' },
     footer: 'Сделано на Astro, Tailwind и навязчивом внимании к деталям',
   },
   zh: {
-    nav: { about: '关于', experience: '经验', projects: '项目', skills: '技能', tools: '工具', contact: '联系' },
+    nav: { about: '关于', experience: '经验', projects: '项目', skills: '技能', community: '社区', tools: '工具', contact: '联系' },
     hero: { tagline: 'R&D C++ 工程师', viewProjects: '项目' },
     stats: { years: '年生产经验', repos: '开源项目', platforms: '平台' },
     about: {
       label: '关于',
       p1: '拥有3年以上跨平台C++游戏引擎生产经验的系统工程师。专注于性能关键系统：图形管线、资源流送、内存管理。',
       p2: '在Lesta Games（Engine Core，Tanks Blitz），我致力于为1000万+活跃玩家提供动力的引擎系统。我的代码运行在Linux服务器、Android/iOS设备和Windows客户端上——全部来自单个CMake构建树。',
-      p3: '逆向工程和游戏保护是我的长期热情。发布了用于资源提取和二进制分析的开源工具。25+个公共仓库，涵盖系统编程、工具化和实验性引擎。',
+      p3: '逆向工程和游戏保护是我的长期热情。发布了用于资源提取和二进制分析的开源工具。30+个公共仓库，涵盖系统编程、工具化和实验性引擎。',
       philosophy: '理念',
       p4: '静态分析优于运行时调试。编译时安全优于运行时检查。简单、无聊、可靠的代码优于聪明的抽象。每一行代码都必须在生产环境中证明其存在的合理性。',
       impact: { label: '影响', items: ['服务1000万+玩家的引擎系统', '跨平台：Linux/Win/macOS/iOS/Android', '具有活跃社区的开源工具', '亚毫秒帧时间保证'] },
@@ -122,6 +150,16 @@ export const languages = {
     },
     projects: { label: '项目', view: '查看', noDesc: '无描述' },
     skills: { label: '技能', languages: '语言', systems: '系统与工具', engine: '引擎与图形', mobile: '移动与原生', reverse: '逆向工程', practices: '实践' },
+    community: {
+      label: '社区与软技能',
+      subtitle: '有据可查的软技能——每一项都链接到公开证明。',
+      items: {
+        oss: { title: '拥有真实用户的开源项目', desc: '公开构建并被社区采用的工具——而非作品集演示。airstrike3d-tools 已成为 AirStrike 3D 系列的首选保护工具包；wemod_enhancer 首周即获 13 星和 5 个 fork。' },
+        engage: { title: '社区驱动开发', desc: '公开分享进展、收集反馈、迭代。在 r/cpp Show & Tell 展示了 AirStrike 3D noclip 相机研究；活跃于 r/airstrike3d 模组社区。' },
+        impact: { title: '能修复问题的 Bug 报告', desc: '详细、可复现、包含完整环境信息的报告。GModPatchTool #232（Fedora glibc 静态 TLS 故障）获得 5 个 👍，促成了已确认的解决方案，现已被项目官方 FAQ 收录。' },
+        sharing: { title: '知识分享', desc: '记录他人可复用的内容——交叉编译指南、CMake 预设、调试清单，以及无废话的开发术语表。' },
+      },
+    },
     tools: { label: '工具与资源', subtitle: '精选工具栈 — 性能优先，无冗余。' },
     contact: { label: '联系', text: '开放C++系统、游戏引擎架构和跨平台工具方面的咨询与合作。' },
     share: { subtitle: '分享此页面' },

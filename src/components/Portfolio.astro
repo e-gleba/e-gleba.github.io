@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Nav from './Nav.astro';
 import PrintResume from './PrintResume.astro';
 import { languages, type Language } from '../data/i18n';
-import { techBadges, skillCategories, tools, contactLinks } from '../data/site';
+import { techBadges, skillCategories, tools, communityCards, contactLinks } from '../data/site';
 import reposData from '../data/repos.json';
 
 interface Props {
@@ -106,7 +106,7 @@ const formatDate = (iso: string) =>
           <div class="text-[13px] text-slate-500 dark:text-slate-400 mt-1">{t.stats.years}</div>
         </div>
         <div class="stat-cell stat-glass">
-          <div class="text-2xl md:text-3xl font-bold gradient-text">25+</div>
+          <div class="text-2xl md:text-3xl font-bold gradient-text">30+</div>
           <div class="text-[13px] text-slate-500 dark:text-slate-400 mt-1">{t.stats.repos}</div>
         </div>
         <div class="stat-cell stat-glass">
@@ -248,6 +248,39 @@ const formatDate = (iso: string) =>
                 </li>
               ))}
             </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Community & Soft Skills — proof-linked cards -->
+  <section id="community" class="py-8 lg:py-12 px-6 lg:px-10 no-print cv-auto">
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-5 lg:mb-7">
+        <h2 class="text-[clamp(2rem,4vw,2.75rem)] font-bold">{t.community.label}</h2>
+        <p class="text-[15px] text-slate-500 dark:text-slate-400 mt-2">{t.community.subtitle}</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        {communityCards.map((card) => (
+          <div class="card-glass card-glass-hover p-5 lg:p-6 flex flex-col">
+            <h3 class="text-[16px] font-bold mb-2 flex items-center gap-2.5">
+              <span class="w-5 h-5 inline-flex items-center justify-center text-brand-pink shrink-0 skill-svg" aria-hidden="true" set:html={card.svg} />
+              <span>{t.community.items[card.key].title}</span>
+            </h3>
+            <p class="text-[14px] text-slate-500 dark:text-slate-400 leading-[1.7] mb-4">{t.community.items[card.key].desc}</p>
+            <div class="flex flex-wrap gap-2 mt-auto">
+              {card.proofs.map((proof) => (
+                <a href={proof.url} target="_blank" rel="noopener noreferrer" class="tool-chip">
+                  {proof.icon && <img src={proof.icon} class="w-4 h-4" alt="" loading="lazy" width="16" height="16" decoding="async" />}
+                  {proof.svg && <span class="w-4 h-4 inline-flex items-center justify-center text-current" set:html={proof.svg} />}
+                  <span class="text-[12px]">{proof.label}</span>
+                  {proof.metric && (
+                    <span class="px-1.5 py-0.5 text-[10px] font-mono font-semibold rounded-md bg-brand-pink/10 text-brand-pink border border-brand-pink/20">{proof.metric}</span>
+                  )}
+                </a>
+              ))}
+            </div>
           </div>
         ))}
       </div>
