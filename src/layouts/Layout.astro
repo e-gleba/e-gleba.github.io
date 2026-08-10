@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import 'shareon/css';
+import { Font } from 'astro:assets';
 import type { Language } from '../data/i18n';
 
 interface Props {
@@ -60,16 +62,12 @@ const person = {
   <link rel="alternate" hreflang="zh" href={`${site}/zh/`} />
   <link rel="alternate" hreflang="x-default" href={`${site}/`} />
 
-  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+  <!-- Self-hosted fonts (stable Fonts API, see astro.config.mjs): emits
+       @font-face + optimized metric-matched fallbacks. No Google Fonts
+       round-trip, no render-blocking third-party CSS. -->
+  <Font cssVariable="--font-inter" />
+  <Font cssVariable="--font-jetbrains-mono" />
   <link rel="dns-prefetch" href="https://cdn.simpleicons.org" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet" />
-
-  <link rel="preload" href="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.min.css" /></noscript>
-  <script src="https://cdn.jsdelivr.net/npm/shareon@2/dist/shareon.iife.js" defer init></script>
 
   <script is:inline>
     (() => {
@@ -100,6 +98,11 @@ const person = {
   <slot />
 
   <script>
+    import { init as initShareon } from 'shareon';
+
+    // share buttons — bundled from npm, versioned + content-hashed (was jsdelivr CDN)
+    initShareon();
+
     // theme toggle with ripple + staggered transition (parity with the old Alpine toggleTheme)
     document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
       button.addEventListener('click', () => {
@@ -122,16 +125,6 @@ const person = {
     updateTopButton();
     addEventListener('scroll', updateTopButton, { passive: true });
     topButton?.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
-
-    // scroll-driven reveal
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.reveal, .reveal-stagger').forEach((element) => observer.observe(element));
 
     // print resume
     document.querySelectorAll('[data-print]').forEach((button) => {

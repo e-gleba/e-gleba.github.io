@@ -16,7 +16,7 @@ export interface ExperienceItem {
 
 export interface Locale {
   nav: Record<'about' | 'experience' | 'projects' | 'skills' | 'tools' | 'contact', string>;
-  hero: { status: string; tagline: string; viewProjects: string };
+  hero: { tagline: string; viewProjects: string };
   stats: { years: string; repos: string; platforms: string };
   about: {
     label: string;
@@ -39,7 +39,7 @@ export interface Locale {
 export const languages = {
   en: {
     nav: { about: 'About', experience: 'Experience', projects: 'Projects', skills: 'Skills', tools: 'Tools', contact: 'Contact' },
-    hero: { status: 'Open to open source & consulting', tagline: 'C++ Engineer · Reverse Engineer · Investigator', viewProjects: 'Projects' },
+    hero: { tagline: 'R&D C++ engineer', viewProjects: 'Projects' },
     stats: { years: 'Years in Production', repos: 'Open Source', platforms: 'Platforms' },
     about: {
       label: 'About',
@@ -69,7 +69,7 @@ export const languages = {
   },
   ru: {
     nav: { about: 'Обо мне', experience: 'Опыт', projects: 'Проекты', skills: 'Навыки', tools: 'Инструменты', contact: 'Контакты' },
-    hero: { status: 'Открыт к open source и консалтингу', tagline: 'C++ инженер · Реверс-инженер · Исследователь', viewProjects: 'Проекты' },
+    hero: { tagline: 'R&D C++ инженер', viewProjects: 'Проекты' },
     stats: { years: 'лет в продакшене', repos: 'open source', platforms: 'платформ' },
     about: {
       label: 'Обо мне',
@@ -99,7 +99,7 @@ export const languages = {
   },
   zh: {
     nav: { about: '关于', experience: '经验', projects: '项目', skills: '技能', tools: '工具', contact: '联系' },
-    hero: { status: '开放开源与咨询', tagline: 'C++工程师 · 逆向工程师 · 研究员', viewProjects: '项目' },
+    hero: { tagline: 'R&D C++ 工程师', viewProjects: '项目' },
     stats: { years: '年生产经验', repos: '开源项目', platforms: '平台' },
     about: {
       label: '关于',

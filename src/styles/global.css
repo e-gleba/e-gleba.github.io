@@ -5,10 +5,15 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@theme {
-  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+/* Font families come from Astro's Fonts API (see astro.config.mjs) — the
+   cssVariables resolve to self-hosted @font-face families with metric-matched
+   fallbacks. @theme inline forwards the var() references into utilities. */
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+}
 
+@theme {
   --color-brand-pink: #ff6b9d;
   --color-brand-orange: #ff8c42;
   --color-brand-purple: #c792ea;
@@ -30,6 +35,22 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent; /* no gray flash on mobile taps */
+}
+
+/* Hand cursor on every interactive control — Tailwind v4 preflight resets
+   buttons/summaries to cursor:default; web convention expects the pointer.
+   touch-action: manipulation kills the double-tap-zoom delay on touch. */
+button,
+summary,
+[role='button'] {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* Keep section tops clear of the 56px sticky nav on anchor jumps */
+section[id] {
+  scroll-margin-top: 4.5rem;
 }
 
 /* ===== SCROLLBAR ===== */
@@ -379,29 +400,6 @@ body::before {
 .timeline-desc { font-size: 0.9rem; line-height: 1.6; color: #64748b; }
 .dark .timeline-desc { color: #8a8a95; }
 
-/* ===== SCROLL-DRIVEN REVEAL ===== */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.reveal-stagger > * {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-}
-.reveal-stagger.visible > *:nth-child(1) { transition-delay: 0ms; opacity: 1; transform: translateY(0); }
-.reveal-stagger.visible > *:nth-child(2) { transition-delay: 80ms; opacity: 1; transform: translateY(0); }
-.reveal-stagger.visible > *:nth-child(3) { transition-delay: 160ms; opacity: 1; transform: translateY(0); }
-.reveal-stagger.visible > *:nth-child(4) { transition-delay: 240ms; opacity: 1; transform: translateY(0); }
-.reveal-stagger.visible > *:nth-child(5) { transition-delay: 320ms; opacity: 1; transform: translateY(0); }
-.reveal-stagger.visible > *:nth-child(6) { transition-delay: 400ms; opacity: 1; transform: translateY(0); }
-
 /* ===== CONTENT VISIBILITY ===== */
 /* Skip offscreen rendering; hold an estimated size so the scrollbar doesn't jump */
 .cv-auto {
@@ -556,6 +554,5 @@ body.theme-transitioning *::after {
     transition-duration: 0.01ms !important;
   }
   .aurora-blob, .animate-shimmer { animation: none !important; }
-  .reveal, .reveal-stagger > * { opacity: 1 !important; transform: none !important; }
   html { scroll-behavior: auto; }
 }

@@ -14,8 +14,9 @@ Personal portfolio — multilingual, dark/light, performance-first.
 
 ## Stack
 
-- **Astro** — build-time static generation, localized routes, zero client JS framework
+- **Astro 7** — build-time static generation, localized routes, zero client JS framework; self-hosted web fonts via the stable Fonts API (no Google Fonts round-trip, metric-matched fallbacks)
 - **Tailwind CSS v4** — `@tailwindcss/vite`, Lightning CSS minification
+- **shareon** — share buttons bundled from npm, no CDN dependency
 - **GitHub Actions** — build, deploy, dependency updates (Dependabot + Renovate)
 
 ## Develop
