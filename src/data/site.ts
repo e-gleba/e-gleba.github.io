@@ -67,6 +67,7 @@ export const skillCategories: SkillCategory[] = [
     { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>', label: 'API Hooking / DLL Inject' },
     { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>', label: 'Asset Extraction' },
     { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>', label: 'Binary Patching' },
+    { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>', label: 'Sierra OSINT' },
   ]},
   { key: 'practices', color: '#C792EA', items: [
     { svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>', label: 'Static Analysis > Runtime' },
@@ -159,6 +160,7 @@ export const communityCards: CommunityCard[] = [
   { key: 'oss', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>', proofs: [
     { label: 'airstrike3d-tools', url: 'https://github.com/e-gleba/airstrike3d-tools', metric: '23 ★', svg: githubMark },
     { label: 'wemod_enhancer', url: 'https://github.com/e-gleba/wemod_enhancer', metric: '13 ★ · 5 forks · week 1', svg: githubMark },
+    { label: 'r/PiratedGames — release post', url: 'https://www.reddit.com/r/PiratedGames/s/v5Rc6lvqZL', metric: 'community launch', icon: redditIcon },
   ]},
   { key: 'engage', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>', proofs: [
     { label: 'r/cpp Show & Tell — noclip camera', url: 'https://www.reddit.com/r/cpp/comments/1olj18d/c_show_and_tell_november_2025/', metric: 'u/Ascendo_Aquila', icon: redditIcon },
@@ -168,8 +170,10 @@ export const communityCards: CommunityCard[] = [
     { label: 'GModPatchTool #232 — glibc TLS', url: 'https://github.com/solsticegamestudios/GModPatchTool/issues/232', metric: '5 👍 · in official FAQ', svg: githubMark },
   ]},
   { key: 'sharing', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>', proofs: [
+    { label: 'ai — engineering handbook', url: 'https://github.com/e-gleba/ai', metric: 'prompts · skills · review', svg: githubMark },
     { label: 'how-to', url: 'https://github.com/e-gleba/how-to', metric: 'C++/CMake guides', svg: githubMark },
     { label: 'dev-glossary', url: 'https://github.com/e-gleba/dev-glossary', metric: 'no-fluff terms', svg: githubMark },
+    { label: 'nvim-config', url: 'https://github.com/e-gleba/nvim-config', metric: 'public dotfiles', svg: githubMark },
   ]},
 ];
 
