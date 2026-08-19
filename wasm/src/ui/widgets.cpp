@@ -1,234 +1,182 @@
 #include "ui/widgets.hpp"
 
-#include "ui/theme.hpp"
-
 #include <SDL3/SDL_misc.h>
 
 #include <imgui.h>
 
 #include <algorithm>
-#include <array>
-#include <cfloat>
 #include <cmath>
+#include <cstdio>
+#include <string_view>
 #include <unordered_map>
 
-namespace ui::widgets {
+#include "ui/theme.hpp"
 
-namespace {
-
-// FontAwesome solid glyphs for the theme toggle.
-inline constexpr std::uint32_t icon_sun = 0xF185;
-inline constexpr std::uint32_t icon_moon = 0xF186;
-
-// Toggle glyph is drawn 2.5x the base font size; the invisible click target
-// adds a margin around the glyph.
-constexpr float toggle_icon_scale = 2.5F;
-constexpr float toggle_hit_margin = 1.4F;
-
-/// Encodes a Private Use Area codepoint (U+E000-U+F2FF - exactly 3 UTF-8
-/// bytes) into a null-terminated string.
-[[nodiscard]] std::array<char, 4> encode_pua(std::uint32_t codepoint) noexcept
+namespace ui
 {
-    return std::array<char, 4>{
-        static_cast<char>(0xE0U | (codepoint >> 12U)),
-        static_cast<char>(0x80U | ((codepoint >> 6U) & 0x3FU)),
-        static_cast<char>(0x80U | (codepoint & 0x3FU)),
-        '\0'};
-}
 
-// -- fold-open hover animation (sidebar nav rows) ---------------------------
+namespace
+{
 
-// Geometry/timing of the nav row fold.
-constexpr float fold_shift = 14.0F; // label travel on fold-open (arrow slot)
-constexpr float fold_speed = 14.0F; // 1/s - higher = snappier
+// FontAwesome glyphs as UTF-8 string literals (private use area, U+F000+).
+constexpr std::string_view icon_sun = "\xef\x86\x85"; // f185
+constexpr std::string_view icon_moon = "\xef\x86\x86"; // f186
 
-/// Per-row animation state, keyed by the row's ImGui ID. Static storage:
-/// rows are few and live for the whole run; the wasm build is
-/// single-threaded.
-struct fold_state {
-    float t = 0.0F;   // eased open amount, [0,1]
-    bool hot = false; // hovered as of the previous frame
+constexpr float toggle_icon_scale = 2.5F; // glyph size vs. base font
+constexpr float toggle_hit_margin = 1.4F; // click target vs. glyph size
+
+// Fold-open animation for nav rows: the label eases right by one arrow slot
+// while a '>' fades in at the spot it vacated. Nothing is ever drawn left of
+// the row's resting position - no gutter to clip, no marker travel.
+constexpr float fold_shift = 14.0F; // px of label travel = one arrow slot
+constexpr float fold_speed = 14.0F; // exponential ease rate, higher = snappier
+
+struct nav_fold
+{
+    float t = 0.0F;
+    bool hot = false; // hovered on the previous frame
 };
 
-[[nodiscard]] std::unordered_map<ImGuiID, fold_state>& fold_states()
+// Animation state per nav row, keyed by ImGui ID. Static map: the map itself
+// is never rehashed away, and references into it stay valid across frames.
+auto nav_folds() -> std::unordered_map<ImGuiID, nav_fold>&
 {
-    static std::unordered_map<ImGuiID, fold_state> states;
-    return states;
+    static std::unordered_map<ImGuiID, nav_fold> folds;
+    return folds;
 }
 
-/// Advances the row's animation and eases the cursor right for a folding
-/// row. Returns the eased amount for fold_end(). Hover is read from the
-/// previous frame because the offset must be known before the row is
-/// drawn - one frame of lag is invisible.
-[[nodiscard]] float fold_begin(std::string_view label, bool selected)
+// Advances the fold animation, indents the row (label shift), returns t.
+// Hover is read from the previous frame: the cursor offset must be set before
+// Selectable() runs, so this frame's hover state is not knowable yet - one
+// frame of lag on hover-start is invisible at 60 fps.
+auto fold_begin(const std::string_view label, const bool selected) -> float
 {
-    fold_state& fold = fold_states()[ImGui::GetID(label.data())];
+    nav_fold& fold = nav_folds()[ImGui::GetID(label.data())];
 
-    // Exponential ease toward the target - frame-rate independent.
     const float target = (fold.hot || selected) ? 1.0F : 0.0F;
     fold.t += (target - fold.t)
               * (1.0F - std::exp(-fold_speed * ImGui::GetIO().DeltaTime));
-    if (target == 0.0F && fold.t < 0.001F) {
-        fold.t = 0.0F; // settle exactly; skips the arrow draw
-    }
 
     ImGui::SetCursorPosX(ImGui::GetCursorPosX() + fold.t * fold_shift);
     return fold.t;
 }
 
-/// Fades the `>` arrow in at the row's RESTING left edge (the label eased
-/// right past it) and records the row's hover state for the next frame.
-/// Nothing is ever drawn left of the row, so the arrow can neither slide
-/// under a left neighbor nor be clipped by a parent gutter. Call right
-/// after the row widget.
-void fold_end(std::string_view label, float t, bool hovered)
+// Draws the '>' marker (faded, at the vacated slot) and records hover for
+// next frame. Call right after Selectable().
+void fold_end(const std::string_view label, const float t,
+              const bool hovered)
 {
-    fold_states()[ImGui::GetID(label.data())].hot = hovered;
+    if (t > 0.001F)
+    {
+        // Fade leads the shift: the marker stays mostly transparent while the
+        // label is still passing through its slot, so they never overlap.
+        const float alpha = std::min(1.0F, t * 2.0F);
 
-    if (t <= 0.0F) {
-        return;
+        // The '>' glyph is short and sits on the baseline, so centering the
+        // full line height would leave its ink in the upper half of the row.
+        // Center the glyph's own ink box against the row's actual center.
+        const ImVec2 glyph = ImGui::CalcTextSizeA(
+            ImGui::GetFontSize(), std::numeric_limits<float>::max(), 0.0F,
+            ">");
+        const ImVec2 row_min = ImGui::GetItemRectMin();
+        const float row_height = ImGui::GetItemRectSize().y;
+        const ImVec2 pos{row_min.x - t * fold_shift,
+                         row_min.y + (row_height - glyph.y) * 0.5F};
+        ImGui::GetWindowDrawList()->AddText(
+            pos, theme::with_alpha(theme::secondary, alpha), ">");
     }
-    const ImVec2 row = ImGui::GetItemRectMin();
-    // The fade leads the shift, so the arrow is mostly transparent while
-    // the label is still passing through its slot.
-    const float alpha = std::min(1.0F, t * 2.0F);
-    ImGui::GetWindowDrawList()->AddText(
-        ImGui::GetFont(), ImGui::GetFontSize(),
-        ImVec2{row.x - t * fold_shift, row.y},
-        ImGui::GetColorU32(theme::with_alpha(theme::secondary, alpha)), ">");
+
+    nav_folds()[ImGui::GetID(label.data())].hot = hovered;
 }
 
 } // namespace
 
-// All string_views passed here point at string literals from
-// data/portfolio.hpp, so data() is always null-terminated and safe to hand
-// to ImGui's const char* API.
-
-void hyperlink(std::string_view label, std::string_view url)
+void nav_item(const std::string_view label, bool& selected)
 {
-    ImGui::PushStyleColor(ImGuiCol_Text, theme::link);
-    const bool clicked = ImGui::Selectable(label.data());
+    const float t = fold_begin(label, selected);
+
+    if (ImGui::Selectable(label.data(), selected))
+        selected = true;
+
+    fold_end(label, t, ImGui::IsItemHovered());
+}
+
+void hyperlink(const std::string_view label, const std::string_view url)
+{
+    ImGui::PushStyleColor(ImGuiCol_Text, theme::secondary);
+    ImGui::Selectable(label.data(), false,
+                      ImGuiSelectableFlags_DontClosePopups);
     ImGui::PopStyleColor();
 
-    if (ImGui::IsItemHovered()) {
+    if (ImGui::IsItemHovered())
+    {
         ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
         ImGui::SetTooltip("%s", url.data());
     }
-    if (clicked) {
-        SDL_OpenURL(url.data()); // new tab on Emscripten
-    }
+    if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
+        SDL_OpenURL(url.data());
 }
 
-bool nav_item(std::string_view label, bool selected)
+void theme_toggle()
 {
-    const float t = fold_begin(label, selected);
-    const bool clicked = ImGui::Selectable(label.data(), selected);
-    fold_end(label, t, ImGui::IsItemHovered());
-    return clicked;
-}
+    ImGui::PushID("theme_toggle");
 
-void icon(std::uint32_t codepoint, const ImVec4& color)
-{
-    const auto utf8 = encode_pua(codepoint);
-    ImGui::TextColored(color, "%s", utf8.data());
-}
+    const std::string_view utf8 =
+        theme::active() == theme::mode::dark ? icon_sun : icon_moon;
 
-float theme_toggle_size() noexcept
-{
-    // Clickable square: the glyph plus a comfortable margin on every side.
-    return ImGui::GetFontSize() * toggle_icon_scale * toggle_hit_margin;
-}
-
-bool theme_toggle()
-{
-    const auto utf8 = encode_pua(theme::active_mode == theme::mode::light
-                                     ? icon_sun
-                                     : icon_moon);
-    const float side = theme_toggle_size();
-
-    // Icon-only ghost button: an invisible button provides the click/hover
-    // target. At rest only the glyph is visible; hover adds a subtle
-    // rounded wash and tints the glyph with the accent color.
-    const bool clicked =
-        ImGui::InvisibleButton("##theme_toggle", ImVec2{side, side});
-    const bool hovered = ImGui::IsItemHovered();
-
-    ImDrawList* draw_list = ImGui::GetWindowDrawList();
-    const ImVec2 rect_min = ImGui::GetItemRectMin();
-    const ImVec2 rect_max = ImGui::GetItemRectMax();
-
-    if (hovered) {
-        draw_list->AddRectFilled(
-            rect_min, rect_max,
-            ImGui::GetColorU32(theme::with_alpha(theme::surface, 0.6F)),
-            ImGui::GetStyle().FrameRounding);
-    }
-
-    ImGui::SetWindowFontScale(toggle_icon_scale);
-    ImFont* font = ImGui::GetFont();
-    const float font_size = ImGui::GetFontSize();
+    ImFont* const font = ImGui::GetFont();
+    const float font_size = ImGui::GetFontSize() * toggle_icon_scale;
     const ImVec2 glyph =
-        font->CalcTextSizeA(font_size, FLT_MAX, 0.0F, utf8.data());
+        font->CalcTextSizeA(font_size, std::numeric_limits<float>::max(), 0.0F,
+                            utf8.data());
+
+    // Click target is the glyph plus a margin on every side: comfortable to
+    // hit while staying visually frameless.
+    const ImVec2 hit_size{glyph.x * toggle_hit_margin,
+                          glyph.y * toggle_hit_margin};
+    const ImVec2 rect_min = ImGui::GetCursorScreenPos();
+
+    // No visible frame: the button is a pure click/hover target, all feedback
+    // is drawn by hand below.
+    ImGui::InvisibleButton("##toggle", hit_size);
+    const bool hovered = ImGui::IsItemHovered();
+    const bool held = ImGui::IsItemActive();
+
+    if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
+        theme::toggle();
+    if (hovered)
+    {
+        ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
+        ImGui::SetTooltip("switch to %s theme", theme::active() ==
+                                                        theme::mode::dark
+                                                    ? "light"
+                                                    : "dark");
+    }
+
+    ImDrawList* const draw = ImGui::GetWindowDrawList();
+
+    // Ghost button: a soft rounded wash appears on hover, nothing at rest.
+    if (hovered)
+    {
+        const ImVec2 rect_max{rect_min.x + hit_size.x,
+                              rect_min.y + hit_size.y};
+        draw->AddRectFilled(rect_min, rect_max,
+                            theme::with_alpha(theme::surface, 0.6F),
+                            ImGui::GetStyle().FrameRounding);
+    }
 
     // Icon glyphs sit on the text baseline, so their ink rides high in the
     // em box - drop the centered box slightly to optically center the icon.
     constexpr float glyph_drop = 0.10F; // fraction of the glyph line height
+    const ImVec2 pos{rect_min.x + (hit_size.x - glyph.x) * 0.5F,
+                     rect_min.y + (hit_size.y - glyph.y) * 0.5F
+                         + font_size * glyph_drop};
+    const ImU32 color = held       ? theme::primary
+                        : hovered  ? theme::secondary
+                                   : theme::text_dim;
+    draw->AddText(font, font_size, pos, color, utf8.data());
 
-    // Rest: dim. Hover: accent. Held: primary.
-    const ImVec4 tint = ImGui::IsItemActive() ? theme::primary
-                        : hovered             ? theme::secondary
-                                              : theme::text_dim;
-    draw_list->AddText(
-        font, font_size,
-        ImVec2{rect_min.x + (rect_max.x - rect_min.x - glyph.x) * 0.5F,
-               rect_min.y + (rect_max.y - rect_min.y - glyph.y) * 0.5F
-                   + font_size * glyph_drop},
-        ImGui::GetColorU32(tint), utf8.data());
-    ImGui::SetWindowFontScale(1.0F);
-
-    if (hovered) {
-        ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
-        ImGui::SetTooltip("toggle theme");
-    }
-    return clicked;
+    ImGui::PopID();
 }
 
-void tag_list(std::span<const std::string_view> tags)
-{
-    const float right_edge =
-        ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x;
-    const float spacing = ImGui::GetStyle().ItemSpacing.x;
-
-    bool first = true;
-    for (const std::string_view tag : tags) {
-        if (!first) {
-            const float item_width = ImGui::CalcTextSize(tag.data()).x;
-            if (ImGui::GetCursorPosX() + spacing + item_width <= right_edge) {
-                ImGui::SameLine();
-            }
-        }
-        first = false;
-        ImGui::TextColored(theme::secondary, "%s", tag.data());
-    }
-}
-
-void header(std::string_view title)
-{
-    ImGui::SetWindowFontScale(1.5F);
-    ImGui::TextDisabled("~/");
-    ImGui::SameLine(0.0F, 0.0F);
-    ImGui::TextColored(theme::primary, "%s", title.data());
-    ImGui::SetWindowFontScale(1.0F);
-    ImGui::Separator();
-    ImGui::Spacing();
-}
-
-void paragraph(std::string_view text)
-{
-    ImGui::PushTextWrapPos(0.0F); // 0 = wrap at the window edge
-    ImGui::TextUnformatted(text.data(), text.data() + text.size());
-    ImGui::PopTextWrapPos();
-    ImGui::Spacing();
-}
-
-} // namespace ui::widgets
+} // namespace ui
