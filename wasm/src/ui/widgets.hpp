@@ -11,8 +11,7 @@
 
 namespace ui::widgets {
 
-/// Colored label that opens `url` in a new browser tab when clicked. On
-/// hover the label eases right while a `>` arrow fades in at its left edge.
+/// Colored label that opens `url` in a new browser tab when clicked.
 /// Stock SDL_OpenURL - no custom JS glue.
 void hyperlink(std::string_view label, std::string_view url);
 

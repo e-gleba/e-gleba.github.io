@@ -36,9 +36,9 @@ constexpr float toggle_hit_margin = 1.4F;
         '\0'};
 }
 
-// -- fold-open hover animation (nav rows, links) ----------------------------
+// -- fold-open hover animation (sidebar nav rows) ---------------------------
 
-// Geometry/timing shared by every folding row.
+// Geometry/timing of the nav row fold.
 constexpr float fold_shift = 14.0F; // label travel on fold-open (arrow slot)
 constexpr float fold_speed = 14.0F; // 1/s - higher = snappier
 
@@ -106,16 +106,11 @@ void fold_end(std::string_view label, float t, bool hovered)
 
 void hyperlink(std::string_view label, std::string_view url)
 {
-    const float t = fold_begin(label, false);
-
     ImGui::PushStyleColor(ImGuiCol_Text, theme::link);
     const bool clicked = ImGui::Selectable(label.data());
     ImGui::PopStyleColor();
 
-    const bool hovered = ImGui::IsItemHovered();
-    fold_end(label, t, hovered);
-
-    if (hovered) {
+    if (ImGui::IsItemHovered()) {
         ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
         ImGui::SetTooltip("%s", url.data());
     }
