@@ -13,6 +13,8 @@ void experience_section::render() const
     widgets::header(name());
 
     for (const portfolio::experience_entry& entry : portfolio::experience) {
+        widgets::icon(entry.icon, theme::primary);
+        ImGui::SameLine();
         ImGui::TextColored(theme::primary, "%s", entry.title.data());
         ImGui::SameLine();
         ImGui::TextDisabled("%s", entry.period.data());

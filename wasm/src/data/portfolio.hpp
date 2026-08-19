@@ -8,7 +8,9 @@
 ///
 /// Note: the stock ImGui font covers Latin-1 only, so the copy is ASCII
 /// (the Astro site's en-dashes are plain hyphens here). Icons are
-/// FontAwesome PUA codepoints (merged into the default font at startup).
+/// FontAwesome PUA codepoints (merged into the default font at startup):
+/// the brand glyph where FA Free has one, the closest solid metaphor
+/// otherwise (same role as the feather fallbacks on the Astro site).
 
 #pragma once
 
@@ -34,6 +36,7 @@ struct experience_entry {
     std::string_view period;
     std::string_view title;
     std::string_view company;
+    std::uint32_t icon; // FontAwesome PUA codepoint
     std::string_view description;
     std::span<const std::string_view> tags;
     std::string_view link_label; // empty = no link
@@ -49,9 +52,14 @@ struct project_entry {
     std::int32_t forks;
 };
 
+struct skill_item {
+    std::string_view label;
+    std::uint32_t icon; // FontAwesome PUA codepoint
+};
+
 struct skill_category {
     std::string_view name;
-    std::span<const std::string_view> items;
+    std::span<const skill_item> items;
 };
 
 // ---------------------------------------------------------------------------
@@ -126,6 +134,7 @@ inline constexpr std::array experience{
         .period = "2023 - now",
         .title = "C++ Engine Core Engineer",
         .company = "Lesta Games - Engine Core, Tanks Blitz",
+        .icon = 0xF11B, // gamepad
         .description =
             "Shipping cross-platform game engine internals. CMake build "
             "systems, Tracy profiling, SDL3 integration, Wwise audio "
@@ -138,6 +147,7 @@ inline constexpr std::array experience{
         .period = "2023 - 2025",
         .title = "Simulation Developer / Team Lead",
         .company = "Military Contract - ZRK Osa Air Defense",
+        .icon = 0xF05B, // crosshairs
         .description =
             "Led a student team building a cross-platform simulator in Godot "
             "for military training. Managed 4 developers, set milestones, "
@@ -153,6 +163,7 @@ inline constexpr std::array experience{
         .period = "2021 - 2025",
         .title = "BSU RFCT - Satellite & Aerospace",
         .company = "Belarusian State University",
+        .icon = 0xF7BF, // satellite
         .description =
             "Developed thermal sensor parsing models for CubeSat-2 satellite. "
             "Competed in rocket engineering with Moscow State University - "
@@ -165,6 +176,7 @@ inline constexpr std::array experience{
         .period = "2023",
         .title = "Advanced C++ Certification",
         .company = "Leonid Chaika Intensive Program",
+        .icon = 0xF19D, // graduation-cap
         .description =
             "Completed intensive C++ & rendering creating crossplatform "
             "engines course. Joined Lesta Games. Focus: modern standards, "
@@ -177,6 +189,7 @@ inline constexpr std::array experience{
         .period = "2018 - 2020",
         .title = "Game Modding & RE / Project Manager",
         .company = "Community Projects",
+        .icon = 0xF12E, // puzzle-piece
         .description =
             "Reverse-engineered game binaries for full Russian localization "
             "of World Conqueror 4. Managed translation workflow, coordinated "
@@ -237,32 +250,59 @@ inline constexpr std::array projects{
 };
 
 // ---------------------------------------------------------------------------
-// skills
+// skills (icons: FA brand glyph where one exists, closest solid metaphor
+// otherwise - the Astro site's simple-icons/feather mix, font-glyph edition)
 // ---------------------------------------------------------------------------
 
-inline constexpr std::array<std::string_view, 4> skills_languages{
-    "C++20 / C++23", "C17 / C23", "Python 3", "Bash / PowerShell"};
+inline constexpr std::array skills_languages{
+    skill_item{.label = "C++20 / C++23", .icon = 0xF121},      // code
+    skill_item{.label = "C17 / C23", .icon = 0xF2DB},          // microchip
+    skill_item{.label = "Python 3", .icon = 0xF3E2},           // python
+    skill_item{.label = "Bash / PowerShell", .icon = 0xF120},  // terminal
+};
 
-inline constexpr std::array<std::string_view, 7> skills_systems{
-    "CMake", "Linux (ALT, Fedora)", "Git / GitHub Actions", "Docker",
-    "Ansible / IaC", "Ninja", "Clang / LLVM / Xcode"};
+inline constexpr std::array skills_systems{
+    skill_item{.label = "CMake", .icon = 0xF085},              // gears
+    skill_item{.label = "Linux (ALT, Fedora)", .icon = 0xF17C}, // linux
+    skill_item{.label = "Git / GitHub Actions", .icon = 0xF841}, // git-alt
+    skill_item{.label = "Docker", .icon = 0xF395},             // docker
+    skill_item{.label = "Ansible / IaC", .icon = 0xF544},      // robot
+    skill_item{.label = "Ninja", .icon = 0xF504},              // user-ninja
+    skill_item{.label = "Clang / LLVM / Xcode", .icon = 0xF6D5}, // dragon
+};
 
-inline constexpr std::array<std::string_view, 5> skills_engine{
-    "SDL 3 (GPU, Input, Audio)", "OpenGL / GLSL", "Tracy Profiler",
-    "Wwise Integration & Mgmt", "Hot Reload Systems"};
+inline constexpr std::array skills_engine{
+    skill_item{.label = "SDL 3 (GPU, Input, Audio)", .icon = 0xF11B}, // gamepad
+    skill_item{.label = "OpenGL / GLSL", .icon = 0xF1B2},      // cube
+    skill_item{.label = "Tracy Profiler", .icon = 0xF83E},     // wave-square
+    skill_item{.label = "Wwise Integration & Mgmt", .icon = 0xF028}, // volume
+    skill_item{.label = "Hot Reload Systems", .icon = 0xF021}, // arrows-rotate
+};
 
-inline constexpr std::array<std::string_view, 4> skills_mobile{
-    "Android SDK / NDK", "iOS / Obj-C++", "Java / Kotlin",
-    "Cross-platform Native"};
+inline constexpr std::array skills_mobile{
+    skill_item{.label = "Android SDK / NDK", .icon = 0xF17B},  // android
+    skill_item{.label = "iOS / Obj-C++", .icon = 0xF179},      // apple
+    skill_item{.label = "Java / Kotlin", .icon = 0xF7B6},      // mug-hot
+    skill_item{.label = "Cross-platform Native", .icon = 0xF0AC}, // globe
+};
 
-inline constexpr std::array<std::string_view, 6> skills_reverse{
-    "Ghidra", "Memory Analysis", "API Hooking / DLL Inject",
-    "Asset Extraction", "Binary Patching", "Sierra OSINT"};
+inline constexpr std::array skills_reverse{
+    skill_item{.label = "Ghidra", .icon = 0xF3ED},             // shield-halved
+    skill_item{.label = "Memory Analysis", .icon = 0xF84C},    // border-all
+    skill_item{.label = "API Hooking / DLL Inject", .icon = 0xF0C1}, // link
+    skill_item{.label = "Asset Extraction", .icon = 0xF187},   // box-archive
+    skill_item{.label = "Binary Patching", .icon = 0xF1C9},    // file-code
+    skill_item{.label = "Sierra OSINT", .icon = 0xF002},       // magnify-glass
+};
 
-inline constexpr std::array<std::string_view, 6> skills_practices{
-    "Static Analysis > Runtime", "C++ Contracts (P2900)",
-    "Generic Programming", "constexpr / consteval", "STL / Boost / GSL",
-    "Claude Code / AI-Assisted Eng."};
+inline constexpr std::array skills_practices{
+    skill_item{.label = "Static Analysis > Runtime", .icon = 0xE522}, // search-chart
+    skill_item{.label = "C++ Contracts (P2900)", .icon = 0xE5A0}, // file-check
+    skill_item{.label = "Generic Programming", .icon = 0xF5FD}, // layer-group
+    skill_item{.label = "constexpr / consteval", .icon = 0xF0E7}, // bolt
+    skill_item{.label = "STL / Boost / GSL", .icon = 0xF02D},   // book
+    skill_item{.label = "Claude Code / AI-Assisted Eng.", .icon = 0xE2CA}, // wand
+};
 
 inline constexpr std::array skill_categories{
     skill_category{.name = "Languages", .items = skills_languages},

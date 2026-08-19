@@ -15,8 +15,9 @@ The whole site is one static binary: `portfolio.html` + `portfolio.js` +
   top-right corner - no JS glue
 - adaptive layout: sidebar on wide screens, compact wrapping nav row on
   phone-width screens (< 640 px)
-- FontAwesome brand/solid icons (social links, theme toggle), embedded into
-  the wasm FS via `--embed-file` and merged into the default font
+- FontAwesome brand/solid icons (social links, skill tags, experience
+  entries, theme toggle), embedded into the wasm FS via `--embed-file` and
+  merged into the default font
 - keyboard navigation: `j`/`k`, `h`/`l`, arrows, `1`-`5` jump
 - terminal-style `>` selector marker on hovered/selected nav rows
 - ImPlot bar chart of repo stars, rendered from the same constexpr data
