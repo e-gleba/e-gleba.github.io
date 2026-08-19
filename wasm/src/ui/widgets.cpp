@@ -75,15 +75,17 @@ void fold_end(const std::string_view label, const float t,
         // The '>' glyph is short and sits on the baseline, so centering the
         // full line height would leave its ink in the upper half of the row.
         // Center the glyph's own ink box against the row's actual center.
-        const ImVec2 glyph = ImGui::CalcTextSizeA(
+        ImFont* const font = ImGui::GetFont();
+        const ImVec2 glyph = font->CalcTextSizeA(
             ImGui::GetFontSize(), std::numeric_limits<float>::max(), 0.0F,
             ">");
         const ImVec2 row_min = ImGui::GetItemRectMin();
         const float row_height = ImGui::GetItemRectSize().y;
         const ImVec2 pos{row_min.x - t * fold_shift,
                          row_min.y + (row_height - glyph.y) * 0.5F};
-        ImGui::GetWindowDrawList()->AddText(
-            pos, theme::with_alpha(theme::secondary, alpha), ">");
+        const ImU32 color = ImGui::ColorConvertFloat4ToU32(
+            theme::with_alpha(theme::secondary, alpha));
+        ImGui::GetWindowDrawList()->AddText(pos, color, ">");
     }
 
     nav_folds()[ImGui::GetID(label.data())].hot = hovered;
@@ -122,7 +124,7 @@ void theme_toggle()
     ImGui::PushID("theme_toggle");
 
     const std::string_view utf8 =
-        theme::active() == theme::mode::dark ? icon_sun : icon_moon;
+        theme::active_mode == theme::mode::dark ? icon_sun : icon_moon;
 
     ImFont* const font = ImGui::GetFont();
     const float font_size = ImGui::GetFontSize() * toggle_icon_scale;
@@ -147,10 +149,9 @@ void theme_toggle()
     if (hovered)
     {
         ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
-        ImGui::SetTooltip("switch to %s theme", theme::active() ==
-                                                        theme::mode::dark
-                                                    ? "light"
-                                                    : "dark");
+        ImGui::SetTooltip("switch to %s theme",
+                          theme::active_mode == theme::mode::dark ? "light"
+                                                                  : "dark");
     }
 
     ImDrawList* const draw = ImGui::GetWindowDrawList();
@@ -160,8 +161,9 @@ void theme_toggle()
     {
         const ImVec2 rect_max{rect_min.x + hit_size.x,
                               rect_min.y + hit_size.y};
-        draw->AddRectFilled(rect_min, rect_max,
-                            theme::with_alpha(theme::surface, 0.6F),
+        const ImU32 wash = ImGui::ColorConvertFloat4ToU32(
+            theme::with_alpha(theme::surface, 0.6F));
+        draw->AddRectFilled(rect_min, rect_max, wash,
                             ImGui::GetStyle().FrameRounding);
     }
 
@@ -171,10 +173,11 @@ void theme_toggle()
     const ImVec2 pos{rect_min.x + (hit_size.x - glyph.x) * 0.5F,
                      rect_min.y + (hit_size.y - glyph.y) * 0.5F
                          + font_size * glyph_drop};
-    const ImU32 color = held       ? theme::primary
-                        : hovered  ? theme::secondary
-                                   : theme::text_dim;
-    draw->AddText(font, font_size, pos, color, utf8.data());
+    const ImVec4 tint = held      ? theme::primary
+                        : hovered ? theme::secondary
+                                  : theme::text_dim;
+    draw->AddText(font, font_size, pos, ImGui::ColorConvertFloat4ToU32(tint),
+                  utf8.data());
 
     ImGui::PopID();
 }
