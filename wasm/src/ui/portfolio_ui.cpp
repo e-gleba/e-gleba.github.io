@@ -79,7 +79,7 @@ void portfolio_ui::render()
     // Children leave room for the status bar at the bottom.
     const float status_height = ImGui::GetFrameHeightWithSpacing();
 
-    // -- sidebar: identity, navigation, stats -------------------------------
+    // -- sidebar: identity, navigation, stats, theme toggle -----------------
     constexpr float sidebar_width = 240.0F;
     if (ImGui::BeginChild("sidebar", ImVec2{sidebar_width, -status_height},
                           ImGuiChildFlags_Borders)) {
@@ -109,6 +109,16 @@ void portfolio_ui::render()
             ImGui::SameLine();
             ImGui::TextDisabled("%s", s.label.data());
         }
+
+        ImGui::Spacing();
+        ImGui::Separator();
+        ImGui::Spacing();
+
+        if (widgets::theme_toggle()) {
+            theme::toggle();
+        }
+        ImGui::SameLine();
+        ImGui::TextDisabled("theme");
     }
     ImGui::EndChild();
 
@@ -120,9 +130,9 @@ void portfolio_ui::render()
     }
     ImGui::EndChild();
 
-    // -- status bar: vim key hints + position -------------------------------
+    // -- status bar: key hints + position -----------------------------------
     ImGui::Separator();
-    ImGui::TextDisabled("j/k sections · 1-5 jump · g/G first/last");
+    ImGui::TextDisabled("tab/arrows/j/k sections · 1-5 jump · g/G first/last");
 
     std::array<char, 16> position{};
     std::snprintf(position.data(), position.size(), "%zu/%zu",

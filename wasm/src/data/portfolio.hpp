@@ -21,6 +21,7 @@ namespace portfolio {
 struct external_link {
     std::string_view label;
     std::string_view url;
+    std::string_view sigil; // short terminal-style marker, e.g. "gh"
 };
 
 struct stat {
@@ -129,6 +130,8 @@ inline constexpr std::array experience{
             "systems, Tracy profiling, SDL3 integration, Wwise audio "
             "pipelines. Performance optimization for mobile and desktop.",
         .tags = tags_lesta,
+        .link_label = {},
+        .link_url = {},
     },
     experience_entry{
         .period = "2023 - 2025",
@@ -142,6 +145,8 @@ inline constexpr std::array experience{
             "units with real-time coordination across heterogeneous "
             "platforms.",
         .tags = tags_simulation,
+        .link_label = {},
+        .link_url = {},
     },
     experience_entry{
         .period = "2021 - 2025",
@@ -152,6 +157,8 @@ inline constexpr std::array experience{
             "Competed in rocket engineering with Moscow State University - "
             "adult league, live launches, drone development.",
         .tags = tags_bsu,
+        .link_label = {},
+        .link_url = {},
     },
     experience_entry{
         .period = "2023",
@@ -162,6 +169,8 @@ inline constexpr std::array experience{
             "engines course. Joined Lesta Games. Focus: modern standards, "
             "generic programming, performance optimization.",
         .tags = tags_certification,
+        .link_label = {},
+        .link_url = {},
     },
     experience_entry{
         .period = "2018 - 2020",
@@ -272,13 +281,19 @@ inline constexpr std::string_view contact_text =
     "architecture, and cross-platform tooling.";
 
 inline constexpr std::array contact_links{
-    external_link{.label = "GitHub", .url = "https://github.com/e-gleba"},
-    external_link{.label = "X", .url = "https://x.com/e_gleba"},
-    external_link{.label = "Telegram", .url = "https://t.me/egleba"},
-    external_link{.label = "Email", .url = "mailto:i@egleba.ru"},
-    external_link{.label = "VK", .url = "https://vk.ru/e_gleba"},
+    external_link{
+        .label = "GitHub", .url = "https://github.com/e-gleba", .sigil = "gh"},
+    external_link{
+        .label = "X", .url = "https://x.com/e_gleba", .sigil = "x"},
+    external_link{
+        .label = "Telegram", .url = "https://t.me/egleba", .sigil = "tg"},
+    external_link{
+        .label = "Email", .url = "mailto:i@egleba.ru", .sigil = "@"},
+    external_link{
+        .label = "VK", .url = "https://vk.ru/e_gleba", .sigil = "vk"},
     external_link{.label = "Steam",
-                  .url = "https://steamcommunity.com/id/egleba"},
+                  .url = "https://steamcommunity.com/id/egleba",
+                  .sigil = "st"},
 };
 
 } // namespace portfolio

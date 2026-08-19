@@ -12,10 +12,13 @@ The whole site is one static binary: `portfolio.html` + `portfolio.js` +
 - warm "seaside sunset" look: sunlit stone, terracotta, gold, sea teal.
   Sunset (light) by default; dusk (warm espresso, never cold blue-black)
   when the device prefers dark - stock SDL3 (`SDL_GetSystemTheme` +
-  `SDL_EVENT_SYSTEM_THEME_CHANGED`), no JS glue
-- vim-style keyboard navigation: `j`/`k` (or `h`/`l`, arrows) switch
-  sections, `1`-`5` jump, `g`/`G` first/last; hints live in the status bar
+  `SDL_EVENT_SYSTEM_THEME_CHANGED`), no JS glue. Manual sun/moon toggle in
+  the sidebar (icon drawn with ImDrawList primitives, no font assets)
+- keyboard navigation: `tab`/`shift+tab` and arrows work even with browser
+  vim extensions in normal mode (Vimium never captures them); `j`/`k`,
+  `h`/`l`, `1`-`5`, `g`/`G` for full vim style once keys reach the page
 - terminal-style `>` selector marker on hovered/selected nav rows
+- social links with terminal sigils (`[gh]`, `[tg]`, ...)
 - ImPlot bar chart of repo stars, rendered from the same constexpr data
 - links open via `SDL_OpenURL` (new browser tab)
 
@@ -34,11 +37,11 @@ src/
   main.cpp                SDL3 callback entry points (thin, no logic)
   shell.html              canvas page template for emcc --shell-file
   app/application.*       window + GL context + ImGui lifecycle, frame pump,
-                          device-theme tracking, vim key handling
+                          device-theme tracking, key handling
   data/portfolio.hpp      all site copy as inline constexpr data
   ui/section.hpp          standard module interface (abstract base)
-  ui/theme.hpp            constexpr sunset/dusk palettes
-  ui/widgets.*            shared helpers: hyperlink, nav_item, tag_list, ...
+  ui/theme.hpp            constexpr sunset/dusk palettes + toggle
+  ui/widgets.*            shared helpers: hyperlink, nav_item, theme_toggle...
   ui/<name>_section.*     one file pair per section (about, experience, ...)
   ui/portfolio_ui.*       layout: sidebar nav + content + status bar
 ```
@@ -78,3 +81,6 @@ No server-side code.
 
 - Stock ImGui font covers Latin-1 only; copy uses ASCII on purpose. For full
   typography load a TTF with wider glyph ranges in `application.cpp`.
+- Browser vim extensions (Vimium & co) capture `j`/`k` in their normal mode
+  before the page sees them - use `tab`/arrows, or press `i` (insert mode)
+  to hand all keys to the page.

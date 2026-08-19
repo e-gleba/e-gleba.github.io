@@ -8,7 +8,7 @@
 ///
 /// The UI theme follows the device theme via stock SDL3
 /// (SDL_GetSystemTheme + SDL_EVENT_SYSTEM_THEME_CHANGED); keyboard
-/// navigation is vim-style (j/k/h/l, 1-5, g/G).
+/// navigation is vim-style (j/k/h/l, tab, arrows, 1-5, g/G).
 
 #include "app/application.hpp"
 
@@ -123,7 +123,7 @@ bool application::init() noexcept
                         SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG); // macOS
 #endif
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 0);  // UI only: no depth
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 0);
 
@@ -204,8 +204,10 @@ SDL_AppResult application::handle_event(SDL_Event* event) noexcept
         return SDL_APP_CONTINUE;
     }
 
-    // Vim-style section navigation. No text inputs exist, but respect
-    // WantCaptureKeyboard anyway so future widgets keep their keys.
+    // Vim-style section navigation. Tab and the arrow keys are never
+    // captured by browser vim extensions (Vimium & co), so they work without
+    // entering the extension's insert mode. No text inputs exist, but
+    // respect WantCaptureKeyboard anyway so future widgets keep their keys.
     if (event->type == SDL_EVENT_KEY_DOWN
         && !ImGui::GetIO().WantCaptureKeyboard) {
         const bool shift = (event->key.mod & SDL_KMOD_SHIFT) != 0;
@@ -216,6 +218,13 @@ SDL_AppResult application::handle_event(SDL_Event* event) noexcept
             return SDL_APP_CONTINUE;
         }
         switch (key) {
+        case SDLK_TAB:
+            if (shift) {
+                ui_.select_prev();
+            } else {
+                ui_.select_next();
+            }
+            break;
         case SDLK_J:
         case SDLK_DOWN:
         case SDLK_L:

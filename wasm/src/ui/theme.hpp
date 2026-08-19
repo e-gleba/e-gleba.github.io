@@ -4,7 +4,8 @@
 /// Sunset (light, default): sunlit stone, terracotta, gold, sea teal -
 /// warm Mediterranean feel. Dusk (dark): the same hues over warm espresso,
 /// never cold blue-black. The active palette follows the device theme
-/// (SDL_GetSystemTheme + SDL_EVENT_SYSTEM_THEME_CHANGED) - no JS glue.
+/// (SDL_GetSystemTheme + SDL_EVENT_SYSTEM_THEME_CHANGED) and can also be
+/// flipped manually with toggle() - no JS glue anywhere.
 
 #pragma once
 
@@ -38,8 +39,9 @@ inline constexpr ImVec4 surface_dusk{0.200F, 0.149F, 0.102F, 1.0F};
 inline constexpr ImVec4 text_dusk{0.957F, 0.914F, 0.847F, 1.0F};
 inline constexpr ImVec4 text_dim_dusk{0.690F, 0.608F, 0.494F, 1.0F};
 
-// Active palette. Reassigned by apply() on device theme change; read-only
-// for the rest of the UI.
+// Active palette + mode. Reassigned by apply(); read-only for the rest of
+// the UI.
+inline mode active_mode = mode::sunset;
 inline ImVec4 primary = primary_sunset;
 inline ImVec4 secondary = secondary_sunset;
 inline ImVec4 link = link_sunset;
@@ -53,10 +55,12 @@ inline ImVec4 text_dim = text_dim_sunset;
     return ImVec4{color.x, color.y, color.z, alpha};
 }
 
-/// Applies the given mode. Called once after ImGui::CreateContext and again
-/// on SDL_EVENT_SYSTEM_THEME_CHANGED. Touches colors only - sizes persist.
+/// Applies the given mode. Called once after ImGui::CreateContext, on
+/// SDL_EVENT_SYSTEM_THEME_CHANGED, and on manual toggle. Colors only -
+/// sizes persist.
 inline void apply(mode m) noexcept
 {
+    active_mode = m;
     if (m == mode::dusk) {
         ImGui::StyleColorsDark();
         primary = primary_dusk;
@@ -97,6 +101,13 @@ inline void apply(mode m) noexcept
     colors[ImGuiCol_Header] = with_alpha(primary, 0.25F);
     colors[ImGuiCol_HeaderHovered] = with_alpha(secondary, 0.35F);
     colors[ImGuiCol_HeaderActive] = with_alpha(secondary, 0.55F);
+}
+
+/// Flips sunset <-> dusk (manual override; the next device theme change
+/// re-applies the device preference).
+inline void toggle() noexcept
+{
+    apply(active_mode == mode::sunset ? mode::dusk : mode::sunset);
 }
 
 } // namespace ui::theme

@@ -6,6 +6,8 @@
 
 #include <imgui.h>
 
+#include <cmath>
+
 namespace ui::widgets {
 
 // All string_views passed here point at string literals from
@@ -41,6 +43,50 @@ bool nav_item(std::string_view label, bool selected)
             ImGui::GetFont(), ImGui::GetFontSize(),
             ImVec2{pos.x - marker_indent + 2.0F, pos.y},
             ImGui::GetColorU32(theme::secondary), ">");
+    }
+    return clicked;
+}
+
+bool theme_toggle()
+{
+    const float size = ImGui::GetFrameHeight();
+    const ImVec2 pos = ImGui::GetCursorScreenPos();
+
+    ImGui::InvisibleButton("##theme_toggle", ImVec2{size, size});
+    const bool clicked = ImGui::IsItemClicked();
+    const bool hovered = ImGui::IsItemHovered();
+
+    ImDrawList* draw_list = ImGui::GetWindowDrawList();
+    const ImU32 color =
+        ImGui::GetColorU32(hovered ? theme::secondary : theme::text_dim);
+    const ImVec2 center{pos.x + size * 0.5F, pos.y + size * 0.5F};
+    const float radius = size * 0.28F;
+
+    if (theme::active_mode == theme::mode::sunset) {
+        // sun: ring + 8 rays
+        draw_list->AddCircle(center, radius, color, 0, 1.5F);
+        for (std::int32_t i = 0; i < 8; ++i) {
+            const float angle =
+                6.2831853F * static_cast<float>(i) / 8.0F;
+            const float dir_x = std::cos(angle);
+            const float dir_y = std::sin(angle);
+            draw_list->AddLine(
+                ImVec2{center.x + dir_x * radius * 1.4F,
+                       center.y + dir_y * radius * 1.4F},
+                ImVec2{center.x + dir_x * radius * 1.9F,
+                       center.y + dir_y * radius * 1.9F},
+                color, 1.5F);
+        }
+    } else {
+        // moon: filled disc with an offset background-colored cutout
+        draw_list->AddCircleFilled(center, radius, color);
+        draw_list->AddCircleFilled(
+            ImVec2{center.x + radius * 0.45F, center.y - radius * 0.25F},
+            radius * 0.8F, ImGui::GetColorU32(theme::background));
+    }
+
+    if (hovered) {
+        ImGui::SetTooltip("toggle theme");
     }
     return clicked;
 }
