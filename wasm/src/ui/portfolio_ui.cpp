@@ -71,10 +71,11 @@ void portfolio_ui::render()
         return;
     }
 
-    // -- header row: theme toggle pinned to the right corner ----------------
-    ImGui::SetCursorPosX(ImGui::GetWindowWidth()
-                         - widgets::theme_toggle_size()
-                         - ImGui::GetStyle().WindowPadding.x);
+    // -- header row: theme toggle pinned to the top-right corner ------------
+    ImGui::SetCursorPos(ImVec2{ImGui::GetWindowWidth()
+                                   - widgets::theme_toggle_size()
+                                   - ImGui::GetStyle().WindowPadding.x,
+                               ImGui::GetStyle().WindowPadding.y});
     if (widgets::theme_toggle()) {
         theme::toggle();
     }

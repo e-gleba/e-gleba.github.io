@@ -19,8 +19,10 @@ namespace {
 inline constexpr std::uint32_t icon_sun = 0xF185;
 inline constexpr std::uint32_t icon_moon = 0xF186;
 
-// Toggle glyph is drawn 1.5x the base font size.
-constexpr float toggle_icon_scale = 1.5F;
+// Toggle glyph is drawn 2x the base font size; the invisible click target
+// adds a margin around the glyph.
+constexpr float toggle_icon_scale = 2.0F;
+constexpr float toggle_hit_margin = 1.4F;
 
 /// Encodes a Private Use Area codepoint (U+E000-U+F2FF - exactly 3 UTF-8
 /// bytes) into a null-terminated string.
@@ -117,8 +119,8 @@ void icon(std::uint32_t codepoint, const ImVec4& color)
 
 float theme_toggle_size() noexcept
 {
-    const ImGuiStyle& style = ImGui::GetStyle();
-    return ImGui::GetFontSize() * toggle_icon_scale + style.FramePadding.y * 4.0F;
+    // Clickable square: the glyph plus a comfortable margin on every side.
+    return ImGui::GetFontSize() * toggle_icon_scale * toggle_hit_margin;
 }
 
 bool theme_toggle()
@@ -128,10 +130,11 @@ bool theme_toggle()
                                      : icon_moon);
     const float side = theme_toggle_size();
 
-    // Blank button - the glyph is drawn by hand below. Button's own label
-    // centering misplaces the merged icon glyph, so it is measured and
-    // placed at the exact size it will be rendered at.
-    const bool clicked = ImGui::Button("##theme_toggle", ImVec2{side, side});
+    // Icon-only: an invisible button provides the click/hover target - the
+    // glyph drawn below is all that is visible.
+    const bool clicked =
+        ImGui::InvisibleButton("##theme_toggle", ImVec2{side, side});
+    const bool hovered = ImGui::IsItemHovered();
 
     ImGui::SetWindowFontScale(toggle_icon_scale);
     ImFont* font = ImGui::GetFont();
@@ -145,15 +148,17 @@ bool theme_toggle()
 
     const ImVec2 rect_min = ImGui::GetItemRectMin();
     const ImVec2 rect_max = ImGui::GetItemRectMax();
+    const ImVec4 tint = hovered ? theme::secondary : theme::text_dim;
     ImGui::GetWindowDrawList()->AddText(
         font, font_size,
         ImVec2{rect_min.x + (rect_max.x - rect_min.x - glyph.x) * 0.5F,
                rect_min.y + (rect_max.y - rect_min.y - glyph.y) * 0.5F
                    + font_size * glyph_drop},
-        ImGui::GetColorU32(ImGuiCol_Text), utf8.data());
+        ImGui::GetColorU32(tint), utf8.data());
     ImGui::SetWindowFontScale(1.0F);
 
-    if (ImGui::IsItemHovered()) {
+    if (hovered) {
+        ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
         ImGui::SetTooltip("toggle theme");
     }
     return clicked;

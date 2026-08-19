@@ -24,12 +24,13 @@ bool nav_item(std::string_view label, bool selected);
 /// FontAwesome icon glyph (PUA codepoint) in the given color.
 void icon(std::uint32_t codepoint, const ImVec4& color);
 
-/// Icon-only theme switcher (FontAwesome sun/moon, large padded square).
+/// Icon-only theme switcher: just the FontAwesome sun/moon glyph, no button
+/// frame - the glyph itself is the click target (accent-tinted on hover).
 /// Returns true when clicked.
 bool theme_toggle();
 
-/// Side length of the theme_toggle button - layout code uses this to pin
-/// the button to a corner.
+/// Side length of the theme_toggle click target - layout code uses this to
+/// pin it to a corner.
 [[nodiscard]] float theme_toggle_size() noexcept;
 
 /// Flowing row of accent-colored tags, wraps at the content edge.
