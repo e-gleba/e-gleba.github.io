@@ -19,9 +19,9 @@ namespace {
 inline constexpr std::uint32_t icon_sun = 0xF185;
 inline constexpr std::uint32_t icon_moon = 0xF186;
 
-// Toggle glyph is drawn 2x the base font size; the invisible click target
+// Toggle glyph is drawn 2.5x the base font size; the invisible click target
 // adds a margin around the glyph.
-constexpr float toggle_icon_scale = 2.0F;
+constexpr float toggle_icon_scale = 2.5F;
 constexpr float toggle_hit_margin = 1.4F;
 
 /// Encodes a Private Use Area codepoint (U+E000-U+F2FF - exactly 3 UTF-8
@@ -130,11 +130,23 @@ bool theme_toggle()
                                      : icon_moon);
     const float side = theme_toggle_size();
 
-    // Icon-only: an invisible button provides the click/hover target - the
-    // glyph drawn below is all that is visible.
+    // Icon-only ghost button: an invisible button provides the click/hover
+    // target. At rest only the glyph is visible; hover adds a subtle
+    // rounded wash and tints the glyph with the accent color.
     const bool clicked =
         ImGui::InvisibleButton("##theme_toggle", ImVec2{side, side});
     const bool hovered = ImGui::IsItemHovered();
+
+    ImDrawList* draw_list = ImGui::GetWindowDrawList();
+    const ImVec2 rect_min = ImGui::GetItemRectMin();
+    const ImVec2 rect_max = ImGui::GetItemRectMax();
+
+    if (hovered) {
+        draw_list->AddRectFilled(
+            rect_min, rect_max,
+            ImGui::GetColorU32(theme::with_alpha(theme::surface, 0.6F)),
+            ImGui::GetStyle().FrameRounding);
+    }
 
     ImGui::SetWindowFontScale(toggle_icon_scale);
     ImFont* font = ImGui::GetFont();
@@ -146,10 +158,11 @@ bool theme_toggle()
     // em box - drop the centered box slightly to optically center the icon.
     constexpr float glyph_drop = 0.10F; // fraction of the glyph line height
 
-    const ImVec2 rect_min = ImGui::GetItemRectMin();
-    const ImVec2 rect_max = ImGui::GetItemRectMax();
-    const ImVec4 tint = hovered ? theme::secondary : theme::text_dim;
-    ImGui::GetWindowDrawList()->AddText(
+    // Rest: dim. Hover: accent. Held: primary.
+    const ImVec4 tint = ImGui::IsItemActive() ? theme::primary
+                        : hovered             ? theme::secondary
+                                              : theme::text_dim;
+    draw_list->AddText(
         font, font_size,
         ImVec2{rect_min.x + (rect_max.x - rect_min.x - glyph.x) * 0.5F,
                rect_min.y + (rect_max.y - rect_min.y - glyph.y) * 0.5F
