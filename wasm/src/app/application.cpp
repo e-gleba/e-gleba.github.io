@@ -5,6 +5,10 @@
 /// only clears the background. GL 1.x core entry points (glViewport,
 /// glClearColor, glClear) have real prototypes in <SDL3/SDL_opengl.h> on both
 /// desktop and Emscripten, so no loader library is linked.
+///
+/// The UI theme follows the device theme via stock SDL3
+/// (SDL_GetSystemTheme + SDL_EVENT_SYSTEM_THEME_CHANGED); keyboard
+/// navigation is vim-style (j/k/h/l, 1-5, g/G).
 
 #include "app/application.hpp"
 
@@ -15,6 +19,7 @@
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl3.h>
+#include <implot.h>
 
 #include <string_view>
 
@@ -39,6 +44,14 @@ inline constexpr std::string_view glsl_version = "#version 300 es";
 inline constexpr std::string_view glsl_version = "#version 330 core";
 #endif
 
+/// Dark by default (also when the device reports no preference).
+[[nodiscard]] ui::theme::mode device_theme() noexcept
+{
+    return SDL_GetSystemTheme() == SDL_SYSTEM_THEME_LIGHT
+               ? ui::theme::mode::light
+               : ui::theme::mode::dark;
+}
+
 [[nodiscard]] bool init_imgui(SDL_Window* window,
                               SDL_GLContext context) noexcept
 {
@@ -47,7 +60,8 @@ inline constexpr std::string_view glsl_version = "#version 330 core";
         SDL_LogError(SDL_LOG_CATEGORY_RENDER, "ImGui::CreateContext failed");
         return false;
     }
-    ui::theme::apply();
+    ImPlot::CreateContext();
+    ui::theme::apply(device_theme());
 
     // Stock font is tiny on hi-DPI canvases - scale the whole UI instead of
     // shipping a TTF (keeps the bundle asset-free).
@@ -73,6 +87,7 @@ application::~application()
     // Idempotent teardown, valid for partially-initialized states (init
     // failure path) and the normal SDL_AppQuit path alike.
     if (imgui_initialized_) {
+        ImPlot::DestroyContext();
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplSDL3_Shutdown();
         ImGui::DestroyContext();
@@ -182,6 +197,47 @@ SDL_AppResult application::handle_event(SDL_Event* event) noexcept
 
     if (event->type == SDL_EVENT_QUIT) {
         return SDL_APP_SUCCESS; // browser tab closed / window close button
+    }
+
+    if (event->type == SDL_EVENT_SYSTEM_THEME_CHANGED) {
+        ui::theme::apply(device_theme());
+        return SDL_APP_CONTINUE;
+    }
+
+    // Vim-style section navigation. No text inputs exist, but respect
+    // WantCaptureKeyboard anyway so future widgets keep their keys.
+    if (event->type == SDL_EVENT_KEY_DOWN
+        && !ImGui::GetIO().WantCaptureKeyboard) {
+        const bool shift = (event->key.mod & SDL_KMOD_SHIFT) != 0;
+        const SDL_Keycode key = event->key.key;
+
+        if (key >= SDLK_1 && key <= SDLK_5) {
+            ui_.select(static_cast<std::size_t>(key - SDLK_1));
+            return SDL_APP_CONTINUE;
+        }
+        switch (key) {
+        case SDLK_J:
+        case SDLK_DOWN:
+        case SDLK_L:
+        case SDLK_RIGHT:
+            ui_.select_next();
+            break;
+        case SDLK_K:
+        case SDLK_UP:
+        case SDLK_H:
+        case SDLK_LEFT:
+            ui_.select_prev();
+            break;
+        case SDLK_G:
+            if (shift) {
+                ui_.select_last();
+            } else {
+                ui_.select_first();
+            }
+            break;
+        default:
+            break;
+        }
     }
     return SDL_APP_CONTINUE;
 }

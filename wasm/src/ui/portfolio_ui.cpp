@@ -8,10 +8,12 @@
 #include "ui/section.hpp"
 #include "ui/skills_section.hpp"
 #include "ui/theme.hpp"
+#include "ui/widgets.hpp"
 
 #include <imgui.h>
 
 #include <array>
+#include <cstdio>
 
 namespace ui {
 
@@ -31,6 +33,33 @@ const std::array<const section*, 5> sections{&about, &experience, &projects,
 
 } // namespace
 
+void portfolio_ui::select_next() noexcept
+{
+    active_section_ = (active_section_ + 1) % sections.size();
+}
+
+void portfolio_ui::select_prev() noexcept
+{
+    active_section_ = (active_section_ + sections.size() - 1) % sections.size();
+}
+
+void portfolio_ui::select(std::size_t index) noexcept
+{
+    if (index < sections.size()) {
+        active_section_ = index;
+    }
+}
+
+void portfolio_ui::select_first() noexcept
+{
+    active_section_ = 0;
+}
+
+void portfolio_ui::select_last() noexcept
+{
+    active_section_ = sections.size() - 1;
+}
+
 void portfolio_ui::render()
 {
     const ImGuiViewport* viewport = ImGui::GetMainViewport();
@@ -47,9 +76,12 @@ void portfolio_ui::render()
         return;
     }
 
+    // Children leave room for the status bar at the bottom.
+    const float status_height = ImGui::GetFrameHeightWithSpacing();
+
     // -- sidebar: identity, navigation, stats -------------------------------
     constexpr float sidebar_width = 240.0F;
-    if (ImGui::BeginChild("sidebar", ImVec2{sidebar_width, 0.0F},
+    if (ImGui::BeginChild("sidebar", ImVec2{sidebar_width, -status_height},
                           ImGuiChildFlags_Borders)) {
         ImGui::SetWindowFontScale(1.2F);
         ImGui::TextColored(theme::pink, "%s", portfolio::owner_name.data());
@@ -63,15 +95,8 @@ void portfolio_ui::render()
         ImGui::Spacing();
 
         for (std::size_t i = 0; i < sections.size(); ++i) {
-            const bool selected = (i == active_section_);
-            if (selected) {
-                ImGui::PushStyleColor(ImGuiCol_Text, theme::orange);
-            }
-            if (ImGui::Selectable(sections[i]->name().data(), selected)) {
+            if (widgets::nav_item(sections[i]->name(), i == active_section_)) {
                 active_section_ = i;
-            }
-            if (selected) {
-                ImGui::PopStyleColor();
             }
         }
 
@@ -90,10 +115,22 @@ void portfolio_ui::render()
     ImGui::SameLine();
 
     // -- content: active section --------------------------------------------
-    if (ImGui::BeginChild("content")) {
+    if (ImGui::BeginChild("content", ImVec2{0.0F, -status_height})) {
         sections[active_section_]->render();
     }
     ImGui::EndChild();
+
+    // -- status bar: vim key hints + position -------------------------------
+    ImGui::Separator();
+    ImGui::TextDisabled("j/k sections · 1-5 jump · g/G first/last");
+
+    std::array<char, 16> position{};
+    std::snprintf(position.data(), position.size(), "%zu/%zu",
+                  active_section_ + 1, sections.size());
+    ImGui::SameLine(ImGui::GetWindowWidth()
+                    - ImGui::CalcTextSize(position.data()).x
+                    - ImGui::GetStyle().WindowPadding.x);
+    ImGui::TextDisabled("%s", position.data());
 
     ImGui::End();
 }

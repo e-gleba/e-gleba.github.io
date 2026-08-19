@@ -22,6 +22,7 @@ endif()
 find_package(cpm CONFIG REQUIRED)
 
 find_package(sdl3 CONFIG REQUIRED) # before imgui: backend links SDL3::SDL3
-find_package(imgui CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED) # before implot: it links imgui::imgui
+find_package(implot CONFIG REQUIRED)
 
 add_subdirectory(src)

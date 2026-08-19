@@ -28,7 +28,8 @@ target_compile_options(portfolio PRIVATE -Wall -Wextra -Wpedantic)
 target_link_libraries(
     portfolio
     PRIVATE SDL3::SDL3
-            imgui::sdl3_opengl3)
+            imgui::sdl3_opengl3
+            implot::implot)
 
 target_link_options(
     portfolio

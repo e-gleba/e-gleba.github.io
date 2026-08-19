@@ -27,6 +27,24 @@ void hyperlink(std::string_view label, std::string_view url)
     }
 }
 
+bool nav_item(std::string_view label, bool selected)
+{
+    // Indent the row to leave room for the `>` marker.
+    constexpr float marker_indent = 16.0F;
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + marker_indent);
+    const ImVec2 pos = ImGui::GetCursorScreenPos();
+
+    const bool clicked = ImGui::Selectable(label.data(), selected);
+
+    if (selected || ImGui::IsItemHovered()) {
+        ImGui::GetWindowDrawList()->AddText(
+            ImGui::GetFont(), ImGui::GetFontSize(),
+            ImVec2{pos.x - marker_indent + 2.0F, pos.y},
+            ImGui::GetColorU32(theme::orange), ">");
+    }
+    return clicked;
+}
+
 void tag_list(std::span<const std::string_view> tags)
 {
     const float right_edge =
@@ -49,6 +67,8 @@ void tag_list(std::span<const std::string_view> tags)
 void header(std::string_view title)
 {
     ImGui::SetWindowFontScale(1.5F);
+    ImGui::TextDisabled("~/");
+    ImGui::SameLine(0.0F, 0.0F);
     ImGui::TextColored(theme::pink, "%s", title.data());
     ImGui::SetWindowFontScale(1.0F);
     ImGui::Separator();
