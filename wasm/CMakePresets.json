@@ -23,9 +23,9 @@
         {
             "name": "emscripten",
             "displayName": "Emscripten (WebAssembly)",
-            "description": "Cross-compile to WebAssembly. Requires emsdk: run `source <emsdk>/emsdk_env.sh` first so EMSDK points at the SDK root.",
+            "description": "Cross-compile to WebAssembly. Zero setup: cmake/toolchains/emscripten.cmake bootstraps a pinned emsdk into .emsdk/ on first configure (an existing EMSDK env var is respected). Requires python3 on PATH.",
             "inherits": "base",
-            "toolchainFile": "$env{EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake"
+            "toolchainFile": "${sourceDir}/cmake/toolchains/emscripten.cmake"
         }
     ],
     "buildPresets": [

@@ -15,6 +15,8 @@ cmake/
   cpm/
     sdl3-config.cmake     SDL3 static, video + OpenGL only
     imgui-config.cmake    Dear ImGui core + SDL3/OpenGL3 backend targets
+  toolchains/
+    emscripten.cmake      zero-setup: bootstraps pinned emsdk into .emsdk/
 src/
   main.cpp                SDL3 callback entry points (thin, no logic)
   shell.html              canvas page template for emcc --shell-file
@@ -33,19 +35,18 @@ touch only `data/portfolio.hpp`.
 
 ## build
 
-Requires CMake >= 3.31, Ninja, and emsdk:
+Requires CMake >= 3.31, Ninja, and python3. No manual emsdk install: the
+toolchain downloads and activates a pinned emsdk into `.emsdk/` on first
+configure (one-time, ~2 GB). An existing `EMSDK` env var is respected and
+used as-is (e.g. CI).
 
 ```sh
-git clone https://github.com/emscripten-core/emsdk.git
-cd emsdk && ./emsdk install latest && ./emsdk activate latest
-source ./emsdk_env.sh   # EMSDK env var is used by the preset
-cd ..
-
 cmake --preset emscripten
 cmake --build --preset emscripten-release
 ```
 
 Output: `build/emscripten/src/Release/portfolio.{html,js,wasm}`.
+Delete `.emsdk/` to reset the SDK.
 
 ## run locally
 
