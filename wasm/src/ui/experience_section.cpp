@@ -13,11 +13,11 @@ void experience_section::render() const
     widgets::header(name());
 
     for (const portfolio::experience_entry& entry : portfolio::experience) {
-        ImGui::TextColored(theme::pink, "%s", entry.title.data());
+        ImGui::TextColored(theme::primary, "%s", entry.title.data());
         ImGui::SameLine();
         ImGui::TextDisabled("%s", entry.period.data());
 
-        ImGui::TextColored(theme::purple, "%s", entry.company.data());
+        ImGui::TextColored(theme::link, "%s", entry.company.data());
         widgets::paragraph(entry.description);
         widgets::tag_list(entry.tags);
 

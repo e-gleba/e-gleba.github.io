@@ -9,8 +9,10 @@ The whole site is one static binary: `portfolio.html` + `portfolio.js` +
 
 ## features
 
-- dark/light theme follows the device (`SDL_GetSystemTheme` +
-  `SDL_EVENT_SYSTEM_THEME_CHANGED` - stock SDL3, no JS glue)
+- warm "seaside sunset" look: sunlit stone, terracotta, gold, sea teal.
+  Sunset (light) by default; dusk (warm espresso, never cold blue-black)
+  when the device prefers dark - stock SDL3 (`SDL_GetSystemTheme` +
+  `SDL_EVENT_SYSTEM_THEME_CHANGED`), no JS glue
 - vim-style keyboard navigation: `j`/`k` (or `h`/`l`, arrows) switch
   sections, `1`-`5` jump, `g`/`G` first/last; hints live in the status bar
 - terminal-style `>` selector marker on hovered/selected nav rows
@@ -35,7 +37,7 @@ src/
                           device-theme tracking, vim key handling
   data/portfolio.hpp      all site copy as inline constexpr data
   ui/section.hpp          standard module interface (abstract base)
-  ui/theme.hpp            constexpr dark/light palettes lifted from the site
+  ui/theme.hpp            constexpr sunset/dusk palettes
   ui/widgets.*            shared helpers: hyperlink, nav_item, tag_list, ...
   ui/<name>_section.*     one file pair per section (about, experience, ...)
   ui/portfolio_ui.*       layout: sidebar nav + content + status bar

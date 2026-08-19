@@ -14,7 +14,7 @@ namespace ui::widgets {
 
 void hyperlink(std::string_view label, std::string_view url)
 {
-    ImGui::PushStyleColor(ImGuiCol_Text, theme::purple);
+    ImGui::PushStyleColor(ImGuiCol_Text, theme::link);
     const bool clicked = ImGui::Selectable(label.data());
     ImGui::PopStyleColor();
 
@@ -40,7 +40,7 @@ bool nav_item(std::string_view label, bool selected)
         ImGui::GetWindowDrawList()->AddText(
             ImGui::GetFont(), ImGui::GetFontSize(),
             ImVec2{pos.x - marker_indent + 2.0F, pos.y},
-            ImGui::GetColorU32(theme::orange), ">");
+            ImGui::GetColorU32(theme::secondary), ">");
     }
     return clicked;
 }
@@ -60,7 +60,7 @@ void tag_list(std::span<const std::string_view> tags)
             }
         }
         first = false;
-        ImGui::TextColored(theme::orange, "%s", tag.data());
+        ImGui::TextColored(theme::secondary, "%s", tag.data());
     }
 }
 
@@ -69,7 +69,7 @@ void header(std::string_view title)
     ImGui::SetWindowFontScale(1.5F);
     ImGui::TextDisabled("~/");
     ImGui::SameLine(0.0F, 0.0F);
-    ImGui::TextColored(theme::pink, "%s", title.data());
+    ImGui::TextColored(theme::primary, "%s", title.data());
     ImGui::SetWindowFontScale(1.0F);
     ImGui::Separator();
     ImGui::Spacing();

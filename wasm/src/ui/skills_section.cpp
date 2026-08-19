@@ -14,7 +14,7 @@ void skills_section::render() const
 
     for (const portfolio::skill_category& category :
          portfolio::skill_categories) {
-        ImGui::TextColored(theme::purple, "%s", category.name.data());
+        ImGui::TextColored(theme::link, "%s", category.name.data());
         widgets::tag_list(category.items);
         ImGui::Spacing();
         ImGui::Spacing();

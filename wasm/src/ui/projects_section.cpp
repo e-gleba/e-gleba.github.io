@@ -36,7 +36,7 @@ void projects_section::render() const
     }
 
     ImGui::Spacing();
-    ImGui::TextColored(theme::purple, "Stars");
+    ImGui::TextColored(theme::link, "Stars");
     if (ImPlot::BeginPlot("##project_stars", ImVec2{-1.0F, 200.0F})) {
         ImPlot::SetupAxes(nullptr, "stars");
         ImPlot::SetupAxisTicks(ImAxis_X1, positions.data(),

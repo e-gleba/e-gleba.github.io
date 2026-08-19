@@ -17,10 +17,10 @@ void about_section::render() const
     widgets::paragraph(portfolio::about_p3);
 
     ImGui::Spacing();
-    ImGui::TextColored(theme::purple, "Philosophy");
+    ImGui::TextColored(theme::link, "Philosophy");
     widgets::paragraph(portfolio::about_philosophy);
 
-    ImGui::TextColored(theme::purple, "Impact");
+    ImGui::TextColored(theme::link, "Impact");
     for (const std::string_view item : portfolio::about_impact) {
         ImGui::BulletText("%s", item.data());
     }

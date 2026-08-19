@@ -84,7 +84,7 @@ void portfolio_ui::render()
     if (ImGui::BeginChild("sidebar", ImVec2{sidebar_width, -status_height},
                           ImGuiChildFlags_Borders)) {
         ImGui::SetWindowFontScale(1.2F);
-        ImGui::TextColored(theme::pink, "%s", portfolio::owner_name.data());
+        ImGui::TextColored(theme::primary, "%s", portfolio::owner_name.data());
         ImGui::SetWindowFontScale(1.0F);
         ImGui::TextDisabled("%s", portfolio::tagline.data());
         ImGui::TextDisabled("%s, %s", portfolio::location.data(),
@@ -105,7 +105,7 @@ void portfolio_ui::render()
         ImGui::Spacing();
 
         for (const portfolio::stat& s : portfolio::stats) {
-            ImGui::TextColored(theme::orange, "%s", s.value.data());
+            ImGui::TextColored(theme::secondary, "%s", s.value.data());
             ImGui::SameLine();
             ImGui::TextDisabled("%s", s.label.data());
         }

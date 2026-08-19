@@ -44,12 +44,12 @@ inline constexpr std::string_view glsl_version = "#version 300 es";
 inline constexpr std::string_view glsl_version = "#version 330 core";
 #endif
 
-/// Dark by default (also when the device reports no preference).
+/// Sunset (light) by default - also when the device reports no preference.
 [[nodiscard]] ui::theme::mode device_theme() noexcept
 {
-    return SDL_GetSystemTheme() == SDL_SYSTEM_THEME_LIGHT
-               ? ui::theme::mode::light
-               : ui::theme::mode::dark;
+    return SDL_GetSystemTheme() == SDL_SYSTEM_THEME_DARK
+               ? ui::theme::mode::dusk
+               : ui::theme::mode::sunset;
 }
 
 [[nodiscard]] bool init_imgui(SDL_Window* window,
@@ -123,7 +123,7 @@ bool application::init() noexcept
                         SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG); // macOS
 #endif
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 0);  // UI only: no depth
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 0);
 
