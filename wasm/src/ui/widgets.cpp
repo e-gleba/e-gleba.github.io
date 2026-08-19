@@ -35,18 +35,65 @@ constexpr float toggle_hit_margin = 1.4F;
         '\0'};
 }
 
-/// Per-row state for the nav_item fold animation, keyed by the row's ImGui
-/// ID. Static storage: nav rows are few and live for the whole run, and the
-/// wasm build is single-threaded.
-struct nav_fold {
+// -- fold-open hover animation (nav rows, links) ----------------------------
+
+// Geometry/timing shared by every folding row.
+constexpr float marker_indent = 16.0F; // gutter reserved for the `>` marker
+constexpr float fold_shift = 6.0F;     // label travel on fold-open
+constexpr float marker_slide = 5.0F;   // marker travel while fading in
+constexpr float fold_speed = 14.0F;    // 1/s - higher = snappier
+
+/// Per-row animation state, keyed by the row's ImGui ID. Static storage:
+/// rows are few and live for the whole run; the wasm build is
+/// single-threaded.
+struct fold_state {
     float t = 0.0F;   // eased open amount, [0,1]
     bool hot = false; // hovered as of the previous frame
 };
 
-[[nodiscard]] std::unordered_map<ImGuiID, nav_fold>& nav_folds()
+[[nodiscard]] std::unordered_map<ImGuiID, fold_state>& fold_states()
 {
-    static std::unordered_map<ImGuiID, nav_fold> states;
+    static std::unordered_map<ImGuiID, fold_state> states;
     return states;
+}
+
+/// Advances the row's animation and indents the cursor for a folding row
+/// (gutter + eased label shift). Returns the eased amount for fold_end().
+/// Hover is read from the previous frame because the offset must be known
+/// before the row is drawn - one frame of lag is invisible.
+[[nodiscard]] float fold_begin(std::string_view label, bool selected)
+{
+    fold_state& fold = fold_states()[ImGui::GetID(label.data())];
+
+    // Exponential ease toward the target - frame-rate independent.
+    const float target = (fold.hot || selected) ? 1.0F : 0.0F;
+    fold.t += (target - fold.t)
+              * (1.0F - std::exp(-fold_speed * ImGui::GetIO().DeltaTime));
+    if (target == 0.0F && fold.t < 0.001F) {
+        fold.t = 0.0F; // settle exactly; skips the marker draw
+    }
+
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + marker_indent
+                         + fold.t * fold_shift);
+    return fold.t;
+}
+
+/// Draws the `>` marker in the gutter (faded and slid by `t`) and records
+/// the row's hover state for the next frame. Call right after the row
+/// widget - the gutter is derived from the item rect.
+void fold_end(std::string_view label, float t, bool hovered)
+{
+    fold_states()[ImGui::GetID(label.data())].hot = hovered;
+
+    if (t <= 0.0F) {
+        return;
+    }
+    const ImVec2 row = ImGui::GetItemRectMin();
+    const float marker_x = row.x - marker_indent - t * fold_shift + 2.0F
+                           + (1.0F - t) * marker_slide;
+    ImGui::GetWindowDrawList()->AddText(
+        ImGui::GetFont(), ImGui::GetFontSize(), ImVec2{marker_x, row.y},
+        ImGui::GetColorU32(theme::with_alpha(theme::secondary, t)), ">");
 }
 
 } // namespace
@@ -57,11 +104,16 @@ struct nav_fold {
 
 void hyperlink(std::string_view label, std::string_view url)
 {
+    const float t = fold_begin(label, false);
+
     ImGui::PushStyleColor(ImGuiCol_Text, theme::link);
     const bool clicked = ImGui::Selectable(label.data());
     ImGui::PopStyleColor();
 
-    if (ImGui::IsItemHovered()) {
+    const bool hovered = ImGui::IsItemHovered();
+    fold_end(label, t, hovered);
+
+    if (hovered) {
         ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
         ImGui::SetTooltip("%s", url.data());
     }
@@ -72,42 +124,9 @@ void hyperlink(std::string_view label, std::string_view url)
 
 bool nav_item(std::string_view label, bool selected)
 {
-    // At rest the row keeps a gutter for the `>` marker. On hover (and when
-    // selected) the row folds open: the label eases `fold_shift` px to the
-    // right while the marker fades in and slides left into the gutter.
-    constexpr float marker_indent = 16.0F;
-    constexpr float fold_shift = 6.0F;
-    constexpr float marker_slide = 5.0F;
-    constexpr float fold_speed = 14.0F; // 1/s - higher = snappier
-
-    nav_fold& fold = nav_folds()[ImGui::GetID(label.data())];
-
-    // Exponential ease toward the target - frame-rate independent. The
-    // offset must be known before the row is drawn, so the hover state is
-    // read from the previous frame (one frame of lag is invisible).
-    const float target = (fold.hot || selected) ? 1.0F : 0.0F;
-    fold.t += (target - fold.t)
-              * (1.0F - std::exp(-fold_speed * ImGui::GetIO().DeltaTime));
-    if (target == 0.0F && fold.t < 0.001F) {
-        fold.t = 0.0F; // settle exactly; skips the marker draw below
-    }
-
-    const ImVec2 gutter = ImGui::GetCursorScreenPos();
-    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + marker_indent
-                         + fold.t * fold_shift);
-
+    const float t = fold_begin(label, selected);
     const bool clicked = ImGui::Selectable(label.data(), selected);
-    fold.hot = ImGui::IsItemHovered();
-
-    if (fold.t > 0.0F) {
-        const float marker_x =
-            gutter.x + 2.0F + (1.0F - fold.t) * marker_slide;
-        ImGui::GetWindowDrawList()->AddText(
-            ImGui::GetFont(), ImGui::GetFontSize(),
-            ImVec2{marker_x, gutter.y},
-            ImGui::GetColorU32(theme::with_alpha(theme::secondary, fold.t)),
-            ">");
-    }
+    fold_end(label, t, ImGui::IsItemHovered());
     return clicked;
 }
 

@@ -11,7 +11,8 @@
 
 namespace ui::widgets {
 
-/// Colored label that opens `url` in a new browser tab when clicked.
+/// Colored label that opens `url` in a new browser tab when clicked. Folds
+/// open on hover like nav_item (`>` marker slides in, label shifts right).
 /// Stock SDL_OpenURL - no custom JS glue.
 void hyperlink(std::string_view label, std::string_view url);
 
