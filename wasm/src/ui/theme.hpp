@@ -114,7 +114,7 @@ inline void apply(mode m) noexcept
 /// re-applies the device preference).
 inline void toggle() noexcept
 {
-    apply(active_mode == mode::dark ? mode::dark : mode::light);
+    apply(active_mode == mode::light ? mode::dark : mode::light);
 }
 
 } // namespace ui::theme
