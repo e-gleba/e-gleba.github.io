@@ -14,11 +14,9 @@ void contact_section::render() const
     widgets::paragraph(portfolio::contact_text);
     ImGui::Spacing();
 
-    // Emphasized link rows: larger icon + label, and a fixed-width icon
-    // column so the labels align across brand/solid glyph widths.
-    constexpr float link_scale = 1.3F;
-    ImGui::SetWindowFontScale(link_scale);
-
+    // One aligned row per link: a fixed-width icon column keeps the labels
+    // lined up across brand/solid glyph widths. No local font scaling -
+    // everything follows the global UI scale.
     const float label_x = ImGui::GetCursorPosX() + ImGui::GetFontSize() * 1.6F;
 
     for (const portfolio::external_link& link : portfolio::contact_links) {
@@ -27,8 +25,6 @@ void contact_section::render() const
         widgets::hyperlink(link.label, link.url);
         ImGui::Spacing();
     }
-
-    ImGui::SetWindowFontScale(1.0F);
 }
 
 } // namespace ui

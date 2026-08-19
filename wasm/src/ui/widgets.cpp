@@ -129,8 +129,8 @@ bool theme_toggle()
     const float side = theme_toggle_size();
 
     // Blank button - the glyph is drawn by hand below. Button's own label
-    // centering misplaces the merged icon glyph (it rides high), so it is
-    // measured and placed at the exact size it will be rendered at.
+    // centering misplaces the merged icon glyph, so it is measured and
+    // placed at the exact size it will be rendered at.
     const bool clicked = ImGui::Button("##theme_toggle", ImVec2{side, side});
 
     ImGui::SetWindowFontScale(toggle_icon_scale);
@@ -139,12 +139,17 @@ bool theme_toggle()
     const ImVec2 glyph =
         font->CalcTextSizeA(font_size, FLT_MAX, 0.0F, utf8.data());
 
+    // Icon glyphs sit on the text baseline, so their ink rides high in the
+    // em box - drop the centered box slightly to optically center the icon.
+    constexpr float glyph_drop = 0.10F; // fraction of the glyph line height
+
     const ImVec2 rect_min = ImGui::GetItemRectMin();
     const ImVec2 rect_max = ImGui::GetItemRectMax();
     ImGui::GetWindowDrawList()->AddText(
         font, font_size,
         ImVec2{rect_min.x + (rect_max.x - rect_min.x - glyph.x) * 0.5F,
-               rect_min.y + (rect_max.y - rect_min.y - glyph.y) * 0.5F},
+               rect_min.y + (rect_max.y - rect_min.y - glyph.y) * 0.5F
+                   + font_size * glyph_drop},
         ImGui::GetColorU32(ImGuiCol_Text), utf8.data());
     ImGui::SetWindowFontScale(1.0F);
 
