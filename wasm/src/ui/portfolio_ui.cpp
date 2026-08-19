@@ -31,6 +31,11 @@ const contact_section contact{};
 const std::array<const section*, 5> sections{&about, &experience, &projects,
                                              &skills, &contact};
 
+/// Below this window width the sidebar collapses into a compact top block
+/// (phone screens).
+constexpr float wide_layout_min_width = 640.0F;
+constexpr float sidebar_width = 240.0F;
+
 } // namespace
 
 void portfolio_ui::select_next() noexcept
@@ -76,59 +81,104 @@ void portfolio_ui::render()
         return;
     }
 
-    // Children leave room for the status bar at the bottom.
+    // -- header row: theme toggle pinned to the right corner ----------------
+    ImGui::SetCursorPosX(ImGui::GetWindowWidth()
+                         - ImGui::GetFrameHeight()
+                         - ImGui::GetStyle().WindowPadding.x);
+    if (widgets::theme_toggle()) {
+        theme::toggle();
+    }
+
     const float status_height = ImGui::GetFrameHeightWithSpacing();
+    const bool wide = ImGui::GetWindowWidth() >= wide_layout_min_width;
 
-    // -- sidebar: identity, navigation, stats, theme toggle -----------------
-    constexpr float sidebar_width = 240.0F;
-    if (ImGui::BeginChild("sidebar", ImVec2{sidebar_width, -status_height},
-                          ImGuiChildFlags_Borders)) {
-        ImGui::SetWindowFontScale(1.2F);
+    if (wide) {
+        // -- sidebar: identity, navigation, stats ---------------------------
+        const float body_height =
+            ImGui::GetContentRegionAvail().y - status_height;
+        if (ImGui::BeginChild("sidebar", ImVec2{sidebar_width, body_height},
+                              ImGuiChildFlags_Borders)) {
+            ImGui::SetWindowFontScale(1.2F);
+            ImGui::TextColored(theme::primary, "%s",
+                               portfolio::owner_name.data());
+            ImGui::SetWindowFontScale(1.0F);
+            ImGui::TextDisabled("%s", portfolio::tagline.data());
+            ImGui::TextDisabled("%s, %s", portfolio::location.data(),
+                                portfolio::company.data());
+
+            ImGui::Spacing();
+            ImGui::Separator();
+            ImGui::Spacing();
+
+            for (std::size_t i = 0; i < sections.size(); ++i) {
+                if (widgets::nav_item(sections[i]->name(),
+                                      i == active_section_)) {
+                    active_section_ = i;
+                }
+            }
+
+            ImGui::Spacing();
+            ImGui::Separator();
+            ImGui::Spacing();
+
+            for (const portfolio::stat& s : portfolio::stats) {
+                ImGui::TextColored(theme::secondary, "%s", s.value.data());
+                ImGui::SameLine();
+                ImGui::TextDisabled("%s", s.label.data());
+            }
+        }
+        ImGui::EndChild();
+
+        ImGui::SameLine();
+
+        if (ImGui::BeginChild("content", ImVec2{0.0F, body_height})) {
+            sections[active_section_]->render();
+        }
+        ImGui::EndChild();
+    } else {
+        // -- compact: identity line, wrapping nav row, full-width content ---
         ImGui::TextColored(theme::primary, "%s", portfolio::owner_name.data());
-        ImGui::SetWindowFontScale(1.0F);
+        ImGui::SameLine();
         ImGui::TextDisabled("%s", portfolio::tagline.data());
-        ImGui::TextDisabled("%s, %s", portfolio::location.data(),
-                            portfolio::company.data());
 
-        ImGui::Spacing();
-        ImGui::Separator();
-        ImGui::Spacing();
-
+        const float right_edge =
+            ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x;
+        const float spacing = ImGui::GetStyle().ItemSpacing.x;
+        bool first = true;
         for (std::size_t i = 0; i < sections.size(); ++i) {
-            if (widgets::nav_item(sections[i]->name(), i == active_section_)) {
+            if (!first) {
+                const float item_width =
+                    ImGui::CalcTextSize(sections[i]->name().data()).x;
+                if (ImGui::GetCursorPosX() + spacing + item_width
+                    <= right_edge) {
+                    ImGui::SameLine();
+                }
+            }
+            first = false;
+
+            const bool selected = (i == active_section_);
+            if (selected) {
+                ImGui::PushStyleColor(ImGuiCol_Button,
+                                      theme::with_alpha(theme::secondary,
+                                                        0.45F));
+            }
+            if (ImGui::SmallButton(sections[i]->name().data())) {
                 active_section_ = i;
+            }
+            if (selected) {
+                ImGui::PopStyleColor();
             }
         }
 
-        ImGui::Spacing();
         ImGui::Separator();
-        ImGui::Spacing();
 
-        for (const portfolio::stat& s : portfolio::stats) {
-            ImGui::TextColored(theme::secondary, "%s", s.value.data());
-            ImGui::SameLine();
-            ImGui::TextDisabled("%s", s.label.data());
+        const float content_height =
+            ImGui::GetContentRegionAvail().y - status_height;
+        if (ImGui::BeginChild("content", ImVec2{0.0F, content_height})) {
+            sections[active_section_]->render();
         }
-
-        ImGui::Spacing();
-        ImGui::Separator();
-        ImGui::Spacing();
-
-        if (widgets::theme_toggle()) {
-            theme::toggle();
-        }
-        ImGui::SameLine();
-        ImGui::TextDisabled("theme");
+        ImGui::EndChild();
     }
-    ImGui::EndChild();
-
-    ImGui::SameLine();
-
-    // -- content: active section --------------------------------------------
-    if (ImGui::BeginChild("content", ImVec2{0.0F, -status_height})) {
-        sections[active_section_]->render();
-    }
-    ImGui::EndChild();
 
     // -- status bar: key hints + position -----------------------------------
     ImGui::Separator();

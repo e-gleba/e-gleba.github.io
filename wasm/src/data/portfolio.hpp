@@ -7,7 +7,8 @@
 /// it lands in .rodata of the wasm binary with zero runtime setup.
 ///
 /// Note: the stock ImGui font covers Latin-1 only, so the copy is ASCII
-/// (the Astro site's en-dashes are plain hyphens here).
+/// (the Astro site's en-dashes are plain hyphens here). Icons are
+/// FontAwesome PUA codepoints (merged into the default font at startup).
 
 #pragma once
 
@@ -21,7 +22,7 @@ namespace portfolio {
 struct external_link {
     std::string_view label;
     std::string_view url;
-    std::string_view sigil; // short terminal-style marker, e.g. "gh"
+    std::uint32_t icon; // FontAwesome PUA codepoint
 };
 
 struct stat {
@@ -273,7 +274,7 @@ inline constexpr std::array skill_categories{
 };
 
 // ---------------------------------------------------------------------------
-// contact
+// contact (icons: FontAwesome 6 PUA codepoints)
 // ---------------------------------------------------------------------------
 
 inline constexpr std::string_view contact_text =
@@ -281,19 +282,19 @@ inline constexpr std::string_view contact_text =
     "architecture, and cross-platform tooling.";
 
 inline constexpr std::array contact_links{
+    external_link{.label = "GitHub",
+                  .url = "https://github.com/e-gleba",
+                  .icon = 0xF09B},
+    external_link{.label = "X", .url = "https://x.com/e_gleba", .icon = 0xE61B},
     external_link{
-        .label = "GitHub", .url = "https://github.com/e-gleba", .sigil = "gh"},
+        .label = "Telegram", .url = "https://t.me/egleba", .icon = 0xF2C6},
     external_link{
-        .label = "X", .url = "https://x.com/e_gleba", .sigil = "x"},
+        .label = "Email", .url = "mailto:i@egleba.ru", .icon = 0xF0E0},
     external_link{
-        .label = "Telegram", .url = "https://t.me/egleba", .sigil = "tg"},
-    external_link{
-        .label = "Email", .url = "mailto:i@egleba.ru", .sigil = "@"},
-    external_link{
-        .label = "VK", .url = "https://vk.ru/e_gleba", .sigil = "vk"},
+        .label = "VK", .url = "https://vk.ru/e_gleba", .icon = 0xF189},
     external_link{.label = "Steam",
                   .url = "https://steamcommunity.com/id/egleba",
-                  .sigil = "st"},
+                  .icon = 0xF1B6},
 };
 
 } // namespace portfolio

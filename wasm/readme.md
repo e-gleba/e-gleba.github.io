@@ -9,16 +9,18 @@ The whole site is one static binary: `portfolio.html` + `portfolio.js` +
 
 ## features
 
-- warm "seaside sunset" look: sunlit stone, terracotta, gold, sea teal.
-  Sunset (light) by default; dusk (warm espresso, never cold blue-black)
-  when the device prefers dark - stock SDL3 (`SDL_GetSystemTheme` +
-  `SDL_EVENT_SYSTEM_THEME_CHANGED`), no JS glue. Manual sun/moon toggle in
-  the sidebar (icon drawn with ImDrawList primitives, no font assets)
+- dark/light themes (site accent palette on dark, contrast-tuned on light),
+  following the device via stock SDL3 (`SDL_GetSystemTheme` +
+  `SDL_EVENT_SYSTEM_THEME_CHANGED`) + manual sun/moon toggle pinned to the
+  top-right corner - no JS glue
+- adaptive layout: sidebar on wide screens, compact wrapping nav row on
+  phone-width screens (< 640 px)
+- FontAwesome brand/solid icons (social links, theme toggle), embedded into
+  the wasm FS via `--embed-file` and merged into the default font
 - keyboard navigation: `tab`/`shift+tab` and arrows work even with browser
   vim extensions in normal mode (Vimium never captures them); `j`/`k`,
   `h`/`l`, `1`-`5`, `g`/`G` for full vim style once keys reach the page
 - terminal-style `>` selector marker on hovered/selected nav rows
-- social links with terminal sigils (`[gh]`, `[tg]`, ...)
 - ImPlot bar chart of repo stars, rendered from the same constexpr data
 - links open via `SDL_OpenURL` (new browser tab)
 
@@ -31,19 +33,20 @@ cmake/
     sdl3-config.cmake     SDL3 static, video + OpenGL only
     imgui-config.cmake    Dear ImGui core + SDL3/OpenGL3 backend targets
     implot-config.cmake   ImPlot plotting library
+    fontawesome-config.cmake  FontAwesome Free icon fonts (TTF only)
   toolchains/
     emscripten.cmake      zero-setup: bootstraps pinned emsdk into .emsdk/
 src/
   main.cpp                SDL3 callback entry points (thin, no logic)
   shell.html              canvas page template for emcc --shell-file
   app/application.*       window + GL context + ImGui lifecycle, frame pump,
-                          device-theme tracking, key handling
+                          icon font loading, device-theme tracking, keys
   data/portfolio.hpp      all site copy as inline constexpr data
   ui/section.hpp          standard module interface (abstract base)
-  ui/theme.hpp            constexpr sunset/dusk palettes + toggle
-  ui/widgets.*            shared helpers: hyperlink, nav_item, theme_toggle...
+  ui/theme.hpp            constexpr dark/light palettes + toggle
+  ui/widgets.*            shared helpers: hyperlink, nav_item, icon, ...
   ui/<name>_section.*     one file pair per section (about, experience, ...)
-  ui/portfolio_ui.*       layout: sidebar nav + content + status bar
+  ui/portfolio_ui.*       adaptive layout: sidebar / compact nav + status bar
 ```
 
 Every section implements `ui::section` (`name()` + `render()`); adding a
@@ -74,7 +77,7 @@ python3 -m http.server 8000 -d build/emscripten/src/Release
 
 ## deploy
 
-Copy the three output files to any static host (GitHub Pages, nginx, S3).
+Copy the output files to any static host (GitHub Pages, nginx, S3).
 No server-side code.
 
 ## notes

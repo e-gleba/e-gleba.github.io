@@ -15,7 +15,7 @@ void contact_section::render() const
     ImGui::Spacing();
 
     for (const portfolio::external_link& link : portfolio::contact_links) {
-        ImGui::TextColored(theme::secondary, "[%s]", link.sigil.data());
+        widgets::icon(link.icon, theme::link);
         ImGui::SameLine();
         widgets::hyperlink(link.label, link.url);
     }

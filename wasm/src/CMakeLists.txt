@@ -42,3 +42,13 @@ target_link_options(
             # extra runtime checks in debug builds, zero release cost
             "$<$<CONFIG:Debug>:-sASSERTIONS=2>"
             "$<$<CONFIG:Debug>:-sGL_ASSERTIONS=1>")
+
+# Icon fonts ship inside the wasm FS: <file on host>@<path in wasm FS>.
+if(EMSCRIPTEN)
+    target_link_options(
+        portfolio
+        PRIVATE
+            "SHELL:--embed-file ${fontawesome_SOURCE_DIR}/webfonts/fa-solid-900.ttf@/fonts/fa-solid-900.ttf"
+            "SHELL:--embed-file ${fontawesome_SOURCE_DIR}/webfonts/fa-brands-400.ttf@/fonts/fa-brands-400.ttf"
+    )
+endif()

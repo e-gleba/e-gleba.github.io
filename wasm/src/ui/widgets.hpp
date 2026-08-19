@@ -3,6 +3,9 @@
 
 #pragma once
 
+#include <imgui.h>
+
+#include <cstdint>
 #include <span>
 #include <string_view>
 
@@ -16,8 +19,11 @@ void hyperlink(std::string_view label, std::string_view url);
 /// when selected. Returns true when clicked.
 bool nav_item(std::string_view label, bool selected);
 
-/// Iconized theme switcher: sun/moon drawn with ImDrawList primitives (no
-/// font or asset needed). Returns true when clicked.
+/// FontAwesome icon glyph (PUA codepoint) in the given color.
+void icon(std::uint32_t codepoint, const ImVec4& color);
+
+/// Icon-only theme switcher (FontAwesome sun/moon). Returns true when
+/// clicked.
 bool theme_toggle();
 
 /// Flowing row of accent-colored tags, wraps at the content edge.

@@ -44,12 +44,39 @@ inline constexpr std::string_view glsl_version = "#version 300 es";
 inline constexpr std::string_view glsl_version = "#version 330 core";
 #endif
 
-/// Sunset (light) by default - also when the device reports no preference.
+/// Light by default - also when the device reports no preference.
 [[nodiscard]] ui::theme::mode device_theme() noexcept
 {
     return SDL_GetSystemTheme() == SDL_SYSTEM_THEME_DARK
-               ? ui::theme::mode::dusk
-               : ui::theme::mode::sunset;
+               ? ui::theme::mode::dark
+               : ui::theme::mode::light;
+}
+
+/// FontAwesome Free (solid + brands) merged into the default font. The TTFs
+/// are embedded into the wasm FS at link time (--embed-file, see
+/// src/CMakeLists.txt); only the PUA icon range is loaded.
+void load_icon_fonts() noexcept
+{
+    ImGuiIO& io = ImGui::GetIO();
+    io.Fonts->AddFontDefault();
+
+    static const ImWchar icon_ranges[] = {0xE000, 0xF2FF, 0};
+    ImFontConfig font_config;
+    font_config.MergeMode = true;
+    font_config.GlyphMinAdvanceX = 13.0F;
+
+    if (io.Fonts->AddFontFromFileTTF("/fonts/fa-solid-900.ttf", 13.0F,
+                                     &font_config, icon_ranges)
+        == nullptr) {
+        SDL_LogWarn(SDL_LOG_CATEGORY_RENDER,
+                    "icon font missing: fa-solid-900.ttf");
+    }
+    if (io.Fonts->AddFontFromFileTTF("/fonts/fa-brands-400.ttf", 13.0F,
+                                     &font_config, icon_ranges)
+        == nullptr) {
+        SDL_LogWarn(SDL_LOG_CATEGORY_RENDER,
+                    "icon font missing: fa-brands-400.ttf");
+    }
 }
 
 [[nodiscard]] bool init_imgui(SDL_Window* window,
@@ -61,10 +88,11 @@ inline constexpr std::string_view glsl_version = "#version 330 core";
         return false;
     }
     ImPlot::CreateContext();
+    load_icon_fonts();
     ui::theme::apply(device_theme());
 
     // Stock font is tiny on hi-DPI canvases - scale the whole UI instead of
-    // shipping a TTF (keeps the bundle asset-free).
+    // shipping a larger base font.
     ImGui::GetStyle().ScaleAllSizes(1.25F);
     ImGui::GetIO().FontGlobalScale = 1.25F;
 
