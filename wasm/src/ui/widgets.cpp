@@ -12,7 +12,7 @@
 
 #include "ui/theme.hpp"
 
-namespace ui
+namespace ui::widgets
 {
 
 namespace
@@ -91,16 +91,37 @@ void fold_end(const std::string_view label, const float t,
     nav_folds()[ImGui::GetID(label.data())].hot = hovered;
 }
 
+// Encode a FontAwesome PUA codepoint (<= U+FFFF) as UTF-8 into `out` and
+// return a pointer to it. Icons live in the BMP private use area, so three
+// bytes always suffice; out must hold at least 4 bytes (3 + NUL).
+auto utf8_of(const std::uint32_t codepoint, char* out) -> const char*
+{
+    if (codepoint < 0x800U) // 2-byte sequence
+    {
+        out[0] = static_cast<char>(0xC0U | (codepoint >> 6U));
+        out[1] = static_cast<char>(0x80U | (codepoint & 0x3FU));
+        out[2] = '\0';
+    }
+    else // 3-byte sequence
+    {
+        out[0] = static_cast<char>(0xE0U | (codepoint >> 12U));
+        out[1] = static_cast<char>(0x80U | ((codepoint >> 6U) & 0x3FU));
+        out[2] = static_cast<char>(0x80U | (codepoint & 0x3FU));
+        out[3] = '\0';
+    }
+    return out;
+}
+
 } // namespace
 
-void nav_item(const std::string_view label, bool& selected)
+bool nav_item(const std::string_view label, const bool selected)
 {
     const float t = fold_begin(label, selected);
 
-    if (ImGui::Selectable(label.data(), selected))
-        selected = true;
+    const bool clicked = ImGui::Selectable(label.data(), selected);
 
     fold_end(label, t, ImGui::IsItemHovered());
+    return clicked;
 }
 
 void hyperlink(const std::string_view label, const std::string_view url)
@@ -119,7 +140,53 @@ void hyperlink(const std::string_view label, const std::string_view url)
         SDL_OpenURL(url.data());
 }
 
-void theme_toggle()
+void icon(const std::uint32_t codepoint, const ImVec4& color)
+{
+    std::array<char, 4> buf{};
+    ImGui::TextColored(color, "%s", utf8_of(codepoint, buf.data()));
+}
+
+void tag_list(const std::span<const std::string_view> tags)
+{
+    const float right_edge =
+        ImGui::GetCursorPosX() + ImGui::GetContentRegionAvail().x;
+    const float spacing = ImGui::GetStyle().ItemSpacing.x;
+
+    bool first = true;
+    for (const std::string_view tag : tags)
+    {
+        if (!first)
+        {
+            const float width = ImGui::CalcTextSize(tag.data()).x;
+            if (ImGui::GetCursorPosX() + spacing + width <= right_edge)
+                ImGui::SameLine();
+        }
+        first = false;
+        ImGui::TextColored(theme::secondary, "%s", tag.data());
+    }
+}
+
+void header(const std::string_view title)
+{
+    ImGui::SetWindowFontScale(1.4F);
+    ImGui::TextColored(theme::primary, "~/%s", title.data());
+    ImGui::SetWindowFontScale(1.0F);
+    ImGui::Separator();
+    ImGui::Spacing();
+}
+
+void paragraph(const std::string_view text)
+{
+    ImGui::TextWrapped("%s", text.data());
+    ImGui::Spacing();
+}
+
+float theme_toggle_size() noexcept
+{
+    return ImGui::GetFontSize() * toggle_icon_scale * toggle_hit_margin;
+}
+
+bool theme_toggle()
 {
     ImGui::PushID("theme_toggle");
 
@@ -143,9 +210,8 @@ void theme_toggle()
     ImGui::InvisibleButton("##toggle", hit_size);
     const bool hovered = ImGui::IsItemHovered();
     const bool held = ImGui::IsItemActive();
+    const bool clicked = ImGui::IsItemClicked(ImGuiMouseButton_Left);
 
-    if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
-        theme::toggle();
     if (hovered)
     {
         ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
@@ -180,6 +246,7 @@ void theme_toggle()
                   utf8.data());
 
     ImGui::PopID();
+    return clicked;
 }
 
-} // namespace ui
+} // namespace ui::widgets
