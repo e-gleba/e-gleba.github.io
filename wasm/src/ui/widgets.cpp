@@ -16,6 +16,9 @@ namespace {
 inline constexpr std::uint32_t icon_sun = 0xF185;
 inline constexpr std::uint32_t icon_moon = 0xF186;
 
+// Toggle glyph is drawn 1.5x the base font size.
+constexpr float toggle_icon_scale = 1.5F;
+
 /// Encodes a Private Use Area codepoint (U+E000-U+F2FF - exactly 3 UTF-8
 /// bytes) into a null-terminated string.
 [[nodiscard]] std::array<char, 4> encode_pua(std::uint32_t codepoint) noexcept
@@ -72,12 +75,27 @@ void icon(std::uint32_t codepoint, const ImVec4& color)
     ImGui::TextColored(color, "%s", utf8.data());
 }
 
+float theme_toggle_size() noexcept
+{
+    const ImGuiStyle& style = ImGui::GetStyle();
+    return ImGui::GetFontSize() * toggle_icon_scale + style.FramePadding.y * 4.0F;
+}
+
 bool theme_toggle()
 {
     const auto utf8 = encode_pua(theme::active_mode == theme::mode::light
                                      ? icon_sun
                                      : icon_moon);
-    const bool clicked = ImGui::SmallButton(utf8.data());
+    const float side = theme_toggle_size();
+
+    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding,
+                        ImVec2{ImGui::GetStyle().FramePadding.y * 2.0F,
+                               ImGui::GetStyle().FramePadding.y * 2.0F});
+    ImGui::SetWindowFontScale(toggle_icon_scale);
+    const bool clicked = ImGui::Button(utf8.data(), ImVec2{side, side});
+    ImGui::SetWindowFontScale(1.0F);
+    ImGui::PopStyleVar();
+
     if (ImGui::IsItemHovered()) {
         ImGui::SetTooltip("toggle theme");
     }

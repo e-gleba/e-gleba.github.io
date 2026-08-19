@@ -83,7 +83,7 @@ void portfolio_ui::render()
 
     // -- header row: theme toggle pinned to the right corner ----------------
     ImGui::SetCursorPosX(ImGui::GetWindowWidth()
-                         - ImGui::GetFrameHeight()
+                         - widgets::theme_toggle_size()
                          - ImGui::GetStyle().WindowPadding.x);
     if (widgets::theme_toggle()) {
         theme::toggle();
