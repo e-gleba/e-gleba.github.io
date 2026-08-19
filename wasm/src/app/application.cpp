@@ -8,7 +8,7 @@
 ///
 /// The UI theme follows the device theme via stock SDL3
 /// (SDL_GetSystemTheme + SDL_EVENT_SYSTEM_THEME_CHANGED); keyboard
-/// navigation is vim-style (j/k/h/l, tab, arrows, 1-5, g/G).
+/// navigation is vim-style (j/k, arrows, 1-5).
 
 #include "app/application.hpp"
 
@@ -232,13 +232,12 @@ SDL_AppResult application::handle_event(SDL_Event* event) noexcept
         return SDL_APP_CONTINUE;
     }
 
-    // Vim-style section navigation. Tab and the arrow keys are never
-    // captured by browser vim extensions (Vimium & co), so they work without
-    // entering the extension's insert mode. No text inputs exist, but
-    // respect WantCaptureKeyboard anyway so future widgets keep their keys.
+    // Vim-style section navigation. Arrow keys are never captured by browser
+    // vim extensions (Vimium & co), so they work without entering the
+    // extension's insert mode. No text inputs exist, but respect
+    // WantCaptureKeyboard anyway so future widgets keep their keys.
     if (event->type == SDL_EVENT_KEY_DOWN
         && !ImGui::GetIO().WantCaptureKeyboard) {
-        const bool shift = (event->key.mod & SDL_KMOD_SHIFT) != 0;
         const SDL_Keycode key = event->key.key;
 
         if (key >= SDLK_1 && key <= SDLK_5) {
@@ -246,13 +245,6 @@ SDL_AppResult application::handle_event(SDL_Event* event) noexcept
             return SDL_APP_CONTINUE;
         }
         switch (key) {
-        case SDLK_TAB:
-            if (shift) {
-                ui_.select_prev();
-            } else {
-                ui_.select_next();
-            }
-            break;
         case SDLK_J:
         case SDLK_DOWN:
         case SDLK_L:
@@ -264,13 +256,6 @@ SDL_AppResult application::handle_event(SDL_Event* event) noexcept
         case SDLK_H:
         case SDLK_LEFT:
             ui_.select_prev();
-            break;
-        case SDLK_G:
-            if (shift) {
-                ui_.select_last();
-            } else {
-                ui_.select_first();
-            }
             break;
         default:
             break;

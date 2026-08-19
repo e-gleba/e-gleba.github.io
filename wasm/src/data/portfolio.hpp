@@ -64,7 +64,7 @@ inline constexpr std::string_view location = "Minsk";
 inline constexpr std::string_view company = "Lesta Games";
 
 inline constexpr std::array stats{
-    stat{.value = "3+", .label = "years in production"},
+    stat{.value = "3+", .label = "years of experience"},
     stat{.value = "30+", .label = "open source repos"},
     stat{.value = "5", .label = "platforms"},
 };

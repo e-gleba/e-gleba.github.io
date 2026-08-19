@@ -55,16 +55,6 @@ void portfolio_ui::select(std::size_t index) noexcept
     }
 }
 
-void portfolio_ui::select_first() noexcept
-{
-    active_section_ = 0;
-}
-
-void portfolio_ui::select_last() noexcept
-{
-    active_section_ = sections.size() - 1;
-}
-
 void portfolio_ui::render()
 {
     const ImGuiViewport* viewport = ImGui::GetMainViewport();
@@ -180,16 +170,15 @@ void portfolio_ui::render()
         ImGui::EndChild();
     }
 
-    // -- status bar: key hints + position -----------------------------------
+    // -- status bar: position only (keys are discoverable by convention) ----
     ImGui::Separator();
-    ImGui::TextDisabled("tab/arrows/j/k sections · 1-5 jump · g/G first/last");
 
     std::array<char, 16> position{};
     std::snprintf(position.data(), position.size(), "%zu/%zu",
                   active_section_ + 1, sections.size());
-    ImGui::SameLine(ImGui::GetWindowWidth()
-                    - ImGui::CalcTextSize(position.data()).x
-                    - ImGui::GetStyle().WindowPadding.x);
+    ImGui::SetCursorPosX(ImGui::GetWindowWidth()
+                         - ImGui::CalcTextSize(position.data()).x
+                         - ImGui::GetStyle().WindowPadding.x);
     ImGui::TextDisabled("%s", position.data());
 
     ImGui::End();

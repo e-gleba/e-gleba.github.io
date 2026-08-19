@@ -17,9 +17,7 @@ The whole site is one static binary: `portfolio.html` + `portfolio.js` +
   phone-width screens (< 640 px)
 - FontAwesome brand/solid icons (social links, theme toggle), embedded into
   the wasm FS via `--embed-file` and merged into the default font
-- keyboard navigation: `tab`/`shift+tab` and arrows work even with browser
-  vim extensions in normal mode (Vimium never captures them); `j`/`k`,
-  `h`/`l`, `1`-`5`, `g`/`G` for full vim style once keys reach the page
+- keyboard navigation: `j`/`k`, `h`/`l`, arrows, `1`-`5` jump
 - terminal-style `>` selector marker on hovered/selected nav rows
 - ImPlot bar chart of repo stars, rendered from the same constexpr data
 - links open via `SDL_OpenURL` (new browser tab)
@@ -85,5 +83,5 @@ No server-side code.
 - Stock ImGui font covers Latin-1 only; copy uses ASCII on purpose. For full
   typography load a TTF with wider glyph ranges in `application.cpp`.
 - Browser vim extensions (Vimium & co) capture `j`/`k` in their normal mode
-  before the page sees them - use `tab`/arrows, or press `i` (insert mode)
-  to hand all keys to the page.
+  before the page sees them - use the arrow keys, or press `i` (insert
+  mode) to hand all keys to the page.
