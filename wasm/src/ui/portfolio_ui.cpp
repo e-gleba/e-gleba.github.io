@@ -50,7 +50,7 @@ void portfolio_ui::render()
     // -- sidebar: identity, navigation, stats -------------------------------
     constexpr float sidebar_width = 240.0F;
     if (ImGui::BeginChild("sidebar", ImVec2{sidebar_width, 0.0F},
-                          ImGuiChildFlags_Border)) {
+                          ImGuiChildFlags_Borders)) {
         ImGui::SetWindowFontScale(1.2F);
         ImGui::TextColored(theme::pink, "%s", portfolio::owner_name.data());
         ImGui::SetWindowFontScale(1.0F);
