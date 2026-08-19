@@ -11,15 +11,14 @@
 
 namespace ui::widgets {
 
-/// Colored label that opens `url` in a new browser tab when clicked. Folds
-/// open on hover like nav_item (`>` marker slides in, label shifts right).
+/// Colored label that opens `url` in a new browser tab when clicked. On
+/// hover the label eases right while a `>` arrow fades in at its left edge.
 /// Stock SDL_OpenURL - no custom JS glue.
 void hyperlink(std::string_view label, std::string_view url);
 
-/// Sidebar navigation row with a terminal-style `>` marker. On hover (and
-/// when selected) the row folds open, eased over a few frames: the label
-/// slides a few px to the right while the marker fades in and slides left
-/// into the gutter. Returns true when clicked.
+/// Sidebar navigation row. On hover (and when selected) the label eases
+/// right, over a few frames, while a terminal-style `>` arrow fades in at
+/// the row's left edge. Returns true when clicked.
 bool nav_item(std::string_view label, bool selected);
 
 /// FontAwesome icon glyph (PUA codepoint) in the given color.

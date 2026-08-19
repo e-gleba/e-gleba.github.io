@@ -38,10 +38,8 @@ constexpr float toggle_hit_margin = 1.4F;
 // -- fold-open hover animation (nav rows, links) ----------------------------
 
 // Geometry/timing shared by every folding row.
-constexpr float marker_indent = 16.0F; // gutter reserved for the `>` marker
-constexpr float fold_shift = 6.0F;     // label travel on fold-open
-constexpr float marker_slide = 5.0F;   // marker travel while fading in
-constexpr float fold_speed = 14.0F;    // 1/s - higher = snappier
+constexpr float fold_shift = 14.0F; // label travel on fold-open (arrow slot)
+constexpr float fold_speed = 14.0F; // 1/s - higher = snappier
 
 /// Per-row animation state, keyed by the row's ImGui ID. Static storage:
 /// rows are few and live for the whole run; the wasm build is
@@ -57,10 +55,10 @@ struct fold_state {
     return states;
 }
 
-/// Advances the row's animation and indents the cursor for a folding row
-/// (gutter + eased label shift). Returns the eased amount for fold_end().
-/// Hover is read from the previous frame because the offset must be known
-/// before the row is drawn - one frame of lag is invisible.
+/// Advances the row's animation and eases the cursor right for a folding
+/// row. Returns the eased amount for fold_end(). Hover is read from the
+/// previous frame because the offset must be known before the row is
+/// drawn - one frame of lag is invisible.
 [[nodiscard]] float fold_begin(std::string_view label, bool selected)
 {
     fold_state& fold = fold_states()[ImGui::GetID(label.data())];
@@ -70,17 +68,18 @@ struct fold_state {
     fold.t += (target - fold.t)
               * (1.0F - std::exp(-fold_speed * ImGui::GetIO().DeltaTime));
     if (target == 0.0F && fold.t < 0.001F) {
-        fold.t = 0.0F; // settle exactly; skips the marker draw
+        fold.t = 0.0F; // settle exactly; skips the arrow draw
     }
 
-    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + marker_indent
-                         + fold.t * fold_shift);
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + fold.t * fold_shift);
     return fold.t;
 }
 
-/// Draws the `>` marker in the gutter (faded and slid by `t`) and records
-/// the row's hover state for the next frame. Call right after the row
-/// widget - the gutter is derived from the item rect.
+/// Fades the `>` arrow in at the row's RESTING left edge (the label eased
+/// right past it) and records the row's hover state for the next frame.
+/// Nothing is ever drawn left of the row, so the arrow can neither slide
+/// under a left neighbor nor be clipped by a parent gutter. Call right
+/// after the row widget.
 void fold_end(std::string_view label, float t, bool hovered)
 {
     fold_states()[ImGui::GetID(label.data())].hot = hovered;
@@ -89,11 +88,13 @@ void fold_end(std::string_view label, float t, bool hovered)
         return;
     }
     const ImVec2 row = ImGui::GetItemRectMin();
-    const float marker_x = row.x - marker_indent - t * fold_shift + 2.0F
-                           + (1.0F - t) * marker_slide;
+    // The fade leads the shift, so the arrow is mostly transparent while
+    // the label is still passing through its slot.
+    const float alpha = ImMin(1.0F, t * 2.0F);
     ImGui::GetWindowDrawList()->AddText(
-        ImGui::GetFont(), ImGui::GetFontSize(), ImVec2{marker_x, row.y},
-        ImGui::GetColorU32(theme::with_alpha(theme::secondary, t)), ">");
+        ImGui::GetFont(), ImGui::GetFontSize(),
+        ImVec2{row.x - t * fold_shift, row.y},
+        ImGui::GetColorU32(theme::with_alpha(theme::secondary, alpha)), ">");
 }
 
 } // namespace
