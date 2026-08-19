@@ -6,6 +6,10 @@
 /// for contrast on white. The active palette follows the device theme
 /// (SDL_GetSystemTheme + SDL_EVENT_SYSTEM_THEME_CHANGED) and can also be
 /// flipped manually with toggle() - no JS glue anywhere.
+///
+/// Geometry (padding, spacing, rounding) is set ONCE by setup_geometry(),
+/// before the global ScaleAllSizes at startup. apply() is colors-only, so
+/// a theme switch can never reset scaled sizes and shift the layout.
 
 #pragma once
 
@@ -52,6 +56,21 @@ inline ImVec4 text_dim = text_dim_light;
     return ImVec4{color.x, color.y, color.z, alpha};
 }
 
+/// One-time style geometry: rounding, borders, padding, spacing. Call once
+/// at startup, BEFORE ScaleAllSizes - anything set here gets scaled, and
+/// apply() below never touches it again.
+inline void setup_geometry() noexcept
+{
+    ImGuiStyle& style = ImGui::GetStyle();
+    style.WindowRounding = 8.0F;
+    style.ChildRounding = 8.0F;
+    style.FrameRounding = 6.0F;
+    style.WindowBorderSize = 0.0F;
+    style.ChildBorderSize = 1.0F;
+    style.WindowPadding = ImVec2{16.0F, 16.0F};
+    style.ItemSpacing = ImVec2{10.0F, 8.0F};
+}
+
 /// Applies the given mode. Called once after ImGui::CreateContext, on
 /// SDL_EVENT_SYSTEM_THEME_CHANGED, and on manual toggle. Colors only -
 /// sizes persist.
@@ -78,16 +97,7 @@ inline void apply(mode m) noexcept
         text_dim = text_dim_light;
     }
 
-    ImGuiStyle& style = ImGui::GetStyle();
-    style.WindowRounding = 8.0F;
-    style.ChildRounding = 8.0F;
-    style.FrameRounding = 6.0F;
-    style.WindowBorderSize = 0.0F;
-    style.ChildBorderSize = 1.0F;
-    style.WindowPadding = ImVec2{16.0F, 16.0F};
-    style.ItemSpacing = ImVec2{10.0F, 8.0F};
-
-    auto* colors = style.Colors;
+    auto* colors = ImGui::GetStyle().Colors;
     colors[ImGuiCol_WindowBg] = background;
     colors[ImGuiCol_ChildBg] = background;
     colors[ImGuiCol_Border] = surface;
@@ -104,7 +114,7 @@ inline void apply(mode m) noexcept
 /// re-applies the device preference).
 inline void toggle() noexcept
 {
-    apply(active_mode == mode::light ? mode::dark : mode::light);
+    apply(active_mode == mode::dark ? mode::dark : mode::light);
 }
 
 } // namespace ui::theme

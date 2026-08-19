@@ -89,6 +89,11 @@ void load_icon_fonts() noexcept
     }
     ImPlot::CreateContext();
     load_icon_fonts();
+
+    // Geometry is one-time and must precede the global scale below; apply()
+    // is colors-only, so a theme switch can never reset the scaled sizes
+    // (that reset was the one-time layout shift on the first toggle).
+    ui::theme::setup_geometry();
     ui::theme::apply(device_theme());
 
     // Stock font is tiny on hi-DPI canvases - scale the whole UI instead of
