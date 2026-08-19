@@ -7,6 +7,7 @@
 #include <imgui.h>
 
 #include <array>
+#include <cfloat>
 #include <cmath>
 #include <unordered_map>
 
@@ -127,13 +128,25 @@ bool theme_toggle()
                                      : icon_moon);
     const float side = theme_toggle_size();
 
-    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding,
-                        ImVec2{ImGui::GetStyle().FramePadding.y * 2.0F,
-                               ImGui::GetStyle().FramePadding.y * 2.0F});
+    // Blank button - the glyph is drawn by hand below. Button's own label
+    // centering misplaces the merged icon glyph (it rides high), so it is
+    // measured and placed at the exact size it will be rendered at.
+    const bool clicked = ImGui::Button("##theme_toggle", ImVec2{side, side});
+
     ImGui::SetWindowFontScale(toggle_icon_scale);
-    const bool clicked = ImGui::Button(utf8.data(), ImVec2{side, side});
+    ImFont* font = ImGui::GetFont();
+    const float font_size = ImGui::GetFontSize();
+    const ImVec2 glyph =
+        font->CalcTextSizeA(font_size, FLT_MAX, 0.0F, utf8.data());
+
+    const ImVec2 rect_min = ImGui::GetItemRectMin();
+    const ImVec2 rect_max = ImGui::GetItemRectMax();
+    ImGui::GetWindowDrawList()->AddText(
+        font, font_size,
+        ImVec2{rect_min.x + (rect_max.x - rect_min.x - glyph.x) * 0.5F,
+               rect_min.y + (rect_max.y - rect_min.y - glyph.y) * 0.5F},
+        ImGui::GetColorU32(ImGuiCol_Text), utf8.data());
     ImGui::SetWindowFontScale(1.0F);
-    ImGui::PopStyleVar();
 
     if (ImGui::IsItemHovered()) {
         ImGui::SetTooltip("toggle theme");
