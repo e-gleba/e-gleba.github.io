@@ -6,6 +6,7 @@
 
 #include <imgui.h>
 
+#include <algorithm>
 #include <array>
 #include <cfloat>
 #include <cmath>
@@ -90,7 +91,7 @@ void fold_end(std::string_view label, float t, bool hovered)
     const ImVec2 row = ImGui::GetItemRectMin();
     // The fade leads the shift, so the arrow is mostly transparent while
     // the label is still passing through its slot.
-    const float alpha = ImMin(1.0F, t * 2.0F);
+    const float alpha = std::min(1.0F, t * 2.0F);
     ImGui::GetWindowDrawList()->AddText(
         ImGui::GetFont(), ImGui::GetFontSize(),
         ImVec2{row.x - t * fold_shift, row.y},
