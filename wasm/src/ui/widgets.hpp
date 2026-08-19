@@ -15,8 +15,10 @@ namespace ui::widgets {
 /// Stock SDL_OpenURL - no custom JS glue.
 void hyperlink(std::string_view label, std::string_view url);
 
-/// Sidebar navigation row with a terminal-style `>` marker on hover and
-/// when selected. Returns true when clicked.
+/// Sidebar navigation row with a terminal-style `>` marker. On hover (and
+/// when selected) the row folds open, eased over a few frames: the label
+/// slides a few px to the right while the marker fades in and slides left
+/// into the gutter. Returns true when clicked.
 bool nav_item(std::string_view label, bool selected);
 
 /// FontAwesome icon glyph (PUA codepoint) in the given color.

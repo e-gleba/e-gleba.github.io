@@ -7,6 +7,8 @@
 #include <imgui.h>
 
 #include <array>
+#include <cmath>
+#include <unordered_map>
 
 namespace ui::widgets {
 
@@ -28,6 +30,20 @@ constexpr float toggle_icon_scale = 1.5F;
         static_cast<char>(0x80U | ((codepoint >> 6U) & 0x3FU)),
         static_cast<char>(0x80U | (codepoint & 0x3FU)),
         '\0'};
+}
+
+/// Per-row state for the nav_item fold animation, keyed by the row's ImGui
+/// ID. Static storage: nav rows are few and live for the whole run, and the
+/// wasm build is single-threaded.
+struct nav_fold {
+    float t = 0.0F;   // eased open amount, [0,1]
+    bool hot = false; // hovered as of the previous frame
+};
+
+[[nodiscard]] std::unordered_map<ImGuiID, nav_fold>& nav_folds()
+{
+    static std::unordered_map<ImGuiID, nav_fold> states;
+    return states;
 }
 
 } // namespace
@@ -53,18 +69,41 @@ void hyperlink(std::string_view label, std::string_view url)
 
 bool nav_item(std::string_view label, bool selected)
 {
-    // Indent the row to leave room for the `>` marker.
+    // At rest the row keeps a gutter for the `>` marker. On hover (and when
+    // selected) the row folds open: the label eases `fold_shift` px to the
+    // right while the marker fades in and slides left into the gutter.
     constexpr float marker_indent = 16.0F;
-    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + marker_indent);
-    const ImVec2 pos = ImGui::GetCursorScreenPos();
+    constexpr float fold_shift = 6.0F;
+    constexpr float marker_slide = 5.0F;
+    constexpr float fold_speed = 14.0F; // 1/s - higher = snappier
+
+    nav_fold& fold = nav_folds()[ImGui::GetID(label.data())];
+
+    // Exponential ease toward the target - frame-rate independent. The
+    // offset must be known before the row is drawn, so the hover state is
+    // read from the previous frame (one frame of lag is invisible).
+    const float target = (fold.hot || selected) ? 1.0F : 0.0F;
+    fold.t += (target - fold.t)
+              * (1.0F - std::exp(-fold_speed * ImGui::GetIO().DeltaTime));
+    if (target == 0.0F && fold.t < 0.001F) {
+        fold.t = 0.0F; // settle exactly; skips the marker draw below
+    }
+
+    const ImVec2 gutter = ImGui::GetCursorScreenPos();
+    ImGui::SetCursorPosX(ImGui::GetCursorPosX() + marker_indent
+                         + fold.t * fold_shift);
 
     const bool clicked = ImGui::Selectable(label.data(), selected);
+    fold.hot = ImGui::IsItemHovered();
 
-    if (selected || ImGui::IsItemHovered()) {
+    if (fold.t > 0.0F) {
+        const float marker_x =
+            gutter.x + 2.0F + (1.0F - fold.t) * marker_slide;
         ImGui::GetWindowDrawList()->AddText(
             ImGui::GetFont(), ImGui::GetFontSize(),
-            ImVec2{pos.x - marker_indent + 2.0F, pos.y},
-            ImGui::GetColorU32(theme::secondary), ">");
+            ImVec2{marker_x, gutter.y},
+            ImGui::GetColorU32(theme::with_alpha(theme::secondary, fold.t)),
+            ">");
     }
     return clicked;
 }
