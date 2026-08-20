@@ -1,0 +1,56 @@
+---
+interface Props {
+  title: string;
+  subtitle: string;
+  primaryLabel: string;
+  primaryHref: string;
+  secondaryLabel: string;
+  secondaryHref: string;
+}
+
+const { title, subtitle, primaryLabel, primaryHref, secondaryLabel, secondaryHref } = Astro.props;
+---
+
+<section
+  id="hero"
+  class="relative flex min-h-screen w-full flex-col items-center justify-center bg-[#000000] px-6 py-16 text-center no-print"
+>
+  <!-- Ambient neon glow (decorative). Gradients are inline styles on purpose:
+       Tailwind arbitrary bg-[radial-gradient(...)] classes need underscore
+       escaping and silently break when mis-escaped — inline style cannot. -->
+  <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+    <div
+      class="absolute -top-28 left-1/2 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full opacity-60 blur-[120px]"
+      style="background: radial-gradient(circle, #FF2E55 0%, transparent 70%);"
+    >
+    </div>
+    <div
+      class="absolute top-32 left-1/2 h-[40rem] w-[40rem] -translate-x-1/2 rounded-full opacity-50 blur-[120px]"
+      style="background: radial-gradient(circle, #2E33FF 0%, transparent 70%);"
+    >
+    </div>
+  </div>
+
+  <div class="relative z-10 flex flex-col items-center">
+    <h1 class="text-5xl font-extrabold tracking-tight text-white md:text-7xl">
+      {title}
+    </h1>
+    <p class="mt-6 max-w-xl text-lg text-zinc-400">
+      {subtitle}
+    </p>
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+      <a
+        href={primaryHref}
+        class="rounded-lg bg-white px-6 py-3 font-bold text-black transition-opacity duration-200 hover:opacity-80"
+      >
+        {primaryLabel}
+      </a>
+      <a
+        href={secondaryHref}
+        class="rounded-lg border border-zinc-800 bg-transparent px-6 py-3 font-bold text-white transition-colors duration-200 hover:border-zinc-600"
+      >
+        {secondaryLabel}
+      </a>
+    </div>
+  </div>
+</section>

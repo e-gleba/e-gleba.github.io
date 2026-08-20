@@ -1,9 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Nav from './Nav.astro';
+import Hero from './Hero.astro';
 import PrintResume from './PrintResume.astro';
 import { languages, type Language } from '../data/i18n';
-import { techBadges, skillCategories, tools, communityCards, contactLinks } from '../data/site';
+import { skillCategories, tools, communityCards, contactLinks } from '../data/site';
 import reposData from '../data/repos.json';
 
 interface Props {
@@ -62,51 +63,14 @@ const formatDate = (iso: string) =>
   <Nav lang={lang} nav={t.nav} />
 
   <!-- Hero -->
-  <section id="hero" class="relative flex flex-col items-center justify-center px-6 lg:px-10 pt-8 pb-10 lg:pt-10 lg:pb-12 no-print">
-    <div class="max-w-4xl mx-auto w-full text-center relative z-10">
-      <h1 class="text-[clamp(3rem,8vw,6rem)] font-black tracking-tight leading-[1.05] mb-4">
-        <span class="block">Evgeniy</span>
-        <span class="block gradient-text animate-shimmer">Gleba</span>
-      </h1>
-      <p class="text-[clamp(1.15rem,2.4vw,1.5rem)] text-slate-500 dark:text-slate-400 mb-8 max-w-2xl mx-auto font-light leading-relaxed">{t.hero.tagline}</p>
-      <div class="flex flex-wrap justify-center gap-3 mb-8">
-        <a href="#projects" class="group inline-flex items-center gap-2.5 px-6 py-3.5 text-[15px] bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-semibold hover:opacity-90 transition-all hover:scale-[1.02]">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
-          <span>{t.hero.viewProjects}</span>
-          <svg class="w-4 h-4 group-hover:translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
-        </a>
-        <button type="button" data-print class="pdf-glass group inline-flex items-center gap-2.5 px-6 py-3.5 text-[15px] rounded-xl font-medium transition-all hover:scale-[1.02]" title="Print resume">
-          <svg class="w-5 h-5 group-hover:scale-105 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
-          <span>PDF</span>
-        </button>
-      </div>
-      <!-- Tech badges -->
-      <div class="flex flex-wrap justify-center gap-2 mb-6">
-        {techBadges.map((badge) => (
-          <div class="tech-badge">
-            {badge.icon && <img src={badge.icon} class="w-4 h-4" alt="" width="16" height="16" decoding="async" />}
-            {badge.svg && <span class="w-4 h-4 inline-flex items-center justify-center" set:html={badge.svg} />}
-            <span>{badge.label}</span>
-          </div>
-        ))}
-      </div>
-      <!-- Stats — 3 cards only -->
-      <div class="grid grid-cols-3 gap-3 max-w-md mx-auto">
-        <div class="stat-cell stat-glass">
-          <div class="text-2xl md:text-3xl font-bold gradient-text">3+</div>
-          <div class="text-[13px] text-slate-500 dark:text-slate-400 mt-1">{t.stats.years}</div>
-        </div>
-        <div class="stat-cell stat-glass">
-          <div class="text-2xl md:text-3xl font-bold gradient-text">30+</div>
-          <div class="text-[13px] text-slate-500 dark:text-slate-400 mt-1">{t.stats.repos}</div>
-        </div>
-        <div class="stat-cell stat-glass">
-          <div class="text-2xl md:text-3xl font-bold gradient-text">5</div>
-          <div class="text-[13px] text-slate-500 dark:text-slate-400 mt-1">{t.stats.platforms}</div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <Hero
+    title="Evgeniy Gleba"
+    subtitle={t.hero.tagline}
+    primaryLabel={t.hero.viewProjects}
+    primaryHref="#projects"
+    secondaryLabel={t.contact.label}
+    secondaryHref="#contact"
+  />
 
   <!-- About -->
   <section id="about" class="py-8 lg:py-12 px-6 lg:px-10 no-print cv-auto">
