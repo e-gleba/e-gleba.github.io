@@ -3,8 +3,8 @@
    Removed: [x-cloak] (Alpine-only), .card (skeleton-only), .theme-flash (dead in prod).
    Performance pass: animated aurora background removed; backdrop-filter stripped
    from every component except the sticky nav — see "LIQUID GLASS SYSTEM" note.
-   Hero: Linear/Raycast-style black mesh band — one static-blur layer,
-   screen-blended streaks, transform-only drift — see "HERO BAND" note. */
+   Hero: Linear/Raycast-style black band — two static blur(120px) neon glow
+   circles (#FF2E55 crimson + #2E33FF indigo), no animation — see "HERO BAND". */
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -445,52 +445,35 @@ body.theme-transitioning *::after {
     box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* ===== HERO BAND — Linear/Raycast-style mesh gradient =====
-   Always black (#000) in both page themes. Performance contract — this is
-   NOT aurora 2.0:
-   - ONE blurred mesh layer. The blur is rasterized a single time and cached
-     as a texture; the removed aurora re-animated three blur(80-100px) blobs
-     every frame. Only `transform` animates here (compositor-only, no paint).
-   - Light streaks are static screen-blended linear gradients — zero cost.
-   - Drift is gated behind prefers-reduced-motion: no-preference.
-   - No backdrop-filter, no JS, no extra layers over content. */
-.hero-band {
-  background: #000;
-  overflow: hidden; /* clip the blurred mesh bleed */
+/* ===== HERO BAND — Linear/Raycast-style neon glow =====
+   Always black (#000) in both page themes. Two static radial-gradient glow
+   circles — neon crimson #FF2E55 top-center, deep indigo #2E33FF lower —
+   each blurred 120px. Both layers are rasterized exactly once and cached as
+   textures: no animation, no backdrop-filter, no JS, zero per-frame cost.
+   The bottom edge fades into the page background. */
+
+.hero-glow-crimson,
+.hero-glow-indigo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  filter: blur(120px);
 }
 
-.hero-mesh {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
+/* Neon crimson — top-center */
+.hero-glow-crimson {
+  top: -18%;
+  width: min(60vw, 720px);
+  background: radial-gradient(circle, rgba(255, 46, 85, 0.55), transparent 70%);
 }
 
-/* Mesh glow — deep vibrant red + soft blue, warm bridge between them.
-   inset: -25% bleed so the blur never shows a hard raster edge. */
-.hero-mesh::before {
-  content: '';
-  position: absolute;
-  inset: -25%;
-  background:
-    radial-gradient(38% 52% at 30% 42%, rgba(255, 36, 66, 0.65), transparent 70%),
-    radial-gradient(34% 46% at 70% 60%, rgba(96, 140, 255, 0.58), transparent 70%),
-    radial-gradient(52% 42% at 55% 28%, rgba(255, 96, 54, 0.28), transparent 70%);
-  filter: blur(42px);
-}
-
-/* Diagonal light streaks — static, screen-blended. Alpha is deliberately
-   high (0.16-0.30): over black, screen blend at <=0.14 is nearly invisible.
-   The sharp mid-stop pairs (49%/51%, 59%/61%) give each streak a defined
-   bright core with a soft falloff. */
-.hero-mesh::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(112deg, transparent 43%, rgba(255, 64, 96, 0.30) 49%, rgba(255, 64, 96, 0.06) 51%, transparent 57%),
-    linear-gradient(68deg, transparent 53%, rgba(96, 140, 255, 0.26) 59%, rgba(96, 140, 255, 0.05) 61%, transparent 68%),
-    linear-gradient(97deg, transparent 62%, rgba(255, 120, 90, 0.16) 67%, transparent 74%);
-  mix-blend-mode: screen;
+/* Deep indigo — slightly lower, overlapping so the two blend */
+.hero-glow-indigo {
+  top: 22%;
+  width: min(55vw, 680px);
+  background: radial-gradient(circle, rgba(46, 51, 255, 0.45), transparent 70%);
 }
 
 /* Seamless fade from the black band into the page background */
@@ -506,16 +489,6 @@ body.theme-transitioning *::after {
   background: linear-gradient(to bottom, transparent, var(--color-rc-dark-bg));
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .hero-mesh::before {
-    animation: heroMeshDrift 26s ease-in-out infinite alternate;
-  }
-}
-@keyframes heroMeshDrift {
-  from { transform: translate3d(-1.5%, -1%, 0) scale(1); }
-  to { transform: translate3d(1.5%, 1%, 0) scale(1.05); }
-}
-
 /* On-black overrides for nested glass pieces — the band is always black, so
    the light-theme card styles must not apply inside it. These come after the
    base/.dark definitions so they win the specificity tie by source order. */
@@ -526,7 +499,7 @@ body.theme-transitioning *::after {
 }
 .hero-band .tech-badge:hover {
   border-color: rgba(255,255,255,0.2);
-  box-shadow: 0 2px 12px rgba(255,36,66,0.15);
+  box-shadow: 0 2px 12px rgba(255,46,85,0.15);
 }
 .hero-band .stat-cell,
 .hero-band .stat-glass {
@@ -543,7 +516,7 @@ body.theme-transitioning *::after {
 }
 .hero-band .pdf-glass:hover {
   border-color: rgba(255,255,255,0.24);
-  box-shadow: 0 0 24px rgba(255,36,66,0.16);
+  box-shadow: 0 0 24px rgba(255,46,85,0.16);
 }
 
 /* ===== PRINT ===== */
