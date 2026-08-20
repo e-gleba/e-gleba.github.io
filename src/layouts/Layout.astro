@@ -67,6 +67,9 @@ const person = {
        round-trip, no render-blocking third-party CSS. -->
   <Font cssVariable="--font-inter" />
   <Font cssVariable="--font-jetbrains-mono" />
+  <!-- Icon CDN hosts ~35 SVG badges/chips — warm up the connection early
+       (preconnect = DNS + TLS; dns-prefetch kept as fallback) -->
+  <link rel="preconnect" href="https://cdn.simpleicons.org" crossorigin />
   <link rel="dns-prefetch" href="https://cdn.simpleicons.org" />
 
   <script is:inline>
