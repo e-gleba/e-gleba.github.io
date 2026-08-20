@@ -1,6 +1,8 @@
 /* Tailwind v4 css-first config — compiled by @tailwindcss/vite at build time.
    Visual system ported 1:1 from css/src.css + css/styles.css.
-   Removed: [x-cloak] (Alpine-only), .card (skeleton-only), .theme-flash (dead in prod). */
+   Removed: [x-cloak] (Alpine-only), .card (skeleton-only), .theme-flash (dead in prod).
+   Performance pass: animated aurora background removed; backdrop-filter stripped
+   from every component except the sticky nav — see "LIQUID GLASS SYSTEM" note. */
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -97,15 +99,13 @@ section[id] {
   background: rgba(245,245,247,0.7);
   border: 1px solid rgba(229,229,234,0.5);
   color: #475569;
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  transform: translateZ(0);
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .dark .tech-badge {
   background: rgba(19,19,24,0.6); border-color: rgba(30,30,40,0.5); color: #a1a1aa;
 }
 .tech-badge:hover {
-  transform: translateY(-1px) translateZ(0);
+  transform: translateY(-1px);
   border-color: rgba(255,107,157,0.3);
   box-shadow: 0 2px 8px rgba(255,107,157,0.08);
 }
@@ -128,93 +128,33 @@ body::before {
 }
 .dark body::before { opacity: 0.05; }
 
-/* ===== AURORA BACKGROUND ===== */
-.aurora-bg {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255,107,157,0.15), transparent),
-    radial-gradient(ellipse 60% 40% at 80% 50%, rgba(255,140,66,0.08), transparent),
-    radial-gradient(ellipse 70% 50% at 20% 80%, rgba(199,146,234,0.1), transparent);
-}
-.dark .aurora-bg {
-  background:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255,107,157,0.25), transparent),
-    radial-gradient(ellipse 60% 40% at 80% 50%, rgba(255,140,66,0.15), transparent),
-    radial-gradient(ellipse 70% 50% at 20% 80%, rgba(199,146,234,0.18), transparent);
-}
-
-.aurora-blob {
-  position: absolute; border-radius: 50%;
-  filter: blur(80px); opacity: 0.4;
-  animation: blobFloat 20s ease-in-out infinite;
-}
-.dark .aurora-blob { opacity: 0.5; filter: blur(100px); }
-
-.blob-1 {
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(255,107,157,0.4), transparent 70%);
-  top: -10%; left: -10%; animation-duration: 25s;
-}
-.blob-2 {
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(255,140,66,0.35), transparent 70%);
-  top: 40%; right: -5%; animation-duration: 30s; animation-delay: -5s;
-}
-.blob-3 {
-  width: 450px; height: 450px;
-  background: radial-gradient(circle, rgba(199,146,234,0.4), transparent 70%);
-  bottom: -10%; left: 30%; animation-duration: 22s; animation-delay: -10s;
-}
-
-@keyframes blobFloat {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(30px, -40px) scale(1.1); }
-  50% { transform: translate(-20px, 20px) scale(0.95); }
-  75% { transform: translate(40px, 30px) scale(1.05); }
-}
-
-.aurora-overlay {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, transparent 0%, var(--bg-color, #ffffff) 60%);
-}
-.dark .aurora-overlay { --bg-color: #0a0a0f; }
-
 /* ===== THEME RIPPLE ===== */
 @keyframes themeRipple {
   0% { transform: translate(-50%, -50%) scale(0); opacity: 0.6; }
   100% { transform: translate(-50%, -50%) scale(250); opacity: 0; }
 }
 
-/* ===== LIQUID GLASS SYSTEM ===== */
+/* ===== LIQUID GLASS SYSTEM =====
+   backdrop-filter is kept ONLY on the sticky nav — the single place where
+   content genuinely scrolls beneath a blurred surface. Everywhere else the
+   backdrop is the uniform page background, and blurring a uniform color
+   yields the same color: the blur was pure per-frame GPU cost (backdrop
+   re-sampling on ~70 cards/chips/badges during scroll) with zero visual
+   payoff. The translateZ(0) layer promotions went with it — they existed
+   to smooth the blur compositing. */
 
 .nav-glass {
   background: rgba(255,255,255,0.72);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  transform: translateZ(0);
 }
 .dark .nav-glass { background: rgba(10,10,15,0.72); }
-
-.badge-glow {
-  background: rgba(255,255,255,0.55);
-  backdrop-filter: blur(12px) saturate(140%);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
-  box-shadow: 0 0 20px rgba(255,107,157,0.08), 0 0 40px rgba(255,140,66,0.04);
-  transform: translateZ(0);
-}
-.dark .badge-glow {
-  background: rgba(255,255,255,0.06);
-  box-shadow: 0 0 30px rgba(255,107,157,0.12), 0 0 60px rgba(255,140,66,0.06);
-}
 
 /* ===== PDF GLASS BUTTON — Raycast-style ===== */
 .pdf-glass {
   background: rgba(255,255,255,0.55);
-  backdrop-filter: blur(14px) saturate(160%);
-  -webkit-backdrop-filter: blur(14px) saturate(160%);
   border: 1px solid rgba(229,229,234,0.5);
   border-radius: 12px;
-  transform: translateZ(0);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
@@ -236,7 +176,7 @@ body::before {
 .pdf-glass:hover {
   border-color: rgba(255,107,157,0.4);
   box-shadow: 0 0 24px rgba(255,107,157,0.1), 0 4px 16px rgba(255,107,157,0.06);
-  transform: translateY(-1px) translateZ(0);
+  transform: translateY(-1px);
 }
 .dark .pdf-glass {
   background: rgba(19,19,24,0.55);
@@ -255,9 +195,6 @@ body::before {
   background: rgba(245,245,247,0.75);
   border: 1px solid rgba(229,229,234,0.6);
   border-radius: 14px;
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  transform: translateZ(0);
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 .dark .card-glass {
@@ -281,7 +218,7 @@ body::before {
 .card-glass:hover {
   border-color: rgba(255,107,157,0.25);
   box-shadow: 0 8px 32px -12px rgba(0,0,0,0.12);
-  transform: translateY(-2px) translateZ(0);
+  transform: translateY(-2px);
 }
 .dark .card-glass:hover {
   border-color: rgba(255,140,66,0.25);
@@ -293,40 +230,24 @@ body::before {
   border: 1px solid rgba(229,229,234,0.5);
   border-radius: 14px; padding: 1.25rem 0.75rem;
   text-align: center;
-  backdrop-filter: blur(10px) saturate(120%);
-  -webkit-backdrop-filter: blur(10px) saturate(120%);
-  transform: translateZ(0);
   transition: transform 0.2s ease;
 }
 .dark .stat-glass {
   background: rgba(19,19,24,0.5); border-color: rgba(30,30,40,0.5);
 }
-.stat-glass:hover { transform: translateY(-2px) translateZ(0); }
+.stat-glass:hover { transform: translateY(-2px); }
 
+/* Nav language dropdown — fully opaque: it opens over page content, and
+   without backdrop blur a translucent menu would ghost the text beneath. */
 .glass-card {
-  background: rgba(255,255,255,0.85);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  transform: translateZ(0);
+  background: rgba(255,255,255,1);
 }
-.dark .glass-card { background: rgba(19,19,24,0.85); }
+.dark .glass-card { background: rgba(19,19,24,1); }
 
 /* ===== FALLBACKS ===== */
 @supports not (backdrop-filter: blur(1px)) {
   .nav-glass { background: rgba(255,255,255,0.95); }
   .dark .nav-glass { background: rgba(10,10,15,0.95); }
-  .card-glass { background: rgba(245,245,247,0.95); }
-  .dark .card-glass { background: rgba(19,19,24,0.95); }
-  .stat-glass { background: rgba(245,245,247,0.9); }
-  .dark .stat-glass { background: rgba(19,19,24,0.9); }
-  .glass-card { background: rgba(255,255,255,1); }
-  .dark .glass-card { background: rgba(19,19,24,1); }
-  .badge-glow { background: rgba(255,255,255,0.8); }
-  .dark .badge-glow { background: rgba(19,19,24,0.8); }
-  .tech-badge { background: rgba(245,245,247,0.9); }
-  .dark .tech-badge { background: rgba(19,19,24,0.8); }
-  .pdf-glass { background: rgba(255,255,255,0.95); }
-  .dark .pdf-glass { background: rgba(19,19,24,0.9); }
 }
 
 /* ===== CARDS ===== */
@@ -452,8 +373,6 @@ body::before {
   font-size: 0.85rem; font-weight: 500;
   background: rgba(245,245,247,0.7);
   border: 1px solid rgba(229,229,234,0.5);
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  transform: translateZ(0);
   transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
   cursor: pointer;
   text-decoration: none;
@@ -465,7 +384,7 @@ body::before {
 .tool-chip:hover {
   border-color: rgba(255,107,157,0.35);
   background: rgba(255,107,157,0.04);
-  transform: translateY(-1px) translateZ(0);
+  transform: translateY(-1px);
 }
 .dark .tool-chip:hover {
   border-color: rgba(255,140,66,0.35);
@@ -483,8 +402,6 @@ body::before {
   font-weight: 500;
   text-decoration: none;
   color: inherit;
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  transform: translateZ(0);
   transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease, color 0.25s ease;
   position: relative;
   overflow: hidden;
@@ -505,7 +422,7 @@ body::before {
 .contact-link:hover {
   border-color: rgba(255,107,157,0.35);
   box-shadow: 0 4px 20px -8px rgba(255,107,157,0.12);
-  transform: translateY(-2px) translateZ(0);
+  transform: translateY(-2px);
   color: #FF6B9D;
 }
 .dark .contact-link:hover {
@@ -553,6 +470,6 @@ body.theme-transitioning *::after {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .aurora-blob, .animate-shimmer { animation: none !important; }
+  .animate-shimmer { animation: none !important; }
   html { scroll-behavior: auto; }
 }

@@ -48,7 +48,7 @@ export const languages = {
   en: {
     nav: { about: 'About', experience: 'Experience', projects: 'Projects', skills: 'Skills', community: 'Community', tools: 'Tools', contact: 'Contact' },
     hero: { tagline: 'R&D C++ engineer', viewProjects: 'Projects' },
-    stats: { years: 'Years in Production', repos: 'Open Source', platforms: 'Platforms' },
+    stats: { years: 'Years of Commercial Experience', repos: 'Open Source', platforms: 'Platforms' },
     about: {
       label: 'About',
       p1: 'Systems engineer with 3+ years shipping cross-platform C++ in production game engines. Specialized in performance-critical systems: graphics pipelines, asset streaming, memory management.',
@@ -88,7 +88,7 @@ export const languages = {
   ru: {
     nav: { about: 'Обо мне', experience: 'Опыт', projects: 'Проекты', skills: 'Навыки', community: 'Сообщество', tools: 'Инструменты', contact: 'Контакты' },
     hero: { tagline: 'R&D C++ инженер', viewProjects: 'Проекты' },
-    stats: { years: 'лет в продакшене', repos: 'open source', platforms: 'платформ' },
+    stats: { years: 'года коммерческого опыта', repos: 'open source', platforms: 'платформ' },
     about: {
       label: 'Обо мне',
       p1: 'Системный инженер с 3+ годами разработки кросс-платформенного C++ в игровых движках. Специализация — системы, критичные к производительности: графические пайплайны, стриминг ассетов, управление памятью.',
@@ -128,7 +128,7 @@ export const languages = {
   zh: {
     nav: { about: '关于', experience: '经验', projects: '项目', skills: '技能', community: '社区', tools: '工具', contact: '联系' },
     hero: { tagline: 'R&D C++ 工程师', viewProjects: '项目' },
-    stats: { years: '年生产经验', repos: '开源项目', platforms: '平台' },
+    stats: { years: '年商业经验', repos: '开源项目', platforms: '平台' },
     about: {
       label: '关于',
       p1: '拥有3年以上跨平台C++游戏引擎生产经验的系统工程师。专注于性能关键系统：图形管线、资源流送、内存管理。',
