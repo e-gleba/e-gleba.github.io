@@ -472,20 +472,24 @@ body.theme-transitioning *::after {
   position: absolute;
   inset: -25%;
   background:
-    radial-gradient(38% 52% at 30% 42%, rgba(255, 36, 66, 0.55), transparent 70%),
-    radial-gradient(34% 46% at 70% 60%, rgba(96, 140, 255, 0.48), transparent 70%),
-    radial-gradient(52% 42% at 55% 28%, rgba(255, 96, 54, 0.22), transparent 70%);
-  filter: blur(48px);
+    radial-gradient(38% 52% at 30% 42%, rgba(255, 36, 66, 0.65), transparent 70%),
+    radial-gradient(34% 46% at 70% 60%, rgba(96, 140, 255, 0.58), transparent 70%),
+    radial-gradient(52% 42% at 55% 28%, rgba(255, 96, 54, 0.28), transparent 70%);
+  filter: blur(42px);
 }
 
-/* Diagonal light streaks — static, screen-blended */
+/* Diagonal light streaks — static, screen-blended. Alpha is deliberately
+   high (0.16-0.30): over black, screen blend at <=0.14 is nearly invisible.
+   The sharp mid-stop pairs (49%/51%, 59%/61%) give each streak a defined
+   bright core with a soft falloff. */
 .hero-mesh::after {
   content: '';
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(112deg, transparent 42%, rgba(255, 64, 96, 0.14) 50%, transparent 58%),
-    linear-gradient(68deg, transparent 52%, rgba(96, 140, 255, 0.12) 60%, transparent 68%);
+    linear-gradient(112deg, transparent 43%, rgba(255, 64, 96, 0.30) 49%, rgba(255, 64, 96, 0.06) 51%, transparent 57%),
+    linear-gradient(68deg, transparent 53%, rgba(96, 140, 255, 0.26) 59%, rgba(96, 140, 255, 0.05) 61%, transparent 68%),
+    linear-gradient(97deg, transparent 62%, rgba(255, 120, 90, 0.16) 67%, transparent 74%);
   mix-blend-mode: screen;
 }
 
