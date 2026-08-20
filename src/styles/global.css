@@ -2,7 +2,9 @@
    Visual system ported 1:1 from css/src.css + css/styles.css.
    Removed: [x-cloak] (Alpine-only), .card (skeleton-only), .theme-flash (dead in prod).
    Performance pass: animated aurora background removed; backdrop-filter stripped
-   from every component except the sticky nav — see "LIQUID GLASS SYSTEM" note. */
+   from every component except the sticky nav — see "LIQUID GLASS SYSTEM" note.
+   Hero: Linear/Raycast-style black mesh band — one static-blur layer,
+   screen-blended streaks, transform-only drift — see "HERO BAND" note. */
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -75,15 +77,6 @@ section[id] {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-.animate-shimmer {
-  background-size: 200% auto;
-  animation: shimmer 4s ease-in-out infinite;
-}
-@keyframes shimmer {
-  0%, 100% { background-position: 0% center; }
-  50% { background-position: 100% center; }
 }
 
 :focus-visible { outline: 2px solid #FF6B9D; outline-offset: 2px; border-radius: 4px; }
@@ -452,6 +445,103 @@ body.theme-transitioning *::after {
     box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
+/* ===== HERO BAND — Linear/Raycast-style mesh gradient =====
+   Always black (#000) in both page themes. Performance contract — this is
+   NOT aurora 2.0:
+   - ONE blurred mesh layer. The blur is rasterized a single time and cached
+     as a texture; the removed aurora re-animated three blur(80-100px) blobs
+     every frame. Only `transform` animates here (compositor-only, no paint).
+   - Light streaks are static screen-blended linear gradients — zero cost.
+   - Drift is gated behind prefers-reduced-motion: no-preference.
+   - No backdrop-filter, no JS, no extra layers over content. */
+.hero-band {
+  background: #000;
+  overflow: hidden; /* clip the blurred mesh bleed */
+}
+
+.hero-mesh {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Mesh glow — deep vibrant red + soft blue, warm bridge between them.
+   inset: -25% bleed so the blur never shows a hard raster edge. */
+.hero-mesh::before {
+  content: '';
+  position: absolute;
+  inset: -25%;
+  background:
+    radial-gradient(38% 52% at 30% 42%, rgba(255, 36, 66, 0.55), transparent 70%),
+    radial-gradient(34% 46% at 70% 60%, rgba(96, 140, 255, 0.48), transparent 70%),
+    radial-gradient(52% 42% at 55% 28%, rgba(255, 96, 54, 0.22), transparent 70%);
+  filter: blur(48px);
+}
+
+/* Diagonal light streaks — static, screen-blended */
+.hero-mesh::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(112deg, transparent 42%, rgba(255, 64, 96, 0.14) 50%, transparent 58%),
+    linear-gradient(68deg, transparent 52%, rgba(96, 140, 255, 0.12) 60%, transparent 68%);
+  mix-blend-mode: screen;
+}
+
+/* Seamless fade from the black band into the page background */
+.hero-band::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 8rem;
+  background: linear-gradient(to bottom, transparent, var(--color-rc-light-bg));
+  pointer-events: none;
+}
+.dark .hero-band::after {
+  background: linear-gradient(to bottom, transparent, var(--color-rc-dark-bg));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-mesh::before {
+    animation: heroMeshDrift 26s ease-in-out infinite alternate;
+  }
+}
+@keyframes heroMeshDrift {
+  from { transform: translate3d(-1.5%, -1%, 0) scale(1); }
+  to { transform: translate3d(1.5%, 1%, 0) scale(1.05); }
+}
+
+/* On-black overrides for nested glass pieces — the band is always black, so
+   the light-theme card styles must not apply inside it. These come after the
+   base/.dark definitions so they win the specificity tie by source order. */
+.hero-band .tech-badge {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.09);
+  color: #a1a1aa;
+}
+.hero-band .tech-badge:hover {
+  border-color: rgba(255,255,255,0.2);
+  box-shadow: 0 2px 12px rgba(255,36,66,0.15);
+}
+.hero-band .stat-cell,
+.hero-band .stat-glass {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.08);
+}
+.hero-band .pdf-glass {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.12);
+  color: #f4f4f5;
+}
+.hero-band .pdf-glass::before {
+  display: none; /* light-theme gradient wash reads muddy on black */
+}
+.hero-band .pdf-glass:hover {
+  border-color: rgba(255,255,255,0.24);
+  box-shadow: 0 0 24px rgba(255,36,66,0.16);
+}
+
 /* ===== PRINT ===== */
 @media print {
   .no-print { display: none !important; }
@@ -470,6 +560,5 @@ body.theme-transitioning *::after {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .animate-shimmer { animation: none !important; }
   html { scroll-behavior: auto; }
 }
