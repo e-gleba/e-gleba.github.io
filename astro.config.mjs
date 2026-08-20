@@ -3,30 +3,34 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://e-gleba.github.io',
-  // Stable Fonts API: fonts are downloaded at build time and self-hosted from
-  // /_astro with content-hashed names. Removes the render-blocking Google Fonts
-  // CSS + third-party connections; Astro emits size-adjusted fallbacks (no CLS).
-  // Cyrillic subsets kept for the ru locale — parity with the old css2 request.
+  // Self-hosted fonts via the npm provider: files resolve from node_modules
+  // (@fontsource-variable/*) at build time — no Google Fonts / CDN fetch, so
+  // builds work offline and behind restrictive firewalls. remote:false turns a
+  // missing package into a loud resolution error instead of a silent CDN fetch.
+  // NOTE: family names are the Fontsource variable families ('Inter Variable',
+  // 'JetBrains Mono Variable'); the google-only experimental opsz axis option
+  // was dropped (npm provider has no variableAxis family option).
   fonts: [
     {
-      provider: fontProviders.google(),
-      name: 'Inter',
+      provider: fontProviders.npm({ remote: false }),
+      name: 'Inter Variable',
       cssVariable: '--font-inter',
       weights: ['100 900'],
       subsets: ['latin', 'latin-ext', 'cyrillic', 'cyrillic-ext'],
       options: {
-        experimental: {
-          variableAxis: { opsz: [['14', '32']] },
-        },
+        package: '@fontsource-variable/inter',
       },
     },
     {
-      provider: fontProviders.google(),
-      name: 'JetBrains Mono',
+      provider: fontProviders.npm({ remote: false }),
+      name: 'JetBrains Mono Variable',
       cssVariable: '--font-jetbrains-mono',
       weights: ['100 800'],
       subsets: ['latin', 'latin-ext', 'cyrillic', 'cyrillic-ext'],
       fallbacks: ['monospace'],
+      options: {
+        package: '@fontsource-variable/jetbrains-mono',
+      },
     },
   ],
   vite: {

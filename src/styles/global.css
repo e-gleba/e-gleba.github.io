@@ -95,7 +95,7 @@ section[id] {
   display: inline-flex; align-items: center; gap: 0.4rem;
   padding: 0.35rem 0.7rem; border-radius: 9999px;
   font-size: 0.8rem; font-weight: 500;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   background: rgba(245,245,247,0.7);
   border: 1px solid rgba(229,229,234,0.5);
   color: #475569;
@@ -301,7 +301,7 @@ body::before {
 .dark .timeline-entry::after { background: linear-gradient(135deg, #FF8C42, #C792EA); }
 
 .timeline-year {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 0.85rem; font-weight: 600;
   color: #FF6B9D;
   background: rgba(255, 107, 157, 0.07);
