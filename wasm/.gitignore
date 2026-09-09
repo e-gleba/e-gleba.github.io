@@ -1,0 +1,5 @@
+# Local build trees (CMakePresets binaryDir)
+build/
+
+# Bootstrapped emsdk (see cmake/toolchains/emscripten.cmake)
+.emsdk/
