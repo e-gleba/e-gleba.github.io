@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "4.3.3",
-    "astro": "7.3.1",
+    "astro": "7.3.2",
     "shareon": "2.8.1",
     "tailwindcss": "4.3.3"
   }
