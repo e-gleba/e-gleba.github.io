@@ -1,0 +1,55 @@
+{
+    "$schema": "https://cmake.org/cmake/help/latest/_downloads/3e2d73bff478d88a7de0de736ba5e361/schema.json",
+    "version": 8,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 31,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "base",
+            "displayName": "Base Configuration",
+            "description": "Ninja Multi-Config, compile_commands.json, color diagnostics",
+            "hidden": true,
+            "generator": "Ninja Multi-Config",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "CMAKE_COLOR_DIAGNOSTICS": "ON",
+                "CMAKE_CXX_SCAN_FOR_MODULES": "OFF"
+            }
+        },
+        {
+            "name": "emscripten",
+            "displayName": "Emscripten (WebAssembly)",
+            "description": "Cross-compile to WebAssembly. Zero setup: cmake/toolchains/emscripten.cmake bootstraps a pinned emsdk into .emsdk/ on first configure (an existing EMSDK env var is respected). Requires python3 on PATH.",
+            "inherits": "base",
+            "toolchainFile": "${sourceDir}/cmake/toolchains/emscripten.cmake"
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "build-release",
+            "hidden": true,
+            "configuration": "Release"
+        },
+        {
+            "name": "build-debug",
+            "hidden": true,
+            "configuration": "Debug"
+        },
+        {
+            "name": "emscripten-release",
+            "displayName": "Emscripten (Release)",
+            "configurePreset": "emscripten",
+            "inherits": "build-release"
+        },
+        {
+            "name": "emscripten-debug",
+            "displayName": "Emscripten (Debug)",
+            "configurePreset": "emscripten",
+            "inherits": "build-debug"
+        }
+    ]
+}

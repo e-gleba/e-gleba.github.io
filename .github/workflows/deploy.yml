@@ -1,10 +1,19 @@
 name: deploy
 
+# Builds the WebAssembly portfolio (wasm/) and publishes it to GitHub Pages
+# via the Actions pipeline (repo Settings -> Pages -> Source: GitHub Actions).
+# The output is fully static - portfolio.{html,js,wasm} - so deployment is a
+# plain artifact upload, served as-is (no Jekyll, no .nojekyll needed).
+#
+# Nothing to install: the runner image provides cmake, ninja and python3, and
+# cmake/toolchains/emscripten.cmake bootstraps the pinned emsdk into
+# wasm/.emsdk on first configure. Both that SDK and the CPM package sources
+# are cached between runs.
+
 on:
   push:
     branches: [main]
-  schedule:
-    - cron: "0 5 * * 1" # weekly data refresh — mon 05:00 utc
+  pull_request: # build-only check - deploy stays main-only
   workflow_dispatch:
 
 permissions:
@@ -16,47 +25,65 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+env:
+  # CPM.cmake honours this: SDL3/imgui/implot/fontawesome sources persist
+  # between runs instead of being re-fetched on every configure.
+  CPM_SOURCE_CACHE: ${{ github.workspace }}/.cpm-cache
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: wasm
     steps:
       - name: checkout
         uses: actions/checkout@v7
 
-      - name: setup node
-        uses: actions/setup-node@v7
+      - name: cache emsdk
+        uses: actions/cache@v4
         with:
-          node-version: 24
+          path: wasm/.emsdk
+          # The toolchain file carries the pinned SDK version - any bump
+          # changes the hash and re-bootstraps exactly once.
+          key: emsdk-${{ hashFiles('wasm/cmake/toolchains/emscripten.cmake') }}
 
-      - name: install dependencies
-        run: npm install --no-audit --no-fund
+      - name: cache cpm dependencies
+        uses: actions/cache@v4
+        with:
+          path: .cpm-cache
+          key: cpm-${{ hashFiles('wasm/cmake/**') }}
 
-      - name: bake github repos -> src/data/repos.json
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: configure
+        run: cmake --preset emscripten
+
+      - name: build
+        run: cmake --build --preset emscripten-release
+
+      # Ninja Multi-Config nests output under build/emscripten/src/Release -
+      # locate it instead of hardcoding the path. Pages serves index.html at
+      # the site root, so the shell page is renamed on the way out.
+      - name: stage pages artifact
         run: |
-          curl -sf -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GH_TOKEN" \
-            "https://api.github.com/users/e-gleba/repos?sort=stars&direction=desc&per_page=30" \
-            | jq '[.[] | select(.fork | not)]
-                  | sort_by(.stargazers_count + .forks_count * 2) | reverse | .[0:6]
-                  | map({id, name, description, language, stargazers_count, forks_count, html_url, updated_at, archived, fork})' \
-            > src/data/repos.json.tmp || true
-          # keep the committed fallback when the api is unavailable
-          if [ -s src/data/repos.json.tmp ]; then mv src/data/repos.json.tmp src/data/repos.json; fi
-          echo "repos baked: $(jq length src/data/repos.json)"
-
-      - name: build static site
-        run: npm run build
+          out="$(dirname "$(find build/emscripten -name portfolio.html -print -quit)")"
+          mkdir -p "$GITHUB_WORKSPACE/dist"
+          cp "$out"/portfolio.* "$GITHUB_WORKSPACE/dist/"
+          mv "$GITHUB_WORKSPACE/dist/portfolio.html" "$GITHUB_WORKSPACE/dist/index.html"
+          ls -l "$GITHUB_WORKSPACE/dist"
 
       - name: setup pages
+        if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v6
 
       - name: upload artifact
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
   deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     environment:
